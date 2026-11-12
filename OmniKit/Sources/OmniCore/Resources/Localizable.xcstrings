@@ -166,6 +166,292 @@
         }
       }
     },
+    "cheatsheet.appFallback": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "App"
+          }
+        }
+      }
+    },
+    "cheatsheet.clickToRun": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Click an item to run it"
+          }
+        }
+      }
+    },
+    "cheatsheet.couldNotRun": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Couldn't run “%@”"
+          }
+        }
+      }
+    },
+    "cheatsheet.filter": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Filter"
+          }
+        }
+      }
+    },
+    "cheatsheet.gesture": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ %@ hold"
+          }
+        }
+      }
+    },
+    "cheatsheet.itemUnavailable": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "“%@” isn't available right now"
+          }
+        }
+      }
+    },
+    "cheatsheet.itemUnavailableHelp": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ (not available right now)"
+          }
+        }
+      }
+    },
+    "cheatsheet.menusUnreadable": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ doesn't let other apps read its menus."
+          }
+        }
+      }
+    },
+    "cheatsheet.name": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shortcut Cheat Sheet"
+          }
+        }
+      }
+    },
+    "cheatsheet.noApp": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No app to show shortcuts for"
+          }
+        }
+      }
+    },
+    "cheatsheet.noShortcuts": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No keyboard shortcuts in %@'s menus."
+          }
+        }
+      }
+    },
+    "cheatsheet.reading": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reading menus…"
+          }
+        }
+      }
+    },
+    "cheatsheet.settings.cannotWatchKeys": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Omni can't notice the key presses right now. Check that Omni is allowed under Accessibility in System Settings."
+          }
+        }
+      }
+    },
+    "cheatsheet.settings.includeDisabled": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show items that are unavailable right now (dimmed)"
+          }
+        }
+      }
+    },
+    "cheatsheet.settings.openWith": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open with"
+          }
+        }
+      }
+    },
+    "cheatsheet.settings.openWithHelp": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Press the key twice and keep holding it: the cheat sheet stays while you hold. Click an item to run it. Its shortcut (⌃⌥⌘/ unless you changed it) or the Launcher keeps it open until you press Esc, with a filter field."
+          }
+        }
+      }
+    },
+    "cheatsheet.settings.sourceHelp": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shortcuts come from the app's menu bar. Shortcuts that only work inside a window, and aren't in a menu, can't be listed."
+          }
+        }
+      }
+    },
+    "cheatsheet.show": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show Shortcut Cheat Sheet"
+          }
+        }
+      }
+    },
+    "cheatsheet.show.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "For the app you're in"
+          }
+        }
+      }
+    },
+    "cheatsheet.summary": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Press ⌘ twice and hold to see the shortcuts of the app you're in."
+          }
+        }
+      }
+    },
+    "cheatsheet.trigger.command": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Press ⌘ twice and hold"
+          }
+        }
+      }
+    },
+    "cheatsheet.trigger.control": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Press ⌃ twice and hold"
+          }
+        }
+      }
+    },
+    "cheatsheet.trigger.off": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Off (use the shortcut or the Launcher)"
+          }
+        }
+      }
+    },
+    "cheatsheet.trigger.option": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Press ⌥ twice and hold"
+          }
+        }
+      }
+    },
+    "cheatsheet.truncated": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Very large menus: showing the first items only"
+          }
+        }
+      }
+    },
+    "cheatsheet.untitledMenu": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Menu"
+          }
+        }
+      }
+    },
     "clipboard.age.now": {
       "extractionState": "manual",
       "localizations": {
@@ -983,6 +1269,116 @@
         }
       }
     },
+    "diagnostics.fired": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Test shortcut works"
+          }
+        }
+      }
+    },
+    "diagnostics.help": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Press the test shortcut (see Shortcuts) in any app. A notice appears and the count goes up."
+          }
+        }
+      }
+    },
+    "diagnostics.lastFired": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Last pressed"
+          }
+        }
+      }
+    },
+    "diagnostics.name": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Diagnostics"
+          }
+        }
+      }
+    },
+    "diagnostics.never": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Never"
+          }
+        }
+      }
+    },
+    "diagnostics.summary": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A test shortcut that checks Omni's shortcuts work in every app."
+          }
+        }
+      }
+    },
+    "diagnostics.testOmni": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Test Omni"
+          }
+        }
+      }
+    },
+    "diagnostics.testOmni.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show the test notice"
+          }
+        }
+      }
+    },
+    "diagnostics.testShortcut": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Test shortcut"
+          }
+        }
+      }
+    },
+    "diagnostics.timesFired": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Times pressed"
+          }
+        }
+      }
+    },
     "keepawake.command.for": {
       "extractionState": "manual",
       "localizations": {
@@ -1378,6 +1774,381 @@
           "stringUnit": {
             "state": "translated",
             "value": "Stops your Mac from going to sleep for as long as you choose."
+          }
+        }
+      }
+    },
+    "launcher.answer.currencySubtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ %@ = · %@ rate of %@"
+          }
+        }
+      }
+    },
+    "launcher.answer.gelFailed": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "National Bank of Georgia rates couldn't be downloaded."
+          }
+        }
+      }
+    },
+    "launcher.answer.noPublisher": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Neither the European Central Bank nor the National Bank of Georgia publishes a rate for %@."
+          }
+        }
+      }
+    },
+    "launcher.answer.noRates": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No exchange rates"
+          }
+        }
+      }
+    },
+    "launcher.answer.rateMissing": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ rate not available"
+          }
+        }
+      }
+    },
+    "launcher.answer.ratesNotDownloaded": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rates haven't been downloaded yet."
+          }
+        }
+      }
+    },
+    "launcher.answer.turnOnRates": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Turn on currency rate downloads in Settings."
+          }
+        }
+      }
+    },
+    "launcher.copied": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copied %@"
+          }
+        }
+      }
+    },
+    "launcher.erase.usageHistory": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "your Launcher usage history"
+          }
+        }
+      }
+    },
+    "launcher.kind.app": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Application"
+          }
+        }
+      }
+    },
+    "launcher.kind.command": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Command"
+          }
+        }
+      }
+    },
+    "launcher.kind.result": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Result"
+          }
+        }
+      }
+    },
+    "launcher.kind.setting": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "System Settings"
+          }
+        }
+      }
+    },
+    "launcher.name": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Launcher"
+          }
+        }
+      }
+    },
+    "launcher.noResults": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No results for “%@”."
+          }
+        }
+      }
+    },
+    "launcher.open": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open Launcher"
+          }
+        }
+      }
+    },
+    "launcher.privacyPane": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Privacy: %@"
+          }
+        }
+      }
+    },
+    "launcher.search.placeholder": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Search apps, settings and commands, or try 2+2, 5 km in mi, 20 usd"
+          }
+        }
+      }
+    },
+    "launcher.settings.appsFound": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apps found"
+          }
+        }
+      }
+    },
+    "launcher.settings.clearUsage": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Clear Usage History"
+          }
+        }
+      }
+    },
+    "launcher.settings.clearUsageHelp": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The Launcher puts things you open often at the top. Clearing forgets that."
+          }
+        }
+      }
+    },
+    "launcher.settings.currencyCount": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld currency"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld currencies"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "launcher.settings.defaultCurrency": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Convert currencies to"
+          }
+        }
+      }
+    },
+    "launcher.settings.downloadRates": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Download currency rates"
+          }
+        }
+      }
+    },
+    "launcher.settings.downloadRatesHelp": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This is the only thing Omni downloads: one small public file from each bank below, at most every 6 hours, when you open the Launcher. Nothing about you is sent."
+          }
+        }
+      }
+    },
+    "launcher.settings.findAgain": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Look Again"
+          }
+        }
+      }
+    },
+    "launcher.settings.lastOpenTime": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Last opened in"
+          }
+        }
+      }
+    },
+    "launcher.settings.milliseconds": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%.1f ms"
+          }
+        }
+      }
+    },
+    "launcher.settings.notDownloaded": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not downloaded"
+          }
+        }
+      }
+    },
+    "launcher.settings.ratesStatus": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ · %@"
+          }
+        }
+      }
+    },
+    "launcher.settings.updateNow": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Update Now"
+          }
+        }
+      }
+    },
+    "launcher.settings.updating": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Updating…"
+          }
+        }
+      }
+    },
+    "launcher.summary": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open apps, settings and commands, and do quick math, from one search box."
           }
         }
       }
@@ -3373,6 +4144,337 @@
           "stringUnit": {
             "state": "translated",
             "value": "Type a short code like ;sig in any app to insert text you use often."
+          }
+        }
+      }
+    },
+    "stats.battery.charging": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Charging"
+          }
+        }
+      }
+    },
+    "stats.battery.left": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ left"
+          }
+        }
+      }
+    },
+    "stats.battery.onAdapter": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "On power adapter"
+          }
+        }
+      }
+    },
+    "stats.battery.onBattery": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "On battery"
+          }
+        }
+      }
+    },
+    "stats.battery.toFull": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ to full"
+          }
+        }
+      }
+    },
+    "stats.detail.freeOf": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ free of %@"
+          }
+        }
+      }
+    },
+    "stats.detail.noTemperatures": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Temperatures and fans aren't shown: Apple silicon Macs don't offer a reliable way to read them."
+          }
+        }
+      }
+    },
+    "stats.detail.startupDisk": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Disk (startup)"
+          }
+        }
+      }
+    },
+    "stats.detail.usedOf": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ of %@"
+          }
+        }
+      }
+    },
+    "stats.item.battery": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Battery"
+          }
+        }
+      }
+    },
+    "stats.item.cpu": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CPU"
+          }
+        }
+      }
+    },
+    "stats.item.disk": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Disk"
+          }
+        }
+      }
+    },
+    "stats.item.memory": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Memory"
+          }
+        }
+      }
+    },
+    "stats.item.network": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Network"
+          }
+        }
+      }
+    },
+    "stats.line.battery": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Battery %@"
+          }
+        }
+      }
+    },
+    "stats.line.cpu": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CPU %@"
+          }
+        }
+      }
+    },
+    "stats.line.disk": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Disk %@ free"
+          }
+        }
+      }
+    },
+    "stats.line.memory": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Memory %@"
+          }
+        }
+      }
+    },
+    "stats.menu.cpu": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CPU %@"
+          }
+        }
+      }
+    },
+    "stats.menu.disk": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SSD %@ free"
+          }
+        }
+      }
+    },
+    "stats.menu.memory": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "MEM %@"
+          }
+        }
+      }
+    },
+    "stats.name": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "System Stats"
+          }
+        }
+      }
+    },
+    "stats.settings.nothingSelectedHelp": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "With nothing selected, the menu bar shows an icon. Click it for details."
+          }
+        }
+      }
+    },
+    "stats.settings.refreshEvery": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Refresh every"
+          }
+        }
+      }
+    },
+    "stats.settings.refreshHelp": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reading the numbers costs almost nothing, but redrawing the menu bar does, so a longer interval saves energy. Measured: about 1.7% CPU at 2 seconds, 0.7% at 5 seconds, 0.2% with only the icon."
+          }
+        }
+      }
+    },
+    "stats.settings.seconds": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld second"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld seconds"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "stats.settings.showInMenuBar": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show in the menu bar"
+          }
+        }
+      }
+    },
+    "stats.settings.temperaturesHelp": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Temperatures and fan speeds are left out on purpose: on Apple silicon Macs they can't be read reliably."
+          }
+        }
+      }
+    },
+    "stats.summary": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shows CPU, memory, network and battery in the menu bar."
           }
         }
       }

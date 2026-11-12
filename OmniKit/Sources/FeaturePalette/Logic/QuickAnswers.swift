@@ -1,4 +1,5 @@
 import Foundation
+import OmniCore
 
 /// An instant result computed from the query: arithmetic, units, or currency.
 public struct QuickAnswer: Equatable, Sendable {
@@ -64,22 +65,23 @@ public struct QuickAnswerEngine: Sendable {
         guard !rateTables.isEmpty else {
             // Only claim it's a currency query if the source looks like a real code.
             guard Self.isKnown(from) else { return nil }
-            let hint = currencyFetchEnabled ? "Rates haven't been downloaded yet." : "Turn on rate updates in Settings."
-            return QuickAnswer(kind: .currency, title: "No exchange rates", subtitle: hint, copyText: "")
+            let hint = currencyFetchEnabled ? L10n.Launcher.ratesNotDownloaded : L10n.Launcher.turnOnRates
+            return QuickAnswer(kind: .currency, title: L10n.Launcher.noRates, subtitle: hint, copyText: "")
         }
         guard let table = rateTables.first(where: { $0.supports(from) && $0.supports(to) }),
               let value = table.convert(q.amount, from: from, to: to) else {
             let missing = rateTables.contains { $0.supports(from) } ? to : from
             guard Self.isKnown(missing) else { return nil }
-            let reason = missing == "GEL"
-                ? "National Bank of Georgia rates couldn't be downloaded."
-                : "Neither the ECB nor the NBG publishes a rate for \(missing)."
-            return QuickAnswer(kind: .currency, title: "\(missing) rate not available", subtitle: reason, copyText: "")
+            let reason = missing == "GEL" ? L10n.Launcher.gelRatesFailed : L10n.Launcher.noPublisher(missing)
+            return QuickAnswer(kind: .currency, title: L10n.Launcher.rateMissing(missing), subtitle: reason, copyText: "")
         }
         let text = String(format: "%.2f", value)
         return QuickAnswer(
             kind: .currency, title: "\(text) \(to)",
-            subtitle: "\(Calculator.format(q.amount)) \(from) = · \(table.source) rate of \(table.date)", copyText: text
+            subtitle: L10n.Launcher.currencySubtitle(
+                amount: Calculator.format(q.amount), from: from, source: table.source, date: table.date
+            ),
+            copyText: text
         )
     }
 

@@ -12,20 +12,20 @@ public final class ShortcutOverlayFeature: Feature {
     static let includeDisabledKey = SettingKey.feature("shortcuts", "includeDisabled", default: true)
 
     public static let showHotkey = HotkeyAction(
-        id: "shortcuts.show", title: "Show keyboard shortcuts",
+        id: "shortcuts.show", title: L10n.Cheatsheet.showTitle,
         defaultCombo: KeyCombo(keyCode: 44, modifiers: [.control, .option, .command]) // ⌃⌥⌘/
     )
 
     public let id: FeatureID = "shortcuts"
-    public let displayName = "Shortcut Overlay"
-    public let summary = "Press ⌘ twice and hold to see the current app's keyboard shortcuts."
+    public var displayName: String { L10n.Cheatsheet.name }
+    public var summary: String { L10n.Cheatsheet.summary }
     public let symbolName = "command.square"
     public let requiredPermissions: Set<Permission> = [.accessibility]
 
     private(set) var tapError: String?
     @ObservationIgnored private var controller: OverlayController?
     @ObservationIgnored private var tap: ModifierTap?
-    @ObservationIgnored private var settings: SettingsStore?
+    @ObservationIgnored private(set) var settings: SettingsStore?
 
     public init() {}
 
@@ -42,7 +42,7 @@ public final class ShortcutOverlayFeature: Feature {
         }
         context.registerHotkey(Self.showHotkey) { controller.togglePinned() }
         context.registerCommand(Command(
-            id: "shortcuts.show", title: "Show Keyboard Shortcuts", subtitle: "For the frontmost app",
+            id: "shortcuts.show", title: L10n.Cheatsheet.showTitle, subtitle: L10n.Cheatsheet.showSubtitle,
             keywords: ["cheatsheet", "keys", "menu", "hotkeys"], symbolName: symbolName
         ) {
             // Let the palette close first so it doesn't take the key focus back.
@@ -77,7 +77,7 @@ public final class ShortcutOverlayFeature: Feature {
             self.tap = tap
             tapError = nil
         } catch {
-            tapError = "\(error)"
+            tapError = L10n.Cheatsheet.cannotWatchKeys
             throw error
         }
     }
@@ -93,16 +93,18 @@ struct ShortcutOverlaySettingsView: View {
     let settings: SettingsStore
 
     var body: some View {
-        Picker("Show with", selection: Binding(
+        Picker(L10n.Cheatsheet.openWith, selection: Binding(
             get: { settings.value(ShortcutOverlayFeature.triggerKey) },
             set: { settings.set($0, for: ShortcutOverlayFeature.triggerKey); try? feature.applyTrigger() }
         )) {
             ForEach(OverlayTrigger.allCases, id: \.self) { Text($0.label).tag($0) }
         }
-        Text("Tap the key, then press it again and keep holding: the overlay stays while you hold it. Click an item to run it. The shortcut in Settings → Shortcuts (default ⌃⌥⌘/) and the palette command open it until you press Esc, with a filter field.")
+        .settingsAnchor(ShortcutOverlayAnchor.trigger)
+        Text(L10n.Cheatsheet.openWithHelp)
             .font(.caption).foregroundStyle(.secondary)
-        Toggle("Include items that are disabled right now (dimmed)", isOn: settings.binding(ShortcutOverlayFeature.includeDisabledKey))
-        Text("Shortcuts come from the app's menu bar. Shortcuts that exist only inside a window (not in a menu) can't be listed.")
+        Toggle(L10n.Cheatsheet.includeDisabled, isOn: settings.binding(ShortcutOverlayFeature.includeDisabledKey))
+            .settingsAnchor(ShortcutOverlayAnchor.includeDisabled)
+        Text(L10n.Cheatsheet.sourceHelp)
             .font(.caption).foregroundStyle(.secondary)
         if let error = feature.tapError {
             Text(error).font(.caption).foregroundStyle(.orange)

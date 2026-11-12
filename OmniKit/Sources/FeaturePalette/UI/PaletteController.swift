@@ -103,13 +103,13 @@ final class PaletteController: NSObject, NSWindowDelegate {
         let screen = NSScreen.screens.first { NSMouseInRect(mouse, $0.frame, false) } ?? NSScreen.main
         guard let visible = screen?.visibleFrame else { return }
         topEdge = visible.maxY - visible.height * 0.22
-        let height = PaletteView.height(forResults: model.results.count)
+        let height = PaletteView.height(for: model)
         panel.setFrame(NSRect(x: visible.midX - PaletteView.width / 2, y: topEdge - height, width: PaletteView.width, height: height), display: false)
     }
 
     /// Grows or shrinks downward, keeping the search field in place.
     private func resize() {
-        let height = PaletteView.height(forResults: model.results.count)
+        let height = PaletteView.height(for: model)
         var frame = panel.frame
         guard frame.height != height else { return }
         frame.origin.y = (topEdge > 0 ? topEdge : frame.maxY) - height

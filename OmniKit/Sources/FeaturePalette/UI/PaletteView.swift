@@ -1,4 +1,6 @@
 import AppKit
+import OmniCore
+import OmniPlatform
 import SwiftUI
 
 /// Search field plus result list. Keyboard handling lives in `PaletteController`.
@@ -11,6 +13,8 @@ struct PaletteView: View {
     static let headerHeight: CGFloat = 56
     static let rowHeight: CGFloat = 46
     static let maxVisibleRows = 8
+    /// Room for the empty-state message below the field.
+    static let emptyHeight: CGFloat = 100
 
     /// Height that fits `count` results without scrolling (up to the max).
     static func height(forResults count: Int) -> CGFloat {
@@ -18,17 +22,31 @@ struct PaletteView: View {
         return headerHeight + (rows > 0 ? CGFloat(rows) * rowHeight + 13 : 0)
     }
 
+    /// Height for the model's current results or empty-state message.
+    @MainActor
+    static func height(for model: PaletteViewModel) -> CGFloat {
+        model.results.isEmpty && model.emptyMessage != nil
+            ? headerHeight + emptyHeight
+            : height(forResults: model.results.count)
+    }
+
     var body: some View {
         VStack(spacing: 0) {
             HStack(spacing: 10) {
                 Image(systemName: "magnifyingglass").font(.title2).foregroundStyle(.secondary)
-                TextField("Search apps, settings, commands — or 2+2, 5 km in mi, 20 usd, clip …", text: $model.query)
+                TextField(L10n.Launcher.searchPlaceholder, text: $model.query)
                     .textFieldStyle(.plain)
                     .font(.title2)
                     .focused($fieldFocused)
             }
-            .padding(.horizontal, 16)
+            .padding(.horizontal, OmniStyle.s4)
             .frame(height: Self.headerHeight)
+
+            if model.results.isEmpty, let message = model.emptyMessage {
+                Divider()
+                EmptyState(symbol: "magnifyingglass", message: message)
+                    .frame(height: Self.emptyHeight - 1)
+            }
 
             if !model.results.isEmpty {
                 Divider()
@@ -52,8 +70,7 @@ struct PaletteView: View {
             }
         }
         .frame(width: Self.width)
-        .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 14))
-        .overlay(RoundedRectangle(cornerRadius: 14).strokeBorder(.separator.opacity(0.5)))
+        .omniPanelBackground()
         .onChange(of: model.focusRequest, initial: true) { fieldFocused = true }
     }
 }
@@ -76,7 +93,10 @@ private struct PaletteRow: View {
         }
         .padding(.horizontal, 10)
         .frame(height: PaletteView.rowHeight)
-        .background(isSelected ? Color.accentColor.opacity(0.22) : .clear, in: RoundedRectangle(cornerRadius: 8))
+        .background(
+            isSelected ? Color.accentColor.opacity(0.22) : .clear,
+            in: RoundedRectangle(cornerRadius: OmniStyle.controlRadius, style: .continuous)
+        )
     }
 
     @ViewBuilder private var icon: some View {

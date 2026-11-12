@@ -18,10 +18,10 @@ public enum OverlayTrigger: String, Codable, CaseIterable, Sendable {
 
     var label: String {
         switch self {
-        case .command: "Press ⌘ twice and hold"
-        case .option: "Press ⌥ twice and hold"
-        case .control: "Press ⌃ twice and hold"
-        case .off: "Off (shortcut and palette only)"
+        case .command: L10n.Cheatsheet.triggerCommand
+        case .option: L10n.Cheatsheet.triggerOption
+        case .control: L10n.Cheatsheet.triggerControl
+        case .off: L10n.Cheatsheet.triggerOff
         }
     }
 

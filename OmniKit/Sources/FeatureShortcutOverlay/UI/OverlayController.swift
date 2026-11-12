@@ -87,13 +87,13 @@ final class OverlayController: NSObject, NSWindowDelegate {
     private func present(mode: OverlayModel.Mode) {
         guard let pid = frontmostPID(), let app = NSRunningApplication(processIdentifier: pid) else {
             gesture.reset()
-            HUD.show("No app to show shortcuts for", symbol: "command")
+            HUD.show(L10n.Cheatsheet.noApp, symbol: "command")
             return
         }
         targetPID = pid
         model.mode = mode
         model.query = ""
-        model.appName = app.localizedName ?? "App"
+        model.appName = app.localizedName ?? L10n.Cheatsheet.appFallback
         model.appIcon = app.icon
         if let cached = cache.cached(pid) {
             show(cached)
@@ -160,7 +160,7 @@ final class OverlayController: NSObject, NSWindowDelegate {
 
     private func choose(_ entry: ShortcutEntry) {
         guard entry.isEnabled else {
-            HUD.show("“\(entry.title)” isn't available right now", symbol: "nosign")
+            HUD.show(L10n.Cheatsheet.unavailable(entry.title), symbol: "nosign")
             return
         }
         guard let ref = entry.ref, let snapshot else { return }
@@ -171,7 +171,7 @@ final class OverlayController: NSObject, NSWindowDelegate {
             // A press that opens a sheet or dialog often reports
             // `cannotComplete` even though it worked.
             if result != .success && result != .cannotComplete {
-                await MainActor.run { HUD.show("Couldn't run “\(title)”", symbol: "exclamationmark.triangle") }
+                await MainActor.run { HUD.show(L10n.Cheatsheet.couldNotRun(title), symbol: "exclamationmark.triangle") }
             }
         }
     }
