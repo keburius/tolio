@@ -67,7 +67,7 @@ public struct MenuBarConfiguration: Codable, Equatable, Sendable {
         }
     }
 
-    private static let standardVisible: Set<QuickAccessID> = [.keepAwake, .screenshot, .captureText, .clipboard]
+    private static let standardVisible: Set<QuickAccessID> = [.keepAwake, .screenshot, .captureText, .clipboard, .stickyNotes]
 
     public func isVisible(_ id: QuickAccessID) -> Bool {
         entries.first { $0.id == id }?.isVisible ?? false

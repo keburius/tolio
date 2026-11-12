@@ -27,6 +27,8 @@ final class MenuBarController: NSObject {
     private var quick: [QuickAccessID: NSStatusItem] = [:]
     private var shownOrder: [QuickAccessID] = []
     private var timer: Timer?
+    /// The open click panel (e.g. the clipboard list), if any.
+    private var clickPanel: AnchoredPanel?
 
     init(services: AppServices, actions: MenuBarActions) {
         self.services = services
@@ -51,7 +53,12 @@ final class MenuBarController: NSObject {
     /// Shows a feature's click menu under its icon, or at the pointer when
     /// the icon is hidden (e.g. ⌃⌥V in one-icon mode).
     private func showClickMenu(_ id: QuickAccessID) -> Bool {
-        guard let entry = entries()[id], isRunning(entry.feature), let clickMenu = entry.item.clickMenu else { return false }
+        guard let entry = entries()[id], isRunning(entry.feature) else { return false }
+        if entry.item.clickPanel != nil {
+            showClickPanel(entry, below: quick[id]?.button)
+            return true
+        }
+        guard let clickMenu = entry.item.clickMenu else { return false }
         let menu = MenuBuilder.menu(clickMenu(), shortcuts: shortcuts)
         if let statusItem = quick[id] {
             show(menu, on: statusItem)
@@ -59,6 +66,19 @@ final class MenuBarController: NSObject {
             menu.popUp(positioning: nil, at: NSEvent.mouseLocation, in: nil)
         }
         return true
+    }
+
+    /// A feature's own dropdown under its icon, or at the pointer when the icon is hidden.
+    private func showClickPanel(_ entry: Entry, below button: NSStatusBarButton?) {
+        if let open = clickPanel, open.isVisible {
+            open.close()
+            return
+        }
+        guard let make = entry.item.clickPanel else { return }
+        var panel: AnchoredPanel?
+        panel = AnchoredPanel(content: make({ panel?.close() }))
+        clickPanel = panel
+        if let button { panel?.show(below: button, leading: true) } else { panel?.show(at: NSEvent.mouseLocation) }
     }
 
     /// The main icon's button, to anchor the control panel.
@@ -211,6 +231,8 @@ final class MenuBarController: NSObject {
             show(optionsMenu(for: entry), on: statusItem)
         } else if id == .windowLayouts {
             actions.showLayoutGrid(sender)
+        } else if entry.item.clickPanel != nil {
+            showClickPanel(entry, below: sender)
         } else if let clickMenu = entry.item.clickMenu {
             show(MenuBuilder.menu(clickMenu(), shortcuts: shortcuts), on: statusItem)
         } else {

@@ -1,4 +1,5 @@
 import Foundation
+import SwiftUI
 
 // UI-facing descriptions a feature can provide. None of them changes what a
 // feature does; they let the app show and reach it (menu bar icons, the
@@ -43,6 +44,7 @@ public enum QuickAccessID: String, Codable, CaseIterable, Sendable {
     case screenshot
     case captureText = "capturetext"
     case clipboard
+    case stickyNotes = "stickynotes"
     case recording
     case lockKeyboard = "lockkeyboard"
     case windowLayouts = "windowlayouts"
@@ -134,6 +136,9 @@ public struct QuickAccessItem: Identifiable {
     public let menu: @MainActor () -> [MenuEntry]
     /// If set, a left-click shows this menu under the icon instead of running `primary`.
     public let clickMenu: (@MainActor () -> [MenuEntry])?
+    /// If set, a left-click shows this view in a menu-like panel under the
+    /// icon (takes precedence over `clickMenu`). Call `close` to dismiss it.
+    public let clickPanel: (@MainActor (_ close: @escaping @MainActor () -> Void) -> AnyView)?
 
     public init(
         id: QuickAccessID, title: String, symbolName: String, activeSymbolName: String? = nil,
@@ -141,9 +146,11 @@ public struct QuickAccessItem: Identifiable {
         state: @escaping @MainActor () -> QuickAccessState = { .idle },
         primary: @escaping @MainActor () -> Void,
         menu: @escaping @MainActor () -> [MenuEntry],
-        clickMenu: (@MainActor () -> [MenuEntry])? = nil
+        clickMenu: (@MainActor () -> [MenuEntry])? = nil,
+        clickPanel: (@MainActor (_ close: @escaping @MainActor () -> Void) -> AnyView)? = nil
     ) {
         self.clickMenu = clickMenu
+        self.clickPanel = clickPanel
         self.id = id
         self.title = title
         self.symbolName = symbolName

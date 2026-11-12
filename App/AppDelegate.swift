@@ -4,6 +4,7 @@ import FeatureDiagnostics
 import FeatureKeepAwake
 import FeatureKeyboardClean
 import FeatureScreenshots
+import FeatureStickyNotes
 import FeaturePalette
 import FeatureShortcutOverlay
 import FeatureSwitcher
@@ -111,6 +112,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         services.features.register(TextActionsFeature())
         services.features.register(ScreenshotsFeature())
         services.features.register(CaptureTextFeature())
+        services.features.register(StickyNotesFeature())
         services.features.register(DiagnosticsFeature())
     }
 
@@ -146,9 +148,19 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             case "palette": services.commands.allCommands.first { $0.id == PaletteFeature.showCommandID }?.action()
             case "settings": showSettings(nil)
             case "panel": controlPanel?.toggle(below: menuBar?.mainButton, byKeyboard: true)
+            case NoteURL.host: newStickyNote(from: url)
             default: break
             }
         }
+    }
+
+    /// "New Sticky Note" from the desktop's right-click menu (Finder extension).
+    /// Turns Sticky Notes on if needed: choosing the menu item is consent.
+    private func newStickyNote(from url: URL) {
+        guard case let .some(point) = NoteURL.newNotePoint(url),
+              let feature = services.features.feature("stickynotes") as? StickyNotesFeature else { return }
+        if !services.features.isWanted(feature.id) { services.features.setWanted(true, for: feature.id) }
+        feature.newNote(at: point)
     }
 
     /// Opens Settings at `page` (or where it was). Holding ⌥ also lists Diagnostics.

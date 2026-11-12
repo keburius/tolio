@@ -7,13 +7,13 @@ struct MenuBarConfigurationTests {
         let config = MenuBarConfiguration.standard
         #expect(config.mode == .separate)
         #expect(config.entries.map(\.id) == QuickAccessID.allCases)
-        #expect(config.entries.filter(\.isVisible).map(\.id) == [.keepAwake, .screenshot, .captureText, .clipboard])
+        #expect(config.entries.filter(\.isVisible).map(\.id) == [.keepAwake, .screenshot, .captureText, .clipboard, .stickyNotes])
     }
 
     @Test func iconsDependOnFeaturesBeingOn() {
         let config = MenuBarConfiguration.standard
         #expect(config.iconsToShow(available: [.keepAwake, .clipboard, .recording]) == [.keepAwake, .clipboard])
-        #expect(config.iconsToShow(available: Set(QuickAccessID.allCases)) == [.keepAwake, .screenshot, .captureText, .clipboard])
+        #expect(config.iconsToShow(available: Set(QuickAccessID.allCases)) == [.keepAwake, .screenshot, .captureText, .clipboard, .stickyNotes])
     }
 
     @Test func singleModeShowsNoIconsButKeepsChoices() {
@@ -22,7 +22,7 @@ struct MenuBarConfigurationTests {
         config.mode = .single
         #expect(config.iconsToShow(available: Set(QuickAccessID.allCases)).isEmpty)
         config.mode = .separate
-        #expect(config.iconsToShow(available: Set(QuickAccessID.allCases)) == [.keepAwake, .screenshot, .captureText, .clipboard, .recording])
+        #expect(config.iconsToShow(available: Set(QuickAccessID.allCases)) == [.keepAwake, .screenshot, .captureText, .clipboard, .stickyNotes, .recording])
     }
 
     @Test func moveByOffsetClamps() {
@@ -41,9 +41,9 @@ struct MenuBarConfigurationTests {
         config.move(fromOffsets: IndexSet(integer: 0), toOffset: 3)
         #expect(config.entries.prefix(3).map(\.id) == [.screenshot, .captureText, .keepAwake])
         // Drag the last item to the top.
-        config.move(fromOffsets: IndexSet(integer: 6), toOffset: 0)
+        config.move(fromOffsets: IndexSet(integer: 7), toOffset: 0)
         #expect(config.entries.first?.id == .windowLayouts)
-        #expect(config.entries.count == 7)
+        #expect(config.entries.count == 8)
     }
 
     @Test func codableRoundTripAndUnknownIDs() throws {

@@ -19,6 +19,7 @@ let package = Package(
         .library(name: "FeatureShortcutOverlay", targets: ["FeatureShortcutOverlay"]),
         .library(name: "FeatureTextActions", targets: ["FeatureTextActions"]),
         .library(name: "FeatureScreenshots", targets: ["FeatureScreenshots"]),
+        .library(name: "FeatureStickyNotes", targets: ["FeatureStickyNotes"]),
     ],
     dependencies: [
         // Approved dependency (SQLite), vendored at 7.12.0. See Vendor/README.md.
@@ -40,6 +41,7 @@ let package = Package(
         .target(name: "FeatureShortcutOverlay", dependencies: ["OmniCore", "OmniPlatform"]),
         .target(name: "FeatureTextActions", dependencies: ["OmniCore", "OmniPlatform"]),
         .target(name: "FeatureScreenshots", dependencies: ["OmniCore", "OmniPlatform"]),
+        .target(name: "FeatureStickyNotes", dependencies: ["OmniCore", "OmniPlatform"]),
         .testTarget(name: "OmniCoreTests", dependencies: ["OmniCore"]),
         .testTarget(name: "OmniPlatformTests", dependencies: ["OmniPlatform"]),
         .testTarget(name: "FeaturePaletteTests", dependencies: ["FeaturePalette", "OmniCore"]),
@@ -52,5 +54,6 @@ let package = Package(
         .testTarget(name: "FeatureShortcutOverlayTests", dependencies: ["FeatureShortcutOverlay", "OmniCore"]),
         .testTarget(name: "FeatureTextActionsTests", dependencies: ["FeatureTextActions", "OmniCore", "OmniPlatform"]),
         .testTarget(name: "FeatureScreenshotsTests", dependencies: ["FeatureScreenshots", "OmniCore"]),
+        .testTarget(name: "FeatureStickyNotesTests", dependencies: ["FeatureStickyNotes", "OmniCore"]),
     ]
 )

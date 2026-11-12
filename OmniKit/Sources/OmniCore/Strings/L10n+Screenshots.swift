@@ -197,6 +197,8 @@ public extension L10n {
         public static var toolBrush: String { tr("screenshots.tool.brush", "Brush (P)") }
         public static var deleteSelected: String { tr("screenshots.deleteSelected", "Delete the selected mark, or the last one you drew (⌫)") }
         public static var delete: String { tr("screenshots.delete", "Delete") }
+        public static var deleteScreenshot: String { tr("screenshots.deleteScreenshot", "Delete this screenshot and close the window (it isn't saved)") }
+        public static var screenshotDeleted: String { tr("screenshots.screenshotDeleted", "Screenshot deleted") }
         public static var toolArrow: String { tr("screenshots.tool.arrow", "Arrow (A)") }
         public static var toolBox: String { tr("screenshots.tool.box", "Box (R)") }
         public static var toolText: String { tr("screenshots.tool.text", "Text (T)") }

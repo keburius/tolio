@@ -621,3 +621,24 @@ Sources: the FoundationModels interface in the installed SDK (MacOSX 27.2, Xcode
   - Norwegian (no, nn, nb), Malay, Polish, Romanian, Swedish, Finnish, Hindi, Marathi
   - **Georgian is not supported.** The fast level offers only the first six.
 - **Tests:** line-break handling (keep, join, whitespace, blank lines), append (with and without a previous capture, both modes, Shift without a previous capture), the empty case (nothing to write, clipboard unchanged), barcode priority and link detection, and the captured-text marker in clipboard history.
+
+## 11. Sticky Notes (its own feature)
+
+- **Feature:** `FeatureStickyNotes` (no permission needed, off by default).
+  - Notes are glass panels on the desktop, just above the desktop icons and behind app windows. They stay put during Mission Control and Show Desktop.
+  - Per note: "Keep on Top" makes it float; it can be tinted in 7 colours.
+  - Editing: type directly in the note (it takes the keyboard without bringing Omni forward), drag it by the top edge, resize it from any edge (minimum 160 × 120).
+  - The glass is SwiftUI `.glassEffect` (Liquid Glass) on macOS 26 and later, and a frosted material before that.
+- **Adding a note:**
+  - The desktop's right-click menu, "New Sticky Note", through the sandboxed Finder Sync extension `OmniFinderNote.appex` (`com.george.omni.FinderNote`). It watches only ~/Desktop, reads no files, and sends `omni://note/new?x=&y=` so the note opens where you clicked. You turn the extension on once under System Settings → General → Login Items & Extensions → Finder; Settings shows its status and a button.
+  - ⌃⌥⌘N, the menu bar icon (left-click), and the Launcher command "New Sticky Note".
+- **Storage:** `~/Library/Application Support/com.george.omni/notes.json`, written atomically and readable only by you (0600).
+  - A damaged file is moved aside (`.damaged`), never overwritten.
+  - Deleted notes with text are kept (the last 20). "Undo" in the notice and "Restore Deleted Note" bring them back.
+  - Note text is never logged.
+  - "Erase Data…" deletes all notes and the recently deleted ones.
+- **Menu bar icon** (shown by default while the feature is on):
+  - Left-click: a new note.
+  - Right-click: New Sticky Note, Bring Notes to Front, the 15 most recent notes, Restore Deleted Note, and the right-click menu setup if the extension is off.
+- **Tests:** the store (add, update, persist, permissions, delete and restore, the 20-note cap, damaged file, erase), placement (at the click point, edges, minimum size, unplugged display, cascade), and `omni://note` link parsing (fixed action only; bad numbers are ignored).
+- **Limit:** a Finder extension's menu items appear only after you enable it, and macOS decides whether container menus show on the desktop background. This needs checking on your Mac.

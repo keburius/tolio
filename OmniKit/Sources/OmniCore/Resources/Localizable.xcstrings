@@ -3642,6 +3642,17 @@
         }
       }
     },
+    "screenshots.deleteScreenshot": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete this screenshot and close the window (it isn't saved)"
+          }
+        }
+      }
+    },
     "screenshots.deleteSelected": {
       "extractionState": "manual",
       "localizations": {
@@ -4453,6 +4464,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Recording saved"
+          }
+        }
+      }
+    },
+    "screenshots.screenshotDeleted": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Screenshot deleted"
           }
         }
       }
@@ -6304,6 +6326,348 @@
           "stringUnit": {
             "state": "translated",
             "value": "Working"
+          }
+        }
+      }
+    },
+    "stickynotes.allSpaces": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show notes on every desktop (Space)"
+          }
+        }
+      }
+    },
+    "stickynotes.bringToFront": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bring Notes to Front"
+          }
+        }
+      }
+    },
+    "stickynotes.clickHint": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "new note"
+          }
+        }
+      }
+    },
+    "stickynotes.colorAndOptions": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Color and options"
+          }
+        }
+      }
+    },
+    "stickynotes.defaultColor": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Color of new notes"
+          }
+        }
+      }
+    },
+    "stickynotes.delete": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete note"
+          }
+        }
+      }
+    },
+    "stickynotes.deleted": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Note deleted"
+          }
+        }
+      }
+    },
+    "stickynotes.displayName": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sticky Notes"
+          }
+        }
+      }
+    },
+    "stickynotes.enableRightClick": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add “New Sticky Note” to the Desktop’s Right-Click Menu…"
+          }
+        }
+      }
+    },
+    "stickynotes.erase": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld sticky note and the recently deleted ones"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "all %lld sticky notes and the recently deleted ones"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "stickynotes.finderMenuItem": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "New Sticky Note"
+          }
+        }
+      }
+    },
+    "stickynotes.hotkey.new": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "New sticky note"
+          }
+        }
+      }
+    },
+    "stickynotes.keepOnTop": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Keep on Top"
+          }
+        }
+      }
+    },
+    "stickynotes.new": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "New Sticky Note"
+          }
+        }
+      }
+    },
+    "stickynotes.placeholder": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Write a note…"
+          }
+        }
+      }
+    },
+    "stickynotes.restoreDeleted": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Restore Deleted Note"
+          }
+        }
+      }
+    },
+    "stickynotes.rightClick": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "“New Sticky Note” in the desktop’s right-click menu"
+          }
+        }
+      }
+    },
+    "stickynotes.rightClick.off": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Off. Turn on “Omni” under Finder in System Settings → General → Login Items & Extensions."
+          }
+        }
+      }
+    },
+    "stickynotes.rightClick.on": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "On. Right-click an empty spot on the desktop."
+          }
+        }
+      }
+    },
+    "stickynotes.settingsNote": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Notes sit on the desktop, behind your windows; use “Keep on Top” on a note to float it. Drag a note by its top edge and resize it from any edge. Notes are saved on this Mac only."
+          }
+        }
+      }
+    },
+    "stickynotes.summary": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Glass notes on your desktop. Right-click the desktop or press ⌃⌥⌘N to add one."
+          }
+        }
+      }
+    },
+    "stickynotes.tint.blue": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Blue"
+          }
+        }
+      }
+    },
+    "stickynotes.tint.gray": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gray"
+          }
+        }
+      }
+    },
+    "stickynotes.tint.green": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Green"
+          }
+        }
+      }
+    },
+    "stickynotes.tint.orange": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Orange"
+          }
+        }
+      }
+    },
+    "stickynotes.tint.pink": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pink"
+          }
+        }
+      }
+    },
+    "stickynotes.tint.purple": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Purple"
+          }
+        }
+      }
+    },
+    "stickynotes.tint.yellow": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yellow"
+          }
+        }
+      }
+    },
+    "stickynotes.undo": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Undo"
+          }
+        }
+      }
+    },
+    "stickynotes.untitled": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Empty note"
           }
         }
       }

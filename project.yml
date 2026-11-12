@@ -28,6 +28,7 @@ targets:
           - Info.plist
           - Omni.entitlements
     dependencies:
+      - target: OmniFinderNote
       - package: OmniKit
         product: OmniCore
       - package: OmniKit
@@ -54,6 +55,8 @@ targets:
         product: FeatureTextActions
       - package: OmniKit
         product: FeatureScreenshots
+      - package: OmniKit
+        product: FeatureStickyNotes
     info:
       path: App/Info.plist
       properties:
@@ -78,6 +81,39 @@ targets:
         ENABLE_HARDENED_RUNTIME: YES
         COMBINE_HIDPI_IMAGES: YES
         GENERATE_INFOPLIST_FILE: NO
+  OmniFinderNote:
+    type: app-extension
+    platform: macOS
+    sources:
+      - path: Extensions/FinderNote
+        excludes:
+          - Info.plist
+          - FinderNote.entitlements
+    dependencies:
+      - package: OmniKit
+        product: OmniCore
+    info:
+      path: Extensions/FinderNote/Info.plist
+      properties:
+        CFBundleDisplayName: Omni
+        CFBundleShortVersionString: "0.1.0"
+        CFBundleVersion: "1"
+        LSMinimumSystemVersion: "$(MACOSX_DEPLOYMENT_TARGET)"
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.FinderSync
+          NSExtensionPrincipalClass: "$(PRODUCT_MODULE_NAME).FinderSync"
+          NSExtensionAttributes: {}
+    entitlements:
+      path: Extensions/FinderNote/FinderNote.entitlements
+      properties:
+        com.apple.security.app-sandbox: true
+    settings:
+      base:
+        PRODUCT_NAME: OmniFinderNote
+        PRODUCT_BUNDLE_IDENTIFIER: com.george.omni.FinderNote
+        ENABLE_HARDENED_RUNTIME: YES
+        GENERATE_INFOPLIST_FILE: NO
+        SKIP_INSTALL: YES
 schemes:
   Omni:
     build:
@@ -100,5 +136,6 @@ schemes:
         - package: OmniKit/FeatureShortcutOverlayTests
         - package: OmniKit/FeatureTextActionsTests
         - package: OmniKit/FeatureScreenshotsTests
+        - package: OmniKit/FeatureStickyNotesTests
     archive:
       config: Release

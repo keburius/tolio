@@ -34,7 +34,9 @@ struct ControlPanelView: View {
 
     private var header: some View {
         HStack {
-            Text(L10n.App.name).font(.headline)
+            Button { actions.activate(.settings) } label: { Text(L10n.App.name).font(.headline) }
+                .buttonStyle(.plain)
+                .help(L10n.App.settings)
             Spacer()
             if let shortcut = ShortcutLookupText.controlPanel { ShortcutChip(shortcut) }
         }
@@ -251,7 +253,10 @@ private struct ClipRow: View {
         case let .symbol(name): Image(systemName: name).foregroundStyle(.secondary)
         case let .file(url): Image(nsImage: NSWorkspace.shared.icon(forFile: url.path)).resizable()
         case let .image(url):
-            if let image = NSImage(contentsOf: url) { Image(nsImage: image).resizable().scaledToFill().clipShape(RoundedRectangle(cornerRadius: 3)) }
+            if let image = NSImage(contentsOf: url) {
+                Image(nsImage: image).resizable().aspectRatio(contentMode: .fit)
+                    .frame(width: 20, height: 20).clipShape(RoundedRectangle(cornerRadius: 3))
+            }
             else { Image(systemName: "photo").foregroundStyle(.secondary) }
         }
     }

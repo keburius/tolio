@@ -38,13 +38,14 @@ final class AnchoredPanel: NSObject, NSWindowDelegate {
     var isVisible: Bool { panel.isVisible }
 
     /// Shows the panel below `button` (or centered at the top of the main screen).
-    func show(below button: NSView?) {
+    /// `leading` aligns its left edge with the button, as native menus do.
+    func show(below button: NSView?, leading: Bool = false) {
         guard let host = panel.contentView else { return }
         let size = host.fittingSize
         var origin: CGPoint
         if let button, let window = button.window {
             let frame = window.convertToScreen(button.convert(button.bounds, to: nil))
-            origin = CGPoint(x: frame.midX - size.width / 2, y: frame.minY - size.height - 6)
+            origin = CGPoint(x: leading ? frame.minX : frame.midX - size.width / 2, y: frame.minY - size.height - (leading ? 1 : 6))
             if let visible = window.screen?.visibleFrame {
                 origin.x = min(max(origin.x, visible.minX + 8), visible.maxX - size.width - 8)
             }
@@ -52,6 +53,21 @@ final class AnchoredPanel: NSObject, NSWindowDelegate {
             let visible = (NSScreen.main ?? NSScreen.screens[0]).visibleFrame
             origin = CGPoint(x: visible.maxX - size.width - 16, y: visible.maxY - size.height - 8)
         }
+        panel.setFrame(CGRect(origin: origin, size: size), display: true)
+        installKeyMonitor()
+        panel.makeKeyAndOrderFront(nil)
+    }
+
+    /// Shows the panel with its top-left corner at `point` (e.g. the pointer).
+    func show(at point: CGPoint) {
+        guard let host = panel.contentView else { return }
+        let size = host.fittingSize
+        let screen = NSScreen.screens.first { $0.frame.contains(point) } ?? NSScreen.main ?? NSScreen.screens[0]
+        let visible = screen.visibleFrame
+        let origin = CGPoint(
+            x: min(max(point.x, visible.minX + 8), visible.maxX - size.width - 8),
+            y: min(max(point.y - size.height, visible.minY + 8), visible.maxY - size.height)
+        )
         panel.setFrame(CGRect(origin: origin, size: size), display: true)
         installKeyMonitor()
         panel.makeKeyAndOrderFront(nil)

@@ -169,7 +169,7 @@ final class ControlPanelController {
             command.action()
         case .settings:
             panel?.close()
-            openSettings(nil)
+            openSettings(.overview)
         case .quit:
             NSApp.terminate(nil)
         }

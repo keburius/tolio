@@ -42,16 +42,22 @@ final class CaptureWindows: NSObject, NSWindowDelegate {
                 self.close(window)
             },
             close: { [weak self, weak window] in self?.close(window) },
+            discard: { [weak self, weak window] in
+                self?.close(window)
+                HUD.show(L10n.Screenshots.screenshotDeleted, symbol: "trash")
+            },
             copyText: { [weak self] in
                 guard let image = model.export() else { return }
                 self?.copyText(from: image)
             }
         )
         window.contentView = NSHostingView(rootView: EditorView(model: model, actions: actions))
-        window.contentMinSize = CGSize(width: 640, height: 300)
+        // Never narrower than the toolbar, so no button loses its label.
+        let toolbarWidth = ceil(NSHostingView(rootView: EditorView(model: model, actions: actions, toolbarOnly: true)).fittingSize.width)
+        window.contentMinSize = CGSize(width: max(640, toolbarWidth), height: 300)
         let visible = (NSScreen.main ?? NSScreen.screens[0]).visibleFrame
         let size = CGSize(
-            width: min(max(capture.pointSize.width + 40, 760), visible.width * 0.9),
+            width: min(max(capture.pointSize.width + 40, 760, toolbarWidth), max(visible.width * 0.9, toolbarWidth)),
             height: min(max(capture.pointSize.height + 90, 360), visible.height * 0.9)
         )
         window.setContentSize(size)

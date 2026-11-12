@@ -1,5 +1,6 @@
 import Foundation
 import OmniCore
+import SwiftUI
 
 /// What the app shows for Clipboard History: shortcuts, settings search,
 /// reset/erase, and the menu bar icon with its menu. No new behaviour; every
@@ -43,7 +44,10 @@ public extension ClipboardHistoryFeature {
                 clickHint: L10n.Clipboard.quickClickHint, shortcutID: Self.showHotkey.id,
                 primary: { [weak self] in self?.showHistory() },
                 menu: { [weak self] in self?.quickAccessMenu() ?? [] },
-                clickMenu: { [weak self] in self?.historyMenu() ?? [] }
+                clickPanel: { [weak self] close in
+                    guard let self else { return AnyView(EmptyView()) }
+                    return AnyView(ClipboardDropdown(feature: self, close: close))
+                }
             ),
         ]
     }

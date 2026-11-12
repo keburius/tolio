@@ -8,15 +8,27 @@ struct EditorActions {
     var save: () -> Void
     var pin: () -> Void
     var close: () -> Void
+    /// Throws the screenshot away and closes the window (nothing was saved).
+    var discard: () -> Void
     var copyText: () -> Void
 }
 
 struct EditorView: View {
     @Bindable var model: EditorModel
     let actions: EditorActions
+    /// Renders only the toolbar at its natural width (to size the window).
+    var toolbarOnly = false
     @FocusState private var textFocused: Bool
 
     var body: some View {
+        if toolbarOnly {
+            toolbar.fixedSize()
+        } else {
+            editor
+        }
+    }
+
+    private var editor: some View {
         VStack(spacing: 0) {
             toolbar
             Divider()
@@ -77,13 +89,12 @@ struct EditorView: View {
                 Button(L10n.Screenshots.resetCrop) { model.resetCrop() }.buttonStyle(.borderless)
             }
             Spacer(minLength: OmniStyle.s3)
-            Button(role: .destructive) { model.deleteSelection() } label: {
+            Button(role: .destructive) { actions.discard() } label: {
                 Label(L10n.Screenshots.delete, systemImage: "trash")
             }
             .buttonStyle(.borderedProminent)
             .tint(.red)
-            .disabled(!model.canDelete)
-            .help(L10n.Screenshots.deleteSelected)
+            .help(L10n.Screenshots.deleteScreenshot)
             // Icon-only so they never get cut to "…" in a narrow window; names are in the tooltips.
             Button { actions.copyText() } label: { Image(systemName: "text.viewfinder") }
                 .help(L10n.Screenshots.copyTextHelp)

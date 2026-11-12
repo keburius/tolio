@@ -14,7 +14,7 @@ PATTERN = re.compile(
     r'\.help|HUD\.show|confirmationDialog|\.alert|navigationTitle|ActionMenuItem|NSMenuItem|'
     r'accessibilityLabel|SecureField|Link)\(\s*"((?:[^"\\]|\\.)*)"'
     r'|\b(?:title|subtitle|displayName|summary|messageText|informativeText|toolTip|placeholder|explanation)\s*[:=]\s*"((?:[^"\\]|\\.)*)"')
-roots = ["App", "OmniKit/Sources"]
+roots = ["App", "OmniKit/Sources", "Extensions"]
 skip = os.path.join("OmniKit", "Sources", "OmniCore", "Strings")
 bad = []
 for root in roots:
