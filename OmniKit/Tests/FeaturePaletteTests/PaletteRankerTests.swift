@@ -1,3 +1,4 @@
+import OmniCore
 import Foundation
 @testable import FeaturePalette
 import Testing
@@ -74,5 +75,64 @@ struct UsageHistoryTests {
         }
         #expect(usage.entries.count == UsageHistory.maxEntries)
         #expect(usage.entries["item0"] == nil)
+    }
+}
+
+@MainActor
+final class StubProvider: SearchProvider {
+    let keyword = "clip"
+    let title = "Clipboard"
+    private(set) var queries: [String] = []
+
+    func results(for query: String, limit: Int) -> [SearchResult] {
+        queries.append(query)
+        return (0..<limit).map { SearchResult(id: "\($0)", title: "clip \(query) \($0)", icon: .symbol("doc"), primaryAction: {}) }
+    }
+}
+
+@MainActor
+struct PaletteProviderTests {
+    private func model(_ provider: StubProvider) -> PaletteViewModel {
+        let apps = ["Safari", "Slack", "System Settings", "Messages", "Mail", "Maps", "Music", "Stocks"].map {
+            PaletteItem(id: "app:\($0)", title: $0, icon: .symbol("app"), kind: .app, action: .copy($0))
+        }
+        return PaletteViewModel(sources: PaletteSources(
+            staticItems: { apps }, commandItems: { [] }, answers: { _ in [] },
+            usage: { UsageHistory() }, providers: { [provider] }
+        ))
+    }
+
+    @Test func keywordScopesToProvider() {
+        let provider = StubProvider()
+        let model = model(provider)
+        model.query = "clip hello"
+        #expect(provider.queries.last == "hello")
+        #expect(model.results.count == 50)
+        #expect(model.results.allSatisfy { $0.kind == .provided && $0.kindLabel == "Clipboard" })
+    }
+
+    @Test func keywordWithEmptyRestShowsRecent() {
+        let provider = StubProvider()
+        let model = model(provider)
+        model.query = "CLIP "
+        #expect(provider.queries.last == "")
+    }
+
+    @Test func providerResultsMixAfterTopRanked() {
+        let provider = StubProvider()
+        let model = model(provider)
+        model.query = "sa"
+        let kinds = model.results.map(\.kind)
+        let firstProvided = kinds.firstIndex(of: .provided)
+        #expect(firstProvided != nil)
+        #expect(firstProvided! <= PaletteViewModel.topRankedBeforeProviders)
+        #expect(kinds.filter { $0 == .provided }.count == PaletteViewModel.mixedProviderLimit)
+    }
+
+    @Test func singleCharacterQueryDoesNotHitProviders() {
+        let provider = StubProvider()
+        let model = model(provider)
+        model.query = "s"
+        #expect(!model.results.contains { $0.kind == .provided })
     }
 }

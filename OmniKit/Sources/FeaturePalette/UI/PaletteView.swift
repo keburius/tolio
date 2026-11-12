@@ -22,7 +22,7 @@ struct PaletteView: View {
         VStack(spacing: 0) {
             HStack(spacing: 10) {
                 Image(systemName: "magnifyingglass").font(.title2).foregroundStyle(.secondary)
-                TextField("Search apps, settings, commands — or type 2+2, 5 km in mi, 20 usd", text: $model.query)
+                TextField("Search apps, settings, commands — or 2+2, 5 km in mi, 20 usd, clip …", text: $model.query)
                     .textFieldStyle(.plain)
                     .font(.title2)
                     .focused($fieldFocused)
@@ -86,6 +86,11 @@ private struct PaletteRow: View {
                 .resizable()
         case let .symbol(name):
             Image(systemName: name).font(.title2).foregroundStyle(Color.accentColor)
+        case let .image(url):
+            Image(nsImage: IconCache.thumbnail(for: url))
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .clipShape(RoundedRectangle(cornerRadius: 4))
         }
     }
 
@@ -111,6 +116,14 @@ enum IconCache {
         if let image = cache.object(forKey: url as NSURL) { return image }
         let image = NSWorkspace.shared.icon(forFile: url.path)
         image.size = NSSize(width: 32, height: 32)
+        cache.setObject(image, forKey: url as NSURL)
+        return image
+    }
+
+    /// Small image files (thumbnails written by features), cached.
+    static func thumbnail(for url: URL) -> NSImage {
+        if let image = cache.object(forKey: url as NSURL) { return image }
+        let image = NSImage(contentsOf: url) ?? NSImage(systemSymbolName: "photo", accessibilityDescription: nil) ?? NSImage()
         cache.setObject(image, forKey: url as NSURL)
         return image
     }

@@ -28,22 +28,44 @@ public struct Command: Identifiable, Sendable {
     }
 }
 
-/// Registers palette commands on behalf of a feature.
+/// Registers palette commands and search providers on behalf of a feature.
 @MainActor
 public protocol CommandRegistering: AnyObject {
     func register(_ command: Command, owner: FeatureID)
+    func registerProvider(_ provider: any SearchProvider, owner: FeatureID)
+    /// Removes the owner's commands and providers.
     func unregisterAll(owner: FeatureID)
     /// Commands of all enabled features, for the palette to search.
     var allCommands: [Command] { get }
+    var allProviders: [any SearchProvider] { get }
+    /// Opens the palette with `query` prefilled, if the palette is enabled.
+    func openPalette(query: String)
+    /// Set by the palette feature while enabled.
+    var paletteHandler: (@MainActor (String) -> Void)? { get set }
 }
 
-/// Holds the commands of all enabled features.
+/// Holds the commands and search providers of all enabled features.
 @MainActor
 @Observable
 public final class CommandRegistry: CommandRegistering {
     public private(set) var commandsByOwner: [FeatureID: [Command]] = [:]
+    @ObservationIgnored private var providersByOwner: [FeatureID: [any SearchProvider]] = [:]
+    @ObservationIgnored public var paletteHandler: (@MainActor (String) -> Void)?
 
     public init() {}
+
+    public var allProviders: [any SearchProvider] {
+        providersByOwner.keys.sorted { $0.rawValue < $1.rawValue }.flatMap { providersByOwner[$0] ?? [] }
+    }
+
+    public func registerProvider(_ provider: any SearchProvider, owner: FeatureID) {
+        providersByOwner[owner, default: []].removeAll { $0.keyword == provider.keyword }
+        providersByOwner[owner, default: []].append(provider)
+    }
+
+    public func openPalette(query: String) {
+        paletteHandler?(query)
+    }
 
     /// All commands, sorted by title.
     public var allCommands: [Command] {
@@ -60,5 +82,6 @@ public final class CommandRegistry: CommandRegistering {
 
     public func unregisterAll(owner: FeatureID) {
         commandsByOwner[owner] = nil
+        providersByOwner[owner] = nil
     }
 }

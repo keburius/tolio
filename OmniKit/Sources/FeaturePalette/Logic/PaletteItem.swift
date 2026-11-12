@@ -5,6 +5,8 @@ import OmniCore
 public enum PaletteIcon: Sendable, Hashable {
     case file(URL)
     case symbol(String)
+    /// A small image file shown as a thumbnail.
+    case image(URL)
 }
 
 /// What happens when an item is chosen.
@@ -13,12 +15,14 @@ public enum PaletteAction: Sendable {
     case openURL(URL)
     case command(Command)
     case copy(String)
+    /// From a feature's `SearchProvider`; `alternate` runs on ⌘↩.
+    case provided(primary: @MainActor @Sendable () -> Void, alternate: (@MainActor @Sendable () -> Void)?)
 }
 
 /// One searchable row in the palette.
 public struct PaletteItem: Identifiable, Sendable {
     public enum Kind: String, Sendable {
-        case answer, app, setting, command
+        case answer, app, setting, command, provided
 
         var label: String {
             switch self {
@@ -26,6 +30,7 @@ public struct PaletteItem: Identifiable, Sendable {
             case .app: "Application"
             case .setting: "System Settings"
             case .command: "Command"
+            case .provided: ""
             }
         }
     }
@@ -40,11 +45,14 @@ public struct PaletteItem: Identifiable, Sendable {
     let targets: [FuzzyTarget]
     /// Matched title characters for highlighting; set by the ranker.
     public internal(set) var highlighted: [Int] = []
+    /// Right-hand label; defaults to the kind's label.
+    public let kindLabel: String
 
     public init(
         id: String, title: String, subtitle: String? = nil, icon: PaletteIcon,
-        kind: Kind, keywords: [String] = [], action: PaletteAction
+        kind: Kind, keywords: [String] = [], action: PaletteAction, kindLabel: String? = nil
     ) {
+        self.kindLabel = kindLabel ?? kind.label
         self.id = id
         self.title = title
         self.subtitle = subtitle
@@ -53,6 +61,22 @@ public struct PaletteItem: Identifiable, Sendable {
         self.action = action
         targets = ([title] + keywords).map(FuzzyTarget.init)
     }
+}
 
-    public var kindLabel: String { kind.label }
+extension PaletteItem {
+    /// Wraps a provider result.
+    @MainActor
+    init(result: SearchResult, provider: any SearchProvider) {
+        let icon: PaletteIcon = switch result.icon {
+        case let .symbol(name): .symbol(name)
+        case let .file(url): .file(url)
+        case let .image(url): .image(url)
+        }
+        self.init(
+            id: "provided:\(provider.keyword):\(result.id)", title: result.title, subtitle: result.subtitle,
+            icon: icon, kind: .provided,
+            action: .provided(primary: result.primaryAction, alternate: result.alternateAction),
+            kindLabel: provider.title
+        )
+    }
 }

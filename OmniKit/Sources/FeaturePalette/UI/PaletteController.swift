@@ -66,8 +66,9 @@ final class PaletteController: NSObject, NSWindowDelegate {
         isVisible ? hide() : show(startedAt: startedAt)
     }
 
-    func show(startedAt: ContinuousClock.Instant) {
+    func show(startedAt: ContinuousClock.Instant, query: String = "") {
         model.reset()
+        if !query.isEmpty { model.query = query }
         position()
         installKeyMonitor()
         panel.makeKeyAndOrderFront(nil)

@@ -1,4 +1,5 @@
 import AppKit
+import FeatureClipboard
 import FeatureDiagnostics
 import FeaturePalette
 import OmniCore
@@ -36,6 +37,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     /// Every feature module is registered here, in sidebar order.
     private func registerFeatures() {
         services.features.register(PaletteFeature())
+        services.features.register(ClipboardHistoryFeature())
+        services.features.register(SnippetsFeature())
         services.features.register(DiagnosticsFeature())
     }
 

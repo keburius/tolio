@@ -68,4 +68,25 @@ public struct FeatureContext {
 
     /// Commands registered by all enabled features (and the app itself).
     public var availableCommands: [Command] { commands.allCommands }
+
+    /// Adds dynamic palette results; removed automatically on disable.
+    public func registerSearchProvider(_ provider: any SearchProvider) {
+        commands.registerProvider(provider, owner: featureID)
+    }
+
+    /// Search providers of all enabled features.
+    public var searchProviders: [any SearchProvider] { commands.allProviders }
+
+    /// Opens the palette with `query` prefilled (no-op if the palette is off).
+    public func openPalette(query: String) {
+        commands.openPalette(query: query)
+    }
+
+    /// For the palette feature only: receives `openPalette` requests.
+    /// Cleared automatically on disable.
+    public func setPaletteHandler(_ handler: @escaping @MainActor (String) -> Void) {
+        let commands = self.commands
+        commands.paletteHandler = handler
+        lifetime.add { commands.paletteHandler = nil }
+    }
 }

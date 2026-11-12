@@ -1,6 +1,6 @@
 # Omni — Implementation Plan
 
-Status: **approved. Phases 0–1 done** (see §8).
+Status: **approved. Phases 0–2 done** (see §8).
 
 ## 0. Environment found
 
@@ -42,10 +42,10 @@ Dependency rule: feature modules depend on `OmniCore` plus the platform kits the
 | Module | Role | Depends on |
 |---|---|---|
 | `OmniCore` | `Feature` protocol, `FeatureRegistry`, `Lifetime`, `SettingsStore`, `Log`, `Permission`, `Command`/`CommandRegistry`, `KeyCombo`/`HotkeyBindings`. Foundation only, except `Feature.makeSettingsView()` returning `AnyView` | none |
-| `OmniPlatform` | `HotkeyManager` + `CarbonHotkeyBackend`, `PermissionsManager`, `LaunchAtLogin`, `HUD`, `HotkeyRecorderView`, `DirectoryWatcher` (FSEvents). Later: `FailOpenEventTap`, `AXElement`, `PasteboardSnapshot`, `FloatingPanel` | OmniCore |
+| `OmniPlatform` | `HotkeyManager` + `CarbonHotkeyBackend`, `PermissionsManager`, `LaunchAtLogin`, `HUD`, `HotkeyRecorderView`, `DirectoryWatcher` (FSEvents), `EventTap` (fail-open), `KeySender`, `PasteboardSnapshot`/`TemporaryPasteboard`. Later: `FailOpenEventTap`, `AXElement`, `PasteboardSnapshot`, `FloatingPanel` | OmniCore |
 | `FeatureDiagnostics` | Test hotkey + palette command, proves the plumbing | Core, Platform |
 | `FeaturePalette` | Launcher: `Logic/` (FuzzyMatcher, PaletteRanker, UsageHistory, Calculator, QuantityQuery, UnitConversion, CurrencyRates/ECBRateParser, CurrencyRateStore, QuickAnswerEngine, AppScanner, SettingsPaneCatalog) and `UI/` (PaletteFeature, PaletteController/PalettePanel, PaletteView, view model) | Core, Platform |
-| `FeatureClipboard` | History, SQLite store, snippets/expansion | Core, Platform, **GRDB** |
+| `FeatureClipboard` | Two features: Clipboard History (`ClipCapturePolicy`, `ClipboardStore` on GRDB + FTS5, `ClipboardMonitor`, palette provider) and Snippets (`KeystrokeBuffer`, `PlaceholderExpander`, `SnippetEngine`) | Core, Platform, **GRDB 7.12.0 vendored in `Vendor/GRDB`** |
 | `FeatureWindows` | Snap layouts, AX frame engine, drag-to-edge | Core, Platform |
 | `FeatureSwitcher` | Window list, recency tracker, SCK thumbnails | Core, Platform |
 | `FeatureKeepAwake` | IOPMAssertion wrapper, app-running trigger | Core, Platform |
@@ -113,8 +113,8 @@ public protocol CommandProvider { func results(for query: String) async -> [Comm
 | Feature | Required | Optional / notes |
 |---|---|---|
 | Palette | none | Network only for the currency fetch |
-| Clipboard history | none | — |
-| Snippets (part of Clipboard) | Accessibility | Keystroke tap + synthetic typing |
+| Clipboard history | none | Accessibility to paste directly (else copies) |
+| Snippets | Accessibility | Listen-only keystroke tap + synthetic ⌘V |
 | Window management | Accessibility | Drag-to-edge uses the same permission |
 | Window switcher | Accessibility, Screen Recording | — |
 | Keep awake | none | — |
@@ -227,7 +227,7 @@ Tests: allowlist property tests (generated hostile paths, symlinks, `..`, `/Syst
 |---|---|
 | 0 Skeleton | **done** |
 | 1 Palette | **done** |
-| 2 Clipboard + snippets | not started |
+| 2 Clipboard + snippets | **done** |
 | 3 Window management | not started |
 | 4 Window switcher | not started |
 | 5 Utilities | not started |
@@ -265,3 +265,32 @@ Tests: allowlist property tests (generated hostile paths, symlinks, `..`, `/Syst
 - Dynamic palette providers (clipboard history search) arrive with Phase 2. Today commands are static per feature.
 - Settings pane titles are English only. macOS ships no public localized names for them.
 - Hotkey-to-screen latency isn't measured end to end (Carbon delivery is outside our clock). The figure above starts when the hotkey handler runs.
+
+### Phase 2 — done
+- **Palette providers** (`SearchProvider` in OmniCore): `clip …` / `snip …` scope the palette to one feature; other queries mix in each provider's top 3 after the top 5 ranked items. Features can open the palette prefilled (`openPalette(query:)`).
+- **Clipboard History** (on by default, no permission):
+  - Capture: polls `changeCount` every 0.5 s (timer exists only while enabled).
+  - What's skipped: the policy runs on the type list *before* reading content and rejects concealed (plus legacy 1Password/KeeWeb markers), transient, auto-generated, Omni-internal, built-in password-manager apps, and the user's exclude list.
+  - What's kept: files beat their names, then images (PNG + 96 px thumbnail via ImageIO), then text. Limits are 2 MB of text and 25 MB per image.
+  - Store: GRDB at `~/Library/Application Support/com.george.omni/clipboard` (folder mode 0700), FTS5 prefix search, de-duplicated by SHA-256 (a repeat copy moves to the top), pin, delete, clear.
+  - Retention: count (default 500) + age (default 30 days); pinned items are exempt.
+  - Palette: ↩ pastes (Accessibility) or copies; ⌘↩ copies. ⌃⌥V opens `clip `. Settings has a history browser and the exclude list.
+- **Snippets** (requires Accessibility):
+  - Listening: listen-only `EventTap`, so it can't block keys. The buffer is in memory only, and it stops while secure input is on.
+  - Matching: abbreviations need a word boundary unless they start with punctuation; the longest match wins.
+  - Expansion: backspaces, then a ⌘V paste via `TemporaryPasteboard` (transient + internal marker), and the previous pasteboard is restored after 400 ms if unchanged. Placeholders are `{date[:fmt]}`, `{time[:fmt]}`, `{clipboard}`, `{cursor}`, `{{`/`}}`.
+  - Also insertable from the palette.
+- **Fail-open `EventTap`**: listen-only taps re-enable after a system timeout. Filtering taps (Phase 5) stop and report instead of re-enabling.
+- **GRDB vendored** (`Vendor/README.md`: source URL, SHA-256, upgrade steps). It emits 2 Swift 6.2 Sendable warnings, which the gate lists but doesn't fail on.
+- **Acceptance checks** — automated tests and in the running app:
+  - History survives restart (store reopen test, plus a real app restart).
+  - Concealed items are never stored (`ClipboardMonitorTests` against a private pasteboard, plus a real concealed copy in the running app that didn't appear).
+- 62 new tests (162 total).
+
+### Phase 2 — deferred / limits
+- Rich text (RTF/HTML) isn't kept; text entries store plain text only.
+- The source app is the frontmost app at poll time (up to 0.5 s late), so a copy made right before switching apps can be attributed to the wrong app.
+- `{cursor}` moves the caret with ← presses. Apps that treat ← specially (some terminals) may misplace it.
+- Snippet restore can't bring back lazily promised pasteboard data byte-for-byte. Plain text, RTF, images, and file URLs restore exactly.
+- Pin/unpin from the palette itself (e.g. ⌘P) isn't implemented; pinning is in Settings.
+- The history database isn't encrypted at rest; it relies on the 0700 folder and FileVault.

@@ -29,3 +29,39 @@ struct CommandRegistryTests {
         #expect(registry.allCommands.map(\.id) == ["b"])
     }
 }
+
+@MainActor
+final class FakeProvider: SearchProvider {
+    let keyword: String
+    let title = "Fake"
+    init(_ keyword: String) { self.keyword = keyword }
+    func results(for query: String, limit: Int) -> [SearchResult] { [] }
+}
+
+@MainActor
+struct SearchProviderRegistryTests {
+    @Test func providersAreOwnedAndRemovedWithOwner() {
+        let registry = CommandRegistry()
+        registry.registerProvider(FakeProvider("clip"), owner: "clipboard")
+        registry.registerProvider(FakeProvider("snip"), owner: "snippets")
+        #expect(registry.allProviders.map(\.keyword) == ["clip", "snip"])
+        registry.unregisterAll(owner: "clipboard")
+        #expect(registry.allProviders.map(\.keyword) == ["snip"])
+    }
+
+    @Test func sameKeywordReplaces() {
+        let registry = CommandRegistry()
+        registry.registerProvider(FakeProvider("clip"), owner: "a")
+        registry.registerProvider(FakeProvider("clip"), owner: "a")
+        #expect(registry.allProviders.count == 1)
+    }
+
+    @Test func openPaletteForwardsToHandlerOnlyWhileSet() {
+        let registry = CommandRegistry()
+        var received: [String] = []
+        registry.openPalette(query: "ignored")
+        registry.paletteHandler = { received.append($0) }
+        registry.openPalette(query: "clip ")
+        #expect(received == ["clip "])
+    }
+}

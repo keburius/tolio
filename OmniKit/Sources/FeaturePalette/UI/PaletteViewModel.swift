@@ -1,5 +1,6 @@
 import Foundation
 import Observation
+import OmniCore
 
 /// Where the palette gets its items. Closures so the view model stays testable
 /// and doesn't own any services.
@@ -11,6 +12,8 @@ struct PaletteSources {
     var commandItems: () -> [PaletteItem]
     var answers: (String) -> [QuickAnswer]
     var usage: () -> UsageHistory
+    /// Dynamic result sources of enabled features (clipboard, snippets…).
+    var providers: () -> [any SearchProvider]
 }
 
 /// Query, results, and selection of the palette.
@@ -51,7 +54,32 @@ final class PaletteViewModel {
         if results.indices.contains(index) { selection = index }
     }
 
+    /// Provider results mixed into normal search, per provider.
+    static let mixedProviderLimit = 3
+    /// How many top-ranked items stay above mixed provider results.
+    static let topRankedBeforeProviders = 5
+
+    /// The provider whose keyword starts the query ("clip foo"), and the rest.
+    func scopedProvider() -> (provider: any SearchProvider, query: String)? {
+        let lower = query.lowercased()
+        for provider in sources.providers() {
+            let prefix = provider.keyword.lowercased() + " "
+            if lower.hasPrefix(prefix) {
+                return (provider, String(query.dropFirst(prefix.count)).trimmingCharacters(in: .whitespaces))
+            }
+        }
+        return nil
+    }
+
     func recompute(now: Date = Date()) {
+        if let scoped = scopedProvider() {
+            results = scoped.provider.results(for: scoped.query, limit: 50).map {
+                PaletteItem(result: $0, provider: scoped.provider)
+            }
+            selection = 0
+            onResultsChanged?()
+            return
+        }
         let answers = sources.answers(query).enumerated().map { offset, answer in
             PaletteItem(
                 id: "answer:\(offset)", title: answer.title, subtitle: answer.subtitle,
@@ -61,7 +89,12 @@ final class PaletteViewModel {
         let ranked = PaletteRanker.rank(
             sources.staticItems() + sources.commandItems(), query: query, usage: sources.usage(), now: now
         )
-        results = answers + ranked
+        let trimmed = query.trimmingCharacters(in: .whitespaces)
+        let provided = trimmed.count < 2 ? [] : sources.providers().flatMap { provider in
+            provider.results(for: trimmed, limit: Self.mixedProviderLimit).map { PaletteItem(result: $0, provider: provider) }
+        }
+        let top = ranked.prefix(Self.topRankedBeforeProviders)
+        results = answers + top + provided + ranked.dropFirst(top.count)
         selection = 0
         onResultsChanged?()
     }

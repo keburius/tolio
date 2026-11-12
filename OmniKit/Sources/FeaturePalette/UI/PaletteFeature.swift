@@ -54,7 +54,8 @@ public final class PaletteFeature: Feature {
             staticItems: { [weak self] in self?.staticItems ?? [] },
             commandItems: { [weak self] in self?.commandItems() ?? [] },
             answers: { [weak self] query in self?.answerEngine().answers(for: query) ?? [] },
-            usage: { context.settings.value(Self.usageKey) }
+            usage: { context.settings.value(Self.usageKey) },
+            providers: { context.searchProviders }
         ))
         let controller = PaletteController(model: model) { [weak self] item, alternate in
             self?.perform(item, alternate: alternate)
@@ -73,6 +74,7 @@ public final class PaletteFeature: Feature {
             self?.controller = nil
         }
         context.registerHotkey(Self.toggleHotkey) { [weak self] in self?.toggle(startedAt: .now) }
+        context.setPaletteHandler { [weak self] query in self?.show(startedAt: .now, query: query) }
         context.registerCommand(Command(
             id: Self.showCommandID, title: "Open Command Palette", symbolName: symbolName
         ) { [weak self] in self?.show(startedAt: .now) })
@@ -100,12 +102,12 @@ public final class PaletteFeature: Feature {
         }
     }
 
-    func show(startedAt: ContinuousClock.Instant) {
+    func show(startedAt: ContinuousClock.Instant, query: String = "") {
         guard let controller else { return }
         if context?.settings.value(Self.currencyFetchKey) == true {
             for store in rateStores { store.refreshIfNeeded() }
         }
-        controller.show(startedAt: startedAt)
+        controller.show(startedAt: startedAt, query: query)
         lastOpenMilliseconds = controller.lastOpenDuration?.milliseconds
     }
 
@@ -187,8 +189,14 @@ public final class PaletteFeature: Feature {
             NSPasteboard.general.clearContents()
             NSPasteboard.general.setString(text, forType: .string)
             HUD.show("Copied \(text)", symbol: "doc.on.clipboard")
+        case let .provided(primary, alternateAction):
+            if alternate, let alternateAction {
+                alternateAction()
+            } else {
+                primary()
+            }
         }
-        if item.kind != .answer { recordUse(item.id) }
+        if item.kind != .answer && item.kind != .provided { recordUse(item.id) }
     }
 
     private func recordUse(_ id: String) {
