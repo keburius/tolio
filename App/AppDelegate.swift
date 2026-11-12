@@ -23,6 +23,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private var onboardingWindow: HostingWindowController<OnboardingView>?
 
     func applicationDidFinishLaunching(_ notification: Notification) {
+        NSApp.mainMenu = Self.makeMainMenu()
         registerFeatures()
         migrateSettings()
         registerAppCommands()
@@ -44,6 +45,30 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         if !services.settings.value(AppServices.onboardingCompletedKey) {
             showOnboarding()
         }
+    }
+
+    /// A menu bar app has no visible menu, but text fields only get ⌘A, ⌘C,
+    /// ⌘V, ⌘X and ⌘Z through an Edit menu, so Omni installs one.
+    private static func makeMainMenu() -> NSMenu {
+        let main = NSMenu()
+        let appItem = NSMenuItem()
+        appItem.submenu = NSMenu()
+        appItem.submenu?.addItem(NSMenuItem(title: L10n.App.quit, action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q"))
+        main.addItem(appItem)
+        let editItem = NSMenuItem()
+        let edit = NSMenu(title: L10n.App.editMenu)
+        edit.addItem(NSMenuItem(title: L10n.App.undo, action: Selector(("undo:")), keyEquivalent: "z"))
+        let redo = NSMenuItem(title: L10n.App.redo, action: Selector(("redo:")), keyEquivalent: "z")
+        redo.keyEquivalentModifierMask = [.command, .shift]
+        edit.addItem(redo)
+        edit.addItem(.separator())
+        edit.addItem(NSMenuItem(title: L10n.App.cut, action: #selector(NSText.cut(_:)), keyEquivalent: "x"))
+        edit.addItem(NSMenuItem(title: L10n.App.copy, action: #selector(NSText.copy(_:)), keyEquivalent: "c"))
+        edit.addItem(NSMenuItem(title: L10n.App.paste, action: #selector(NSText.paste(_:)), keyEquivalent: "v"))
+        edit.addItem(NSMenuItem(title: L10n.App.selectAll, action: #selector(NSText.selectAll(_:)), keyEquivalent: "a"))
+        editItem.submenu = edit
+        main.addItem(editItem)
+        return main
     }
 
     func applicationWillTerminate(_ notification: Notification) {

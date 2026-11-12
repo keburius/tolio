@@ -45,6 +45,20 @@ final class MenuBarController: NSObject {
             button.setAccessibilityLabel(L10n.App.name)
         }
         observe()
+        QuickAccessCenter.showClickMenu = { [weak self] id in self?.showClickMenu(id) ?? false }
+    }
+
+    /// Shows a feature's click menu under its icon, or at the pointer when
+    /// the icon is hidden (e.g. ⌃⌥V in one-icon mode).
+    private func showClickMenu(_ id: QuickAccessID) -> Bool {
+        guard let entry = entries()[id], isRunning(entry.feature), let clickMenu = entry.item.clickMenu else { return false }
+        let menu = MenuBuilder.menu(clickMenu(), shortcuts: shortcuts)
+        if let statusItem = quick[id] {
+            show(menu, on: statusItem)
+        } else {
+            menu.popUp(positioning: nil, at: NSEvent.mouseLocation, in: nil)
+        }
+        return true
     }
 
     /// The main icon's button, to anchor the control panel.
@@ -197,6 +211,8 @@ final class MenuBarController: NSObject {
             show(optionsMenu(for: entry), on: statusItem)
         } else if id == .windowLayouts {
             actions.showLayoutGrid(sender)
+        } else if let clickMenu = entry.item.clickMenu {
+            show(MenuBuilder.menu(clickMenu(), shortcuts: shortcuts), on: statusItem)
         } else {
             entry.item.primary()
         }

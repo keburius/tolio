@@ -30,8 +30,33 @@ enum MenuBuilder {
             }
             item.state = action.isChecked ? .on : .off
             item.isEnabled = action.isEnabled
-            ShortcutLookup.apply(shortcuts.combo(for: action.shortcutID), to: item)
+            item.toolTip = action.toolTip
+            item.image = action.icon.flatMap(image)
+            if let digit = action.commandDigit {
+                item.keyEquivalent = "\(digit)"
+                item.keyEquivalentModifierMask = .command
+            } else {
+                ShortcutLookup.apply(shortcuts.combo(for: action.shortcutID), to: item)
+            }
             return item
+        }
+    }
+
+    /// Menu-sized image: thumbnails a little larger than icons.
+    static func image(_ icon: SearchResult.Icon) -> NSImage? {
+        switch icon {
+        case let .symbol(name):
+            return NSImage(systemSymbolName: name, accessibilityDescription: nil)
+        case let .file(url):
+            let image = NSWorkspace.shared.icon(forFile: url.path)
+            image.size = NSSize(width: 16, height: 16)
+            return image
+        case let .image(url):
+            guard let source = NSImage(contentsOf: url) else { return nil }
+            let side: CGFloat = 28
+            let scale = min(side / max(source.size.width, 1), side / max(source.size.height, 1))
+            source.size = NSSize(width: source.size.width * scale, height: source.size.height * scale)
+            return source
         }
     }
 

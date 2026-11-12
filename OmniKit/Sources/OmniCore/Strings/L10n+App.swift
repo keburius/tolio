@@ -12,6 +12,13 @@ public extension L10n {
         public static var setupGuideCommand: String { tr("app.setupGuide.command", "Omni Setup Guide") }
         public static var about: String { tr("app.about", "About Omni") }
         public static var quit: String { tr("app.quit", "Quit Omni") }
+        public static var editMenu: String { tr("app.menu.edit", "Edit") }
+        public static var undo: String { tr("app.menu.undo", "Undo") }
+        public static var redo: String { tr("app.menu.redo", "Redo") }
+        public static var cut: String { tr("app.menu.cut", "Cut") }
+        public static var copy: String { tr("app.menu.copy", "Copy") }
+        public static var paste: String { tr("app.menu.paste", "Paste") }
+        public static var selectAll: String { tr("app.menu.selectAll", "Select All") }
         public static var stopRecording: String { tr("app.stopRecording", "Stop recording") }
         public static func recordingTooltip(_ time: String) -> String { format("app.recordingTooltip", "Recording %@. Click to stop.", time) }
         public static func featureIsOff(_ feature: String) -> String { format("app.featureIsOff", "%@ is off.", feature) }

@@ -55,7 +55,7 @@ public final class ClipboardHistoryFeature: Feature {
 
         prune()
         context.registerSearchProvider(ClipboardSearchProvider(feature: self))
-        context.registerHotkey(Self.showHotkey) { context.openPalette(query: Self.historyQuery) }
+        context.registerHotkey(Self.showHotkey) { [weak self] in self?.showHistory() }
         context.registerCommand(Command(
             id: "clipboard.show", title: L10n.Clipboard.commandShow, keywords: ["paste", "copy"], symbolName: symbolName
         ) { context.openPalette(query: Self.historyQuery) })
@@ -65,11 +65,18 @@ public final class ClipboardHistoryFeature: Feature {
         ) { [weak self] in self?.clear(keepPinned: true) })
     }
 
-    /// Launcher query that shows the history (what ⌃⌥V opens).
+    /// Launcher query that searches the history.
     static let historyQuery = "clip "
 
-    /// Opens the history in the Launcher, like the shortcut.
+    /// Shows the history list (a menu under the Clipboard icon, or at the
+    /// pointer if the icon is hidden). Falls back to the Launcher search.
     func showHistory() {
+        if QuickAccessCenter.showClickMenu?(.clipboard) == true { return }
+        searchHistory()
+    }
+
+    /// Opens the history search in the Launcher.
+    func searchHistory() {
         context?.openPalette(query: Self.historyQuery)
     }
 

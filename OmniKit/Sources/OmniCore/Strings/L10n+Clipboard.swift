@@ -46,6 +46,8 @@ public extension L10n {
         public static var quickTitle: String { tr("clipboard.quick.title", "Clipboard") }
         public static var quickClickHint: String { tr("clipboard.quick.clickHint", "show history") }
         public static var menuShowHistory: String { tr("clipboard.menu.showHistory", "Show Clipboard History") }
+        public static var menuSearchHistory: String { tr("clipboard.menu.searchHistory", "Search History…") }
+        public static var pinnedHeader: String { tr("clipboard.menu.pinned", "Pinned") }
         public static var menuClearHistory: String { tr("clipboard.menu.clearHistory", "Clear History…") }
         public static func menuRecentItem(_ title: String, age: String) -> String {
             format("clipboard.menu.recentItem", "%1$@   %2$@", title, age)

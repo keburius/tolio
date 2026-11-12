@@ -42,7 +42,8 @@ public extension ClipboardHistoryFeature {
                 id: .clipboard, title: L10n.Clipboard.quickTitle, symbolName: "doc.on.clipboard",
                 clickHint: L10n.Clipboard.quickClickHint, shortcutID: Self.showHotkey.id,
                 primary: { [weak self] in self?.showHistory() },
-                menu: { [weak self] in self?.quickAccessMenu() ?? [] }
+                menu: { [weak self] in self?.quickAccessMenu() ?? [] },
+                clickMenu: { [weak self] in self?.historyMenu() ?? [] }
             ),
         ]
     }
@@ -88,6 +89,53 @@ extension ClipboardHistoryFeature {
             }
         }
         entries.append(.separator)
+        let unpinned = (try? store?.unpinnedCount()) ?? 0
+        entries.append(.action(MenuAction(
+            L10n.Clipboard.menuClearHistory, isEnabled: unpinned > 0,
+            confirmation: L10n.Clipboard.clearConfirmation(unpinned)
+        ) { [weak self] in self?.clear(keepPinned: true) }))
+        return entries
+    }
+
+    /// Items in the history list (left-click on the icon, ⌃⌥V).
+    static let historyMenuCount = 40
+    /// Characters of an item's first line shown in the history list.
+    static let historyTitleLength = 60
+
+    /// The history as a plain menu list: pinned items, then the newest
+    /// copies. Choosing one pastes it into the frontmost app; the first nine
+    /// also answer to ⌘1–⌘9.
+    func historyMenu() -> [MenuEntry] {
+        let recent = newestRecords(limit: Self.historyMenuCount)
+        let pinned = recent.filter(\.pinned)
+        let others = recent.filter { !$0.pinned }
+        var entries: [MenuEntry] = []
+        if recent.isEmpty {
+            entries.append(.header(L10n.Clipboard.emptyHistory))
+        }
+        var digit = 1
+        func item(_ record: ClipRecord) -> MenuEntry {
+            defer { digit += 1 }
+            let title = record.title.count > Self.historyTitleLength
+                ? String(record.title.prefix(Self.historyTitleLength - 1)) + "…" : record.title
+            let icon: SearchResult.Icon? = switch record.kind {
+            case .text: nil
+            case .image: store?.thumbnailURL(for: record).map { .image($0) } ?? .symbol("photo")
+            case .files: record.fileURLs.first.map { .file($0) } ?? .symbol("doc")
+            }
+            let tip = record.kind == .text ? record.text.map { String($0.prefix(400)) } : nil
+            return .action(MenuAction(
+                title, icon: icon, commandDigit: digit <= 9 ? digit : nil, toolTip: tip, perform: pasteAction(for: record)
+            ))
+        }
+        if !pinned.isEmpty {
+            entries.append(.header(L10n.Clipboard.pinnedHeader))
+            entries += pinned.map(item)
+            if !others.isEmpty { entries.append(.separator) }
+        }
+        entries += others.map(item)
+        entries.append(.separator)
+        entries.append(.action(MenuAction(L10n.Clipboard.menuSearchHistory) { [weak self] in self?.searchHistory() }))
         let unpinned = (try? store?.unpinnedCount()) ?? 0
         entries.append(.action(MenuAction(
             L10n.Clipboard.menuClearHistory, isEnabled: unpinned > 0,

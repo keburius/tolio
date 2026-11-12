@@ -91,17 +91,27 @@ public struct MenuAction {
     public let isEnabled: Bool
     /// Asks for confirmation before running, with this question.
     public let confirmation: String?
+    /// Small image shown before the title (thumbnails, file icons, symbols).
+    public let icon: SearchResult.Icon?
+    /// 1–9: the item also answers to ⌘1–⌘9 while the menu is open.
+    public let commandDigit: Int?
+    /// Longer text shown on hover.
+    public let toolTip: String?
     public let perform: @MainActor () -> Void
 
     public init(
         _ title: String, shortcutID: String? = nil, isChecked: Bool = false, isEnabled: Bool = true,
-        confirmation: String? = nil, perform: @escaping @MainActor () -> Void
+        confirmation: String? = nil, icon: SearchResult.Icon? = nil, commandDigit: Int? = nil, toolTip: String? = nil,
+        perform: @escaping @MainActor () -> Void
     ) {
         self.title = title
         self.shortcutID = shortcutID
         self.isChecked = isChecked
         self.isEnabled = isEnabled
         self.confirmation = confirmation
+        self.icon = icon
+        self.commandDigit = commandDigit
+        self.toolTip = toolTip
         self.perform = perform
     }
 }
@@ -121,14 +131,18 @@ public struct QuickAccessItem: Identifiable {
     public let state: @MainActor () -> QuickAccessState
     public let primary: @MainActor () -> Void
     public let menu: @MainActor () -> [MenuEntry]
+    /// If set, a left-click shows this menu under the icon instead of running `primary`.
+    public let clickMenu: (@MainActor () -> [MenuEntry])?
 
     public init(
         id: QuickAccessID, title: String, symbolName: String, activeSymbolName: String? = nil,
         clickHint: String, shortcutID: String?,
         state: @escaping @MainActor () -> QuickAccessState = { .idle },
         primary: @escaping @MainActor () -> Void,
-        menu: @escaping @MainActor () -> [MenuEntry]
+        menu: @escaping @MainActor () -> [MenuEntry],
+        clickMenu: (@MainActor () -> [MenuEntry])? = nil
     ) {
+        self.clickMenu = clickMenu
         self.id = id
         self.title = title
         self.symbolName = symbolName
@@ -151,4 +165,12 @@ public protocol StatsLineProviding: AnyObject {
     func setOwnMenuBarItemHidden(_ hidden: Bool)
     /// Samples now and keeps `statsLine` fresh while `active` (control panel open).
     func setLiveUpdates(_ active: Bool)
+}
+
+/// Lets a feature ask the app to show one of its menus (e.g. ⌃⌥V shows the
+/// clipboard list): under its menu bar icon if shown, else at the pointer.
+@MainActor
+public enum QuickAccessCenter {
+    /// Set by the app. Returns false if the menu couldn't be shown.
+    public static var showClickMenu: ((QuickAccessID) -> Bool)?
 }
