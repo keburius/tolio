@@ -1,6 +1,6 @@
 # Omni — Implementation Plan
 
-Status: **approved. Phases 0–2 done** (see §8).
+Status: **approved. Phases 0–3 done** (see §8).
 
 ## 0. Environment found
 
@@ -42,11 +42,11 @@ Dependency rule: feature modules depend on `OmniCore` plus the platform kits the
 | Module | Role | Depends on |
 |---|---|---|
 | `OmniCore` | `Feature` protocol, `FeatureRegistry`, `Lifetime`, `SettingsStore`, `Log`, `Permission`, `Command`/`CommandRegistry`, `KeyCombo`/`HotkeyBindings`. Foundation only, except `Feature.makeSettingsView()` returning `AnyView` | none |
-| `OmniPlatform` | `HotkeyManager` + `CarbonHotkeyBackend`, `PermissionsManager`, `LaunchAtLogin`, `HUD`, `HotkeyRecorderView`, `DirectoryWatcher` (FSEvents), `EventTap` (fail-open), `KeySender`, `PasteboardSnapshot`/`TemporaryPasteboard`. Later: `FailOpenEventTap`, `AXElement`, `PasteboardSnapshot`, `FloatingPanel` | OmniCore |
+| `OmniPlatform` | `HotkeyManager` + `CarbonHotkeyBackend`, `PermissionsManager`, `LaunchAtLogin`, `HUD`, `HotkeyRecorderView`, `DirectoryWatcher` (FSEvents), `EventTap` (fail-open), `KeySender`, `PasteboardSnapshot`/`TemporaryPasteboard`, `AXWindow` (uses the approved private `_AXUIElementGetWindow`), `ScreenFrames`. Later: `FailOpenEventTap`, `AXElement`, `PasteboardSnapshot`, `FloatingPanel` | OmniCore |
 | `FeatureDiagnostics` | Test hotkey + palette command, proves the plumbing | Core, Platform |
 | `FeaturePalette` | Launcher: `Logic/` (FuzzyMatcher, PaletteRanker, UsageHistory, Calculator, QuantityQuery, UnitConversion, CurrencyRates/ECBRateParser, CurrencyRateStore, QuickAnswerEngine, AppScanner, SettingsPaneCatalog) and `UI/` (PaletteFeature, PaletteController/PalettePanel, PaletteView, view model) | Core, Platform |
 | `FeatureClipboard` | Two features: Clipboard History (`ClipCapturePolicy`, `ClipboardStore` on GRDB + FTS5, `ClipboardMonitor`, palette provider) and Snippets (`KeystrokeBuffer`, `PlaceholderExpander`, `SnippetEngine`) | Core, Platform, **GRDB 7.12.0 vendored in `Vendor/GRDB`** |
-| `FeatureWindows` | Snap layouts, AX frame engine, drag-to-edge | Core, Platform |
+| `FeatureWindows` | `Logic/` (WindowAction, ScreenGeometry, WindowLayout, RestoreHistory, SnapZones) and `Runtime/` (WindowManager, DragSnapper + SnapPreview), WindowsFeature | Core, Platform |
 | `FeatureSwitcher` | Window list, recency tracker, SCK thumbnails | Core, Platform |
 | `FeatureKeepAwake` | IOPMAssertion wrapper, app-running trigger | Core, Platform |
 | `FeatureKeyboardClean` | Lock overlay, swallowing tap | Core, Platform |
@@ -228,7 +228,7 @@ Tests: allowlist property tests (generated hostile paths, symlinks, `..`, `/Syst
 | 0 Skeleton | **done** |
 | 1 Palette | **done** |
 | 2 Clipboard + snippets | **done** |
-| 3 Window management | not started |
+| 3 Window management | **done** |
 | 4 Window switcher | not started |
 | 5 Utilities | not started |
 | 6 Shortcut overlay | not started |
@@ -294,3 +294,24 @@ Tests: allowlist property tests (generated hostile paths, symlinks, `..`, `/Syst
 - Snippet restore can't bring back lazily promised pasteboard data byte-for-byte. Plain text, RTF, images, and file URLs restore exactly.
 - Pin/unpin from the palette itself (e.g. ⌘P) isn't implemented; pinning is in Settings.
 - The history database isn't encrypted at rest; it relies on the 0700 folder and FileVault.
+
+### Phase 3 — done
+- **Actions:**
+  - Layouts: halves, thirds, two-thirds, quarters, maximize, center.
+  - Moves: next/previous display (keeps the relative frame, clamped to fit).
+  - Restore: back to the frame from before Omni first moved the window. A manual move resets this.
+  - Gaps: optional, 0–24 pt.
+  - Every action has a ⌃⌥ shortcut (display moves ⌃⌥⌘←/→, restore ⌃⌥⌫, maximize ⌃⌥↩) and a palette command.
+- **Geometry**: all math is in AX coordinates (top-left of the primary display, y down). `ScreenGeometry` converts from AppKit and picks the display with the most overlap. Display order is left to right, then top to bottom.
+- **Minimum sizes**: set size → position → size, then read back. If the app kept a different size (minimum or character-cell steps), the window is re-anchored to the action's edge (right half keeps the right edge, bottom quarter the bottom edge, center stays centered) and clamped onto the display.
+- **`AXEnhancedUserInterface`** is turned off around each move and restored afterwards, which prevents slow, animated moves in apps that enable it. AX calls use a 0.5 s messaging timeout.
+- **Drag-to-edge** (off by default): a listen-only tap on left-mouse events that only reacts when the drag starts in the top 40 pt of a standard, resizable window. A translucent preview shows the target. Edges snap to halves, corners to quarters, the top edge maximizes, and edges shared with another display don't snap. A window that didn't move (a click) isn't snapped.
+- **Fails gracefully**: full-screen windows, windows that can't be read, nothing to restore, or only one display connected each show a HUD and change nothing.
+- 30 new tests (192 total), including multi-display fixtures (side by side with different heights, stacked above with negative AX y, a display to the left at negative x) and min-size anchoring.
+- `make run` retries `open` once. One unexplained failure happened and didn't reproduce in four later runs.
+
+### Phase 3 — deferred / limits
+- Verified on one built-in display only. Multi-display behavior is covered by unit tests with real-world arrangements, but not yet on hardware.
+- Repeating an action doesn't cycle sizes (e.g. ½ → ⅔ → ⅓, as some tools do).
+- Windows without a CGWindowID (rare) can be arranged but not restored.
+- Drag-to-edge uses the window under the pointer at mouse-down. Apps that draw custom title bars taller than 40 pt (some Electron apps) only snap when grabbed near the top.

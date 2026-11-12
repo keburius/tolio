@@ -31,7 +31,7 @@ run: build
 	@pkill -x Omni || true
 	@for i in $$(seq 1 50); do pgrep -x Omni >/dev/null || break; sleep 0.1; done
 	@if pgrep -x Omni >/dev/null; then echo "Omni did not exit; sending SIGKILL"; pkill -9 -x Omni; sleep 0.5; fi
-	@open $(APP)
+	@open $(APP) || { echo "open failed; retrying in 1 s"; sleep 1; open $(APP); }
 
 clean:
 	rm -rf build Omni.xcodeproj

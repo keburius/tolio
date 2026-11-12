@@ -10,6 +10,7 @@ let package = Package(
         .library(name: "FeatureDiagnostics", targets: ["FeatureDiagnostics"]),
         .library(name: "FeaturePalette", targets: ["FeaturePalette"]),
         .library(name: "FeatureClipboard", targets: ["FeatureClipboard"]),
+        .library(name: "FeatureWindows", targets: ["FeatureWindows"]),
     ],
     dependencies: [
         // Approved dependency (SQLite), vendored at 7.12.0. See Vendor/README.md.
@@ -23,9 +24,11 @@ let package = Package(
         .target(name: "FeatureClipboard", dependencies: [
             "OmniCore", "OmniPlatform", .product(name: "GRDB", package: "GRDB"),
         ]),
+        .target(name: "FeatureWindows", dependencies: ["OmniCore", "OmniPlatform"]),
         .testTarget(name: "OmniCoreTests", dependencies: ["OmniCore"]),
         .testTarget(name: "OmniPlatformTests", dependencies: ["OmniPlatform"]),
         .testTarget(name: "FeaturePaletteTests", dependencies: ["FeaturePalette", "OmniCore"]),
         .testTarget(name: "FeatureClipboardTests", dependencies: ["FeatureClipboard", "OmniCore"]),
+        .testTarget(name: "FeatureWindowsTests", dependencies: ["FeatureWindows", "OmniCore"]),
     ]
 )

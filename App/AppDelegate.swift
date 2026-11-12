@@ -2,6 +2,7 @@ import AppKit
 import FeatureClipboard
 import FeatureDiagnostics
 import FeaturePalette
+import FeatureWindows
 import OmniCore
 
 /// Starts services and features, owns the status item and app windows.
@@ -39,6 +40,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         services.features.register(PaletteFeature())
         services.features.register(ClipboardHistoryFeature())
         services.features.register(SnippetsFeature())
+        services.features.register(WindowsFeature())
         services.features.register(DiagnosticsFeature())
     }
 
