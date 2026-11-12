@@ -15,6 +15,15 @@ final class RecordingController {
     private(set) var isRecording = false
     /// When the running recording started, or nil while not recording.
     private(set) var startDate: Date?
+    /// Elapsed time that stops while paused.
+    private(set) var timer: RecordingTimer?
+    var isPaused: Bool { timer?.isPaused ?? false }
+    /// Whether the running recording has a microphone track, and whether it's muted.
+    private(set) var hasMicrophone = false
+    private(set) var micMuted = false
+    /// The bar and the area outline (set-up and while recording).
+    @ObservationIgnored private var overlay: RecordingOverlay?
+    @ObservationIgnored private var discardOnStop = false
     @ObservationIgnored private let log = Log.logger("recorder")
 
     func start(area: CGRect, options: RecordingOptions, folder: URL) async {
@@ -51,20 +60,80 @@ final class RecordingController {
             self.recorder = recorder
             isRecording = true
             startDate = Date()
+            timer = RecordingTimer(start: Date())
+            hasMicrophone = options.microphone
+            micMuted = false
+            overlay?.showRecording()
             log.info("Recording \(rect.pixelWidth)×\(rect.pixelHeight) at \(options.framesPerSecond) fps")
         } catch {
+            overlay?.close()
+            overlay = nil
             log.error("Recording failed to start: \(String(describing: error), privacy: .public)")
             HUD.show(L10n.Screenshots.couldntStartRecording("\(error)"), symbol: "exclamationmark.triangle")
         }
     }
 
+    /// Shows the outline and the set-up bar for `area`; recording starts
+    /// when Record is clicked (or ↩), nothing happens on Cancel (or Esc).
+    func prepare(area: CGRect, settings: SettingsStore, options: @escaping () -> RecordingOptions, folder: URL) {
+        guard !isRecording, overlay == nil else { return }
+        let overlay = RecordingOverlay(area: area, controller: self, settings: settings)
+        overlay.onRecord = { [weak self] in
+            guard let self else { return }
+            Task { await self.start(area: area, options: options(), folder: folder) }
+        }
+        overlay.onCancel = { [weak self] in
+            self?.overlay?.close()
+            self?.overlay = nil
+        }
+        self.overlay = overlay
+        overlay.showSetup()
+    }
+
+    func togglePause() {
+        guard let recorder, var timer else { return }
+        if timer.isPaused {
+            timer.resume(at: Date())
+            recorder.resume()
+        } else {
+            timer.pause(at: Date())
+            recorder.pause()
+        }
+        self.timer = timer
+    }
+
+    func toggleMic() {
+        guard let recorder, hasMicrophone else { return }
+        micMuted.toggle()
+        recorder.setMicMuted(micMuted)
+    }
+
+    /// Stops and moves the file to the Trash instead of keeping it.
+    func discard() async {
+        discardOnStop = true
+        await stop()
+    }
+
     func stop() async {
+        overlay?.close()
+        overlay = nil
         guard let recorder else { return }
         self.recorder = nil
         isRecording = false
         startDate = nil
+        timer = nil
+        hasMicrophone = false
+        let discard = discardOnStop
+        discardOnStop = false
         do {
             let url = try await recorder.stop()
+            if discard {
+                // Destructive file operations go to the Trash and are logged.
+                try FileManager.default.trashItem(at: url, resultingItemURL: nil)
+                log.notice("Discarded a recording (moved to the Trash)")
+                HUD.show(L10n.Screenshots.recordingDiscarded, symbol: "trash")
+                return
+            }
             HUD.show(L10n.Screenshots.recordingSaved, symbol: "film")
             NSWorkspace.shared.activateFileViewerSelecting([url])
         } catch {

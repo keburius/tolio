@@ -197,6 +197,21 @@ public extension L10n {
         public static var toolBrush: String { tr("screenshots.tool.brush", "Brush (P)") }
         public static var deleteSelected: String { tr("screenshots.deleteSelected", "Delete the selected mark, or the last one you drew (⌫)") }
         public static var delete: String { tr("screenshots.delete", "Delete") }
+        public static var barMicrophone: String { tr("screenshots.bar.mic", "Microphone") }
+        public static var barSystemAudio: String { tr("screenshots.bar.systemAudio", "System Audio") }
+        public static var barPointer: String { tr("screenshots.bar.pointer", "Pointer") }
+        public static var barRecord: String { tr("screenshots.bar.record", "Record") }
+        public static var barPause: String { tr("screenshots.bar.pause", "Pause") }
+        public static var barResume: String { tr("screenshots.bar.resume", "Resume") }
+        public static var barMute: String { tr("screenshots.bar.mute", "Mute Mic") }
+        public static var barUnmute: String { tr("screenshots.bar.unmute", "Unmute Mic") }
+        public static var barMicHelp: String { tr("screenshots.bar.micHelp", "Turn the microphone off and on while recording") }
+        public static var barMicOffHelp: String { tr("screenshots.bar.micOffHelp", "Turn on Microphone before you start recording to use this") }
+        public static var barStop: String { tr("screenshots.bar.stop", "Stop") }
+        public static var barDiscard: String { tr("screenshots.bar.discard", "Stop and throw the recording away (moved to the Trash)") }
+        public static var recordingDiscarded: String { tr("screenshots.recordingDiscarded", "Recording moved to the Trash") }
+        public static var fps30: String { tr("screenshots.bar.fps30", "30 fps") }
+        public static var fps60: String { tr("screenshots.bar.fps60", "60 fps") }
         public static var deleteScreenshot: String { tr("screenshots.deleteScreenshot", "Delete this screenshot and close the window (it isn't saved)") }
         public static var screenshotDeleted: String { tr("screenshots.screenshotDeleted", "Screenshot deleted") }
         public static var toolArrow: String { tr("screenshots.tool.arrow", "Arrow (A)") }

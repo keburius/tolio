@@ -59,3 +59,47 @@ struct CaptureTextTests {
         #expect(languages.contains("en-US"))
     }
 }
+
+struct PauseClockTests {
+    @Test func pausedStretchIsCutOut() {
+        var clock = PauseClock()
+        #expect(clock.adjust(10) == 10)
+        #expect(clock.adjust(11) == 11)
+        clock.pause()
+        #expect(clock.adjust(12) == nil) // dropped while paused
+        #expect(clock.adjust(15) == nil)
+        clock.resume()
+        // 11 → 20 was paused: the next sample continues right after 11.
+        #expect(clock.adjust(20) == 11)
+        #expect(clock.adjust(21) == 12)
+        #expect(clock.offset == 9)
+    }
+
+    @Test func twoPausesAddUp() {
+        var clock = PauseClock()
+        _ = clock.adjust(0)
+        clock.pause(); clock.resume()
+        #expect(clock.adjust(5) == 0)
+        clock.pause(); clock.resume()
+        #expect(clock.adjust(8) == 0)
+        #expect(clock.offset == 8)
+    }
+
+    @Test func pauseBeforeAnySampleIsHarmless() {
+        var clock = PauseClock()
+        clock.pause()
+        clock.resume()
+        #expect(clock.adjust(3) == 3)
+    }
+
+    @Test func timerStopsWhilePaused() {
+        let start = Date(timeIntervalSince1970: 0)
+        var timer = RecordingTimer(start: start)
+        #expect(timer.elapsed(at: start.addingTimeInterval(10)) == 10)
+        timer.pause(at: start.addingTimeInterval(10))
+        #expect(timer.elapsed(at: start.addingTimeInterval(25)) == 10)
+        timer.resume(at: start.addingTimeInterval(25))
+        #expect(timer.elapsed(at: start.addingTimeInterval(30)) == 15)
+        #expect(!timer.isPaused)
+    }
+}

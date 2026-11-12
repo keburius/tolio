@@ -30,6 +30,8 @@ final class ScreenRecorder: NSObject, SCStreamOutput, SCStreamDelegate, @uncheck
     private var micInput: AVAssetWriterInput?
     private var sessionStarted = false
     private var stopped = false
+    private var clock = PauseClock()
+    private var micMuted = false
     private var failure: Error?
     private let log = Log.logger("recorder")
     /// Called on the main actor if the stream stops by itself (display gone, permission revoked).
@@ -128,6 +130,31 @@ final class ScreenRecorder: NSObject, SCStreamOutput, SCStreamDelegate, @uncheck
         return url
     }
 
+    // MARK: - Pause and mute
+
+    func pause() { queue.async { self.clock.pause() } }
+    func resume() { queue.async { self.clock.resume() } }
+    /// Drops microphone audio while muted (the track just has silence there).
+    func setMicMuted(_ muted: Bool) { queue.async { self.micMuted = muted } }
+
+    /// The buffer moved earlier by the paused time, or nil while paused.
+    private func retimed(_ buffer: CMSampleBuffer) -> CMSampleBuffer? {
+        let pts = buffer.presentationTimeStamp
+        guard let adjusted = clock.adjust(pts.seconds) else { return nil }
+        guard clock.offset > 0 else { return buffer }
+        var timing = CMSampleTimingInfo(
+            duration: buffer.duration,
+            presentationTimeStamp: CMTime(seconds: adjusted, preferredTimescale: pts.timescale),
+            decodeTimeStamp: .invalid
+        )
+        var copy: CMSampleBuffer?
+        guard CMSampleBufferCreateCopyWithNewTiming(
+            allocator: kCFAllocatorDefault, sampleBuffer: buffer, sampleTimingEntryCount: 1,
+            sampleTimingArray: &timing, sampleBufferOut: &copy
+        ) == noErr else { return nil }
+        return copy
+    }
+
     // MARK: - SCStreamOutput (on `queue`)
 
     func stream(_ stream: SCStream, didOutputSampleBuffer sampleBuffer: CMSampleBuffer, of type: SCStreamOutputType) {
@@ -138,18 +165,19 @@ final class ScreenRecorder: NSObject, SCStreamOutput, SCStreamDelegate, @uncheck
             guard let attachments = CMSampleBufferGetSampleAttachmentsArray(sampleBuffer, createIfNecessary: false) as? [[SCStreamFrameInfo: Any]],
                   let rawStatus = attachments.first?[.status] as? Int,
                   SCFrameStatus(rawValue: rawStatus) == .complete else { return }
+            guard let buffer = retimed(sampleBuffer) else { return }
             if !sessionStarted {
-                writer.startSession(atSourceTime: sampleBuffer.presentationTimeStamp)
+                writer.startSession(atSourceTime: buffer.presentationTimeStamp)
                 sessionStarted = true
             }
-            if videoInput.isReadyForMoreMediaData { videoInput.append(sampleBuffer) }
+            if videoInput.isReadyForMoreMediaData { videoInput.append(buffer) }
         case .audio:
-            guard sessionStarted, let audioInput, audioInput.isReadyForMoreMediaData else { return }
-            audioInput.append(sampleBuffer)
+            guard sessionStarted, let audioInput, audioInput.isReadyForMoreMediaData, let buffer = retimed(sampleBuffer) else { return }
+            audioInput.append(buffer)
         default:
             if #available(macOS 15.0, *), type == .microphone {
-                guard sessionStarted, let micInput, micInput.isReadyForMoreMediaData else { return }
-                micInput.append(sampleBuffer)
+                guard sessionStarted, !micMuted, let micInput, micInput.isReadyForMoreMediaData, let buffer = retimed(sampleBuffer) else { return }
+                micInput.append(buffer)
             }
         }
     }

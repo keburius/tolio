@@ -642,3 +642,20 @@ Sources: the FoundationModels interface in the installed SDK (MacOSX 27.2, Xcode
   - Right-click: New Sticky Note, Bring Notes to Front, the 15 most recent notes, Restore Deleted Note, and the right-click menu setup if the extension is off.
 - **Tests:** the store (add, update, persist, permissions, delete and restore, the 20-note cap, damaged file, erase), placement (at the click point, edges, minimum size, unplugged display, cascade), and `omni://note` link parsing (fixed action only; bad numbers are ignored).
 - **Limit:** a Finder extension's menu items appear only after you enable it, and macOS decides whether container menus show on the desktop background. This needs checking on your Mac.
+
+## 12. Screen recording controls
+
+- **Choosing the area:** after you pick the area (or click a screen), it stays outlined (dashed white) and a bar appears under it.
+  - The bar has Microphone, System Audio and Pointer toggles (the same settings as in Settings), a frame-rate menu, Cancel (Esc) and Record (↩).
+- **While recording:** the outline turns red and the bar shows:
+  - a red dot (orange while paused) and the elapsed time
+  - **Pause/Resume**
+  - **Mute Mic** (when the recording has a microphone track; macOS 15 and later)
+  - **Stop**, which saves the file and shows it in Finder
+  - **Discard**, which moves the file to the Trash (logged)
+- **Where the bar sits:** below the area, above it if there's no room, or inside the bottom edge for a full-screen recording. You can drag it.
+- **Hidden from the video:** the bar and the outline are Omni windows, which recordings already leave out.
+- **Pause:** paused time is cut from the video, so there's no frozen gap (`PauseClock` shifts later samples earlier).
+  - The menu bar timer stops while paused (`RecordingTimer`).
+  - A muted microphone leaves silence in its track.
+- **Tests:** the paused stretch is cut out, two pauses add up, pausing before the first frame is harmless, and the timer stops while paused.

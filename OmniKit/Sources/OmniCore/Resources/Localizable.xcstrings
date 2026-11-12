@@ -3277,6 +3277,160 @@
         }
       }
     },
+    "screenshots.bar.discard": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stop and throw the recording away (moved to the Trash)"
+          }
+        }
+      }
+    },
+    "screenshots.bar.fps30": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "30 fps"
+          }
+        }
+      }
+    },
+    "screenshots.bar.fps60": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "60 fps"
+          }
+        }
+      }
+    },
+    "screenshots.bar.mic": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Microphone"
+          }
+        }
+      }
+    },
+    "screenshots.bar.micHelp": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Turn the microphone off and on while recording"
+          }
+        }
+      }
+    },
+    "screenshots.bar.micOffHelp": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Turn on Microphone before you start recording to use this"
+          }
+        }
+      }
+    },
+    "screenshots.bar.mute": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mute Mic"
+          }
+        }
+      }
+    },
+    "screenshots.bar.pause": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pause"
+          }
+        }
+      }
+    },
+    "screenshots.bar.pointer": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pointer"
+          }
+        }
+      }
+    },
+    "screenshots.bar.record": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Record"
+          }
+        }
+      }
+    },
+    "screenshots.bar.resume": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Resume"
+          }
+        }
+      }
+    },
+    "screenshots.bar.stop": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stop"
+          }
+        }
+      }
+    },
+    "screenshots.bar.systemAudio": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "System Audio"
+          }
+        }
+      }
+    },
+    "screenshots.bar.unmute": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Unmute Mic"
+          }
+        }
+      }
+    },
     "screenshots.captureText": {
       "extractionState": "manual",
       "localizations": {
@@ -4464,6 +4618,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Recording saved"
+          }
+        }
+      }
+    },
+    "screenshots.recordingDiscarded": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recording moved to the Trash"
           }
         }
       }

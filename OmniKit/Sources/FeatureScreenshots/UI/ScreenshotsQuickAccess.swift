@@ -32,7 +32,9 @@ extension ScreenshotsFeature {
     /// Active with a running timer while a recording is in progress.
     var recordingState: QuickAccessState {
         guard let recording, recording.isRecording else { return .idle }
-        return QuickAccessState(isActive: true, timerStart: recording.startDate)
+        // A start time shifted by the paused time, so the icon's timer matches the video.
+        let elapsed = recording.timer?.elapsed(at: Date()) ?? 0
+        return QuickAccessState(isActive: true, timerStart: Date().addingTimeInterval(-elapsed))
     }
 
     private var isRecording: Bool { recording?.isRecording ?? false }

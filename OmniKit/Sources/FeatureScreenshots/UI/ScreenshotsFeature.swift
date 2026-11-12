@@ -182,12 +182,14 @@ public final class ScreenshotsFeature: Feature {
     private func startRecording() async {
         guard let settings, let recording else { return }
         guard case let .area(rect) = await SelectionOverlay.choose(.record) else { return }
-        let options = RecordingOptions(
-            framesPerSecond: settings.value(Self.fpsKey), codec: settings.value(Self.codecKey),
-            systemAudio: settings.value(Self.systemAudioKey), microphone: settings.value(Self.microphoneKey),
-            showsCursor: settings.value(Self.recordCursorKey)
-        )
-        await recording.start(area: rect, options: options, folder: Self.folder(settings))
+        // The bar under the area lets you change these before clicking Record.
+        recording.prepare(area: rect, settings: settings, options: {
+            RecordingOptions(
+                framesPerSecond: settings.value(Self.fpsKey), codec: settings.value(Self.codecKey),
+                systemAudio: settings.value(Self.systemAudioKey), microphone: settings.value(Self.microphoneKey),
+                showsCursor: settings.value(Self.recordCursorKey)
+            )
+        }, folder: Self.folder(settings))
     }
 
     private func finish(_ capture: () async throws -> Capture) async {
