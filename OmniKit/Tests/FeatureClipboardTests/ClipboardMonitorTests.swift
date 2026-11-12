@@ -38,6 +38,16 @@ struct ClipboardMonitorTests {
         pasteboard.releaseGlobally()
     }
 
+    /// Capture Text's copies are labeled "Captured text", not as the app under the selection.
+    @Test func capturedTextIsLabeled() {
+        let box = Box()
+        let monitor = makeMonitor(into: box)
+        write("Recognized words", extraTypes: [PasteboardTypes.capturedText])
+        monitor.poll()
+        #expect(box.items == [.text("Recognized words", app: PasteboardTypes.capturedTextSource, appName: L10n.Clipboard.capturedText)])
+        pasteboard.releaseGlobally()
+    }
+
     @Test func ignoresUnchangedPasteboard() {
         let box = Box()
         let monitor = makeMonitor(into: box)

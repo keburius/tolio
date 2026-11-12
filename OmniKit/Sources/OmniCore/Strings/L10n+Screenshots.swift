@@ -12,7 +12,7 @@ public extension L10n {
 
         public static var hotkeyArea: String { tr("screenshots.hotkey.area", "Capture area or window") }
         public static var hotkeyScreen: String { tr("screenshots.hotkey.screen", "Capture screen") }
-        public static var hotkeyText: String { tr("screenshots.hotkey.text", "Copy text from screen") }
+        public static var hotkeyText: String { tr("screenshots.hotkey.text", "Capture text") }
         public static var hotkeyRecord: String { tr("screenshots.hotkey.record", "Start or stop screen recording") }
         public static var hotkeyScrolling: String { tr("screenshots.hotkey.scrolling", "Scrolling capture (experimental)") }
 
@@ -20,10 +20,6 @@ public extension L10n {
 
         public static var captureArea: String { tr("screenshots.command.area", "Capture Area or Window") }
         public static var captureScreen: String { tr("screenshots.command.screen", "Capture Screen") }
-        public static var copyTextFromScreen: String { tr("screenshots.command.text", "Copy Text from Screen") }
-        public static var copyTextFromScreenSubtitle: String {
-            tr("screenshots.command.text.subtitle", "Select part of the screen and copy the text in it")
-        }
         public static var recordOrStop: String { tr("screenshots.command.record", "Record Screen / Stop Recording") }
         public static var scrollingCapture: String { tr("screenshots.command.scrolling", "Scrolling Capture (Experimental)") }
         public static var turnOnScrolling: String {
@@ -109,9 +105,6 @@ public extension L10n {
         public static func couldntSave(_ reason: String) -> String { format("screenshots.hud.couldntSave", "Couldn't save: %@", reason) }
         public static var recognizingText: String { tr("screenshots.hud.recognizingText", "Recognizing text…") }
         public static var noTextFound: String { tr("screenshots.hud.noTextFound", "No text found") }
-        public static func copiedLines(_ count: Int) -> String {
-            plural("screenshots.hud.copiedLines", one: "Copied %lld line of text", other: "Copied %lld lines of text", count)
-        }
         public static var textRecognitionFailed: String { tr("screenshots.hud.textRecognitionFailed", "Text recognition failed") }
         public static var scrolling: String { tr("screenshots.hud.scrolling", "Scrolling… hold Esc to stop") }
         public static func joinedPages(_ count: Int, reason: String) -> String {
@@ -168,6 +161,34 @@ public extension L10n {
 
         public static var editorWindowTitle: String { tr("screenshots.editor.windowTitle", "Screenshot") }
         public static var toolSelect: String { tr("screenshots.tool.select", "Select and move (V)") }
+        public static var captureText: String { tr("screenshots.captureText", "Capture Text") }
+        public static var captureTextSubtitle: String { tr("screenshots.captureText.subtitle", "Copy the text, QR code or barcode in part of the screen") }
+        public static func copiedCharacters(_ count: Int) -> String {
+            plural("screenshots.captureText.copied", one: "Copied %lld character", other: "Copied %lld characters", count)
+        }
+        public static func appendedCharacters(_ added: Int, _ total: Int) -> String {
+            format("screenshots.captureText.appended", "Added %lld characters (%lld in total)", added, total)
+        }
+        public static func copiedLink(_ host: String) -> String { format("screenshots.captureText.copiedLink", "Copied a link to %@", host) }
+        public static func copiedCode(_ count: Int) -> String {
+            plural("screenshots.captureText.copiedCode", one: "Copied a code (%lld character)", other: "Copied a code (%lld characters)", count)
+        }
+        public static var open: String { tr("screenshots.captureText.open", "Open") }
+        public static var sectionCaptureText: String { tr("screenshots.section.captureText", "Capture Text") }
+        public static var lineBreaks: String { tr("screenshots.captureText.lineBreaks", "Line breaks") }
+        public static var lineBreaksKeep: String { tr("screenshots.captureText.lineBreaks.keep", "Keep them") }
+        public static var lineBreaksJoin: String { tr("screenshots.captureText.lineBreaks.join", "Join into one paragraph") }
+        public static var recognitionLanguages: String { tr("screenshots.captureText.languages", "Recognition languages") }
+        public static var languagesMatchMac: String { tr("screenshots.captureText.languages.matchMac", "Same as my Mac's languages") }
+        public static func languagesMatchMacSummary(_ list: String) -> String { format("screenshots.captureText.languages.matchMacSummary", "Same as my Mac (%@)", list) }
+        public static var autoLanguage: String { tr("screenshots.captureText.autoLanguage", "Detect the language automatically") }
+        public static var autoLanguageNote: String {
+            tr("screenshots.captureText.autoLanguageNote", "Helps with mixed languages but can make recognition much slower on some macOS versions.")
+        }
+        public static var speakAloud: String { tr("screenshots.captureText.speak", "Read captured text aloud") }
+        public static var captureTextNote: String {
+            tr("screenshots.captureText.note", "Hold ⇧ when you finish the selection to add the text to your previous capture. QR codes and barcodes are copied too; for a link you get an Open button. Everything is recognized on this Mac.")
+        }
         public static var toolBrush: String { tr("screenshots.tool.brush", "Brush (P)") }
         public static var deleteSelected: String { tr("screenshots.deleteSelected", "Delete selected mark (⌫)") }
         public static var toolArrow: String { tr("screenshots.tool.arrow", "Arrow (A)") }

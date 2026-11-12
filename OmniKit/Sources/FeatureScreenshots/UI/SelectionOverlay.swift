@@ -49,6 +49,9 @@ final class SelectionOverlay {
         }
     }
 
+    /// Whether ⇧ was held when the last selection ended (Capture Text's append mode).
+    static var lastFinishedWithShift = false
+
     private var panels: [Panel] = []
     private var continuation: CheckedContinuation<OverlayResult, Never>?
     private let state: State
@@ -220,6 +223,7 @@ private final class SelectionView: NSView {
     }
 
     override func mouseUp(with event: NSEvent) {
+        SelectionOverlay.lastFinishedWithShift = event.modifierFlags.contains(.shift)
         state.current = NSEvent.mouseLocation
         let selection = state.selection
         let point = NSEvent.mouseLocation

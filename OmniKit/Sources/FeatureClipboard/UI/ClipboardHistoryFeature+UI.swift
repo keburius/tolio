@@ -119,7 +119,7 @@ extension ClipboardHistoryFeature {
             let title = record.title.count > Self.historyTitleLength
                 ? String(record.title.prefix(Self.historyTitleLength - 1)) + "…" : record.title
             let icon: SearchResult.Icon? = switch record.kind {
-            case .text: nil
+            case .text: record.sourceBundleID == PasteboardTypes.capturedTextSource ? .symbol("text.viewfinder") : nil
             case .image: store?.thumbnailURL(for: record).map { .image($0) } ?? .symbol("photo")
             case .files: record.fileURLs.first.map { .file($0) } ?? .symbol("doc")
             }

@@ -67,7 +67,11 @@ final class ClipboardMonitor {
 
         let types = Set((pasteboard.pasteboardItems ?? []).flatMap(\.types).map(\.rawValue))
         guard !types.isEmpty else { return }
-        let source = frontmostApp()
+        // Text Omni captured from the screen is labeled as such, not as the
+        // app that happened to be under the selection.
+        let source = types.contains(PasteboardTypes.capturedText)
+            ? Source(bundleID: PasteboardTypes.capturedTextSource, name: L10n.Clipboard.capturedText)
+            : frontmostApp()
         if let reason = ClipCapturePolicy.skipReason(
             types: types, sourceBundleID: source?.bundleID, userExcludedApps: excludedApps()
         ) {

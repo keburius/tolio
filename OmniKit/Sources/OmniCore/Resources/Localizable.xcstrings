@@ -540,6 +540,17 @@
         }
       }
     },
+    "clipboard.capturedText": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Captured text"
+          }
+        }
+      }
+    },
     "clipboard.command.clear": {
       "extractionState": "manual",
       "localizations": {
@@ -3255,6 +3266,217 @@
         }
       }
     },
+    "screenshots.captureText": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Capture Text"
+          }
+        }
+      }
+    },
+    "screenshots.captureText.appended": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Added %lld characters (%lld in total)"
+          }
+        }
+      }
+    },
+    "screenshots.captureText.autoLanguage": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Detect the language automatically"
+          }
+        }
+      }
+    },
+    "screenshots.captureText.autoLanguageNote": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Helps with mixed languages but can make recognition much slower on some macOS versions."
+          }
+        }
+      }
+    },
+    "screenshots.captureText.copied": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Copied %lld character"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Copied %lld characters"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "screenshots.captureText.copiedCode": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Copied a code (%lld character)"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Copied a code (%lld characters)"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "screenshots.captureText.copiedLink": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copied a link to %@"
+          }
+        }
+      }
+    },
+    "screenshots.captureText.languages": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recognition languages"
+          }
+        }
+      }
+    },
+    "screenshots.captureText.languages.matchMac": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Same as my Mac's languages"
+          }
+        }
+      }
+    },
+    "screenshots.captureText.languages.matchMacSummary": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Same as my Mac (%@)"
+          }
+        }
+      }
+    },
+    "screenshots.captureText.lineBreaks": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Line breaks"
+          }
+        }
+      }
+    },
+    "screenshots.captureText.lineBreaks.join": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Join into one paragraph"
+          }
+        }
+      }
+    },
+    "screenshots.captureText.lineBreaks.keep": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Keep them"
+          }
+        }
+      }
+    },
+    "screenshots.captureText.note": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hold ⇧ when you finish the selection to add the text to your previous capture. QR codes and barcodes are copied too; for a link you get an Open button. Everything is recognized on this Mac."
+          }
+        }
+      }
+    },
+    "screenshots.captureText.open": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open"
+          }
+        }
+      }
+    },
+    "screenshots.captureText.speak": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Read captured text aloud"
+          }
+        }
+      }
+    },
+    "screenshots.captureText.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copy the text, QR code or barcode in part of the screen"
+          }
+        }
+      }
+    },
     "screenshots.color.black": {
       "extractionState": "manual",
       "localizations": {
@@ -3372,28 +3594,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Scrolling Capture (Experimental)"
-          }
-        }
-      }
-    },
-    "screenshots.command.text": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Copy Text from Screen"
-          }
-        }
-      }
-    },
-    "screenshots.command.text.subtitle": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Select part of the screen and copy the text in it"
           }
         }
       }
@@ -3778,7 +3978,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Copy text from screen"
+            "value": "Capture text"
           }
         }
       }
@@ -3790,29 +3990,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Copied"
-          }
-        }
-      }
-    },
-    "screenshots.hud.copiedLines": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "variations": {
-            "plural": {
-              "one": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Copied %lld line of text"
-                }
-              },
-              "other": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Copied %lld lines of text"
-                }
-              }
-            }
           }
         }
       }
@@ -4298,6 +4475,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Turn on scrolling capture in Screenshots & Recording settings"
+          }
+        }
+      }
+    },
+    "screenshots.section.captureText": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Capture Text"
           }
         }
       }

@@ -73,23 +73,11 @@ final class CaptureWindows: NSObject, NSWindowDelegate {
         }
     }
 
+    /// The editor's Copy Text: the same recognition and settings as Capture Text.
+    var recognizeText: ((CGImage) -> Void)?
+
     func copyText(from image: CGImage) {
-        HUD.show(L10n.Screenshots.recognizingText, symbol: "text.viewfinder")
-        Task { @MainActor in
-            do {
-                let lines = try await TextRecognizer.lines(in: image)
-                guard !lines.isEmpty else {
-                    HUD.show(L10n.Screenshots.noTextFound, symbol: "text.viewfinder")
-                    return
-                }
-                let pasteboard = NSPasteboard.general
-                pasteboard.clearContents()
-                pasteboard.setString(lines.joined(separator: "\n"), forType: .string)
-                HUD.show(L10n.Screenshots.copiedLines(lines.count), symbol: "text.viewfinder")
-            } catch {
-                HUD.show(L10n.Screenshots.textRecognitionFailed, symbol: "exclamationmark.triangle")
-            }
-        }
+        recognizeText?(image)
     }
 
     private func close(_ window: NSWindow?) {
