@@ -4,19 +4,19 @@ import OmniCore
 import OmniPlatform
 import SwiftUI
 
-/// Text snippets: type an abbreviation anywhere and it's replaced with the
-/// snippet text. Also insertable from the palette with “snip …”.
+/// Text snippets: type an abbreviation (its "code") anywhere and it's
+/// replaced with the snippet text. Also insertable from the Launcher with “snip …”.
 @MainActor
 @Observable
 public final class SnippetsFeature: Feature {
     static let snippetsKey = SettingKey.feature("snippets", "items", default: [
-        Snippet(abbreviation: ";date", title: "Today's date", body: "{date}"),
-        Snippet(abbreviation: ";sig", title: "Email sign-off", body: "Best regards,\n{cursor}"),
+        Snippet(abbreviation: ";date", title: L10n.Snippets.defaultDateTitle, body: "{date}"),
+        Snippet(abbreviation: ";sig", title: L10n.Snippets.defaultSignOffTitle, body: "Best regards,\n{cursor}"),
     ])
 
     public let id: FeatureID = "snippets"
-    public let displayName = "Snippets"
-    public let summary = "Type an abbreviation like ;sig in any app to insert saved text."
+    public var displayName: String { L10n.Snippets.displayName }
+    public var summary: String { L10n.Snippets.summary }
     public let symbolName = "text.badge.plus"
     public let requiredPermissions: Set<Permission> = [.accessibility]
 
@@ -34,7 +34,7 @@ public final class SnippetsFeature: Feature {
         context.lifetime.add { engine.stop() }
         context.registerSearchProvider(SnippetSearchProvider(feature: self))
         context.registerCommand(Command(
-            id: "snippets.browse", title: "Insert Snippet", keywords: ["snippet", "text"], symbolName: symbolName
+            id: "snippets.browse", title: L10n.Snippets.commandInsert, keywords: ["snippet", "text"], symbolName: symbolName
         ) { context.openPalette(query: "snip ") })
     }
 
@@ -50,16 +50,23 @@ public final class SnippetsFeature: Feature {
 
     var snippets: [Snippet] { settings?.value(Self.snippetsKey) ?? [] }
 
+    /// True while on (settings are only available then).
+    var isOn: Bool { settings != nil }
+
+    func setSnippets(_ snippets: [Snippet]) {
+        settings?.set(snippets, for: Self.snippetsKey)
+    }
+
     func insert(_ snippet: Snippet) {
         engine?.insert(snippet)
     }
 }
 
-/// Palette results for "snip …".
+/// Launcher results for "snip …".
 @MainActor
 final class SnippetSearchProvider: SearchProvider {
     let keyword = "snip"
-    let title = "Snippet"
+    var title: String { L10n.Snippets.searchTitle }
     private weak var feature: SnippetsFeature?
 
     init(feature: SnippetsFeature) {

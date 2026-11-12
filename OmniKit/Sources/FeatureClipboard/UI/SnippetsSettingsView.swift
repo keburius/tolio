@@ -11,6 +11,13 @@ struct SnippetsSettingsView: View {
 
     var body: some View {
         Group {
+            if snippets.isEmpty {
+                EmptyState(
+                    symbol: "text.badge.plus", message: L10n.Snippets.empty,
+                    actionTitle: L10n.Snippets.addSnippet, action: addSnippet
+                )
+                .settingsAnchor(SnippetsFeature.Anchor.list)
+            }
             ForEach(snippets) { snippet in
                 HStack {
                     Toggle("", isOn: Binding(
@@ -18,22 +25,26 @@ struct SnippetsSettingsView: View {
                         set: { enabled in update(snippet.id) { $0.isEnabled = enabled } }
                     ))
                     .labelsHidden()
-                    VStack(alignment: .leading, spacing: 2) {
+                    .accessibilityLabel(L10n.Snippets.enabledToggle(snippet.title))
+                    VStack(alignment: .leading, spacing: OmniStyle.s1) {
                         Text(snippet.title)
                         Text(snippet.abbreviation).font(.caption.monospaced()).foregroundStyle(.secondary)
                     }
                     Spacer()
-                    Button("Edit") { editing = snippet }.buttonStyle(.borderless)
+                    Button(L10n.Snippets.edit) { editing = snippet }.buttonStyle(.borderless)
                     Button { save(snippets.filter { $0.id != snippet.id }) } label: { Image(systemName: "trash") }
                         .buttonStyle(.borderless)
-                        .help("Delete")
+                        .help(L10n.Snippets.delete)
+                        .accessibilityLabel(L10n.Snippets.delete)
                 }
             }
-            Button("Add Snippet") {
-                editing = Snippet(abbreviation: "", title: "", body: "")
+            if !snippets.isEmpty {
+                Button(L10n.Snippets.addSnippet, action: addSnippet)
+                    .settingsAnchor(SnippetsFeature.Anchor.list)
             }
-            Text("Placeholders: {date}, {date:yyyy-MM-dd}, {time}, {time:HH:mm}, {clipboard}, {cursor}. Use {{ and }} for literal braces. Snippets never expand in password fields.")
+            Text(L10n.Snippets.placeholdersHelp)
                 .font(.caption).foregroundStyle(.secondary)
+                .settingsAnchor(SnippetsFeature.Anchor.placeholders)
         }
         .sheet(item: $editing) { snippet in
             SnippetEditor(snippet: snippet, others: snippets) { saved in
@@ -47,6 +58,11 @@ struct SnippetsSettingsView: View {
                 editing = nil
             }
         }
+    }
+
+    /// Opens the editor for a new snippet.
+    private func addSnippet() {
+        editing = Snippet(abbreviation: "", title: "", body: "")
     }
 
     private func update(_ id: UUID, _ change: (inout Snippet) -> Void) {
@@ -70,11 +86,11 @@ private struct SnippetEditor: View {
     var body: some View {
         let problem = Snippet.problem(with: snippet.abbreviation, among: others, editing: snippet.id)
         Form {
-            TextField("Abbreviation", text: $snippet.abbreviation, prompt: Text(";sig"))
+            TextField(L10n.Snippets.code, text: $snippet.abbreviation, prompt: Text(L10n.Snippets.codePrompt))
             if let problem, !snippet.abbreviation.isEmpty {
                 Text(problem).font(.caption).foregroundStyle(.red)
             }
-            TextField("Title", text: $snippet.title)
+            TextField(L10n.Snippets.title, text: $snippet.title)
             TextEditor(text: $snippet.body)
                 .font(.body.monospaced())
                 .frame(minHeight: 140)
@@ -82,9 +98,9 @@ private struct SnippetEditor: View {
         .formStyle(.grouped)
         .frame(width: 460)
         .toolbar {
-            ToolbarItem(placement: .cancellationAction) { Button("Cancel", action: onCancel) }
+            ToolbarItem(placement: .cancellationAction) { Button(L10n.Common.cancel, action: onCancel) }
             ToolbarItem(placement: .confirmationAction) {
-                Button("Save") {
+                Button(L10n.Snippets.save) {
                     if snippet.title.isEmpty { snippet.title = snippet.abbreviation }
                     onSave(snippet)
                 }

@@ -16,14 +16,14 @@ public final class TextActionsFeature: Feature {
     static let engineKey = SettingKey.feature("textactions", "searchEngine", default: SearchEngine.google)
 
     public let id: FeatureID = "textactions"
-    public let displayName = "Text Selection Popup"
-    public let summary = "Select text in any app to get a small bar with copy, search, translate, case changes and more."
+    public var displayName: String { L10n.TextActions.displayName }
+    public var summary: String { L10n.TextActions.summary }
     public let symbolName = "text.cursor"
     public let requiredPermissions: Set<Permission> = [.accessibility]
 
     @ObservationIgnored private var controller: PopupController?
     @ObservationIgnored private var tap: SelectionTap?
-    @ObservationIgnored private var settings: SettingsStore?
+    @ObservationIgnored private(set) var settings: SettingsStore?
 
     public init() {}
 
@@ -66,11 +66,13 @@ struct TextActionsSettingsView: View {
     let settings: SettingsStore
 
     var body: some View {
-        Section("Show the bar after") {
-            Toggle("Selecting with the mouse (drag, double-click, ⇧-click)", isOn: settings.binding(TextActionsFeature.mouseKey))
-            Toggle("Selecting with ⇧ and arrow keys", isOn: settings.binding(TextActionsFeature.keyboardKey))
+        Section(L10n.TextActions.showAfter) {
+            Toggle(L10n.TextActions.mouseTrigger, isOn: settings.binding(TextActionsFeature.mouseKey))
+                .settingsAnchor(TextActionsFeature.Anchor.mouseTrigger)
+            Toggle(L10n.TextActions.keyboardTrigger, isOn: settings.binding(TextActionsFeature.keyboardKey))
+                .settingsAnchor(TextActionsFeature.Anchor.keyboardTrigger)
         }
-        Section("Actions") {
+        Section(L10n.TextActions.actions) {
             ForEach(TextActionCatalog.builtIn, id: \.id) { action in
                 Toggle(isOn: Binding(
                     get: { settings.value(TextActionsFeature.actionsKey).contains(action.id) },
@@ -80,16 +82,19 @@ struct TextActionsSettingsView: View {
                         settings.set(set, for: TextActionsFeature.actionsKey)
                     }
                 )) { Label(action.title, systemImage: action.symbolName) }
+                .settingsAnchor(TextActionsFeature.Anchor.action(action.id))
             }
-            Picker("Search with", selection: settings.binding(TextActionsFeature.engineKey)) {
+            Picker(L10n.TextActions.searchWith, selection: settings.binding(TextActionsFeature.engineKey)) {
                 ForEach(SearchEngine.allCases, id: \.self) { Text($0.label).tag($0) }
             }
-            Text("Search, Open Link and Translate act only when you click them. Search and Open Link hand the text to your browser; Translate uses Apple's translation panel (the same as Translate in context menus).")
+            .settingsAnchor(TextActionsFeature.Anchor.searchEngine)
+            Text(L10n.TextActions.actionsNote)
                 .font(.caption).foregroundStyle(.secondary)
         }
-        Section("Reading the selection") {
-            Toggle("When an app doesn't share its selection, copy it briefly (⌘C) and restore the clipboard", isOn: settings.binding(TextActionsFeature.fallbackKey))
-            Text("Needed for most Electron and Chromium apps. Omni puts your previous clipboard back right away, and clipboard history never records it. Never used in password fields, while macOS protects password entry, in password managers, or in Finder.")
+        Section(L10n.TextActions.readingSelection) {
+            Toggle(L10n.TextActions.copyBriefly, isOn: settings.binding(TextActionsFeature.fallbackKey))
+                .settingsAnchor(TextActionsFeature.Anchor.copyFallback)
+            Text(L10n.TextActions.copyBrieflyNote)
                 .font(.caption).foregroundStyle(.secondary)
         }
         ExcludedAppsSection(settings: settings)
@@ -100,23 +105,27 @@ private struct ExcludedAppsSection: View {
     let settings: SettingsStore
 
     var body: some View {
-        Section("Never show in") {
+        Section(L10n.TextActions.neverShowIn) {
             let excluded = settings.value(TextActionsFeature.excludedKey)
-            Text("Password managers are always excluded.").font(.caption).foregroundStyle(.secondary)
+            Text(L10n.Common.passwordManagersAlwaysExcluded).font(.caption).foregroundStyle(.secondary)
+            if excluded.isEmpty {
+                EmptyState(symbol: "app.dashed", message: L10n.Common.noAppsExcluded)
+            }
             ForEach(excluded.sorted(), id: \.self) { bundleID in
                 HStack {
                     Text(appName(bundleID))
                     Spacer()
-                    Button("Remove") { settings.set(excluded.subtracting([bundleID]), for: TextActionsFeature.excludedKey) }
+                    Button(L10n.Common.remove) { settings.set(excluded.subtracting([bundleID]), for: TextActionsFeature.excludedKey) }
                         .buttonStyle(.borderless)
                 }
             }
-            Menu("Add App") {
+            Menu(L10n.Common.addApp) {
                 ForEach(runningApps(excluding: excluded), id: \.0) { id, name in
                     Button(name) { settings.set(excluded.union([id]), for: TextActionsFeature.excludedKey) }
                 }
             }
             .fixedSize()
+            .settingsAnchor(TextActionsFeature.Anchor.excludedApps)
         }
     }
 

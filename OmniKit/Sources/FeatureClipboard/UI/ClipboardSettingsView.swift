@@ -12,37 +12,45 @@ struct ClipboardSettingsView: View {
 
     var body: some View {
         Group {
-            Picker("Keep up to", selection: settings.binding(ClipboardHistoryFeature.maxItemsKey)) {
-                ForEach([100, 500, 1000, 5000], id: \.self) { Text("\($0) items").tag($0) }
+            Picker(L10n.Clipboard.keepUpTo, selection: settings.binding(ClipboardHistoryFeature.maxItemsKey)) {
+                ForEach([100, 500, 1000, 5000], id: \.self) { Text(L10n.Clipboard.itemCount($0)).tag($0) }
             }
             .onChange(of: settings.value(ClipboardHistoryFeature.maxItemsKey)) { feature.prune() }
-            Picker("Delete items older than", selection: settings.binding(ClipboardHistoryFeature.maxAgeDaysKey)) {
-                Text("1 day").tag(1)
-                Text("1 week").tag(7)
-                Text("1 month").tag(30)
-                Text("3 months").tag(90)
-                Text("1 year").tag(365)
-                Text("Never").tag(0)
+            .settingsAnchor(ClipboardHistoryFeature.Anchor.keepUpTo)
+            Picker(L10n.Clipboard.deleteOlderThan, selection: settings.binding(ClipboardHistoryFeature.maxAgeDaysKey)) {
+                Text(L10n.Clipboard.oneDay).tag(1)
+                Text(L10n.Clipboard.oneWeek).tag(7)
+                Text(L10n.Clipboard.oneMonth).tag(30)
+                Text(L10n.Clipboard.threeMonths).tag(90)
+                Text(L10n.Clipboard.oneYear).tag(365)
+                Text(L10n.Clipboard.never).tag(0)
             }
             .onChange(of: settings.value(ClipboardHistoryFeature.maxAgeDaysKey)) { feature.prune() }
-            Text("Pinned items are never deleted automatically. Items marked secret by password managers are never stored.")
+            .settingsAnchor(ClipboardHistoryFeature.Anchor.maxAge)
+            Text(L10n.Clipboard.retentionNote)
                 .font(.caption).foregroundStyle(.secondary)
 
             ExcludedAppsEditor(settings: settings)
 
-            Section("History") {
-                TextField("Search history", text: $query)
+            Section(L10n.Clipboard.history) {
+                TextField(L10n.Clipboard.searchHistory, text: $query)
+                    .settingsAnchor(ClipboardHistoryFeature.Anchor.history)
                 let records = feature.records(matching: query, limit: 200)
                 if records.isEmpty {
-                    Text(query.isEmpty ? "Nothing copied yet." : "No matches.").foregroundStyle(.secondary)
+                    if query.isEmpty {
+                        EmptyState(symbol: "doc.on.clipboard", message: L10n.Clipboard.emptyHistory)
+                    } else {
+                        Text(L10n.Common.noMatches(query)).foregroundStyle(.secondary)
+                    }
                 }
                 ForEach(records) { record in
                     HistoryRow(feature: feature, record: record)
                 }
-                Button("Clear History…", role: .destructive) { confirmClear = true }
-                    .confirmationDialog("Clear clipboard history?", isPresented: $confirmClear) {
-                        Button("Clear, Keep Pinned") { feature.clear(keepPinned: true) }
-                        Button("Clear Everything", role: .destructive) { feature.clear(keepPinned: false) }
+                Button(L10n.Clipboard.clearHistory, role: .destructive) { confirmClear = true }
+                    .settingsAnchor(ClipboardHistoryFeature.Anchor.clear)
+                    .confirmationDialog(L10n.Clipboard.clearQuestion, isPresented: $confirmClear) {
+                        Button(L10n.Clipboard.clearKeepPinned) { feature.clear(keepPinned: true) }
+                        Button(L10n.Clipboard.clearEverything, role: .destructive) { feature.clear(keepPinned: false) }
                     }
             }
         }
@@ -56,7 +64,7 @@ private struct HistoryRow: View {
     var body: some View {
         HStack {
             preview.frame(width: 28, height: 28)
-            VStack(alignment: .leading, spacing: 2) {
+            VStack(alignment: .leading, spacing: OmniStyle.s1) {
                 Text(record.title).lineLimit(1)
                 Text([record.sourceAppName, record.createdAt.formatted(date: .abbreviated, time: .shortened)]
                     .compactMap { $0 }.joined(separator: " · "))
@@ -67,11 +75,14 @@ private struct HistoryRow: View {
                 Image(systemName: record.pinned ? "pin.fill" : "pin")
             }
             .buttonStyle(.borderless)
-            .help(record.pinned ? "Unpin" : "Pin")
+            .help(record.pinned ? L10n.Clipboard.unpin : L10n.Clipboard.pin)
+            .accessibilityLabel(record.pinned ? L10n.Clipboard.unpin : L10n.Clipboard.pin)
             Button { feature.copy(record) } label: { Image(systemName: "doc.on.doc") }
-                .buttonStyle(.borderless).help("Copy")
+                .buttonStyle(.borderless).help(L10n.Clipboard.copy)
+                .accessibilityLabel(L10n.Clipboard.copy)
             Button { feature.delete(record) } label: { Image(systemName: "trash") }
-                .buttonStyle(.borderless).help("Delete")
+                .buttonStyle(.borderless).help(L10n.Clipboard.delete)
+                .accessibilityLabel(L10n.Clipboard.delete)
         }
     }
 
@@ -98,22 +109,25 @@ private struct ExcludedAppsEditor: View {
     let settings: SettingsStore
 
     var body: some View {
-        Section("Never record copies from") {
+        Section(L10n.Clipboard.neverRecordFrom) {
             ForEach(ClipCapturePolicy.builtInExcludedApps.sorted().compactMap(installedApp), id: \.bundleID) { app in
-                AppRow(app: app, note: "Password manager, always excluded")
+                AppRow(app: app, note: L10n.Clipboard.passwordManagerNote)
             }
             let excluded = settings.value(ClipboardHistoryFeature.excludedAppsKey)
+            if excluded.isEmpty {
+                EmptyState(symbol: "app.dashed", message: L10n.Common.noAppsExcluded)
+            }
             ForEach(excluded.sorted(), id: \.self) { bundleID in
                 HStack {
                     AppRow(app: installedApp(bundleID) ?? AppInfo(bundleID: bundleID, name: bundleID, url: nil), note: nil)
                     Spacer()
-                    Button("Remove") {
+                    Button(L10n.Common.remove) {
                         settings.set(excluded.subtracting([bundleID]), for: ClipboardHistoryFeature.excludedAppsKey)
                     }
                     .buttonStyle(.borderless)
                 }
             }
-            Menu("Add App") {
+            Menu(L10n.Common.addApp) {
                 ForEach(runningApps(excluding: excluded), id: \.bundleID) { app in
                     Button(app.name) {
                         settings.set(excluded.union([app.bundleID]), for: ClipboardHistoryFeature.excludedAppsKey)
@@ -121,6 +135,7 @@ private struct ExcludedAppsEditor: View {
                 }
             }
             .fixedSize()
+            .settingsAnchor(ClipboardHistoryFeature.Anchor.excludedApps)
         }
     }
 

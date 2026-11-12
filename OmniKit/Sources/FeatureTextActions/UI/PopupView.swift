@@ -1,5 +1,6 @@
 import AppKit
 import Observation
+import OmniPlatform
 import SwiftUI
 import Translation
 
@@ -40,7 +41,7 @@ struct PopupView: View {
                 .accessibilityLabel(action.title)
             }
         }
-        .padding(.horizontal, 4)
+        .padding(.horizontal, OmniStyle.s1)
         .frame(height: Self.height)
         .background(.regularMaterial, in: Capsule())
         .overlay(Capsule().strokeBorder(.primary.opacity(0.12)))
@@ -54,7 +55,7 @@ struct PopupView: View {
 private struct PopupButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .background(RoundedRectangle(cornerRadius: 7).fill(Color.primary.opacity(configuration.isPressed ? 0.2 : 0.0001)))
+            .background(RoundedRectangle(cornerRadius: OmniStyle.controlRadius).fill(Color.primary.opacity(configuration.isPressed ? 0.2 : 0.0001)))
             .modifier(HoverHighlight())
     }
 }
@@ -63,7 +64,7 @@ private struct HoverHighlight: ViewModifier {
     @State private var hovering = false
     func body(content: Content) -> some View {
         content
-            .background(RoundedRectangle(cornerRadius: 7).fill(Color.primary.opacity(hovering ? 0.1 : 0)))
+            .background(RoundedRectangle(cornerRadius: OmniStyle.controlRadius).fill(Color.primary.opacity(hovering ? 0.1 : 0)))
             .onHover { hovering = $0 }
     }
 }

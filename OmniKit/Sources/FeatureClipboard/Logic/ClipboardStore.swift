@@ -184,6 +184,18 @@ public final class ClipboardStore: Sendable {
         try db.read { db in try ClipRecord.fetchCount(db) }
     }
 
+    /// Number of items that aren't pinned (what "clear, keep pinned" removes).
+    public func unpinnedCount() throws -> Int {
+        try db.read { db in try ClipRecord.filter(Column("pinned") == false).fetchCount(db) }
+    }
+
+    /// Newest first, pinned or not (recently copied lists).
+    public func newest(limit: Int) throws -> [ClipRecord] {
+        try db.read { db in
+            try ClipRecord.order(Column("createdAt").desc).limit(limit).fetchAll(db)
+        }
+    }
+
     public func imageURL(for record: ClipRecord) -> URL? {
         record.imageFile.map { imagesDirectory.appendingPathComponent($0) }
     }

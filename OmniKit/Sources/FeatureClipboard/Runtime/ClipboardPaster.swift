@@ -31,11 +31,11 @@ enum ClipboardPaster {
     /// The palette has just closed, so wait a moment for focus to settle.
     static func paste(_ record: ClipRecord, store: ClipboardStore, canPostKeys: Bool) {
         guard copy(record, store: store) else {
-            HUD.show("That item is no longer available", symbol: "exclamationmark.triangle")
+            HUD.show(L10n.Clipboard.itemGone, symbol: "exclamationmark.triangle")
             return
         }
         guard canPostKeys else {
-            HUD.show("Copied. Press ⌘V to paste", symbol: "doc.on.clipboard")
+            HUD.show(L10n.Clipboard.copiedPressToPaste, symbol: "doc.on.clipboard")
             return
         }
         Task { @MainActor in
