@@ -25,13 +25,7 @@ public enum ClipCapturePolicy {
 
     /// Password managers whose copies are never stored, even if they forget
     /// to mark the item concealed. Users can't remove these.
-    public static let builtInExcludedApps: Set<String> = [
-        "com.1password.1password", "com.agilebits.onepassword7", "com.agilebits.onepassword-osx",
-        "org.keepassxc.keepassxc", "com.bitwarden.desktop", "com.lastpass.LastPass",
-        "com.dashlane.dashlanephonefinal", "com.dashlane.Dashlane", "com.apple.Passwords",
-        "com.apple.keychainaccess", "in.sinew.Enpass-Desktop", "com.nordpass.macos.NordPass",
-        "com.proton.pass.electron",
-    ]
+    public static let builtInExcludedApps: Set<String> = KnownApps.passwordManagers
 
     /// `nil` means the change may be stored.
     public static func skipReason(

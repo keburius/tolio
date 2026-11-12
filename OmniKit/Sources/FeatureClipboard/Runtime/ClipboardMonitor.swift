@@ -1,5 +1,6 @@
 import AppKit
 import OmniCore
+import OmniPlatform
 
 /// Polls the pasteboard's change count and hands storable changes to
 /// `onCapture`. Runs a timer only between `start()` and `stop()`.
@@ -58,6 +59,8 @@ final class ClipboardMonitor {
 
     /// Checks for a change once. Internal so tests can drive it.
     func poll() {
+        // Omni is borrowing the pasteboard; look again after it's put back.
+        guard !PasteboardLease.isActive else { return }
         let changeCount = pasteboard.changeCount
         guard changeCount != lastChangeCount else { return }
         lastChangeCount = changeCount

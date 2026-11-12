@@ -50,6 +50,8 @@ targets:
         product: FeatureSystemStats
       - package: OmniKit
         product: FeatureShortcutOverlay
+      - package: OmniKit
+        product: FeatureTextActions
     info:
       path: App/Info.plist
       properties:
@@ -94,5 +96,6 @@ schemes:
         - package: OmniKit/FeatureKeyboardCleanTests
         - package: OmniKit/FeatureSystemStatsTests
         - package: OmniKit/FeatureShortcutOverlayTests
+        - package: OmniKit/FeatureTextActionsTests
     archive:
       config: Release

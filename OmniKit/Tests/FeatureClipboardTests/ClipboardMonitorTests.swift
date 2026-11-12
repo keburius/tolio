@@ -1,6 +1,7 @@
 import AppKit
 @testable import FeatureClipboard
 import OmniCore
+import OmniPlatform
 import Testing
 
 /// Drives the real monitor against a private named pasteboard.
@@ -44,6 +45,28 @@ struct ClipboardMonitorTests {
         monitor.poll()
         monitor.poll()
         #expect(box.items.count == 1)
+        pasteboard.releaseGlobally()
+    }
+
+    /// The selection popup's ⌘C fallback: the borrowed selection is never
+    /// recorded, and neither is the restored original.
+    @Test func borrowedPasteboardIsNeverRecorded() {
+        write("original")
+        let box = Box()
+        let monitor = makeMonitor(into: box)
+        let snapshot = PasteboardSnapshot.capture(pasteboard)
+        PasteboardLease.begin()
+        write("selected text")
+        monitor.poll()
+        snapshot.restore(to: pasteboard)
+        PasteboardLease.end()
+        monitor.poll()
+        #expect(box.items.isEmpty)
+        #expect(pasteboard.string(forType: .string) == "original")
+        // A real copy afterwards is recorded again.
+        write("later copy")
+        monitor.poll()
+        #expect(box.items == [.text("later copy", app: "com.apple.TextEdit", appName: "TextEdit")])
         pasteboard.releaseGlobally()
     }
 

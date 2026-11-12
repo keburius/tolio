@@ -36,6 +36,11 @@ public enum KeySender {
         press(keyCode(for: "v") ?? CGKeyCode(kVK_ANSI_V), flags: .maskCommand)
     }
 
+    /// ⌘C, layout-aware like `paste()`.
+    public static func copy() {
+        press(keyCode(for: "c") ?? CGKeyCode(kVK_ANSI_C), flags: .maskCommand)
+    }
+
     /// Finds the virtual key code that produces `character` without modifiers.
     static func keyCode(for character: Character) -> CGKeyCode? {
         guard let source = TISCopyCurrentASCIICapableKeyboardLayoutInputSource()?.takeRetainedValue(),

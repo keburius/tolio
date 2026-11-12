@@ -7,6 +7,7 @@ import FeaturePalette
 import FeatureShortcutOverlay
 import FeatureSwitcher
 import FeatureSystemStats
+import FeatureTextActions
 import FeatureWindows
 import OmniCore
 
@@ -51,6 +52,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         services.features.register(KeyboardCleanFeature())
         services.features.register(SystemStatsFeature())
         services.features.register(ShortcutOverlayFeature())
+        services.features.register(TextActionsFeature())
         services.features.register(DiagnosticsFeature())
     }
 

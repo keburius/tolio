@@ -78,3 +78,38 @@ public enum TemporaryPasteboard {
         }
     }
 }
+
+/// Marks a short period in which Omni borrows the pasteboard (e.g. a
+/// simulated ⌘C to read a selection). Clipboard history doesn't look at the
+/// pasteboard while a lease is active, so the borrowed content is never
+/// recorded; it checks again once the lease ends (by then the original
+/// content is back, tagged as Omni's own write).
+@MainActor
+public enum PasteboardLease {
+    private static var holders = 0
+    private static var expiry: ContinuousClock.Instant?
+
+    /// True while some lease is active. Leases expire after `maxDuration`
+    /// even if never ended, so history can't stay paused by a bug.
+    public static var isActive: Bool {
+        guard holders > 0, let expiry else { return false }
+        if ContinuousClock.now >= expiry {
+            holders = 0
+            self.expiry = nil
+            return false
+        }
+        return true
+    }
+
+    public static let maxDuration: Duration = .seconds(2)
+
+    public static func begin() {
+        holders += 1
+        expiry = .now + maxDuration
+    }
+
+    public static func end() {
+        holders = max(0, holders - 1)
+        if holders == 0 { expiry = nil }
+    }
+}

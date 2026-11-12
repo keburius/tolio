@@ -1,6 +1,6 @@
 # Omni — Implementation Plan
 
-Status: **approved. Phases 0–6 done** (see §8).
+Status: **approved. Phases 0–7 done** (see §8).
 
 ## 0. Environment found
 
@@ -52,7 +52,7 @@ Dependency rule: feature modules depend on `OmniCore` plus the platform kits the
 | `FeatureKeyboardClean` | CleaningSession (pure), CleaningController (filtering tap, overlays, watchdog) | Core, Platform |
 | `FeatureSystemStats` | `Logic/` (StatsMath, StatsFormat, StatsSnapshot), `Runtime/` SystemSampler, `UI/` (menu bar item, popover, settings) | Core, Platform |
 | `FeatureShortcutOverlay` | `Logic/` (HoldGesture, ShortcutFormatter, MenuModel: ShortcutCatalog + ColumnPacker), `Runtime/` (MenuReader + MenuCache, ModifierTap), `UI/` (OverlayController, OverlayView, ShortcutOverlayFeature) | Core, Platform |
-| `FeatureTextActions` | Selection reader, action plugins, popup | Core, Platform |
+| `FeatureTextActions` | `Logic/` (TextSelection, TextAnalysis + SearchEngine, SelectionGuard, SelectionTrigger, CopyFallback), `Actions/` (TextAction protocol + built-ins), `Runtime/` (SelectionReader, SelectionTap), `UI/` (PopupController, PopupView, TextActionsFeature) | Core, Platform |
 | `FeatureScreenshots` | Capture, editor, pin, OCR, recording | Core, Platform |
 | `FeatureFileRules` | Rule engine, FSEvents watcher, undo log | Core, Platform |
 | `FeatureUninstaller` | Related-file finder with allowlist | Core, Platform |
@@ -232,7 +232,7 @@ Tests: allowlist property tests (generated hostile paths, symlinks, `..`, `/Syst
 | 4 Window switcher | **done** |
 | 5 Utilities | **done** |
 | 6 Shortcut overlay | **done** |
-| 7 Text selection | not started |
+| 7 Text selection | **done** |
 | 8 Screenshots | not started |
 | 9 File rules | not started |
 | 10 Uninstaller + archives | not started |
@@ -383,3 +383,40 @@ Tests: allowlist property tests (generated hostile paths, symlinks, `..`, `/Syst
 - Alternate items that appear only while ⌥ is held aren't exposed by Accessibility, so they're missing.
 - Menus an app builds only when opened (some Electron menus) show what's there at read time.
 - No palette provider for menu items yet ("keys …" search). The pinned overlay's filter covers it.
+
+### Phase 7 — done
+- **Text Selection Popup** (Accessibility, **off by default**): after a selection, a small bar appears above it. Actions:
+  - Copy, Paste, Open Link (web URLs only), Search the Web (Google, DuckDuckGo, Bing or Kagi).
+  - Translate (Apple's translation panel, macOS 14.4+, can replace editable text).
+  - UPPERCASE and lowercase (editable text only), Word Count (HUD), Send to Palette.
+  - Each action can be turned off. Actions implement `TextAction` (`id`, `title`, `symbolName`, `isAvailable(for:)`, `perform(_:context:)`).
+- Trigger (heuristic, listen-only tap): mouse drag ≥ 6 pt, double/triple click, ⇧-click, or ⇧+arrow/Home/End/Page keys. Checks run 120 ms after the mouse-up and 350 ms after the key-up.
+  - The bar closes on typing, scrolling, a click elsewhere, switching apps, or after 8 s without the pointer on it.
+  - Key events are only classified, never read, stored, or logged.
+- Reading, Accessibility first:
+  - The focused element's `AXSelectedText`, bounds via `AXBoundsForRange`, editability via settable `AXSelectedText`. Read on a background task with 0.3 s timeouts.
+  - Selections over 100,000 characters are ignored, never truncated.
+  - Replacing uses `AXSelectedText` when possible, else a ⌘V of a temporary, history-ignored pasteboard that is restored afterwards.
+- ⌘C fallback (on by default, can be turned off):
+  - Used only when Accessibility has no selection attribute: most Electron/Chromium apps.
+  - Mouse gestures must lie inside the window's content area, not the title bar or edges.
+  - Not used if a mouse button or modifier is held, if secure input started, or in Finder.
+  - Restores the previous pasteboard unless something else wrote it meanwhile. Concealed content is discarded and restored; files and images don't count as text.
+  - `PasteboardLease` pauses clipboard history during the borrow (expires after 2 s at most). The restored copy carries Omni's marker, so neither the selection nor the restore is recorded. There's a test for this in `ClipboardMonitorTests`.
+- Password safety (decision-table test):
+  - Skipped while `IsSecureEventInputEnabled()`, for `AXSecureTextField` role or subrole (checked before the text is read), and in password managers (shared list `KnownApps.passwordManagers`, now also used by clipboard history).
+  - Also skipped in user-excluded apps and in Omni itself.
+- Live check (TextEdit scratch document, background, via the real reader):
+  - Read "world": role AXTextArea, editable, bounds (244.7, 124, 33.1, 13).
+  - AX replace → "Hello WORLD …".
+  - Popup rendered off-screen.
+  - The ⌘C fallback was tested with a fake pasteboard only; a live test would send ⌘C to the app in use.
+- Idle CPU with the feature on: 0.2% over 60 s, including the clipboard poll.
+- 27 new tests (281 total). One of them caught a race: a copy made right after the app's own ⌘C answer could be mistaken for the selection and then overwritten. Fixed.
+
+### Phase 7 — deferred / limits
+- Heuristic trigger: no system "selection changed" event exists. Selections made by ⌘A, Find, or programmatically don't show the bar. Drags that aren't text selections can show it when the app reports a selection.
+- Electron/Chromium: the ⌘C fallback borrows the pasteboard for about 10–300 ms. Other clipboard managers polling in that window could see the selection. Omni's history never does.
+- Restore re-writes data, so types an app only promised (lazy data) are materialized, and the restored item carries Omni's marker type.
+- Translate is Apple's panel; whether it runs on-device depends on the system's Translation settings. Search and Open Link hand the text to the browser only when clicked.
+- The bar is placed at the mouse-up point when the app doesn't report selection bounds (all fallback reads).
