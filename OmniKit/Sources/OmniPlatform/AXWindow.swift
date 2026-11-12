@@ -46,6 +46,33 @@ public struct AXWindow {
         return AXWindow(element: window, pid: pid)
     }
 
+    /// All windows the app exposes (current Space and minimized ones).
+    public static func windows(of pid: pid_t) -> [AXWindow] {
+        let app = applicationElement(pid: pid)
+        let elements: [AXUIElement] = app.attribute(kAXWindowsAttribute) ?? []
+        return elements.map { AXWindow(element: $0, pid: pid) }
+    }
+
+    /// Focus: un-minimize if needed, bring the app forward, raise this window.
+    @discardableResult
+    public func focus() -> Bool {
+        if isMinimized {
+            AXUIElementSetAttributeValue(element, kAXMinimizedAttribute as CFString, kCFBooleanFalse)
+        }
+        let app = Self.applicationElement(pid: pid)
+        AXUIElementSetAttributeValue(app, kAXFrontmostAttribute as CFString, kCFBooleanTrue)
+        AXUIElementSetAttributeValue(element, kAXMainAttribute as CFString, kCFBooleanTrue)
+        return AXUIElementPerformAction(element, kAXRaiseAction as CFString) == .success
+    }
+
+    /// Presses the window's close button, as a click would. The app may
+    /// still ask to save. Returns false if there is no close button.
+    @discardableResult
+    public func close() -> Bool {
+        guard let button: AXUIElement = element.attribute(kAXCloseButtonAttribute) else { return false }
+        return AXUIElementPerformAction(button, kAXPressAction as CFString) == .success
+    }
+
     static func applicationElement(pid: pid_t) -> AXUIElement {
         let element = AXUIElementCreateApplication(pid)
         AXUIElementSetMessagingTimeout(element, messagingTimeout)

@@ -1,6 +1,6 @@
 # Omni — Implementation Plan
 
-Status: **approved. Phases 0–3 done** (see §8).
+Status: **approved. Phases 0–4 done** (see §8).
 
 ## 0. Environment found
 
@@ -47,7 +47,7 @@ Dependency rule: feature modules depend on `OmniCore` plus the platform kits the
 | `FeaturePalette` | Launcher: `Logic/` (FuzzyMatcher, PaletteRanker, UsageHistory, Calculator, QuantityQuery, UnitConversion, CurrencyRates/ECBRateParser, CurrencyRateStore, QuickAnswerEngine, AppScanner, SettingsPaneCatalog) and `UI/` (PaletteFeature, PaletteController/PalettePanel, PaletteView, view model) | Core, Platform |
 | `FeatureClipboard` | Two features: Clipboard History (`ClipCapturePolicy`, `ClipboardStore` on GRDB + FTS5, `ClipboardMonitor`, palette provider) and Snippets (`KeystrokeBuffer`, `PlaceholderExpander`, `SnippetEngine`) | Core, Platform, **GRDB 7.12.0 vendored in `Vendor/GRDB`** |
 | `FeatureWindows` | `Logic/` (WindowAction, ScreenGeometry, WindowLayout, RestoreHistory, SnapZones) and `Runtime/` (WindowManager, DragSnapper + SnapPreview), WindowsFeature | Core, Platform |
-| `FeatureSwitcher` | Window list, recency tracker, SCK thumbnails | Core, Platform |
+| `FeatureSwitcher` | `Logic/` (WindowListBuilder, RecencyTracker + SwitcherOrdering, SwitcherStateMachine), `Runtime/` (WindowCatalog, FocusTracker, SwitcherKeyTap, ThumbnailProvider), `UI/` (SwitcherFeature, SwitcherController, SwitcherView) | Core, Platform |
 | `FeatureKeepAwake` | IOPMAssertion wrapper, app-running trigger | Core, Platform |
 | `FeatureKeyboardClean` | Lock overlay, swallowing tap | Core, Platform |
 | `FeatureSystemStats` | Samplers (CPU, mem, disk, net, battery), menu bar renderers | Core, Platform |
@@ -116,7 +116,7 @@ public protocol CommandProvider { func results(for query: String) async -> [Comm
 | Clipboard history | none | Accessibility to paste directly (else copies) |
 | Snippets | Accessibility | Listen-only keystroke tap + synthetic ⌘V |
 | Window management | Accessibility | Drag-to-edge uses the same permission |
-| Window switcher | Accessibility, Screen Recording | — |
+| Window switcher | Accessibility | Screen Recording for thumbnails and other-Space windows (icons without it) |
 | Keep awake | none | — |
 | Keyboard cleaning | Accessibility | Active event tap |
 | System stats | none | — |
@@ -229,7 +229,7 @@ Tests: allowlist property tests (generated hostile paths, symlinks, `..`, `/Syst
 | 1 Palette | **done** |
 | 2 Clipboard + snippets | **done** |
 | 3 Window management | **done** |
-| 4 Window switcher | not started |
+| 4 Window switcher | **done** |
 | 5 Utilities | not started |
 | 6 Shortcut overlay | not started |
 | 7 Text selection | not started |
@@ -311,7 +311,24 @@ Tests: allowlist property tests (generated hostile paths, symlinks, `..`, `/Syst
 - `make run` retries `open` once. One unexplained failure happened and didn't reproduce in four later runs.
 
 ### Phase 3 — deferred / limits
+- External monitor: not tested on hardware (the user's confirmation left it open; only the built-in display was connected during development).
 - Verified on one built-in display only. Multi-display behavior is covered by unit tests with real-world arrangements, but not yet on hardware.
 - Repeating an action doesn't cycle sizes (e.g. ½ → ⅔ → ⅓, as some tools do).
 - Windows without a CGWindowID (rare) can be arranged but not restored.
 - Drag-to-edge uses the window under the pointer at mouse-down. Apps that draw custom title bars taller than 40 pt (some Electron apps) only snap when grabbed near the top.
+
+### Phase 4 — done
+- **Trigger**: ⌥Tab by default (⌘Tab or ⌃Tab selectable). A filtering `EventTap` swallows only Tab while the modifier is held, and the switcher's keys while it's open. Any other key closes the switcher and passes through. If the modifier is already released by the time the switcher opens, it switches at once. If macOS disables the tap, the switcher pauses (fails open) and says so.
+- **Keys**: Tab / ⇧Tab cycle (wrap), arrows move, releasing the modifier or ↩ switches, Esc cancels, Q quits the selected app, W presses the window's close button (the app may still ask to save). Clicking a tile switches. The overlay appears after 120 ms, so quick taps switch without a flash.
+- **List**: window server (front-to-back, `.optionAll`) merged with Accessibility windows of each regular app. Only standard windows ≥ 80×50 on layer 0 are kept, with Omni excluded. States are normal / minimized / hidden app / other Space. Windows not reachable through Accessibility are kept only with a real title and ≥ 200×120 (so offscreen helper windows stay out); without Screen Recording they have no title, so other-Space windows aren't listed.
+- **Recency**: one `AXObserver` per app (focused/main window changed), plus app-activation notifications, and the focused window is touched again when the switcher opens. Order: recently focused → never-focused in stacking order → minimized → hidden.
+- **Focus**: un-hide the app if hidden, un-minimize, set the app frontmost, set the window main, raise. Other-Space windows activate their app (the accepted limit).
+- **Thumbnails**: ScreenCaptureKit `SCScreenshotManager` per window (≤ 400 pt, up to 24), captured only while open. The last image is kept for windows that can't be captured (minimized), with the app icon otherwise.
+- **Palette**: `win …` searches open windows; "Switch to Window…" command.
+- 19 new tests (211 total).
+
+### Phase 4 — deferred / limits
+- Thumbnails are captured once per opening, not streamed continuously; the window under the overlay doesn't update while it stays open.
+- Apps with no open windows aren't listed (use the palette to launch or activate them).
+- Off by default; requires Accessibility, and Screen Recording for previews. macOS 15+ periodically asks the user to reconfirm Screen Recording.
+- Q and W use key positions (QWERTY), not characters.

@@ -2,6 +2,7 @@ import AppKit
 import FeatureClipboard
 import FeatureDiagnostics
 import FeaturePalette
+import FeatureSwitcher
 import FeatureWindows
 import OmniCore
 
@@ -41,6 +42,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         services.features.register(ClipboardHistoryFeature())
         services.features.register(SnippetsFeature())
         services.features.register(WindowsFeature())
+        services.features.register(SwitcherFeature())
         services.features.register(DiagnosticsFeature())
     }
 

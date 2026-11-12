@@ -40,6 +40,8 @@ targets:
         product: FeatureClipboard
       - package: OmniKit
         product: FeatureWindows
+      - package: OmniKit
+        product: FeatureSwitcher
     info:
       path: App/Info.plist
       properties:
@@ -79,5 +81,6 @@ schemes:
         - package: OmniKit/FeaturePaletteTests
         - package: OmniKit/FeatureClipboardTests
         - package: OmniKit/FeatureWindowsTests
+        - package: OmniKit/FeatureSwitcherTests
     archive:
       config: Release
