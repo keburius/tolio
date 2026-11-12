@@ -7,6 +7,7 @@ struct EditorActions {
     var copy: () -> Void
     var save: () -> Void
     var pin: () -> Void
+    var close: () -> Void
     var copyText: () -> Void
 }
 
@@ -32,7 +33,7 @@ struct EditorView: View {
             .background(Color(nsColor: .underPageBackgroundColor))
         }
         .onDeleteCommand { model.deleteSelection() }
-        .background(KeyShortcuts(model: model))
+        .background(KeyShortcuts(model: model, close: actions.close))
     }
 
     /// View points per image pixel: the capture at its real size, shrunk to fit.
@@ -75,12 +76,14 @@ struct EditorView: View {
             if model.document.crop != nil {
                 Button(L10n.Screenshots.resetCrop) { model.resetCrop() }.buttonStyle(.borderless)
             }
-            Button { model.deleteSelection() } label: { Image(systemName: "trash") }
-                .buttonStyle(.borderless)
-                .disabled(model.selection == nil)
-                .help(L10n.Screenshots.deleteSelected)
-                .accessibilityLabel(L10n.Screenshots.deleteSelected)
             Spacer(minLength: OmniStyle.s3)
+            Button(role: .destructive) { model.deleteSelection() } label: {
+                Label(L10n.Screenshots.delete, systemImage: "trash")
+            }
+            .buttonStyle(.borderedProminent)
+            .tint(.red)
+            .disabled(!model.canDelete)
+            .help(L10n.Screenshots.deleteSelected)
             // Icon-only so they never get cut to "…" in a narrow window; names are in the tooltips.
             Button { actions.copyText() } label: { Image(systemName: "text.viewfinder") }
                 .help(L10n.Screenshots.copyTextHelp)
@@ -88,16 +91,17 @@ struct EditorView: View {
             Button { actions.pin() } label: { Image(systemName: "pin") }
                 .help(L10n.Screenshots.pinHelp)
                 .accessibilityLabel(L10n.Screenshots.pin)
-            Button { actions.copy() } label: { Image(systemName: "doc.on.doc") }
+            Button { actions.copy() } label: { Label(L10n.Screenshots.copy, systemImage: "doc.on.doc") }
+                .buttonStyle(.borderedProminent)
+                .tint(.blue)
                 .help(L10n.Screenshots.copy)
-                .accessibilityLabel(L10n.Screenshots.copy)
                 .keyboardShortcut("c", modifiers: .command)
             Button { actions.save() } label: { Label(L10n.Screenshots.save, systemImage: "square.and.arrow.down") }
                 .keyboardShortcut("s", modifiers: .command)
                 .buttonStyle(.borderedProminent)
         }
         .labelStyle(.titleAndIcon)
-        .controlSize(.regular)
+        .controlSize(.large)
         .padding(.horizontal, OmniStyle.s3)
         .padding(.vertical, OmniStyle.s2)
     }
@@ -150,7 +154,11 @@ struct EditorView: View {
                 }
         )
         .onContinuousHover { phase in
-            if case .active = phase { cursor.set() }
+            // The drawing cursor only over the image; the normal arrow everywhere else.
+            switch phase {
+            case .active: cursor.set()
+            case .ended: NSCursor.arrow.set()
+            }
         }
     }
 
@@ -212,9 +220,14 @@ struct EditorView: View {
 /// Single-letter tool shortcuts, ignored while typing text.
 private struct KeyShortcuts: View {
     let model: EditorModel
+    let close: () -> Void
 
     var body: some View {
         ZStack {
+            // Esc closes the window (while typing a label, Esc just finishes the label).
+            Button("") { if model.textEdit == nil { close() } } // l10n-ignore
+                .keyboardShortcut(.cancelAction)
+                .disabled(model.textEdit != nil)
             ForEach(EditorModel.Tool.allCases) { tool in
                 Button("") { if model.textEdit == nil { model.tool = tool } }
                     .keyboardShortcut(KeyEquivalent(tool.key), modifiers: [])

@@ -3631,13 +3631,24 @@
         }
       }
     },
+    "screenshots.delete": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete"
+          }
+        }
+      }
+    },
     "screenshots.deleteSelected": {
       "extractionState": "manual",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Delete selected mark (⌫)"
+            "value": "Delete the selected mark, or the last one you drew (⌫)"
           }
         }
       }

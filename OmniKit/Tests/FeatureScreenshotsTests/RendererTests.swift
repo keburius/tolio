@@ -209,5 +209,13 @@ struct BrushTests {
         #expect(model.document.annotations.count == 1)
         model.undo()
         #expect(model.document.annotations.count == 2)
+        // With nothing selected, Delete removes the newest mark (the box), then the stroke.
+        model.selection = nil
+        #expect(model.canDelete)
+        model.deleteSelection()
+        #expect(model.document.annotations.map(\.isStroke) == [true])
+        model.deleteSelection()
+        #expect(model.document.annotations.isEmpty)
+        #expect(!model.canDelete)
     }
 }

@@ -128,8 +128,14 @@ final class EditorModel {
         document = next
     }
 
+    /// Something Delete can remove: the selected mark, else the newest one.
+    var canDelete: Bool { selection != nil || !document.annotations.isEmpty }
+
+    /// Deletes the selected mark, or the newest mark when nothing is
+    /// selected (so it works right after drawing, like an eraser for the last stroke).
     func deleteSelection() {
-        guard let id = selection else { return }
+        commitText()
+        guard let id = selection ?? document.annotations.last?.id else { return }
         change { $0.remove(id) }
         selection = nil
     }

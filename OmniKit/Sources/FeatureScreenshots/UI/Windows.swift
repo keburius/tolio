@@ -41,6 +41,7 @@ final class CaptureWindows: NSObject, NSWindowDelegate {
                 self.pin(Capture(image: image, scale: capture.scale, date: capture.date))
                 self.close(window)
             },
+            close: { [weak self, weak window] in self?.close(window) },
             copyText: { [weak self] in
                 guard let image = model.export() else { return }
                 self?.copyText(from: image)

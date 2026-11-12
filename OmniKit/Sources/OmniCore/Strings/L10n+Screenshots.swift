@@ -195,7 +195,8 @@ public extension L10n {
             tr("screenshots.captureText.note", "Hold ⇧ when you finish the selection to add the text to your previous capture. QR codes and barcodes are copied too; for a link you get an Open button. Everything is recognized on this Mac.")
         }
         public static var toolBrush: String { tr("screenshots.tool.brush", "Brush (P)") }
-        public static var deleteSelected: String { tr("screenshots.deleteSelected", "Delete selected mark (⌫)") }
+        public static var deleteSelected: String { tr("screenshots.deleteSelected", "Delete the selected mark, or the last one you drew (⌫)") }
+        public static var delete: String { tr("screenshots.delete", "Delete") }
         public static var toolArrow: String { tr("screenshots.tool.arrow", "Arrow (A)") }
         public static var toolBox: String { tr("screenshots.tool.box", "Box (R)") }
         public static var toolText: String { tr("screenshots.tool.text", "Text (T)") }
