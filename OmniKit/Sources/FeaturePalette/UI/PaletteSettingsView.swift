@@ -17,8 +17,8 @@ struct PaletteSettingsView: View {
         if let ms = feature.lastOpenMilliseconds {
             LabeledContent("Last open time") { Text("\(ms, specifier: "%.1f") ms").monospacedDigit() }
         }
-        Toggle("Download currency rates from the European Central Bank", isOn: settings.binding(PaletteFeature.currencyFetchKey))
-        Text("The only network request Omni makes: one small file, at most every 6 hours, when you open the palette.")
+        Toggle("Download currency rates", isOn: settings.binding(PaletteFeature.currencyFetchKey))
+        Text("Omni's only network requests: one small public file from each bank below, at most every 6 hours, when you open the palette. Nothing is sent.")
             .font(.caption).foregroundStyle(.secondary)
         LabeledContent("Default target currency") {
             TextField("", text: Binding(
@@ -28,24 +28,33 @@ struct PaletteSettingsView: View {
             .frame(width: 60)
             .multilineTextAlignment(.trailing)
         }
-        if let rates = feature.rates {
-            LabeledContent("Rates") {
-                HStack {
-                    if let current = rates.rates {
-                        Text("ECB, \(current.date) · \(current.rates.count) currencies")
-                    } else {
-                        Text("Not downloaded").foregroundStyle(.secondary)
-                    }
-                    Button(rates.isFetching ? "Updating…" : "Update Now") {
-                        Task { await rates.refresh() }
-                    }
-                    .disabled(rates.isFetching || !settings.value(PaletteFeature.currencyFetchKey))
-                }
-            }
-            if let error = rates.lastError {
-                Text(error).font(.caption).foregroundStyle(.red)
-            }
+        ForEach(feature.rateStores, id: \.source.name) { store in
+            RateStatusRow(store: store, fetchEnabled: settings.value(PaletteFeature.currencyFetchKey))
         }
         Button("Clear Usage History") { feature.clearUsage() }
+    }
+}
+
+private struct RateStatusRow: View {
+    let store: CurrencyRateStore
+    let fetchEnabled: Bool
+
+    var body: some View {
+        LabeledContent(store.source.name) {
+            HStack {
+                if let current = store.rates {
+                    Text("\(current.date) · \(current.rates.count) currencies")
+                } else {
+                    Text("Not downloaded").foregroundStyle(.secondary)
+                }
+                Button(store.isFetching ? "Updating…" : "Update Now") {
+                    Task { await store.refresh() }
+                }
+                .disabled(store.isFetching || !fetchEnabled)
+            }
+        }
+        if let error = store.lastError {
+            Text(error).font(.caption).foregroundStyle(.red)
+        }
     }
 }

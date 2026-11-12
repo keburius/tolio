@@ -70,6 +70,35 @@ struct CurrencyTests {
     </gesmes:Envelope>
     """.utf8)
 
+    /// Trimmed copy of a real NBG response (2026-11-12): GEL per `quantity` units.
+    static let nbgFixture = Data("""
+    [{"date":"2026-11-12T00:00:00.000Z","currencies":[
+      {"code":"AMD","quantity":1000,"rateFormated":"7.1944","diffFormated":"0.0005","rate":7.1944,"name":"Armenian Dram","diff":-0.0005,"date":"2026-11-11T17:01:12.692Z","validFromDate":"2026-11-12T00:00:00.000Z"},
+      {"code":"EUR","quantity":1,"rateFormated":"3.0000","diffFormated":"0.0010","rate":3.0,"name":"Euro","diff":0.001,"date":"2026-11-11T17:01:12.692Z","validFromDate":"2026-11-12T00:00:00.000Z"},
+      {"code":"USD","quantity":1,"rateFormated":"2.7000","diffFormated":"0.0010","rate":2.7,"name":"US Dollar","diff":0.001,"date":"2026-11-11T17:01:12.692Z","validFromDate":"2026-11-12T00:00:00.000Z"}
+    ]}]
+    """.utf8)
+
+    @Test func parsesNBGDocumentIntoEuroBase() throws {
+        let rates = try NBGRateParser.parse(Self.nbgFixture, fetchedAt: Date())
+        #expect(rates.source == "NBG")
+        #expect(rates.date == "2026-11-12")
+        #expect(rates.rates["GEL"] == 3)
+        #expect(abs(try #require(rates.convert(1, from: "USD", to: "GEL")) - 2.7) < 1e-9)
+        #expect(abs(try #require(rates.convert(1000, from: "AMD", to: "GEL")) - 7.1944) < 1e-9)
+    }
+
+    @Test func nbgWithoutEuroIsRejected() {
+        let data = Data(#"[{"date":"2026-11-12","currencies":[{"code":"USD","quantity":1,"rate":2.7}]}]"#.utf8)
+        #expect(throws: NBGRateParser.Failure.missingEuro) { try NBGRateParser.parse(data, fetchedAt: Date()) }
+        #expect(throws: (any Error).self) { try NBGRateParser.parse(Data("{}".utf8), fetchedAt: Date()) }
+    }
+
+    @Test func oldCacheWithoutSourceDecodesAsECB() throws {
+        let json = Data(#"{"date":"2026-11-11","fetchedAt":0,"rates":{"USD":1.1,"EUR":1}}"#.utf8)
+        #expect(try JSONDecoder().decode(CurrencyRates.self, from: json).source == "ECB")
+    }
+
     @Test func parsesECBDocument() throws {
         let rates = try ECBRateParser.parse(Self.fixture, fetchedAt: Date(timeIntervalSince1970: 0))
         #expect(rates.date == "2026-11-11")

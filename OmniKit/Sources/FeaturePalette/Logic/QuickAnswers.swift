@@ -15,14 +15,16 @@ public struct QuickAnswer: Equatable, Sendable {
 
 /// Turns a query into quick answers. Pure: rates and defaults are injected.
 public struct QuickAnswerEngine: Sendable {
-    public var rates: CurrencyRates?
+    /// Rate tables in order of preference (ECB first, then NBG). The first
+    /// table that has both currencies is used, so GEL pairs use NBG's own rates.
+    public var rateTables: [CurrencyRates]
     /// Target when the user types only "100 usd".
     public var defaultCurrency: String
     /// Whether rate fetching is on (changes the "no rates" message).
     public var currencyFetchEnabled: Bool
 
-    public init(rates: CurrencyRates?, defaultCurrency: String, currencyFetchEnabled: Bool = true) {
-        self.rates = rates
+    public init(rateTables: [CurrencyRates], defaultCurrency: String, currencyFetchEnabled: Bool = true) {
+        self.rateTables = rateTables
         self.defaultCurrency = defaultCurrency.uppercased()
         self.currencyFetchEnabled = currencyFetchEnabled
     }
@@ -59,26 +61,30 @@ public struct QuickAnswerEngine: Sendable {
         } else {
             to = from == defaultCurrency ? (from == "USD" ? "EUR" : "USD") : defaultCurrency
         }
-        guard let rates else {
-            // Only claim it's a currency query if both sides look like known codes.
-            guard Self.knownCodes.contains(from) || CurrencyNames.symbols.values.contains(from) else { return nil }
+        guard !rateTables.isEmpty else {
+            // Only claim it's a currency query if the source looks like a real code.
+            guard Self.isKnown(from) else { return nil }
             let hint = currencyFetchEnabled ? "Rates haven't been downloaded yet." : "Turn on rate updates in Settings."
             return QuickAnswer(kind: .currency, title: "No exchange rates", subtitle: hint, copyText: "")
         }
-        guard rates.supports(from), rates.supports(to) else {
-            let missing = rates.supports(from) ? to : from
-            guard Self.knownCodes.contains(missing) || CurrencyNames.symbols.values.contains(missing) else { return nil }
-            return QuickAnswer(
-                kind: .currency, title: "\(missing) isn't available",
-                subtitle: "The ECB doesn't publish a rate for \(missing).", copyText: ""
-            )
+        guard let table = rateTables.first(where: { $0.supports(from) && $0.supports(to) }),
+              let value = table.convert(q.amount, from: from, to: to) else {
+            let missing = rateTables.contains { $0.supports(from) } ? to : from
+            guard Self.isKnown(missing) else { return nil }
+            let reason = missing == "GEL"
+                ? "National Bank of Georgia rates couldn't be downloaded."
+                : "Neither the ECB nor the NBG publishes a rate for \(missing)."
+            return QuickAnswer(kind: .currency, title: "\(missing) rate not available", subtitle: reason, copyText: "")
         }
-        guard let value = rates.convert(q.amount, from: from, to: to) else { return nil }
         let text = String(format: "%.2f", value)
         return QuickAnswer(
             kind: .currency, title: "\(text) \(to)",
-            subtitle: "\(Calculator.format(q.amount)) \(from) = · ECB rate of \(rates.date)", copyText: text
+            subtitle: "\(Calculator.format(q.amount)) \(from) = · \(table.source) rate of \(table.date)", copyText: text
         )
+    }
+
+    private static func isKnown(_ code: String) -> Bool {
+        knownCodes.contains(code) || CurrencyNames.symbols.values.contains(code)
     }
 
     /// 6 significant digits so conversions don't show float noise.

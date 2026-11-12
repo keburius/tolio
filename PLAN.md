@@ -204,7 +204,7 @@ Tests: allowlist property tests (generated hostile paths, symlinks, `..`, `/Syst
 - **Swift 6 strict concurrency**: AX, CGEventTap, FSEvents, and Carbon callbacks are C callbacks off the main actor. Each wrapper does a minimal hop to `@MainActor` and the payload types are `Sendable`. This is the most likely source of build friction in every phase.
 - **Warnings**: `SWIFT_TREAT_WARNINGS_AS_ERRORS=YES` in CI config (`make build`), so "fix all warnings" is enforced.
 - **Testing command**: `xcodebuild -project Omni.xcodeproj -scheme Omni -destination 'platform=macOS' test`. The scheme includes every OmniKit test target.
-- **Network**: one outbound call (ECB). No analytics, crash reporters, or update checks. Sparkle-style updates are out of scope unless you add them.
+- **Network**: two outbound GETs (ECB and NBG rate files). No analytics, crash reporters, or update checks. Sparkle-style updates are out of scope unless you add them.
 - **Distribution**: hardened runtime, Developer ID, `notarytool` script. The final notarization run needs your credentials (keychain profile) and happens only when you ask.
 - **Per-phase routine**: `make gen build test` → fix warnings → update this file's status table → `git commit` → summary + manual test steps.
 
@@ -261,7 +261,7 @@ Tests: allowlist property tests (generated hostile paths, symlinks, `..`, `/Syst
 - 54 new tests (100 total).
 
 ### Phase 1 — deferred / limits
-- The ECB doesn't publish GEL (and ~130 other currencies), so `usd in gel` explains that rather than converting. Adding a second rate source would be a second network endpoint and needs your OK.
+- ~~GEL missing~~ Added: National Bank of Georgia feed (`nbg.gov.ge/gw/api/ct/monetarypolicy/currencies/en/json`) as a second source with the same caching and backoff rules. GEL pairs use NBG's official rates; other pairs prefer the ECB, and NBG covers what the ECB lacks (e.g. AMD, AZN, KZT, UAH). If NBG is unreachable and nothing is cached, GEL shows "rate not available" and everything else keeps working. Network endpoints are now exactly two GETs, ECB and NBG.
 - Dynamic palette providers (clipboard history search) arrive with Phase 2. Today commands are static per feature.
 - Settings pane titles are English only. macOS ships no public localized names for them.
 - Hotkey-to-screen latency isn't measured end to end (Carbon delivery is outside our clock). The figure above starts when the hotkey handler runs.

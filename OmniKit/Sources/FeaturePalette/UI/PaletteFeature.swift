@@ -32,7 +32,8 @@ public final class PaletteFeature: Feature {
     public let isEnabledByDefault = true
 
     private(set) var appCount = 0
-    private(set) var rates: CurrencyRateStore?
+    /// ECB first, then NBG (see `QuickAnswerEngine.rateTables`).
+    private(set) var rateStores: [CurrencyRateStore] = []
     private(set) var lastOpenMilliseconds: Double?
 
     @ObservationIgnored private var context: FeatureContext?
@@ -44,8 +45,10 @@ public final class PaletteFeature: Feature {
 
     public func enable(context: FeatureContext) throws {
         self.context = context
-        let cacheURL = try? AppPaths.applicationSupport().appendingPathComponent("currency-rates.json")
-        rates = CurrencyRateStore(cacheURL: cacheURL)
+        let support = try? AppPaths.applicationSupport()
+        rateStores = [RateSource.ecb, .nbg].map { source in
+            CurrencyRateStore(source: source, cacheURL: support?.appendingPathComponent(source.cacheFileName))
+        }
 
         let model = PaletteViewModel(sources: PaletteSources(
             staticItems: { [weak self] in self?.staticItems ?? [] },
@@ -77,7 +80,7 @@ public final class PaletteFeature: Feature {
 
     public func disable() {
         context = nil
-        rates = nil
+        rateStores = []
         staticItems = []
         appCount = 0
     }
@@ -99,7 +102,9 @@ public final class PaletteFeature: Feature {
 
     func show(startedAt: ContinuousClock.Instant) {
         guard let controller else { return }
-        if context?.settings.value(Self.currencyFetchKey) == true { rates?.refreshIfNeeded() }
+        if context?.settings.value(Self.currencyFetchKey) == true {
+            for store in rateStores { store.refreshIfNeeded() }
+        }
         controller.show(startedAt: startedAt)
         lastOpenMilliseconds = controller.lastOpenDuration?.milliseconds
     }
@@ -153,7 +158,7 @@ public final class PaletteFeature: Feature {
 
     private func answerEngine() -> QuickAnswerEngine {
         QuickAnswerEngine(
-            rates: rates?.rates,
+            rateTables: rateStores.compactMap(\.rates),
             defaultCurrency: context?.settings.value(Self.defaultCurrencyKey) ?? "USD",
             currencyFetchEnabled: context?.settings.value(Self.currencyFetchKey) ?? false
         )

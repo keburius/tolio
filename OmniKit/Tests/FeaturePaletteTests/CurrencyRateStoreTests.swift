@@ -43,6 +43,17 @@ struct CurrencyRateStoreTests {
         #expect(failing.needsRefresh(now: later.addingTimeInterval(CurrencyRateStore.retryDelay + 1)))
     }
 
+    @Test func nbgSourceUsesItsParser() async {
+        let store = CurrencyRateStore(source: .nbg, cacheURL: nil) { CurrencyTests.nbgFixture }
+        await store.refresh(now: now)
+        #expect(store.rates?.source == "NBG")
+        #expect(store.rates?.supports("GEL") == true)
+    }
+
+    @Test func sourcesUseSeparateCacheFiles() {
+        #expect(RateSource.ecb.cacheFileName != RateSource.nbg.cacheFileName)
+    }
+
     @Test func corruptCacheIsIgnored() throws {
         let url = tempFile()
         try Data("garbage".utf8).write(to: url)
