@@ -59,11 +59,16 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         ) { NSApp.terminate(nil) }, owner: owner)
     }
 
-    /// `omni://palette` opens the palette (for automation, e.g. Shortcuts).
-    /// Only this fixed action is exposed: a link can't run arbitrary commands.
+    /// `omni://palette` opens the palette and `omni://settings` the Settings
+    /// window (for automation, e.g. Shortcuts). Only these fixed actions are
+    /// exposed: a link can't run arbitrary commands.
     func application(_ application: NSApplication, open urls: [URL]) {
-        for url in urls where url.scheme == "omni" && url.host == "palette" {
-            services.commands.allCommands.first { $0.id == PaletteFeature.showCommandID }?.action()
+        for url in urls where url.scheme == "omni" {
+            switch url.host {
+            case "palette": services.commands.allCommands.first { $0.id == PaletteFeature.showCommandID }?.action()
+            case "settings": showSettings()
+            default: break
+            }
         }
     }
 
@@ -73,6 +78,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                 title: "Omni Settings",
                 size: NSSize(width: 720, height: 500),
                 permissions: services.permissions,
+                fullSizeContent: true,
                 content: SettingsRootView(services: services, onShowOnboarding: { [weak self] in self?.showOnboarding() })
             )
         }
