@@ -1,6 +1,6 @@
 # Omni — Implementation Plan
 
-Status: **approved. Phases 0–8 done** (see §8).
+Status: **approved. Phases 0–8 done; next: Interface and onboarding** (see §8 and DESIGN.md).
 
 ## 0. Environment found
 
@@ -9,7 +9,6 @@ Status: **approved. Phases 0–8 done** (see §8).
 | Xcode | 26.1 (17B55), Swift 6.2.1 |
 | Host OS | macOS 27.0.1, arm64 |
 | XcodeGen | 2.46.0 via Homebrew (build tool only) |
-| libarchive | The SDK ships `libarchive.tbd` but **no headers**. See decision D4 |
 | Signing | Apple Development, Personal Team `M6TAWX2WCS`, pinned by SHA-1 in git-ignored `Config/Signing.local.xcconfig`. Without that file builds fall back to ad-hoc |
 
 ## 1. Repository layout
@@ -31,7 +30,6 @@ MC/
 │   ├── Sources/<Module>/...
 │   └── Tests/<Module>Tests/...
 └── Scripts/
-    ├── build-libarchive.sh      # universal static lib (Phase 10)
     └── notarize.sh              # Developer ID sign + notarytool
 ```
 
@@ -54,10 +52,6 @@ Dependency rule: feature modules depend on `OmniCore` plus the platform kits the
 | `FeatureShortcutOverlay` | `Logic/` (HoldGesture, ShortcutFormatter, MenuModel: ShortcutCatalog + ColumnPacker), `Runtime/` (MenuReader + MenuCache, ModifierTap), `UI/` (OverlayController, OverlayView, ShortcutOverlayFeature) | Core, Platform |
 | `FeatureTextActions` | `Logic/` (TextSelection, TextAnalysis + SearchEngine, SelectionGuard, SelectionTrigger, CopyFallback), `Actions/` (TextAction protocol + built-ins), `Runtime/` (SelectionReader, SelectionTap), `UI/` (PopupController, PopupView, TextActionsFeature) | Core, Platform |
 | `FeatureScreenshots` | `Logic/` (CaptureGeometry, FileNaming, Annotation + AnnotationDocument, AnnotationRenderer, AlphaBounds, ScrollStitcher, TextRecognizer), `Runtime/` (ScreenCapturer + CaptureOutput, ScreenRecorder, ScrollingCapture), `UI/` (SelectionOverlay, EditorModel/EditorView, CaptureWindows + pin, RecordingController, ScreenshotsFeature) | Core, Platform |
-| `FeatureFileRules` | Rule engine, FSEvents watcher, undo log | Core, Platform |
-| `FeatureUninstaller` | Related-file finder with allowlist | Core, Platform |
-| `FeatureArchives` | libarchive wrapper | Core, Platform, `CLibArchive` |
-| `CLibArchive` | System-library or binary target for libarchive | none |
 
 Inside each feature module, pure logic (matchers, parsers, rule evaluation, layout math, path filtering) lives in files that import only Foundation, so it can be tested without a window server. AppKit/SwiftUI code lives under a `UI/` subfolder and stays thin.
 
@@ -123,11 +117,6 @@ public protocol CommandProvider { func results(for query: String) async -> [Comm
 | Shortcut overlay | Accessibility | Modifier double-press detection via tap |
 | Text selection popup | Accessibility | — |
 | Screenshots | Screen Recording | Microphone for recording with mic |
-| File rules | none | Full Disk Access if watching protected folders. Desktop/Documents/Downloads get per-folder TCC prompts instead |
-| Uninstaller | Full Disk Access | App Management (to trash bundles in /Applications on macOS 13+) |
-| Archives | none | — |
-
-Full Disk Access has no query API. Detection is a heuristic: try to read a TCC-protected path such as `~/Library/Safari/Bookmarks.plist`. The result is shown as "likely granted / not granted".
 
 Onboarding shows only the union of `requiredPermissions` for the features the user turned on. It runs again (for the delta) when a feature that needs a new permission is enabled later.
 
@@ -187,18 +176,6 @@ Build: SCK captures, using the display's native pixel scale for each capture so 
 Tests: annotation model and transforms, crop/scale math across scale factors, pixel-dimension checks against synthetic images, output file naming.
 Risks: the mixed-DPI composite of a cross-display area has no single "correct" pixel grid. Recording mic on macOS 14 needs A/V sync work. Scrolling capture (scroll by synthesized events, stitch by row matching) is inherently fragile.
 
-### Phase 9 — File rules
-Build: an FSEvents stream per watched folder (file-level events, latency about 1 s). Engine: `Rule { conditions: [Condition], match: all/any, actions: [Action] }` evaluated against a `FileFacts` snapshot (name, ext, UTType kind, size, dates, `kMDItemWhereFroms` decoded from the xattr binary plist, PDF text via PDFKit with a page cap). Actions plan into `[FileOperation]` first. Dry-run shows the plan, and execution applies it while appending to a JSON-lines undo log. "Delete" only exists as `trashItem`. Name conflicts are resolved by the policy `appendNumber | skip | replaceToTrash`. Loop protection keeps a recently-processed set so the engine doesn't react to its own moves. The shell-script action runs `/bin/zsh -c` with the path in `$1`, a timeout, and no shell interpolation of filenames.
-Tests: one or more tests per condition and action, conflict policies, rename pattern tokens, undo of every operation, dry-run equals execution plan, loop protection. Tests run on a temp directory with a fake trash in tests.
-Risks: "Date added" relies on `kMDItemDateAdded` (Spotlight) or the `addedToDirectoryDate` resource value, which can be missing on some volumes. Undo can fail if a file was changed in between, and the log records that and reports it. Shell scripts are user code with full user privileges, so Settings warns about that.
-
-### Phase 10 — Uninstaller and archives
-- Uninstaller: a hard-coded `SearchRoot` allowlist (`~/Library/{Application Support, Caches, Preferences, Containers, Group Containers, LaunchAgents, Logs, Saved Application State}` and the `/Library/...` equivalents that exist). The matcher only looks at the **direct children** of those roots. Every candidate is canonicalized (`realpath`, symlinks resolved) and must still be inside a root, so it rejects `/System`, other `.app` bundles, and paths with `..` or symlinks escaping the root. Matches are labeled by confidence: exact bundle id/group id = checked by default, name-only = unchecked. Everything goes through `trashItem` and is logged.
-- Root-owned items in `/Library` can't be trashed without admin rights. I'll show them as "requires admin, reveal in Finder" rather than build a privileged helper (D5).
-- Archives: libarchive read for zip/tar/gz/bz2/xz/7z. Write zip and 7z. Extraction guards against path traversal (`..`, absolute paths, symlinks pointing outside the destination) and against zip bombs (size/ratio cap).
-- **RAR: libarchive itself can extract RAR 4 and RAR 5** with its own BSD-licensed, clean-room decoder. No unrar license is involved. Limits: no encrypted RAR and partial multi-volume support. I plan to include RAR extraction on that basis unless you object (Q6).
-Tests: allowlist property tests (generated hostile paths, symlinks, `..`, `/System/...`, other bundles never match), bundle-id matching, archive round-trip, traversal rejection, bomb cap.
-
 ## 6. Cross-cutting
 
 - **Swift 6 strict concurrency**: AX, CGEventTap, FSEvents, and Carbon callbacks are C callbacks off the main actor. Each wrapper does a minimal hop to `@MainActor` and the payload types are `Sendable`. This is the most likely source of build friction in every phase.
@@ -215,10 +192,7 @@ Tests: allowlist property tests (generated hostile paths, symlinks, `..`, `/Syst
 | Q1 | Apple Developer **Team ID** and bundle id prefix (e.g. `com.yourname.omni`)? | Needed so TCC grants survive rebuilds |
 | Q2 | Allow **private APIs**? `_AXUIElementGetWindow` (Phases 3–4, very widely used, low risk) and optionally CGS/SkyLight Space APIs (Phase 4 off-Space focus, higher risk). | Allow `_AXUIElementGetWindow`. Skip SkyLight and accept the off-Space limitation |
 | Q3 | OK to `brew install xcodegen` on this machine? | Yes |
-| Q4 | **libarchive sourcing** (no headers in SDK): (a) build a pinned libarchive release from source into a universal static lib via script, with xz/bz2/zstd static too, or (b) link the system `libarchive.dylib` with vendored matching headers (fragile, undocumented ABI). | (a) |
 | Q5 | Which Electron app should Phase 6 be verified against (VS Code, Slack, Discord…)? Is it installed? | VS Code |
-| Q6 | RAR extraction via libarchive's built-in BSD decoder (no encryption)? | Include it |
-| D5 | Uninstaller: skip root-owned `/Library` items (reveal only) instead of a privileged helper? | Skip; a helper is a large security surface |
 | — | SMC temperatures/fans on Apple silicon | Skip (see Phase 5) |
 
 ## 8. Status
@@ -234,8 +208,7 @@ Tests: allowlist property tests (generated hostile paths, symlinks, `..`, `/Syst
 | 6 Shortcut overlay | **done** |
 | 7 Text selection | **done** |
 | 8 Screenshots | **done** |
-| 9 File rules | not started |
-| 10 Uninstaller + archives | not started |
+| Interface and onboarding | design written (DESIGN.md), waiting for approval |
 
 ### Phase 0 — done
 - `make build | test | release | run`. Warnings fail the build (`Scripts/check-warnings.sh`). Release is universal (arm64 + x86_64), hardened runtime.
