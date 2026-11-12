@@ -1,19 +1,21 @@
 import AppKit
 import AVFoundation
+import Observation
 import OmniCore
 import OmniPlatform
 @preconcurrency import ScreenCaptureKit
 
-/// Runs one recording at a time and shows a stop button in the menu bar.
+/// Runs one recording at a time. Its state is observable so the app can show
+/// a timer on the Screen Recording icon (or the main icon) while it runs.
 @MainActor
-final class RecordingController: NSObject {
-    private var recorder: ScreenRecorder?
-    private var statusItem: NSStatusItem?
-    private var timer: Timer?
-    private var startDate = Date()
-    private let log = Log.logger("recorder")
-
-    var isRecording: Bool { recorder != nil }
+@Observable
+final class RecordingController {
+    @ObservationIgnored private var recorder: ScreenRecorder?
+    /// True from the moment a recording has started until `stop()` is called.
+    private(set) var isRecording = false
+    /// When the running recording started, or nil while not recording.
+    private(set) var startDate: Date?
+    @ObservationIgnored private let log = Log.logger("recorder")
 
     func start(area: CGRect, options: RecordingOptions, folder: URL) async {
         guard !isRecording else { return }
@@ -21,10 +23,10 @@ final class RecordingController: NSObject {
         if options.microphone {
             if #unavailable(macOS 15.0) {
                 options.microphone = false
-                HUD.show("Microphone recording needs macOS 15", symbol: "mic.slash")
+                HUD.show(L10n.Screenshots.micNeedsMacOS15, symbol: "mic.slash")
             } else if !(await Self.microphoneAllowed()) {
                 options.microphone = false
-                HUD.show("Recording without microphone (no permission)", symbol: "mic.slash")
+                HUD.show(L10n.Screenshots.micNoPermission, symbol: "mic.slash")
             }
         }
         do {
@@ -32,7 +34,7 @@ final class RecordingController: NSObject {
                   let rect = CaptureGeometry.recordingRect(area: area, display: display) else { throw CaptureError.nothingToCapture }
             let content = try await ScreenCapturer.shareableContent()
             guard let scDisplay = content.displays.first(where: { $0.displayID == display.id }) else { throw CaptureError.nothingToCapture }
-            // Omni's own windows (HUD, stop button) stay out of the video.
+            // Omni's own windows (notices, menus) stay out of the video.
             let own = content.applications.filter { $0.processID == ProcessInfo.processInfo.processIdentifier }
             let filter = SCContentFilter(display: scDisplay, excludingApplications: own, exceptingWindows: [])
             try FileManager.default.createDirectory(at: folder, withIntermediateDirectories: true)
@@ -47,26 +49,27 @@ final class RecordingController: NSObject {
                 pixelWidth: rect.pixelWidth, pixelHeight: rect.pixelHeight, options: options
             )
             self.recorder = recorder
+            isRecording = true
             startDate = Date()
-            showStatusItem()
             log.info("Recording \(rect.pixelWidth)×\(rect.pixelHeight) at \(options.framesPerSecond) fps")
         } catch {
             log.error("Recording failed to start: \(String(describing: error), privacy: .public)")
-            HUD.show("Couldn't start recording: \(error)", symbol: "exclamationmark.triangle")
+            HUD.show(L10n.Screenshots.couldntStartRecording("\(error)"), symbol: "exclamationmark.triangle")
         }
     }
 
     func stop() async {
         guard let recorder else { return }
         self.recorder = nil
-        hideStatusItem()
+        isRecording = false
+        startDate = nil
         do {
             let url = try await recorder.stop()
-            HUD.show("Recording saved", symbol: "film")
+            HUD.show(L10n.Screenshots.recordingSaved, symbol: "film")
             NSWorkspace.shared.activateFileViewerSelecting([url])
         } catch {
             log.error("Recording failed: \(String(describing: error), privacy: .public)")
-            HUD.show("Recording failed: \(error)", symbol: "exclamationmark.triangle")
+            HUD.show(L10n.Screenshots.recordingFailed("\(error)"), symbol: "exclamationmark.triangle")
         }
     }
 
@@ -76,43 +79,5 @@ final class RecordingController: NSObject {
         case .notDetermined: return await AVCaptureDevice.requestAccess(for: .audio)
         default: return false
         }
-    }
-
-    // MARK: - Status item
-
-    private func showStatusItem() {
-        let item = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
-        item.button?.target = self
-        item.button?.action = #selector(stopClicked)
-        item.button?.toolTip = "Stop recording"
-        statusItem = item
-        updateTitle()
-        let timer = Timer(timeInterval: 1, repeats: true) { [weak self] _ in
-            MainActor.assumeIsolated { self?.updateTitle() }
-        }
-        timer.tolerance = 0.2
-        RunLoop.main.add(timer, forMode: .common)
-        self.timer = timer
-    }
-
-    private func updateTitle() {
-        let seconds = Int(Date().timeIntervalSince(startDate))
-        let title = NSMutableAttributedString(string: "● ", attributes: [.foregroundColor: NSColor.systemRed])
-        title.append(NSAttributedString(
-            string: String(format: "%d:%02d", seconds / 60, seconds % 60),
-            attributes: [.font: NSFont.monospacedDigitSystemFont(ofSize: 0, weight: .regular)]
-        ))
-        statusItem?.button?.attributedTitle = title
-    }
-
-    private func hideStatusItem() {
-        timer?.invalidate()
-        timer = nil
-        if let statusItem { NSStatusBar.system.removeStatusItem(statusItem) }
-        statusItem = nil
-    }
-
-    @objc private func stopClicked() {
-        Task { await stop() }
     }
 }

@@ -4,20 +4,33 @@ import OmniCore
 import OmniPlatform
 import SwiftUI
 
+/// What happens to a screenshot right after it is taken.
 public enum AfterCapture: String, Codable, CaseIterable, Sendable {
     case editor, copy, save, pin
 
+    /// Sentence-case label for the settings picker.
     var label: String {
         switch self {
-        case .editor: "Open in the editor"
-        case .copy: "Copy to the clipboard"
-        case .save: "Save to the folder"
-        case .pin: "Pin on screen"
+        case .editor: L10n.Screenshots.afterEditor
+        case .copy: L10n.Screenshots.afterCopy
+        case .save: L10n.Screenshots.afterSave
+        case .pin: L10n.Screenshots.afterPin
+        }
+    }
+
+    /// Title-case item for the "After Capturing" menu.
+    var menuTitle: String {
+        switch self {
+        case .editor: L10n.Screenshots.afterEditorMenu
+        case .copy: L10n.Screenshots.afterCopyMenu
+        case .save: L10n.Screenshots.afterSaveMenu
+        case .pin: L10n.Screenshots.afterPinMenu
         }
     }
 }
 
-/// Screenshots, OCR, pinning, an annotation editor, and screen recording.
+/// Screenshots & Recording: captures, text recognition, pinning, an
+/// annotation editor, and screen recording.
 @MainActor
 @Observable
 public final class ScreenshotsFeature: Feature {
@@ -32,23 +45,36 @@ public final class ScreenshotsFeature: Feature {
     static let scrollingKey = SettingKey.feature("screenshots", "experimentalScrolling", default: false)
 
     static func combo(_ keyCode: UInt32) -> KeyCombo { KeyCombo(keyCode: keyCode, modifiers: [.control, .option, .command]) }
-    public static let areaHotkey = HotkeyAction(id: "screenshots.area", title: "Capture area or window", defaultCombo: combo(21)) // ⌃⌥⌘4
-    public static let screenHotkey = HotkeyAction(id: "screenshots.screen", title: "Capture screen", defaultCombo: combo(20)) // ⌃⌥⌘3
-    public static let textHotkey = HotkeyAction(id: "screenshots.text", title: "Capture text (OCR)", defaultCombo: combo(31)) // ⌃⌥⌘O
-    public static let recordHotkey = HotkeyAction(id: "screenshots.record", title: "Start or stop screen recording", defaultCombo: combo(15)) // ⌃⌥⌘R
-    public static let scrollingHotkey = HotkeyAction(id: "screenshots.scrolling", title: "Scrolling capture (experimental)", defaultCombo: nil)
+    public static let areaHotkey = HotkeyAction(id: "screenshots.area", title: L10n.Screenshots.hotkeyArea, defaultCombo: combo(21)) // ⌃⌥⌘4
+    public static let screenHotkey = HotkeyAction(id: "screenshots.screen", title: L10n.Screenshots.hotkeyScreen, defaultCombo: combo(20)) // ⌃⌥⌘3
+    public static let textHotkey = HotkeyAction(id: "screenshots.text", title: L10n.Screenshots.hotkeyText, defaultCombo: combo(31)) // ⌃⌥⌘O
+    public static let recordHotkey = HotkeyAction(id: "screenshots.record", title: L10n.Screenshots.hotkeyRecord, defaultCombo: combo(15)) // ⌃⌥⌘R
+    public static let scrollingHotkey = HotkeyAction(id: "screenshots.scrolling", title: L10n.Screenshots.hotkeyScrolling, defaultCombo: nil)
 
     public let id: FeatureID = "screenshots"
-    public let displayName = "Screenshots"
-    public let summary = "Capture areas, windows, or the screen; annotate, pin, copy text, and record video."
+    public var displayName: String { L10n.Screenshots.displayName }
+    public var summary: String { L10n.Screenshots.summary }
     public let symbolName = "camera.viewfinder"
     public let requiredPermissions: Set<Permission> = [.screenRecording]
     /// Microphone for recording with mic; Accessibility for scrolling capture.
     public let optionalPermissions: Set<Permission> = [.microphone, .accessibility]
 
-    @ObservationIgnored private var settings: SettingsStore?
+    public var declaredHotkeys: [HotkeyAction] {
+        [Self.areaHotkey, Self.screenHotkey, Self.textHotkey, Self.recordHotkey, Self.scrollingHotkey]
+    }
+
+    typealias Action = @MainActor @Sendable () -> Void
+
+    /// The actions behind the shortcuts, kept for the menu bar icons.
+    struct Actions {
+        let area, screen, text, record, scrolling: Action
+    }
+
+    @ObservationIgnored var settings: SettingsStore?
+    @ObservationIgnored var actions: Actions?
     @ObservationIgnored private var windows: CaptureWindows?
-    @ObservationIgnored private var recording: RecordingController?
+    /// Observed, so the menu bar icons can follow the recording state.
+    private(set) var recording: RecordingController?
     @ObservationIgnored private var busy = false
     private let log = Log.logger("screenshots")
 
@@ -66,8 +92,8 @@ public final class ScreenshotsFeature: Feature {
             Task { await recording.stop() }
             self?.windows = nil
             self?.recording = nil
+            self?.actions = nil
         }
-        typealias Action = @MainActor @Sendable () -> Void
         let run: (@escaping @MainActor @Sendable () async -> Void) -> Action = { [weak self] body in
             {
                 guard let self, !self.busy else { return }
@@ -86,6 +112,7 @@ public final class ScreenshotsFeature: Feature {
             if recording.isRecording { Task { await recording.stop() } } else { run { await self.startRecording() }() }
         }
         let scrolling = run { [weak self] in await self?.captureScrolling() }
+        actions = Actions(area: area, screen: screen, text: text, record: record, scrolling: scrolling)
 
         context.registerHotkey(Self.areaHotkey, handler: area)
         context.registerHotkey(Self.screenHotkey, handler: screen)
@@ -93,21 +120,24 @@ public final class ScreenshotsFeature: Feature {
         context.registerHotkey(Self.recordHotkey, handler: record)
         context.registerHotkey(Self.scrollingHotkey) { if settings.value(Self.scrollingKey) { scrolling() } }
 
-        // From the palette: wait until it has closed so it isn't captured.
-        func later(_ action: @escaping Action) -> Action {
-            { Task { @MainActor in try? await Task.sleep(for: .milliseconds(200)); action() } }
-        }
-        context.registerCommand(Command(id: "screenshots.area", title: "Capture Area or Window", keywords: ["screenshot", "snip", "capture"], symbolName: "viewfinder", action: later(area)))
-        context.registerCommand(Command(id: "screenshots.screen", title: "Capture Screen", keywords: ["screenshot", "full screen"], symbolName: "display", action: later(screen)))
-        context.registerCommand(Command(id: "screenshots.text", title: "Capture Text", subtitle: "Copy text from part of the screen (OCR)", keywords: ["ocr", "recognize", "text"], symbolName: "text.viewfinder", action: later(text)))
-        context.registerCommand(Command(id: "screenshots.record", title: "Record Screen / Stop Recording", keywords: ["video", "recording", "mp4"], symbolName: "record.circle", action: later(record)))
-        context.registerCommand(Command(id: "screenshots.scrolling", title: "Scrolling Capture (Experimental)", keywords: ["long screenshot", "scroll"], symbolName: "arrow.up.and.down.text.horizontal") {
-            if settings.value(Self.scrollingKey) { later(scrolling)() } else { HUD.show("Turn on scrolling capture in Settings → Screenshots", symbol: "flask") }
+        let later = Self.afterUICloses
+        context.registerCommand(Command(id: "screenshots.area", title: L10n.Screenshots.captureArea, keywords: ["screenshot", "snip", "capture"], symbolName: "viewfinder", action: later(area)))
+        context.registerCommand(Command(id: "screenshots.screen", title: L10n.Screenshots.captureScreen, keywords: ["screenshot", "full screen"], symbolName: "display", action: later(screen)))
+        context.registerCommand(Command(id: "screenshots.text", title: L10n.Screenshots.copyTextFromScreen, subtitle: L10n.Screenshots.copyTextFromScreenSubtitle, keywords: ["ocr", "recognize", "text"], symbolName: "text.viewfinder", action: later(text)))
+        context.registerCommand(Command(id: "screenshots.record", title: L10n.Screenshots.recordOrStop, keywords: ["video", "recording", "mp4"], symbolName: "record.circle", action: later(record)))
+        context.registerCommand(Command(id: "screenshots.scrolling", title: L10n.Screenshots.scrollingCapture, keywords: ["long screenshot", "scroll"], symbolName: "arrow.up.and.down.text.horizontal") {
+            if settings.value(Self.scrollingKey) { later(scrolling)() } else { HUD.show(L10n.Screenshots.turnOnScrolling, symbol: "flask") }
         })
     }
 
     public func disable() {
         settings = nil
+    }
+
+    /// Runs `action` once the palette, menu or control panel that triggered
+    /// it has closed, so it doesn't end up in the capture.
+    static func afterUICloses(_ action: @escaping Action) -> Action {
+        { Task { @MainActor in try? await Task.sleep(for: .milliseconds(200)); action() } }
     }
 
     static func folder(_ settings: SettingsStore) -> URL {
@@ -150,13 +180,13 @@ public final class ScreenshotsFeature: Feature {
 
     private func captureScrolling() async {
         guard case let .area(rect) = await SelectionOverlay.choose(.scrolling) else { return }
-        HUD.show("Scrolling… hold Esc to stop", symbol: "arrow.down.doc")
+        HUD.show(L10n.Screenshots.scrolling, symbol: "arrow.down.doc")
         try? await Task.sleep(for: .milliseconds(900)) // let the HUD fade before the first page
         do {
             let outcome = try await ScrollingCapture.run(area: rect)
             if case let .finished(capture, pages, reason) = outcome {
                 log.info("Scrolling capture: \(pages) pages, \(reason, privacy: .public)")
-                HUD.show("Joined \(pages) page\(pages == 1 ? "" : "s"): \(reason)", symbol: "arrow.down.doc")
+                HUD.show(L10n.Screenshots.joinedPages(pages, reason: reason), symbol: "arrow.down.doc")
                 deliver(capture)
             }
         } catch {
@@ -190,7 +220,7 @@ public final class ScreenshotsFeature: Feature {
         case .editor: windows.openEditor(capture)
         case .copy:
             CaptureOutput.copy(capture.image, scale: capture.scale)
-            HUD.show("Screenshot copied", symbol: "doc.on.doc")
+            HUD.show(L10n.Screenshots.screenshotCopied, symbol: "doc.on.doc")
         case .save: windows.save(capture.image, scale: capture.scale, date: capture.date)
         case .pin: windows.pin(capture)
         }
@@ -204,58 +234,5 @@ public final class ScreenshotsFeature: Feature {
     public func makeSettingsView() -> AnyView {
         guard let settings else { return AnyView(EmptyView()) }
         return AnyView(ScreenshotsSettingsView(settings: settings))
-    }
-}
-
-struct ScreenshotsSettingsView: View {
-    let settings: SettingsStore
-
-    var body: some View {
-        Section("Screenshots") {
-            Picker("After capturing", selection: settings.binding(ScreenshotsFeature.afterKey)) {
-                ForEach(AfterCapture.allCases, id: \.self) { Text($0.label).tag($0) }
-            }
-            LabeledContent("Save to") {
-                HStack {
-                    Text(ScreenshotsFeature.folder(settings).path(percentEncoded: false)).lineLimit(1).truncationMode(.middle)
-                    Button("Choose…") { chooseFolder() }
-                    if !settings.value(ScreenshotsFeature.folderKey).isEmpty {
-                        Button("Use macOS Setting") { settings.set("", for: ScreenshotsFeature.folderKey) }
-                    }
-                }
-            }
-            Toggle("Include the shadow when capturing a window", isOn: settings.binding(ScreenshotsFeature.shadowKey))
-            Text("Captures keep each display's native resolution: a Retina screenshot has twice the points in pixels and is saved at 144 dpi so it shows at its real size. An area across displays with different resolutions is saved at the higher one.")
-                .font(.caption).foregroundStyle(.secondary)
-        }
-        Section("Screen recording (MP4)") {
-            Picker("Frame rate", selection: settings.binding(ScreenshotsFeature.fpsKey)) {
-                Text("30 fps").tag(30)
-                Text("60 fps").tag(60)
-            }
-            Picker("Format", selection: settings.binding(ScreenshotsFeature.codecKey)) {
-                ForEach(VideoCodec.allCases, id: \.self) { Text($0.label).tag($0) }
-            }
-            Toggle("Show the pointer", isOn: settings.binding(ScreenshotsFeature.recordCursorKey))
-            Toggle("Record system audio", isOn: settings.binding(ScreenshotsFeature.systemAudioKey))
-            Toggle("Record the microphone (macOS 15 or later)", isOn: settings.binding(ScreenshotsFeature.microphoneKey))
-            Text("System audio and the microphone are saved as two audio tracks. Press the recording shortcut again or click ● in the menu bar to stop.")
-                .font(.caption).foregroundStyle(.secondary)
-        }
-        Section("Experimental") {
-            Toggle("Scrolling capture", isOn: settings.binding(ScreenshotsFeature.scrollingKey))
-            Text("Select the part of a window that scrolls; Omni scrolls it and joins the pages into one tall image. Needs Accessibility. Works best on plain documents and web pages; animated content or content that changes while scrolling can't be joined.")
-                .font(.caption).foregroundStyle(.secondary)
-        }
-    }
-
-    private func chooseFolder() {
-        let panel = NSOpenPanel()
-        panel.canChooseDirectories = true
-        panel.canChooseFiles = false
-        panel.canCreateDirectories = true
-        panel.directoryURL = ScreenshotsFeature.folder(settings)
-        guard panel.runModal() == .OK, let url = panel.url else { return }
-        settings.set(url.path, for: ScreenshotsFeature.folderKey)
     }
 }

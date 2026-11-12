@@ -1,11 +1,12 @@
 import Foundation
+import OmniCore
 
 /// Output file names, like macOS's own: "Screenshot 2026-11-12 at 17.20.31.png".
 public enum FileNaming {
     public enum Kind: Sendable {
         case screenshot, recording
 
-        var prefix: String { self == .screenshot ? "Screenshot" : "Screen Recording" }
+        var prefix: String { self == .screenshot ? L10n.Screenshots.fileScreenshot : L10n.Screenshots.fileRecording }
         var fileExtension: String { self == .screenshot ? "png" : "mp4" }
     }
 

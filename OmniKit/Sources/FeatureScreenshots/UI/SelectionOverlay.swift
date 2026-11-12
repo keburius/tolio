@@ -1,5 +1,6 @@
 import AppKit
 import OmniCore
+import OmniPlatform
 
 /// What the user picked on the selection overlay.
 enum OverlayResult {
@@ -14,10 +15,10 @@ enum OverlayMode {
 
     var hint: String {
         switch self {
-        case .screenshot: "Drag to capture an area, or click a window. Esc cancels."
-        case .text: "Drag over the text to copy, or click a window. Esc cancels."
-        case .record: "Drag to record an area, or click to record the whole screen. Esc cancels."
-        case .scrolling: "Drag over the part that scrolls. Omni will scroll it and join the pages. Esc cancels."
+        case .screenshot: L10n.Screenshots.hintScreenshot
+        case .text: L10n.Screenshots.hintText
+        case .record: L10n.Screenshots.hintRecord
+        case .scrolling: L10n.Screenshots.hintScrolling
         }
     }
 
@@ -166,7 +167,7 @@ private final class SelectionView: NSView {
             (state.selection == nil ? NSColor.systemBlue : NSColor.white).setStroke()
             border.stroke()
             if let selection = state.selection, selection.intersects(screenFrame) {
-                drawLabel("\(Int((selection.width * scale).rounded())) × \(Int((selection.height * scale).rounded())) px",
+                drawLabel(L10n.Screenshots.sizeLabel(Int((selection.width * scale).rounded()), Int((selection.height * scale).rounded())),
                           near: CGPoint(x: hole.maxX, y: hole.minY))
             }
         } else {
@@ -187,7 +188,7 @@ private final class SelectionView: NSView {
         rect.origin.x = max(4, min(rect.minX, bounds.maxX - rect.width - 4))
         rect.origin.y = max(4, rect.minY)
         NSColor.black.withAlphaComponent(0.7).setFill()
-        NSBezierPath(roundedRect: rect, xRadius: 4, yRadius: 4).fill()
+        NSBezierPath(roundedRect: rect, xRadius: OmniStyle.controlRadius, yRadius: OmniStyle.controlRadius).fill()
         string.draw(at: CGPoint(x: rect.minX + 5, y: rect.minY + 2))
     }
 

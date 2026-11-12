@@ -1,5 +1,6 @@
 import AppKit
 import Observation
+import OmniCore
 
 /// State of one editor window. All geometry is in image pixels (top-left origin).
 @MainActor
@@ -11,14 +12,14 @@ final class EditorModel {
 
         var title: String {
             switch self {
-            case .select: "Select and move (V)"
-            case .arrow: "Arrow (A)"
-            case .box: "Box (R)"
-            case .text: "Text (T)"
-            case .highlight: "Highlight (H)"
-            case .blur: "Blur (B)"
-            case .step: "Numbered step (N)"
-            case .crop: "Crop (C)"
+            case .select: L10n.Screenshots.toolSelect
+            case .arrow: L10n.Screenshots.toolArrow
+            case .box: L10n.Screenshots.toolBox
+            case .text: L10n.Screenshots.toolText
+            case .highlight: L10n.Screenshots.toolHighlight
+            case .blur: L10n.Screenshots.toolBlur
+            case .step: L10n.Screenshots.toolStep
+            case .crop: L10n.Screenshots.toolCrop
             }
         }
 

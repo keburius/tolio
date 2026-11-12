@@ -1,4 +1,5 @@
 import AppKit
+import OmniCore
 import OmniPlatform
 
 /// Experimental: scrolls the content under an area and joins the pages.
@@ -14,12 +15,12 @@ enum ScrollingCapture {
     }
 
     static func run(area: CGRect) async throws -> Outcome {
-        guard AXIsProcessTrusted() else { throw CaptureError.failed("scrolling capture needs Accessibility permission") }
+        guard AXIsProcessTrusted() else { throw CaptureError.failed(L10n.Screenshots.errorNeedsAccessibility) }
         let first = try await ScreenCapturer.capture(area: area)
         var frames = [first.image]
         var hashes: [[UInt64]] = []
         var uniform = Set<UInt64>()
-        guard let firstHashes = ScrollStitcher.rowHashes(of: first.image) else { throw CaptureError.failed("couldn't read pixels") }
+        guard let firstHashes = ScrollStitcher.rowHashes(of: first.image) else { throw CaptureError.failed(L10n.Screenshots.errorReadPixels) }
         hashes.append(firstHashes.hashes)
         uniform.formUnion(firstHashes.uniform)
 
@@ -30,27 +31,27 @@ enum ScrollingCapture {
         CGWarpMouseCursorPosition(center)
         defer { if let savedPointer { CGWarpMouseCursorPosition(savedPointer) } }
 
-        var reason = "reached the page limit"
+        var reason = L10n.Screenshots.reasonPageLimit
         var total = first.image.height
         for _ in 1..<maxPages {
-            if escapePressed() { reason = "stopped with Esc"; break }
+            if escapePressed() { reason = L10n.Screenshots.reasonStopped; break }
             scroll(by: Int32(-(area.height * 0.7)), at: center)
             try await Task.sleep(for: settleTime)
             let next = try await ScreenCapturer.capture(area: area)
             guard let nextHashes = ScrollStitcher.rowHashes(of: next.image), let previous = hashes.last else { break }
             uniform.formUnion(nextHashes.uniform)
             guard let step = ScrollStitcher.analyze(previous: previous, next: nextHashes.hashes, uniform: { uniform.contains($0) }) else {
-                reason = "the page changed in a way that couldn't be matched"
+                reason = L10n.Screenshots.reasonUnmatched
                 break
             }
-            if step.newRows == 0 { reason = "reached the end"; break }
+            if step.newRows == 0 { reason = L10n.Screenshots.reasonEnd; break }
             frames.append(next.image)
             hashes.append(nextHashes.hashes)
             total += step.newRows
-            if total >= maxPixelHeight { reason = "reached the size limit"; break }
+            if total >= maxPixelHeight { reason = L10n.Screenshots.reasonSizeLimit; break }
         }
         let plan = ScrollStitcher.plan(frames: hashes) { uniform.contains($0) }
-        guard let image = ScrollStitcher.compose(frames, plan: plan) else { throw CaptureError.failed("joining the pages failed") }
+        guard let image = ScrollStitcher.compose(frames, plan: plan) else { throw CaptureError.failed(L10n.Screenshots.errorJoinPages) }
         return .finished(Capture(image: image, scale: first.scale, date: first.date), pages: Set(plan.map(\.frame)).count, reason: reason)
     }
 

@@ -22,14 +22,14 @@ final class CaptureWindows: NSObject, NSWindowDelegate {
             contentRect: .zero, styleMask: [.titled, .closable, .miniaturizable, .resizable],
             backing: .buffered, defer: false
         )
-        window.title = "Screenshot"
+        window.title = L10n.Screenshots.editorWindowTitle
         window.isReleasedWhenClosed = false
         window.delegate = self
         let actions = EditorActions(
             copy: { [weak self, weak window] in
                 guard let image = model.export() else { return }
                 CaptureOutput.copy(image, scale: capture.scale)
-                HUD.show("Copied", symbol: "doc.on.doc")
+                HUD.show(L10n.Screenshots.copied, symbol: "doc.on.doc")
                 self?.close(window)
             },
             save: { [weak self, weak window] in
@@ -64,30 +64,30 @@ final class CaptureWindows: NSObject, NSWindowDelegate {
     func save(_ image: CGImage, scale: CGFloat, date: Date) -> Bool {
         do {
             let url = try CaptureOutput.save(image, scale: scale, to: saveFolder(), date: date)
-            HUD.show("Saved to \(url.deletingLastPathComponent().lastPathComponent)", symbol: "square.and.arrow.down")
+            HUD.show(L10n.Screenshots.savedTo(url.deletingLastPathComponent().lastPathComponent), symbol: "square.and.arrow.down")
             return true
         } catch {
             log.error("Save failed: \(error.localizedDescription, privacy: .public)")
-            HUD.show("Couldn't save: \(error.localizedDescription)", symbol: "exclamationmark.triangle")
+            HUD.show(L10n.Screenshots.couldntSave(error.localizedDescription), symbol: "exclamationmark.triangle")
             return false
         }
     }
 
     func copyText(from image: CGImage) {
-        HUD.show("Recognizing text…", symbol: "text.viewfinder")
+        HUD.show(L10n.Screenshots.recognizingText, symbol: "text.viewfinder")
         Task { @MainActor in
             do {
                 let lines = try await TextRecognizer.lines(in: image)
                 guard !lines.isEmpty else {
-                    HUD.show("No text found", symbol: "text.viewfinder")
+                    HUD.show(L10n.Screenshots.noTextFound, symbol: "text.viewfinder")
                     return
                 }
                 let pasteboard = NSPasteboard.general
                 pasteboard.clearContents()
                 pasteboard.setString(lines.joined(separator: "\n"), forType: .string)
-                HUD.show(lines.count == 1 ? "Copied 1 line of text" : "Copied \(lines.count) lines of text", symbol: "text.viewfinder")
+                HUD.show(L10n.Screenshots.copiedLines(lines.count), symbol: "text.viewfinder")
             } catch {
-                HUD.show("Text recognition failed", symbol: "exclamationmark.triangle")
+                HUD.show(L10n.Screenshots.textRecognitionFailed, symbol: "exclamationmark.triangle")
             }
         }
     }
@@ -130,7 +130,7 @@ final class CaptureWindows: NSObject, NSWindowDelegate {
         let view = PinView(
             capture: capture,
             onClose: { [weak panel] in panel?.close() },
-            onCopy: { CaptureOutput.copy(capture.image, scale: capture.scale); HUD.show("Copied", symbol: "doc.on.doc") },
+            onCopy: { CaptureOutput.copy(capture.image, scale: capture.scale); HUD.show(L10n.Screenshots.copied, symbol: "doc.on.doc") },
             onSave: { [weak self] in self?.save(capture.image, scale: capture.scale, date: capture.date) },
             onEdit: { [weak self, weak panel] in panel?.close(); self?.openEditor(capture) }
         )
@@ -167,23 +167,24 @@ private struct PinView: View {
                         .foregroundStyle(.white, .black.opacity(0.6))
                 }
                 .buttonStyle(.plain)
-                .padding(6)
-                .help("Close (Esc)")
+                .padding(OmniStyle.s2)
+                .help(L10n.Screenshots.closePinHelp)
+                .accessibilityLabel(L10n.Common.close)
             }
         }
         .overlay(Rectangle().strokeBorder(.white.opacity(hovering ? 0.5 : 0)))
         .onHover { hovering = $0 }
         .contextMenu {
-            Button("Copy", action: onCopy)
-            Button("Save", action: onSave)
-            Button("Edit…", action: onEdit)
-            Menu("Opacity") {
+            Button(L10n.Screenshots.copy, action: onCopy)
+            Button(L10n.Screenshots.save, action: onSave)
+            Button(L10n.Screenshots.edit, action: onEdit)
+            Menu(L10n.Screenshots.opacity) {
                 ForEach([1.0, 0.75, 0.5, 0.25], id: \.self) { value in
-                    Button("\(Int(value * 100))%") { opacity = value }
+                    Button(L10n.Screenshots.percent(Int(value * 100))) { opacity = value }
                 }
             }
             Divider()
-            Button("Close", action: onClose)
+            Button(L10n.Common.close, action: onClose)
         }
     }
 }

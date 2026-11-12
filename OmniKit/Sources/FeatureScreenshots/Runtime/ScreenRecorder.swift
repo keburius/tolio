@@ -4,7 +4,7 @@ import OmniCore
 
 public enum VideoCodec: String, Codable, CaseIterable, Sendable {
     case h264, hevc
-    var label: String { self == .h264 ? "H.264 (plays everywhere)" : "HEVC (smaller files)" }
+    var label: String { self == .h264 ? L10n.Screenshots.codecH264 : L10n.Screenshots.codecHEVC }
     var avCodec: AVVideoCodecType { self == .h264 ? .h264 : .hevc }
 }
 
@@ -51,7 +51,7 @@ final class ScreenRecorder: NSObject, SCStreamOutput, SCStreamDelegate, @uncheck
         ])
         videoInput.expectsMediaDataInRealTime = true
         super.init()
-        guard writer.canAdd(videoInput) else { throw CaptureError.failed("the video encoder refused \(pixelWidth)×\(pixelHeight)") }
+        guard writer.canAdd(videoInput) else { throw CaptureError.failed(L10n.Screenshots.errorEncoderSize(pixelWidth, pixelHeight)) }
         writer.add(videoInput)
         if options.systemAudio {
             let input = Self.audioInput(channels: 2)
@@ -100,7 +100,7 @@ final class ScreenRecorder: NSObject, SCStreamOutput, SCStreamDelegate, @uncheck
         if options.microphone, #available(macOS 15.0, *) {
             try stream.addStreamOutput(self, type: .microphone, sampleHandlerQueue: queue)
         }
-        guard writer.startWriting() else { throw writer.error ?? CaptureError.failed("couldn't start the file") }
+        guard writer.startWriting() else { throw writer.error ?? CaptureError.failed(L10n.Screenshots.errorStartFile) }
         self.stream = stream
         try await stream.startCapture()
     }
@@ -116,7 +116,7 @@ final class ScreenRecorder: NSObject, SCStreamOutput, SCStreamDelegate, @uncheck
         guard started else {
             writer.cancelWriting()
             try? FileManager.default.removeItem(at: url)
-            throw failure ?? CaptureError.failed("no frames were recorded")
+            throw failure ?? CaptureError.failed(L10n.Screenshots.errorNoFrames)
         }
         queue.sync {
             videoInput.markAsFinished()
@@ -124,7 +124,7 @@ final class ScreenRecorder: NSObject, SCStreamOutput, SCStreamDelegate, @uncheck
             micInput?.markAsFinished()
         }
         await writer.finishWriting()
-        if writer.status != .completed { throw writer.error ?? CaptureError.failed("the file couldn't be finished") }
+        if writer.status != .completed { throw writer.error ?? CaptureError.failed(L10n.Screenshots.errorFinishFile) }
         return url
     }
 

@@ -1,4 +1,6 @@
 import AppKit
+import OmniCore
+import OmniPlatform
 import SwiftUI
 
 struct EditorActions {
@@ -41,14 +43,16 @@ struct EditorView: View {
     }
 
     private var toolbar: some View {
-        HStack(spacing: 6) {
+        HStack(spacing: OmniStyle.s2) {
             ForEach(EditorModel.Tool.allCases) { tool in
                 Button { model.tool = tool } label: {
                     Image(systemName: tool.symbol).frame(width: 26, height: 22)
                 }
                 .buttonStyle(.borderless)
-                .background(RoundedRectangle(cornerRadius: 6).fill(model.tool == tool ? Color.accentColor.opacity(0.25) : .clear))
+                .background(RoundedRectangle(cornerRadius: OmniStyle.controlRadius).fill(model.tool == tool ? Color.accentColor.opacity(0.25) : .clear))
                 .help(tool.title)
+                .accessibilityLabel(tool.title)
+                .accessibilityAddTraits(model.tool == tool ? .isSelected : [])
             }
             Divider().frame(height: 20)
             ForEach(RGBAColor.palette, id: \.self) { color in
@@ -58,30 +62,34 @@ struct EditorView: View {
                         .frame(width: 16, height: 16)
                 }
                 .buttonStyle(.borderless)
+                .accessibilityLabel(L10n.Screenshots.color(Self.colorName(color)))
+                .accessibilityAddTraits(model.color == color ? .isSelected : [])
             }
             Divider().frame(height: 20)
             Button { model.undo() } label: { Image(systemName: "arrow.uturn.backward") }
-                .buttonStyle(.borderless).disabled(!model.canUndo).keyboardShortcut("z", modifiers: .command).help("Undo")
+                .buttonStyle(.borderless).disabled(!model.canUndo).keyboardShortcut("z", modifiers: .command)
+                .help(L10n.Screenshots.undo).accessibilityLabel(L10n.Screenshots.undo)
             Button { model.redo() } label: { Image(systemName: "arrow.uturn.forward") }
-                .buttonStyle(.borderless).disabled(!model.canRedo).keyboardShortcut("z", modifiers: [.command, .shift]).help("Redo")
+                .buttonStyle(.borderless).disabled(!model.canRedo).keyboardShortcut("z", modifiers: [.command, .shift])
+                .help(L10n.Screenshots.redo).accessibilityLabel(L10n.Screenshots.redo)
             if model.document.crop != nil {
-                Button("Reset Crop") { model.resetCrop() }.buttonStyle(.borderless)
+                Button(L10n.Screenshots.resetCrop) { model.resetCrop() }.buttonStyle(.borderless)
             }
-            Spacer(minLength: 12)
-            Button { actions.copyText() } label: { Label("Copy Text", systemImage: "text.viewfinder") }
-                .help("Recognize text in the image (on this Mac) and copy it")
-            Button { actions.pin() } label: { Label("Pin", systemImage: "pin") }
-                .help("Keep the image floating above other windows")
-            Button { actions.copy() } label: { Label("Copy", systemImage: "doc.on.doc") }
+            Spacer(minLength: OmniStyle.s3)
+            Button { actions.copyText() } label: { Label(L10n.Screenshots.copyText, systemImage: "text.viewfinder") }
+                .help(L10n.Screenshots.copyTextHelp)
+            Button { actions.pin() } label: { Label(L10n.Screenshots.pin, systemImage: "pin") }
+                .help(L10n.Screenshots.pinHelp)
+            Button { actions.copy() } label: { Label(L10n.Screenshots.copy, systemImage: "doc.on.doc") }
                 .keyboardShortcut("c", modifiers: .command)
-            Button { actions.save() } label: { Label("Save", systemImage: "square.and.arrow.down") }
+            Button { actions.save() } label: { Label(L10n.Screenshots.save, systemImage: "square.and.arrow.down") }
                 .keyboardShortcut("s", modifiers: .command)
                 .buttonStyle(.borderedProminent)
         }
         .labelStyle(.titleAndIcon)
         .controlSize(.regular)
-        .padding(.horizontal, 10)
-        .padding(.vertical, 7)
+        .padding(.horizontal, OmniStyle.s3)
+        .padding(.vertical, OmniStyle.s2)
     }
 
     private func canvas(k: CGFloat) -> some View {
@@ -144,6 +152,19 @@ struct EditorView: View {
         }
     }
 
+    private static func colorName(_ color: RGBAColor) -> String {
+        switch color {
+        case .red: L10n.Screenshots.colorRed
+        case .orange: L10n.Screenshots.colorOrange
+        case .yellow: L10n.Screenshots.colorYellow
+        case .green: L10n.Screenshots.colorGreen
+        case .blue: L10n.Screenshots.colorBlue
+        case .black: L10n.Screenshots.colorBlack
+        case .white: L10n.Screenshots.colorWhite
+        default: ""
+        }
+    }
+
     private static func outline(of id: UUID, in document: AnnotationDocument) -> CGRect? {
         guard let annotation = document.annotations.first(where: { $0.id == id }) else { return nil }
         switch annotation.kind {
@@ -155,7 +176,7 @@ struct EditorView: View {
     }
 
     private func textField(_ edit: EditorModel.TextEdit, k: CGFloat) -> some View {
-        TextField("Text", text: Binding(
+        TextField(L10n.Screenshots.textPlaceholder, text: Binding(
             get: { model.textEdit?.string ?? "" },
             set: { model.textEdit?.string = $0 }
         ))
