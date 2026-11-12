@@ -6,14 +6,17 @@ import os
 import SwiftUI
 
 /// Clipboard history: records text, images, and file references; searchable
-/// in the palette ("clip …" or ⌃⌥V); pin, delete, retention, exclusions.
+/// in the Launcher ("clip …" or ⌃⌥V); pin, delete, retention, exclusions.
+/// UI metadata (menu, erase, settings search) is in `+UI.swift`.
 @MainActor
 @Observable
 public final class ClipboardHistoryFeature: Feature {
     public static let showHotkey = HotkeyAction(
-        id: "clipboard.show", title: "Show clipboard history",
+        id: "clipboard.show", title: L10n.Clipboard.showHotkey,
         defaultCombo: KeyCombo(keyCode: 9, modifiers: [.control, .option]) // ⌃⌥V
     )
+    /// Every shortcut `enable` registers.
+    public static let hotkeys = [showHotkey]
 
     static let maxItemsKey = SettingKey.feature("clipboard", "maxItems", default: 500)
     /// Days; 0 means keep forever.
@@ -21,8 +24,8 @@ public final class ClipboardHistoryFeature: Feature {
     static let excludedAppsKey = SettingKey.feature("clipboard", "excludedApps", default: Set<String>())
 
     public let id: FeatureID = "clipboard"
-    public let displayName = "Clipboard History"
-    public let summary = "Keeps text, images, and files you copy. Search it from the palette with “clip”."
+    public var displayName: String { L10n.Clipboard.displayName }
+    public var summary: String { L10n.Clipboard.summary }
     public let symbolName = "doc.on.clipboard"
     public let requiredPermissions: Set<Permission> = []
     /// Only needed to paste directly; without it, items are copied.
@@ -32,7 +35,7 @@ public final class ClipboardHistoryFeature: Feature {
     /// Bumped whenever the history changes, so views refresh.
     private(set) var revision = 0
     @ObservationIgnored private(set) var store: ClipboardStore?
-    @ObservationIgnored private var context: FeatureContext?
+    @ObservationIgnored private(set) var context: FeatureContext?
     @ObservationIgnored private var monitor: ClipboardMonitor?
 
     public init() {}
@@ -52,14 +55,22 @@ public final class ClipboardHistoryFeature: Feature {
 
         prune()
         context.registerSearchProvider(ClipboardSearchProvider(feature: self))
-        context.registerHotkey(Self.showHotkey) { context.openPalette(query: "clip ") }
+        context.registerHotkey(Self.showHotkey) { context.openPalette(query: Self.historyQuery) }
         context.registerCommand(Command(
-            id: "clipboard.show", title: "Clipboard History", keywords: ["paste", "copy"], symbolName: symbolName
-        ) { context.openPalette(query: "clip ") })
+            id: "clipboard.show", title: L10n.Clipboard.commandShow, keywords: ["paste", "copy"], symbolName: symbolName
+        ) { context.openPalette(query: Self.historyQuery) })
         context.registerCommand(Command(
-            id: "clipboard.clear", title: "Clear Clipboard History", subtitle: "Keeps pinned items",
+            id: "clipboard.clear", title: L10n.Clipboard.commandClear, subtitle: L10n.Clipboard.commandClearSubtitle,
             symbolName: "trash"
         ) { [weak self] in self?.clear(keepPinned: true) })
+    }
+
+    /// Launcher query that shows the history (what ⌃⌥V opens).
+    static let historyQuery = "clip "
+
+    /// Opens the history in the Launcher, like the shortcut.
+    func showHistory() {
+        context?.openPalette(query: Self.historyQuery)
     }
 
     public func disable() {
@@ -101,6 +112,13 @@ public final class ClipboardHistoryFeature: Feature {
         revision += 1
     }
 
+    /// Newest first, pinned or not (recently copied lists).
+    func newestRecords(limit: Int) -> [ClipRecord] {
+        _ = revision
+        guard let store else { return [] }
+        return (try? store.newest(limit: limit)) ?? []
+    }
+
     func records(matching query: String, limit: Int) -> [ClipRecord] {
         _ = revision
         guard let store else { return [] }
@@ -122,7 +140,7 @@ public final class ClipboardHistoryFeature: Feature {
     func clear(keepPinned: Bool) {
         try? store?.deleteAll(keepPinned: keepPinned)
         revision += 1
-        HUD.show(keepPinned ? "Clipboard history cleared (pinned kept)" : "Clipboard history cleared", symbol: "trash")
+        HUD.show(keepPinned ? L10n.Clipboard.clearedKeepingPinned : L10n.Clipboard.cleared, symbol: "trash")
     }
 
     func paste(_ record: ClipRecord) {
@@ -134,40 +152,7 @@ public final class ClipboardHistoryFeature: Feature {
     func copy(_ record: ClipRecord) {
         guard let store else { return }
         if ClipboardPaster.copy(record, store: store) {
-            HUD.show("Copied", symbol: "doc.on.clipboard")
-        }
-    }
-}
-
-/// Palette results for "clip …".
-@MainActor
-final class ClipboardSearchProvider: SearchProvider {
-    let keyword = "clip"
-    let title = "Clipboard"
-    private weak var feature: ClipboardHistoryFeature?
-    private let relative = RelativeDateTimeFormatter()
-
-    init(feature: ClipboardHistoryFeature) {
-        self.feature = feature
-        relative.unitsStyle = .short
-    }
-
-    func results(for query: String, limit: Int) -> [SearchResult] {
-        guard let feature, let store = feature.store else { return [] }
-        return feature.records(matching: query, limit: limit).map { record in
-            let icon: SearchResult.Icon = switch record.kind {
-            case .text: .symbol("text.alignleft")
-            case .image: store.thumbnailURL(for: record).map { .image($0) } ?? .symbol("photo")
-            case .files: record.fileURLs.first.map { .file($0) } ?? .symbol("doc")
-            }
-            var subtitle = [record.sourceAppName, relative.localizedString(for: record.createdAt, relativeTo: Date())]
-                .compactMap { $0 }.joined(separator: " · ")
-            if record.pinned { subtitle = "Pinned · " + subtitle }
-            return SearchResult(
-                id: "\(record.id ?? 0)", title: record.title, subtitle: subtitle, icon: icon,
-                primaryAction: { [weak feature] in feature?.paste(record) },
-                alternateAction: { [weak feature] in feature?.copy(record) }
-            )
+            HUD.show(L10n.Clipboard.copied, symbol: "doc.on.clipboard")
         }
     }
 }

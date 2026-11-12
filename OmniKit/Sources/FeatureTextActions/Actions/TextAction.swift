@@ -47,22 +47,25 @@ public enum TextActionCatalog {
 }
 
 struct CopyAction: TextAction {
-    let id = "copy", title = "Copy", symbolName = "doc.on.doc"
+    let id = "copy", symbolName = "doc.on.doc"
+    var title: String { L10n.TextActions.copy }
     func perform(_ selection: TextSelection, context: any TextActionContext) {
         context.copyToClipboard(selection.text)
-        context.showMessage("Copied", symbol: "doc.on.doc")
+        context.showMessage(L10n.TextActions.copied, symbol: "doc.on.doc")
     }
 }
 
 struct PasteAction: TextAction {
-    let id = "paste", title = "Paste", symbolName = "clipboard"
+    let id = "paste", symbolName = "clipboard"
+    var title: String { L10n.TextActions.paste }
     /// Only where the selection can be replaced (or might be).
     func isAvailable(for selection: TextSelection) -> Bool { selection.isEditable != false }
     func perform(_ selection: TextSelection, context: any TextActionContext) { context.pasteClipboard() }
 }
 
 struct OpenURLAction: TextAction {
-    let id = "openURL", title = "Open Link", symbolName = "safari"
+    let id = "openURL", symbolName = "safari"
+    var title: String { L10n.TextActions.openLink }
     func isAvailable(for selection: TextSelection) -> Bool { TextAnalysis.webURL(in: selection.text) != nil }
     func perform(_ selection: TextSelection, context: any TextActionContext) {
         if let url = TextAnalysis.webURL(in: selection.text) { context.open(url) }
@@ -70,14 +73,16 @@ struct OpenURLAction: TextAction {
 }
 
 struct SearchWebAction: TextAction {
-    let id = "search", title = "Search the Web", symbolName = "magnifyingglass"
+    let id = "search", symbolName = "magnifyingglass"
+    var title: String { L10n.TextActions.searchWeb }
     func perform(_ selection: TextSelection, context: any TextActionContext) {
         if let url = context.searchEngine.url(for: selection.text) { context.open(url) }
     }
 }
 
 struct TranslateAction: TextAction {
-    let id = "translate", title = "Translate", symbolName = "translate"
+    let id = "translate", symbolName = "translate"
+    var title: String { L10n.TextActions.translate }
     func isAvailable(for selection: TextSelection) -> Bool {
         // Apple's translation panel needs macOS 14.4 and some letters to work on.
         guard #available(macOS 14.4, *) else { return false }
@@ -89,7 +94,8 @@ struct TranslateAction: TextAction {
 }
 
 struct UppercaseAction: TextAction {
-    let id = "uppercase", title = "UPPERCASE", symbolName = "textformat.size.larger"
+    let id = "uppercase", symbolName = "textformat.size.larger"
+    var title: String { L10n.TextActions.uppercase }
     func isAvailable(for selection: TextSelection) -> Bool {
         selection.isEditable != false && TextAnalysis.uppercased(selection.text) != selection.text
     }
@@ -99,7 +105,8 @@ struct UppercaseAction: TextAction {
 }
 
 struct LowercaseAction: TextAction {
-    let id = "lowercase", title = "lowercase", symbolName = "textformat.size.smaller"
+    let id = "lowercase", symbolName = "textformat.size.smaller"
+    var title: String { L10n.TextActions.lowercase }
     func isAvailable(for selection: TextSelection) -> Bool {
         selection.isEditable != false && TextAnalysis.lowercased(selection.text) != selection.text
     }
@@ -109,19 +116,23 @@ struct LowercaseAction: TextAction {
 }
 
 struct WordCountAction: TextAction {
-    let id = "count", title = "Word Count", symbolName = "number"
+    let id = "count", symbolName = "number"
+    var title: String { L10n.TextActions.wordCount }
     func perform(_ selection: TextSelection, context: any TextActionContext) {
         let c = TextAnalysis.counts(selection.text)
-        let words = c.words == 1 ? "1 word" : "\(c.words) words"
-        let chars = c.characters == 1 ? "1 character" : "\(c.characters) characters"
-        let lines = c.lines > 1 ? ", \(c.lines) lines" : ""
-        context.showMessage("\(words), \(chars)\(lines)", symbol: "number")
+        let words = L10n.TextActions.words(c.words)
+        let chars = L10n.TextActions.characters(c.characters)
+        let message = c.lines > 1
+            ? L10n.TextActions.countSummary(words, chars, L10n.TextActions.lines(c.lines))
+            : L10n.TextActions.countSummary(words, chars)
+        context.showMessage(message, symbol: "number")
     }
 }
 
 struct SendToPaletteAction: TextAction {
-    let id = "palette", title = "Send to Palette", symbolName = "command"
-    /// The palette is a one-line field.
+    let id = "palette", symbolName = "command"
+    var title: String { L10n.TextActions.sendToLauncher }
+    /// The Launcher is a one-line field.
     func isAvailable(for selection: TextSelection) -> Bool {
         !selection.trimmed.isEmpty && selection.trimmed.count <= 500
     }

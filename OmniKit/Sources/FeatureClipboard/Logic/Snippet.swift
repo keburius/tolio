@@ -1,4 +1,5 @@
 import Foundation
+import OmniCore
 
 /// A text snippet expanded when its abbreviation is typed.
 public struct Snippet: Codable, Identifiable, Hashable, Sendable {
@@ -20,10 +21,10 @@ public struct Snippet: Codable, Identifiable, Hashable, Sendable {
 
     /// Why `abbreviation` can't be used, or nil if it can.
     public static func problem(with abbreviation: String, among others: [Snippet], editing id: UUID?) -> String? {
-        if abbreviation.count < 2 { return "Use at least 2 characters." }
-        if abbreviation.contains(where: \.isWhitespace) { return "Abbreviations can't contain spaces." }
+        if abbreviation.count < 2 { return L10n.Snippets.tooShort }
+        if abbreviation.contains(where: \.isWhitespace) { return L10n.Snippets.noSpaces }
         if others.contains(where: { $0.id != id && $0.abbreviation == abbreviation }) {
-            return "Another snippet already uses “\(abbreviation)”."
+            return L10n.Snippets.alreadyUsed(abbreviation)
         }
         return nil
     }

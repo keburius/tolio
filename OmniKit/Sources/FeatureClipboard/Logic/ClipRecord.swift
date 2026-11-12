@@ -1,5 +1,6 @@
 import Foundation
 import GRDB
+import OmniCore
 
 /// A stored clipboard history entry.
 public struct ClipRecord: Codable, Identifiable, Equatable, Sendable, FetchableRecord, MutablePersistableRecord {
@@ -36,13 +37,14 @@ public struct ClipRecord: Codable, Identifiable, Equatable, Sendable, FetchableR
         case .text:
             let firstLine = (text ?? "").split(whereSeparator: \.isNewline).first.map(String.init) ?? ""
             let trimmed = firstLine.trimmingCharacters(in: .whitespaces)
-            return trimmed.count > 120 ? String(trimmed.prefix(120)) + "…" : (trimmed.isEmpty ? "(whitespace)" : trimmed)
+            return trimmed.count > 120 ? String(trimmed.prefix(120)) + "…" : (trimmed.isEmpty ? L10n.Clipboard.whitespaceItem : trimmed)
         case .image:
-            if let pixelWidth, let pixelHeight { return "Image \(pixelWidth) × \(pixelHeight)" }
-            return "Image"
+            if let pixelWidth, let pixelHeight { return L10n.Clipboard.imageItem(width: pixelWidth, height: pixelHeight) }
+            return L10n.Clipboard.imageItem
         case .files:
             let names = fileURLs.map(\.lastPathComponent)
-            return names.count > 3 ? names.prefix(3).joined(separator: ", ") + " +\(names.count - 3)" : names.joined(separator: ", ")
+            let shown = names.prefix(3).joined(separator: ", ")
+            return names.count > 3 ? L10n.Clipboard.moreFiles(shown, names.count - 3) : shown
         }
     }
 }
