@@ -33,6 +33,7 @@ final class MenuBarController: NSObject {
         self.actions = actions
         shortcuts = ShortcutLookup(services: services)
         main = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
+        main.autosaveName = "omni.main"
         super.init()
         if let button = main.button {
             button.image = NSImage(systemSymbolName: "square.grid.3x3.square", accessibilityDescription: L10n.App.name)
@@ -103,10 +104,14 @@ final class MenuBarController: NSObject {
     private func rebuild(_ order: [QuickAccessID]) {
         for item in quick.values { NSStatusBar.system.removeStatusItem(item) }
         quick.removeAll()
-        // New status items appear to the left of existing ones, so create
-        // right to left; the main icon (created first) stays rightmost.
-        for id in order.reversed() {
+        // Icons live in positional slots counted from the main icon
+        // ("omni.slot.r0" sits right next to it). macOS remembers where each
+        // slot is (including the user's ⌘-drag changes) and adds new items on
+        // the left, so slots are created nearest-first and reordering only
+        // changes which feature fills a slot.
+        for (distance, id) in order.reversed().enumerated() {
             let item = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
+            item.autosaveName = "omni.slot.r\(distance)"
             item.button?.target = self
             item.button?.action = #selector(quickClicked(_:))
             item.button?.sendAction(on: [.leftMouseUp, .rightMouseUp])

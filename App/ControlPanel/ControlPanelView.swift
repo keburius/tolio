@@ -103,7 +103,8 @@ struct ControlPanelView: View {
         VStack(alignment: .leading, spacing: OmniStyle.s2) {
             switch model.window {
             case let .window(app, title):
-                SectionHeader(title.map { L10n.Panel.windowNamed(app, $0) } ?? L10n.Panel.windowOfApp(app)).lineLimit(1)
+                SectionHeader(L10n.Panel.windowSection)
+                Text(title.map { L10n.Panel.windowTitle(app, $0) } ?? app).font(.callout).foregroundStyle(.secondary).lineLimit(1).truncationMode(.middle)
                 LayoutGrid(layouts: model.layouts, focused: model.showsFocusRing ? model.focus.current : nil) { actions.activate(.layout($0)) }
             case .none:
                 SectionHeader(L10n.Panel.windowSection)

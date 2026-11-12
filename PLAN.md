@@ -1,6 +1,6 @@
 # Omni — Implementation Plan
 
-Status: **approved. Phases 0–8 done; next: Interface and onboarding** (see §8 and DESIGN.md).
+Status: **approved. Phases 0–8 and Interface and onboarding done** (see §8 and DESIGN.md).
 
 ## 0. Environment found
 
@@ -81,7 +81,7 @@ public struct FeatureContext {                     // injected services, no sing
 }
 
 public enum Permission: String, Codable, CaseIterable {
-    case accessibility, screenRecording, fullDiskAccess, microphone, appManagement
+    case accessibility, screenRecording, microphone
 }
 
 /// Something the palette can show and run. Every feature registers these.
@@ -208,7 +208,7 @@ Risks: the mixed-DPI composite of a cross-display area has no single "correct" p
 | 6 Shortcut overlay | **done** |
 | 7 Text selection | **done** |
 | 8 Screenshots | **done** |
-| Interface and onboarding | design written (DESIGN.md), waiting for approval |
+| Interface and onboarding | **done** |
 
 ### Phase 0 — done
 - `make build | test | release | run`. Warnings fail the build (`Scripts/check-warnings.sh`). Release is universal (arm64 + x86_64), hardened runtime.
@@ -441,3 +441,44 @@ Risks: the mixed-DPI composite of a cross-display area has no single "correct" p
 - The first OCR after installing a new build can take about a minute while macOS prepares the text model (measured: 58–70 s once, then 0.06–0.2 s). A "Recognizing text…" notice shows meanwhile.
 - Scrolling capture moves the pointer to the area during the capture and restores it afterwards. It was tested on synthetic pages only, not live (that would scroll a window in use).
 - No "capture the same area again", no delayed/timer capture, and no editor zoom beyond fit-to-window.
+
+### Interface and onboarding — done
+Design: DESIGN.md (approved). UI only; feature behaviour unchanged except where noted below.
+- **Menu bar:**
+  - The main icon opens the control panel on left-click and a short menu on right-click.
+  - Quick-access icons are on by default for Keep Awake (filled cup while on), Screenshot and Clipboard; Screen Recording, Lock Keyboard and Window Layouts are optional. Left-click runs the main action, right-click shows the feature's options (built from each feature's `quickAccessItems`).
+  - Settings → Menu Bar chooses icons, reorders them, or switches to one-icon mode (which also hides System Stats' own item). The recording timer shows on the Record icon or on the main icon.
+  - Icons use positional slots (`omni.slot.r<n>`, counted from the main icon) because macOS 27 keeps icon positions in a system store apps can't change. Reordering refills slots; checked live for 3 and 4 icons in two orders.
+- **Control panel** (⌃⌥⌘M, the main icon, `omni://panel`): a non-activating panel, so the app you were using stays active.
+  - Contents: five tiles with shortcuts and states (on, off with a "Turn On" prompt, needs permission, recording), the 3 latest copies (click or 1–3 pastes), a layout grid for the frontmost window, the stats line, Settings and Quit.
+  - Keyboard: arrows, ↩/Space, ⇧↩ for options, Esc. Checked live.
+- **Onboarding:** 4 screens:
+  - What Omni does.
+  - Choose features (Recommended / Everything / None); choices apply on Continue.
+  - Permissions for the chosen features only, with live status and Skip.
+  - Shortcut cheat sheet with "Try It".
+- **Settings:**
+  - Overview cards with switch, status and shortcut.
+  - A permission banner on feature pages.
+  - Search across every setting, which scrolls to and highlights the setting.
+  - One shortcuts table with conflict warnings, including features that are off; rebinding works while a feature is off.
+  - Per-feature Reset to Defaults (keeps on/off and user content) and Erase Data… (separate, red, confirmed).
+  - Reset All Settings.
+  - Diagnostics is hidden unless ⌥ is held while Settings opens. It's off by default for new users; existing users keep their state (migration).
+- **Strings:** all user-facing text is in `OmniCore/Resources/Localizable.xcstrings` (611 keys, English) through `L10n` accessors.
+  - `Scripts/gen-strings.py` rebuilds the catalog.
+  - `Scripts/check-strings.sh`, part of `make build`/`make test`, fails on UI literals outside `L10n` or on a stale catalog.
+- **Consistency:** shared components in `OmniPlatform/OmniUI.swift` (ShortcutChip, StatusBadge, EmptyState, SectionHeader, panel background, settings anchors). Reduce Motion turns off fades and slides; Increase Contrast adds borders. Empty states as listed in DESIGN §5.2.
+- **Removed:** the Full Disk Access and App Management permission kinds and the Full Disk Access probe. Two registry tests now use Screen Recording and Microphone; the Full Disk Access heuristic test was deleted with its code.
+- **Tests:** 332 total. 27 are new: MenuBarConfiguration, SettingsIndex, SettingsReset, ShortcutTable, OnboardingModel, ControlPanelFocus, L10n catalog, and rebinding a shortcut while its feature is off.
+
+### Interface and onboarding — deferred / limits
+- A feature's settings aren't shown dimmed while it's off; the page says "Turn on … to see and change its settings." (The settings views need the feature's running store.)
+- Keep Awake's menu has no "While Certain Apps Run…" item; its Settings page covers it.
+- The Launcher's "Press ↩ to search the web" empty-state hint was left out, because it would be new behaviour.
+- Clipboard: deleting history (Clear, Erase, retention, single delete) removes image and thumbnail files directly, not through the Trash. This predates this phase and conflicts with the "destructive file operations go to Trash" rule; it needs a decision.
+- With no search text, the Launcher's clipboard list is now newest first, including pinned items (needed for the control panel's "recent").
+- Not localized (left as data): macOS System Settings pane names, bank and search engine brand names, and unit abbreviations.
+- Not added: a fixture test for `check-strings.sh` and per-feature menu-content tests (the menus need running features).
+- The language picker shows English only.
+

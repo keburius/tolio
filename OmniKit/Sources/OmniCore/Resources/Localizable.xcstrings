@@ -2859,24 +2859,13 @@
         }
       }
     },
-    "panel.windowNamed": {
+    "panel.windowTitle": {
       "extractionState": "manual",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Window · %@, “%@”"
-          }
-        }
-      }
-    },
-    "panel.windowOfApp": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Window · %@"
+            "value": "%@ — “%@”"
           }
         }
       }

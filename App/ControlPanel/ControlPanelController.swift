@@ -263,7 +263,8 @@ private struct LayoutGridPanel: View {
         VStack(alignment: .leading, spacing: OmniStyle.s2) {
             switch model.window {
             case let .window(app, title):
-                SectionHeader(title.map { L10n.Panel.windowNamed(app, $0) } ?? L10n.Panel.windowOfApp(app)).lineLimit(1)
+                SectionHeader(L10n.Panel.windowSection)
+                Text(title.map { L10n.Panel.windowTitle(app, $0) } ?? app).font(.callout).foregroundStyle(.secondary).lineLimit(1).truncationMode(.middle).frame(maxWidth: 360, alignment: .leading)
                 LayoutGrid(layouts: model.layouts, focused: nil, action: action)
             default:
                 Text(L10n.Panel.noWindow).font(.callout).foregroundStyle(.secondary).frame(width: 300, alignment: .leading)

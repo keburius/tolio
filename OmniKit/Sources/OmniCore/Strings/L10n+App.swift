@@ -25,8 +25,7 @@ public extension L10n {
         public static var recentlyCopied: String { tr("panel.recentlyCopied", "Recently copied") }
         public static var showAll: String { tr("panel.showAll", "Show All") }
         public static var windowSection: String { tr("panel.window", "Window") }
-        public static func windowNamed(_ app: String, _ title: String) -> String { format("panel.windowNamed", "Window · %@, “%@”", app, title) }
-        public static func windowOfApp(_ app: String) -> String { format("panel.windowOfApp", "Window · %@", app) }
+        public static func windowTitle(_ app: String, _ title: String) -> String { format("panel.windowTitle", "%@ — “%@”", app, title) }
         public static var noWindow: String { tr("panel.noWindow", "No window to arrange. Click a window, then open the panel again.") }
         public static var nothingCopied: String { tr("panel.nothingCopied", "Nothing copied yet. Copy something to see it here.") }
         public static func turnOnToSeeClips(_ feature: String) -> String { format("panel.turnOnClips", "Turn on %@ to see what you copied here.", feature) }
