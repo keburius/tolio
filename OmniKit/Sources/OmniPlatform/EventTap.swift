@@ -47,9 +47,13 @@ public final class EventTap {
 
     public var isRunning: Bool { port != nil }
 
-    public static func mask(_ types: CGEventType...) -> CGEventMask {
+    nonisolated public static func mask(_ types: CGEventType...) -> CGEventMask {
         types.reduce(0) { $0 | (1 << CGEventMask($1.rawValue)) }
     }
+
+    /// `NX_SYSDEFINED`: media, brightness, and other special keys. Not a
+    /// named `CGEventType` case, so it's added by raw value.
+    nonisolated public static let systemDefinedMask: CGEventMask = 1 << 14
 
     public func start() throws {
         guard port == nil else { return }
@@ -79,8 +83,9 @@ public final class EventTap {
         source = nil
     }
 
-    /// Returns false to swallow the event.
-    fileprivate func shouldDeliver(type: CGEventType, event: CGEvent) -> Bool {
+    /// Returns false to swallow the event. Internal so tests can simulate
+    /// the system disabling the tap.
+    func shouldDeliver(type: CGEventType, event: CGEvent) -> Bool {
         if type == .tapDisabledByTimeout || type == .tapDisabledByUserInput {
             switch mode {
             case .listenOnly:

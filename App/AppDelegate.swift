@@ -1,8 +1,11 @@
 import AppKit
 import FeatureClipboard
 import FeatureDiagnostics
+import FeatureKeepAwake
+import FeatureKeyboardClean
 import FeaturePalette
 import FeatureSwitcher
+import FeatureSystemStats
 import FeatureWindows
 import OmniCore
 
@@ -43,6 +46,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         services.features.register(SnippetsFeature())
         services.features.register(WindowsFeature())
         services.features.register(SwitcherFeature())
+        services.features.register(KeepAwakeFeature())
+        services.features.register(KeyboardCleanFeature())
+        services.features.register(SystemStatsFeature())
         services.features.register(DiagnosticsFeature())
     }
 

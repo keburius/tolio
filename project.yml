@@ -42,6 +42,12 @@ targets:
         product: FeatureWindows
       - package: OmniKit
         product: FeatureSwitcher
+      - package: OmniKit
+        product: FeatureKeepAwake
+      - package: OmniKit
+        product: FeatureKeyboardClean
+      - package: OmniKit
+        product: FeatureSystemStats
     info:
       path: App/Info.plist
       properties:
@@ -82,5 +88,8 @@ schemes:
         - package: OmniKit/FeatureClipboardTests
         - package: OmniKit/FeatureWindowsTests
         - package: OmniKit/FeatureSwitcherTests
+        - package: OmniKit/FeatureKeepAwakeTests
+        - package: OmniKit/FeatureKeyboardCleanTests
+        - package: OmniKit/FeatureSystemStatsTests
     archive:
       config: Release

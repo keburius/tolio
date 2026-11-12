@@ -12,6 +12,9 @@ let package = Package(
         .library(name: "FeatureClipboard", targets: ["FeatureClipboard"]),
         .library(name: "FeatureWindows", targets: ["FeatureWindows"]),
         .library(name: "FeatureSwitcher", targets: ["FeatureSwitcher"]),
+        .library(name: "FeatureKeepAwake", targets: ["FeatureKeepAwake"]),
+        .library(name: "FeatureKeyboardClean", targets: ["FeatureKeyboardClean"]),
+        .library(name: "FeatureSystemStats", targets: ["FeatureSystemStats"]),
     ],
     dependencies: [
         // Approved dependency (SQLite), vendored at 7.12.0. See Vendor/README.md.
@@ -27,11 +30,17 @@ let package = Package(
         ]),
         .target(name: "FeatureWindows", dependencies: ["OmniCore", "OmniPlatform"]),
         .target(name: "FeatureSwitcher", dependencies: ["OmniCore", "OmniPlatform"]),
+        .target(name: "FeatureKeepAwake", dependencies: ["OmniCore", "OmniPlatform"]),
+        .target(name: "FeatureKeyboardClean", dependencies: ["OmniCore", "OmniPlatform"]),
+        .target(name: "FeatureSystemStats", dependencies: ["OmniCore", "OmniPlatform"]),
         .testTarget(name: "OmniCoreTests", dependencies: ["OmniCore"]),
         .testTarget(name: "OmniPlatformTests", dependencies: ["OmniPlatform"]),
         .testTarget(name: "FeaturePaletteTests", dependencies: ["FeaturePalette", "OmniCore"]),
         .testTarget(name: "FeatureClipboardTests", dependencies: ["FeatureClipboard", "OmniCore"]),
         .testTarget(name: "FeatureWindowsTests", dependencies: ["FeatureWindows", "OmniCore"]),
         .testTarget(name: "FeatureSwitcherTests", dependencies: ["FeatureSwitcher", "OmniCore"]),
+        .testTarget(name: "FeatureKeepAwakeTests", dependencies: ["FeatureKeepAwake", "OmniCore", "OmniPlatform"]),
+        .testTarget(name: "FeatureKeyboardCleanTests", dependencies: ["FeatureKeyboardClean", "OmniCore", "OmniPlatform"]),
+        .testTarget(name: "FeatureSystemStatsTests", dependencies: ["FeatureSystemStats", "OmniCore", "OmniPlatform"]),
     ]
 )

@@ -1,6 +1,6 @@
 # Omni — Implementation Plan
 
-Status: **approved. Phases 0–4 done** (see §8).
+Status: **approved. Phases 0–5 done** (see §8).
 
 ## 0. Environment found
 
@@ -42,15 +42,15 @@ Dependency rule: feature modules depend on `OmniCore` plus the platform kits the
 | Module | Role | Depends on |
 |---|---|---|
 | `OmniCore` | `Feature` protocol, `FeatureRegistry`, `Lifetime`, `SettingsStore`, `Log`, `Permission`, `Command`/`CommandRegistry`, `KeyCombo`/`HotkeyBindings`. Foundation only, except `Feature.makeSettingsView()` returning `AnyView` | none |
-| `OmniPlatform` | `HotkeyManager` + `CarbonHotkeyBackend`, `PermissionsManager`, `LaunchAtLogin`, `HUD`, `HotkeyRecorderView`, `DirectoryWatcher` (FSEvents), `EventTap` (fail-open), `KeySender`, `PasteboardSnapshot`/`TemporaryPasteboard`, `AXWindow` (uses the approved private `_AXUIElementGetWindow`), `ScreenFrames`. Later: `FailOpenEventTap`, `AXElement`, `PasteboardSnapshot`, `FloatingPanel` | OmniCore |
+| `OmniPlatform` | `HotkeyManager` + `CarbonHotkeyBackend`, `PermissionsManager`, `LaunchAtLogin`, `HUD`, `HotkeyRecorderView`, `DirectoryWatcher` (FSEvents), `EventTap` (fail-open), `KeySender`, `PasteboardSnapshot`/`TemporaryPasteboard`, `AXWindow` (uses the approved private `_AXUIElementGetWindow`), `ScreenFrames`, `PowerAssertion`. Later: `FailOpenEventTap`, `AXElement`, `PasteboardSnapshot`, `FloatingPanel` | OmniCore |
 | `FeatureDiagnostics` | Test hotkey + palette command, proves the plumbing | Core, Platform |
 | `FeaturePalette` | Launcher: `Logic/` (FuzzyMatcher, PaletteRanker, UsageHistory, Calculator, QuantityQuery, UnitConversion, CurrencyRates/ECBRateParser, CurrencyRateStore, QuickAnswerEngine, AppScanner, SettingsPaneCatalog) and `UI/` (PaletteFeature, PaletteController/PalettePanel, PaletteView, view model) | Core, Platform |
 | `FeatureClipboard` | Two features: Clipboard History (`ClipCapturePolicy`, `ClipboardStore` on GRDB + FTS5, `ClipboardMonitor`, palette provider) and Snippets (`KeystrokeBuffer`, `PlaceholderExpander`, `SnippetEngine`) | Core, Platform, **GRDB 7.12.0 vendored in `Vendor/GRDB`** |
 | `FeatureWindows` | `Logic/` (WindowAction, ScreenGeometry, WindowLayout, RestoreHistory, SnapZones) and `Runtime/` (WindowManager, DragSnapper + SnapPreview), WindowsFeature | Core, Platform |
 | `FeatureSwitcher` | `Logic/` (WindowListBuilder, RecencyTracker + SwitcherOrdering, SwitcherStateMachine), `Runtime/` (WindowCatalog, FocusTracker, SwitcherKeyTap, ThumbnailProvider), `UI/` (SwitcherFeature, SwitcherController, SwitcherView) | Core, Platform |
-| `FeatureKeepAwake` | IOPMAssertion wrapper, app-running trigger | Core, Platform |
-| `FeatureKeyboardClean` | Lock overlay, swallowing tap | Core, Platform |
-| `FeatureSystemStats` | Samplers (CPU, mem, disk, net, battery), menu bar renderers | Core, Platform |
+| `FeatureKeepAwake` | KeepAwakePolicy (pure), KeepAwakeFeature (manual session + while-app-running rules) | Core, Platform |
+| `FeatureKeyboardClean` | CleaningSession (pure), CleaningController (filtering tap, overlays, watchdog) | Core, Platform |
+| `FeatureSystemStats` | `Logic/` (StatsMath, StatsFormat, StatsSnapshot), `Runtime/` SystemSampler, `UI/` (menu bar item, popover, settings) | Core, Platform |
 | `FeatureShortcutOverlay` | AX menu walker, overlay | Core, Platform |
 | `FeatureTextActions` | Selection reader, action plugins, popup | Core, Platform |
 | `FeatureScreenshots` | Capture, editor, pin, OCR, recording | Core, Platform |
@@ -230,7 +230,7 @@ Tests: allowlist property tests (generated hostile paths, symlinks, `..`, `/Syst
 | 2 Clipboard + snippets | **done** |
 | 3 Window management | **done** |
 | 4 Window switcher | **done** |
-| 5 Utilities | not started |
+| 5 Utilities | **done** |
 | 6 Shortcut overlay | not started |
 | 7 Text selection | not started |
 | 8 Screenshots | not started |
@@ -332,3 +332,31 @@ Tests: allowlist property tests (generated hostile paths, symlinks, `..`, `/Syst
 - Apps with no open windows aren't listed (use the palette to launch or activate them).
 - Off by default; requires Accessibility, and Screen Recording for previews. macOS 15+ periodically asks the user to reconfirm Screen Recording.
 - Q and W use key positions (QWERTY), not characters.
+
+### Phase 5 — done
+- **Keep Awake** (on by default, no permission): one IOKit assertion (`PreventUserIdleDisplaySleep`, or `…SystemSleep` if "keep display on" is off).
+  - Manual session: indefinite or timed (15 min–5 h), not persisted across restarts. A single one-shot timer handles the end time.
+  - "While these apps run" rules (persisted): launch/quit observers exist only while rules exist.
+  - Control: palette commands, ⌃⌥⌘A toggle, Settings.
+  - Unit test checks the assertion through `IOPMCopyAssertionsByProcess`: visible while held, gone after release.
+- **Keyboard Cleaning** (Accessibility): ⌃⌥⌘L, the palette, or Settings.
+  - Start: begins after 0.7 s, so you can release the shortcut.
+  - Blocking: a filtering tap swallows keyDown/keyUp/flagsChanged/NX_SYSDEFINED (media and brightness keys). A full-screen non-activating overlay on every display has a mouse-only Unlock button and a countdown.
+  - **Fail open**: tap disabled by macOS → session ends at once (no re-enable, tested). A hard watchdog ends it at the time limit (default 2 min, capped at 10). If Omni exits, the tap goes with it. Unlocking stops the tap before anything else.
+  - Can't block the power button or Touch ID (system level).
+- **System Stats** (off by default):
+  - Readings: CPU (host_processor_info deltas), memory (Activity Monitor formula: app + wired + compressed), startup disk free (read every 60 s), network throughput (getifaddrs, physical links, 32-bit wrap handled), battery (IOPS).
+  - Menu bar: separate item with selectable text items; icon only if none are selected; fixed width so neighbors don't shift. Detail popover with gauges.
+  - Refresh: one timer (1/2/5 s, 25% tolerance).
+  - **Temperatures and fans skipped**: on Apple silicon they're only readable through undocumented, chip-specific SMC/HID keys.
+- **Idle CPU measurements** (60 s, `ps` CPU time plus `top`, after warm-up):
+  - Without System Stats (your feature set): 0.05–0.20%, 0–14 wakeups/s (mostly the 0.5 s clipboard poll).
+  - System Stats, icon only, 2 s: 0.20%. Sampling itself is negligible.
+  - System Stats, CPU + MEM + network text, 2 s: 1.67%; at 5 s: 0.68%.
+  - The text cost is AppKit's, not Omni's: each title change runs `NSStatusItem _updateReplicants`, re-rendering bitmap snapshots of the item (~30 ms per change on this macOS). It only happens at refresh ticks; there's no other background work.
+- 22 new tests (234 total).
+
+### Phase 5 — deferred / limits
+- No menu bar indicator for Keep Awake beyond HUD and Settings. Status items are per-feature and Keep Awake doesn't add one.
+- Disk shows free space on the startup volume, not I/O throughput.
+- Stats text redraw cost (above) could be reduced only by updating less often; a custom-drawn view still goes through the same replicant path.
