@@ -1,6 +1,6 @@
 # Omni — Implementation Plan
 
-Status: **approved. Phases 0–5 done** (see §8).
+Status: **approved. Phases 0–6 done** (see §8).
 
 ## 0. Environment found
 
@@ -51,7 +51,7 @@ Dependency rule: feature modules depend on `OmniCore` plus the platform kits the
 | `FeatureKeepAwake` | KeepAwakePolicy (pure), KeepAwakeFeature (manual session + while-app-running rules) | Core, Platform |
 | `FeatureKeyboardClean` | CleaningSession (pure), CleaningController (filtering tap, overlays, watchdog) | Core, Platform |
 | `FeatureSystemStats` | `Logic/` (StatsMath, StatsFormat, StatsSnapshot), `Runtime/` SystemSampler, `UI/` (menu bar item, popover, settings) | Core, Platform |
-| `FeatureShortcutOverlay` | AX menu walker, overlay | Core, Platform |
+| `FeatureShortcutOverlay` | `Logic/` (HoldGesture, ShortcutFormatter, MenuModel: ShortcutCatalog + ColumnPacker), `Runtime/` (MenuReader + MenuCache, ModifierTap), `UI/` (OverlayController, OverlayView, ShortcutOverlayFeature) | Core, Platform |
 | `FeatureTextActions` | Selection reader, action plugins, popup | Core, Platform |
 | `FeatureScreenshots` | Capture, editor, pin, OCR, recording | Core, Platform |
 | `FeatureFileRules` | Rule engine, FSEvents watcher, undo log | Core, Platform |
@@ -231,7 +231,7 @@ Tests: allowlist property tests (generated hostile paths, symlinks, `..`, `/Syst
 | 3 Window management | **done** |
 | 4 Window switcher | **done** |
 | 5 Utilities | **done** |
-| 6 Shortcut overlay | not started |
+| 6 Shortcut overlay | **done** |
 | 7 Text selection | not started |
 | 8 Screenshots | not started |
 | 9 File rules | not started |
@@ -360,3 +360,26 @@ Tests: allowlist property tests (generated hostile paths, symlinks, `..`, `/Syst
 - No menu bar indicator for Keep Awake beyond HUD and Settings. Status items are per-feature and Keep Awake doesn't add one.
 - Disk shows free space on the startup volume, not I/O throughput.
 - Stats text redraw cost (above) could be reduced only by updating less often; a custom-drawn view still goes through the same replicant path.
+
+### Phase 6 — done
+- **Shortcut Overlay** (Accessibility, off by default): shows the frontmost app's menu shortcuts, one section per menu, submenu items as "Find › Find Next", disabled items dimmed (optional). Click an item to run it (`AXPress`, off the main thread; `cannotComplete` from items that open a sheet isn't reported as a failure).
+- Triggers:
+  - Hold mode: press ⌘ twice and keep holding (tap ≤ 300 ms, gap ≤ 300 ms, hold 250 ms). The overlay stays while the key is held; release, any key, or switching apps hides it. ⌥ or ⌃ can be chosen instead, or Off.
+  - Pinned mode: ⌃⌥⌘/ (rebindable) or the palette command "Show Keyboard Shortcuts". It has a filter field; ↩ runs the first match, Esc or clicking elsewhere closes it.
+- Input: a **listen-only** tap (flagsChanged, keyDown, mouse down) feeds a pure state machine. It can't block anything. Keys only cancel the gesture and are never stored or logged. With the trigger set to Off, no tap runs.
+- Menu reading: AX walk of `AXMenuBar` on a background task (Apple menu skipped), batched attribute reads, limits of 4000 items, depth 4 and 3 s. Per-element messaging timeout 0.25 s, with 1 s for the first call, which may wake an app from App Nap. Reading starts at the second press, so it's usually ready before the hold completes. The cache (6 apps) shows the last copy at once and refreshes in the background; reads within 2 s are reused.
+- Shortcut formatting: AX modifier bits (⇧ ⌥ ⌃, no-⌘, and bit 0x10 = fn/🌐, found in Finder's "Emoji & Symbols"), Carbon menu glyphs, AppKit function-key characters, and virtual-key fallback.
+- Measured reads (first / repeat):
+  - Cursor (Electron; VS Code isn't installed): 351 items, 115 shortcuts, 79 / 15–100 ms. Cursor rebuilds its menu per window type, and the agents window has fewer items (99).
+  - Finder: 250 items, 113 shortcuts, 86–192 / 16–21 ms.
+  - Safari: 482 items, 103 shortcuts, 240 / 37 ms.
+  - Xcode: 840 items, 264 shortcuts, 961 / 61–91 ms.
+- Idle CPU with the overlay on: 0.05% (60 s).
+- `make run`: LaunchServices can return -600 yet still launch the app. The retry now runs only if Omni isn't running; before, it counted as a re-open and showed Settings.
+- 20 new tests (254 total).
+
+### Phase 6 — deferred / limits
+- Only menu-bar shortcuts can be listed. Shortcuts that exist only inside a window, a web view or an editor keymap (e.g. most of VS Code's editor bindings) aren't in the menus, so they can't be shown.
+- Alternate items that appear only while ⌥ is held aren't exposed by Accessibility, so they're missing.
+- Menus an app builds only when opened (some Electron menus) show what's there at read time.
+- No palette provider for menu items yet ("keys …" search). The pinned overlay's filter covers it.

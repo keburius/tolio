@@ -15,6 +15,7 @@ let package = Package(
         .library(name: "FeatureKeepAwake", targets: ["FeatureKeepAwake"]),
         .library(name: "FeatureKeyboardClean", targets: ["FeatureKeyboardClean"]),
         .library(name: "FeatureSystemStats", targets: ["FeatureSystemStats"]),
+        .library(name: "FeatureShortcutOverlay", targets: ["FeatureShortcutOverlay"]),
     ],
     dependencies: [
         // Approved dependency (SQLite), vendored at 7.12.0. See Vendor/README.md.
@@ -33,6 +34,7 @@ let package = Package(
         .target(name: "FeatureKeepAwake", dependencies: ["OmniCore", "OmniPlatform"]),
         .target(name: "FeatureKeyboardClean", dependencies: ["OmniCore", "OmniPlatform"]),
         .target(name: "FeatureSystemStats", dependencies: ["OmniCore", "OmniPlatform"]),
+        .target(name: "FeatureShortcutOverlay", dependencies: ["OmniCore", "OmniPlatform"]),
         .testTarget(name: "OmniCoreTests", dependencies: ["OmniCore"]),
         .testTarget(name: "OmniPlatformTests", dependencies: ["OmniPlatform"]),
         .testTarget(name: "FeaturePaletteTests", dependencies: ["FeaturePalette", "OmniCore"]),
@@ -42,5 +44,6 @@ let package = Package(
         .testTarget(name: "FeatureKeepAwakeTests", dependencies: ["FeatureKeepAwake", "OmniCore", "OmniPlatform"]),
         .testTarget(name: "FeatureKeyboardCleanTests", dependencies: ["FeatureKeyboardClean", "OmniCore", "OmniPlatform"]),
         .testTarget(name: "FeatureSystemStatsTests", dependencies: ["FeatureSystemStats", "OmniCore", "OmniPlatform"]),
+        .testTarget(name: "FeatureShortcutOverlayTests", dependencies: ["FeatureShortcutOverlay", "OmniCore"]),
     ]
 )

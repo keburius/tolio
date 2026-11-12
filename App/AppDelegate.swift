@@ -4,6 +4,7 @@ import FeatureDiagnostics
 import FeatureKeepAwake
 import FeatureKeyboardClean
 import FeaturePalette
+import FeatureShortcutOverlay
 import FeatureSwitcher
 import FeatureSystemStats
 import FeatureWindows
@@ -49,6 +50,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         services.features.register(KeepAwakeFeature())
         services.features.register(KeyboardCleanFeature())
         services.features.register(SystemStatsFeature())
+        services.features.register(ShortcutOverlayFeature())
         services.features.register(DiagnosticsFeature())
     }
 

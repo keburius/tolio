@@ -31,7 +31,9 @@ run: build
 	@pkill -x Omni || true
 	@for i in $$(seq 1 50); do pgrep -x Omni >/dev/null || break; sleep 0.1; done
 	@if pgrep -x Omni >/dev/null; then echo "Omni did not exit; sending SIGKILL"; pkill -9 -x Omni; sleep 0.5; fi
-	@open $(APP) || { echo "open failed; retrying in 1 s"; sleep 1; open $(APP); }
+	@# LaunchServices can report -600 yet still launch the app. Retry only if
+	@# it isn't running, or the second open counts as a re-open and shows Settings.
+	@open $(APP) || { sleep 1; pgrep -x Omni >/dev/null || { echo "open failed; retrying"; open $(APP); }; }
 
 clean:
 	rm -rf build Omni.xcodeproj
