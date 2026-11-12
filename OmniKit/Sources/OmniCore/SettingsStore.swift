@@ -55,6 +55,17 @@ public final class SettingsStore {
         }
     }
 
+    /// Names of stored settings starting with `prefix`.
+    public func storedKeys(withPrefix prefix: String) -> [String] {
+        defaults.dictionaryRepresentation().keys.filter { $0.hasPrefix(prefix) }.sorted()
+    }
+
+    /// Removes a stored value by name (for resetting a group of settings).
+    public func removeValue(named name: String) {
+        defaults.removeObject(forKey: name)
+        revision += 1
+    }
+
     /// Removes the stored value so the default applies again.
     public func reset<Value>(_ key: SettingKey<Value>) {
         defaults.removeObject(forKey: key.name)

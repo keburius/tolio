@@ -15,11 +15,4 @@ struct PermissionStateMappingTests {
     func avAuthorizationMapping(raw: Int, expected: PermissionState) {
         #expect(PermissionStateMapping.fromAVAuthorization(rawValue: raw) == expected)
     }
-
-    @Test func fullDiskAccessHeuristic() {
-        #expect(PermissionStateMapping.fullDiskAccess(probes: [.missing, .readable]) == .granted)
-        #expect(PermissionStateMapping.fullDiskAccess(probes: [.permissionDenied, .missing]) == .denied)
-        #expect(PermissionStateMapping.fullDiskAccess(probes: [.missing, .missing]) == .unknown)
-        #expect(PermissionStateMapping.fullDiskAccess(probes: []) == .unknown)
-    }
 }

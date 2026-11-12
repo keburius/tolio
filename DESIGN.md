@@ -463,7 +463,8 @@ Every feature page has the same frame:
 
   > Reset Screenshots & Recording settings? Options and shortcuts go back to their defaults. Your on/off choice is kept.
 
-  It never deletes things you made: clipboard history items, snippets, Keep Awake's app list, or excluded-app lists (see Q3).
+  It never deletes things you made: clipboard history items, snippets, Keep Awake's app list, or excluded-app lists.
+- **Erase Data…** is a separate, red, clearly labeled button on features that keep your content (Clipboard History, Text Snippets, Keep Awake's app list, excluded-app lists, Launcher usage history). It says exactly what will be deleted, e.g. "Erase all 214 clipboard items, including pinned ones? This can't be undone.", and needs a second click on [Erase]. It's available while the feature is on.
 
 ### 4.4 Search
 
@@ -629,27 +630,26 @@ These are small additions for display. No feature's behaviour changes.
 - Onboarding model: the recommended set, Everything/None presets, the permission union for a choice (required vs optional), and that choices apply only on Continue.
 - Strings: every `L10n` key has an English value in the catalog, there are no duplicate keys, and placeholders are consistent. The `check-strings.sh` script itself gets a fixture test.
 
-All 306 existing tests must keep passing unchanged (the one exception is in §7, for you to approve).
+All existing tests must keep passing. The exceptions are the two registry tests in §7 (approved), plus the Full Disk Access heuristic test, which is deleted together with the code it tested.
 
 ---
 
 ## 7. Removing the cancelled phases from the app
 
 - **Permissions:** remove the two permission kinds only those phases would have used, Full Disk Access and App Management. This includes their texts, the Full Disk Access probe and the "App Management can't be checked" note in Settings → Permissions.
-  - **Tests affected:** two existing registry tests use them as stand-in permissions. They'd switch to Microphone and Screen Recording, with the assertions unchanged (see Q2).
+  - **Tests affected:** two existing registry tests used them as stand-in permissions and now use Screen Recording and Microphone, with the assertions unchanged. The Full Disk Access detection test is deleted with that code.
 - **Launcher:** it can still open the macOS "Full Disk Access" and "App Management" panes of System Settings. Those are macOS pages, not Omni features, so they stay.
 - **PLAN.md:** has already been cleaned. It no longer mentions the cancelled phases, their modules, permissions or decisions.
 
 ---
 
-## 8. Open questions
+## 8. Decisions (approved 2026-11-12)
 
 | # | Question | My recommendation |
 |---|---|---|
-| Q1 | You mentioned "Phase 11 stays as a future idea". Neither the original spec nor PLAN.md has a Phase 11. What is it, so I can record it in PLAN.md under "Future ideas"? | Tell me in one line; I won't guess |
-| Q2 | Remove the now-unused Full Disk Access and App Management permission kinds (two tests change their stand-in permission, same assertions)? Or keep them in code and only remove their text? | Remove them |
-| Q3 | "Reset to Defaults" per feature: keep user-made content (clipboard items, snippets, app lists)? | Keep it; reset options and shortcuts only |
-| Q4 | Diagnostics: off by default for new users, and is your current "on" kept? | Yes to both |
-| Q5 | The new names in §0 (Launcher, Window Layouts, Lock Keyboard, Text Actions, Shortcut Cheat Sheet, Screenshots & Recording)? | As listed |
-| Q6 | Control panel shortcut ⌃⌥⌘M? | Yes |
-| Q7 | Translation: English only for now, with the catalog ready? Any language to add right away (e.g. Georgian)? | English only now |
+| Q2 | Remove the now-unused Full Disk Access and App Management permission kinds? | **Approved:** removed; the two registry tests use Screen Recording and Microphone |
+| Q3 | "Reset to Defaults" per feature: keep user-made content? | **Approved:** reset keeps user content. Each feature with data also gets a separate, clearly labeled **Erase Data…** with confirmation (§4.3) |
+| Q4 | Diagnostics off by default for new users, current setting kept? | **Approved** |
+| Q5 | The new names in §0? | **Approved** |
+| Q6 | Control panel shortcut ⌃⌥⌘M? | **Approved** |
+| Q7 | Languages? | **Approved:** English only, every string in the String Catalog |

@@ -3,6 +3,7 @@ import PackageDescription
 
 let package = Package(
     name: "OmniKit",
+    defaultLocalization: "en",
     platforms: [.macOS(.v14)],
     products: [
         .library(name: "OmniCore", targets: ["OmniCore"]),
@@ -24,7 +25,7 @@ let package = Package(
         .package(path: "../Vendor/GRDB"),
     ],
     targets: [
-        .target(name: "OmniCore"),
+        .target(name: "OmniCore", resources: [.process("Resources")]),
         .target(name: "OmniPlatform", dependencies: ["OmniCore"]),
         .target(name: "FeatureDiagnostics", dependencies: ["OmniCore", "OmniPlatform"]),
         .target(name: "FeaturePalette", dependencies: ["OmniCore", "OmniPlatform"]),

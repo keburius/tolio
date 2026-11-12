@@ -1,12 +1,5 @@
 import OmniCore
 
-/// Result of probing one TCC-protected path for Full Disk Access.
-public enum AccessProbeResult: Sendable, Equatable {
-    case readable
-    case permissionDenied
-    case missing
-}
-
 /// Pure mapping from raw OS answers to `PermissionState`. Kept separate from
 /// `PermissionsManager` so it can be unit-tested.
 public enum PermissionStateMapping {
@@ -24,12 +17,5 @@ public enum PermissionStateMapping {
         case 3: .granted
         default: .unknown
         }
-    }
-
-    /// Any readable probe proves access; any denial proves no access.
-    public static func fullDiskAccess(probes: [AccessProbeResult]) -> PermissionState {
-        if probes.contains(.readable) { return .granted }
-        if probes.contains(.permissionDenied) { return .denied }
-        return .unknown
     }
 }

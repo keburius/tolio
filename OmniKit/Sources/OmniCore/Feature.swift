@@ -22,11 +22,43 @@ public protocol Feature: AnyObject {
     func enable(context: FeatureContext) throws
     func disable()
     func makeSettingsView() -> AnyView
+
+    // MARK: UI descriptions (no behaviour; see FeatureUI.swift)
+
+    /// Every global shortcut the feature registers when on, known even while off.
+    var declaredHotkeys: [HotkeyAction] { get }
+    /// Shortcuts that aren't key combinations.
+    var gestures: [GestureShortcut] { get }
+    /// Searchable settings on the feature's page.
+    var settingsEntries: [SettingsEntry] { get }
+    /// Setting names (`SettingKey.name`) holding things the user made, which
+    /// "Reset to Defaults" keeps. Everything else under `feature.<id>.` is reset.
+    var userContentSettingKeys: Set<String> { get }
+    /// What "Erase Data…" would delete, as a sentence fragment
+    /// ("all 214 clipboard items, including pinned ones"), or nil if there is
+    /// nothing to erase or the feature is off.
+    var erasableDataDescription: String? { get }
+    /// Deletes the feature's user content. Only called after confirmation.
+    func eraseData()
+    /// Menu bar icons and control panel tiles. Title, symbol, hint and
+    /// shortcut must be valid while the feature is off; `state`, `primary` and
+    /// `menu` are only called while it is on.
+    var quickAccessItems: [QuickAccessItem] { get }
+    /// True for internal features hidden from normal users (Diagnostics).
+    var isHidden: Bool { get }
 }
 
 public extension Feature {
     var optionalPermissions: Set<Permission> { [] }
     var isEnabledByDefault: Bool { false }
+    var declaredHotkeys: [HotkeyAction] { [] }
+    var gestures: [GestureShortcut] { [] }
+    var settingsEntries: [SettingsEntry] { [] }
+    var userContentSettingKeys: Set<String> { [] }
+    var erasableDataDescription: String? { nil }
+    func eraseData() {}
+    var quickAccessItems: [QuickAccessItem] { [] }
+    var isHidden: Bool { false }
 }
 
 /// Services handed to a feature when it is enabled. Hotkeys and commands

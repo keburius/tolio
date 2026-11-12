@@ -5,10 +5,14 @@ DERIVED := build/DerivedData
 APP     := $(DERIVED)/Build/Products/Debug/Omni.app
 XCB     := xcodebuild -project $(PROJECT) -scheme $(SCHEME) -destination 'platform=macOS' -derivedDataPath $(DERIVED)
 
-.PHONY: gen build test run release clean
+.PHONY: gen build test run release clean strings
 
 gen:
 	@xcodegen generate --quiet
+
+# Rebuilds the String Catalog from the L10n accessors.
+strings:
+	@python3 Scripts/gen-strings.py
 
 build: gen
 	@mkdir -p build

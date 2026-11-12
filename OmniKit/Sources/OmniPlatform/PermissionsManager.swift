@@ -59,8 +59,6 @@ public final class PermissionsManager: PermissionChecking {
             case .authorized: break
             default: openSettings(for: permission)
             }
-        case .fullDiskAccess, .appManagement:
-            openSettings(for: permission)
         }
         refresh()
         return state(of: permission)
@@ -124,29 +122,6 @@ public final class PermissionsManager: PermissionChecking {
             return PermissionStateMapping.fromAVAuthorization(
                 rawValue: AVCaptureDevice.authorizationStatus(for: .audio).rawValue
             )
-        case .fullDiskAccess:
-            return PermissionStateMapping.fullDiskAccess(probes: Self.fullDiskAccessProbePaths.map(Self.probe))
-        case .appManagement:
-            return .unknown // No API reports App Management.
         }
-    }
-
-    /// Files readable only with Full Disk Access.
-    private static var fullDiskAccessProbePaths: [String] {
-        let home = FileManager.default.homeDirectoryForCurrentUser.path
-        return [
-            "\(home)/Library/Application Support/com.apple.TCC/TCC.db",
-            "\(home)/Library/Safari/Bookmarks.plist",
-            "/Library/Application Support/com.apple.TCC/TCC.db",
-        ]
-    }
-
-    private static func probe(_ path: String) -> AccessProbeResult {
-        let fd = open(path, O_RDONLY)
-        if fd >= 0 {
-            close(fd)
-            return .readable
-        }
-        return errno == ENOENT ? .missing : .permissionDenied
     }
 }

@@ -72,7 +72,14 @@ public final class HotkeyManager: HotkeyRegistering {
     /// Changes or clears (`nil`) the shortcut for an action and persists it.
     @discardableResult
     public func rebind(_ actionID: String, to combo: KeyCombo?) -> RebindResult {
-        guard registrations[actionID] != nil else { return .ok }
+        guard registrations[actionID] != nil else {
+            // A feature that's off: just remember the choice for when it's on.
+            if let combo, let issue = combo.issue { return .invalid(issue) }
+            var bindings = settings.value(Self.bindingsKey)
+            bindings.set(combo, for: actionID)
+            settings.set(bindings, for: Self.bindingsKey)
+            return .ok
+        }
         if let combo {
             if let issue = combo.issue { return .invalid(issue) }
             if let other = activeRegistration(using: combo, excluding: actionID) {
@@ -95,6 +102,22 @@ public final class HotkeyManager: HotkeyRegistering {
         bindings.reset(actionID)
         settings.set(bindings, for: Self.bindingsKey)
         bind(actionID)
+    }
+
+    /// Restores the defaults of several actions (a feature's "Reset to Defaults").
+    public func resetToDefaults(_ actionIDs: [String]) {
+        var bindings = settings.value(Self.bindingsKey)
+        for id in actionIDs { bindings.reset(id) }
+        settings.set(bindings, for: Self.bindingsKey)
+        for id in actionIDs { bind(id) }
+    }
+
+    /// The user's overrides (for the shortcuts table).
+    public var bindings: HotkeyBindings { settings.value(Self.bindingsKey) }
+
+    /// Registered actions macOS refused.
+    public var refusedActionIDs: Set<String> {
+        Set(registrations.values.compactMap { if case .failed = $0.state { $0.action.id } else { nil } })
     }
 
     private func unregister(actionID: String) {

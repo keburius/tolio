@@ -13,8 +13,6 @@ struct PermissionsPane: View {
                 ForEach(Permission.allCases) { permission in
                     PermissionRow(permission: permission, permissions: permissions, note: usage(of: permission))
                 }
-            } footer: {
-                Text("App Management can't be checked by any app; macOS asks when it's first needed.")
             }
         }
         .formStyle(.grouped)

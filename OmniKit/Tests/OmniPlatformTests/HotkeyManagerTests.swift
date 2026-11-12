@@ -117,4 +117,13 @@ struct HotkeyManagerTests {
         #expect(manager.registrations.keys.sorted() == ["b"])
         #expect(Array(backend.active.values) == [ctrlB])
     }
+
+    @Test func rebindWhileFeatureIsOffIsRemembered() {
+        let combo = KeyCombo(keyCode: 11, modifiers: [.control, .option])
+        #expect(manager.rebind("notRegistered", to: combo) == .ok)
+        #expect(manager.bindings.overrides["notRegistered"]?.combo == combo)
+        #expect(manager.rebind("notRegistered", to: KeyCombo(keyCode: 0, modifiers: .option)) != .ok)
+        manager.resetToDefaults(["notRegistered"])
+        #expect(manager.bindings.overrides["notRegistered"] == nil)
+    }
 }

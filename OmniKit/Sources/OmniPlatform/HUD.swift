@@ -24,6 +24,10 @@ public enum HUD {
         hideTask = Task { @MainActor in
             try? await Task.sleep(for: duration)
             guard !Task.isCancelled else { return }
+            if OmniStyle.reduceMotion {
+                panel.orderOut(nil)
+                return
+            }
             NSAnimationContext.runAnimationGroup { $0.duration = 0.25; panel.animator().alphaValue = 0 } completionHandler: {
                 MainActor.assumeIsolated { panel.orderOut(nil) }
             }
@@ -51,6 +55,6 @@ private struct HUDView: View {
             .font(.title3.weight(.medium))
             .padding(.horizontal, 22)
             .padding(.vertical, 14)
-            .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 14))
+            .omniPanelBackground(radius: OmniStyle.panelRadius)
     }
 }

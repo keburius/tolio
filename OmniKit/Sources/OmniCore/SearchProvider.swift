@@ -44,6 +44,13 @@ public protocol SearchProvider: AnyObject {
     var title: String { get }
     /// Results for `query`; an empty query means "most recent".
     func results(for query: String, limit: Int) -> [SearchResult]
+    /// Shown when the scoped list is empty for an empty query
+    /// (e.g. "Nothing copied yet. Copy something to see it here.").
+    var emptyMessage: String? { get }
+}
+
+public extension SearchProvider {
+    var emptyMessage: String? { nil }
 }
 
 /// Well-known pasteboard types (see nspasteboard.org).

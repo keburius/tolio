@@ -25,7 +25,7 @@ struct PermissionRow: View {
                         Task { _ = await permissions.request(permission) }
                     }
                 }
-                if state == .denied && permission != .appManagement {
+                if state == .denied {
                     Button("Reset…") {
                         Task { _ = await permissions.resetAndRequest(permission) }
                     }

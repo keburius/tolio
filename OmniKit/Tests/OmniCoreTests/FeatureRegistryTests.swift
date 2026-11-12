@@ -74,8 +74,8 @@ struct FeatureRegistryTests {
     }
 
     @Test func unknownPermissionStateDoesNotBlock() {
-        permissions.states[.appManagement] = .unknown
-        let registry = makeRegistry(FakeFeature("f", required: [.appManagement]))
+        permissions.states[.screenRecording] = .unknown
+        let registry = makeRegistry(FakeFeature("f", required: [.screenRecording]))
         registry.setWanted(true, for: "f")
         #expect(registry.status(of: "f") == .running)
     }
@@ -98,7 +98,7 @@ struct FeatureRegistryTests {
         let registry = makeRegistry(
             FakeFeature("a", required: [.accessibility], optional: [.microphone]),
             FakeFeature("b", required: [.screenRecording], optional: [.accessibility]),
-            FakeFeature("c", required: [.fullDiskAccess])
+            FakeFeature("c", required: [.microphone])
         )
         registry.setWanted(true, for: "a")
         registry.setWanted(true, for: "b")

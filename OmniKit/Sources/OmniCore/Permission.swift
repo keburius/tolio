@@ -4,35 +4,24 @@ import Foundation
 public enum Permission: String, Codable, CaseIterable, Sendable, Identifiable {
     case accessibility
     case screenRecording
-    case fullDiskAccess
     case microphone
-    case appManagement
 
     public var id: String { rawValue }
 
     public var displayName: String {
         switch self {
-        case .accessibility: "Accessibility"
-        case .screenRecording: "Screen Recording"
-        case .fullDiskAccess: "Full Disk Access"
-        case .microphone: "Microphone"
-        case .appManagement: "App Management"
+        case .accessibility: L10n.Permissions.accessibility
+        case .screenRecording: L10n.Permissions.screenRecording
+        case .microphone: L10n.Permissions.microphone
         }
     }
 
     /// One sentence shown in onboarding and Settings explaining why Omni asks.
     public var explanation: String {
         switch self {
-        case .accessibility:
-            "Lets Omni move windows, read menus and selected text, and listen for shortcuts."
-        case .screenRecording:
-            "Lets Omni capture screenshots, recordings, and window thumbnails."
-        case .fullDiskAccess:
-            "Lets Omni read protected folders such as other apps' containers."
-        case .microphone:
-            "Lets Omni include your voice in screen recordings."
-        case .appManagement:
-            "Lets Omni move other apps to the Trash when you uninstall them."
+        case .accessibility: L10n.Permissions.accessibilityWhy
+        case .screenRecording: L10n.Permissions.screenRecordingWhy
+        case .microphone: L10n.Permissions.microphoneWhy
         }
     }
 
@@ -41,9 +30,7 @@ public enum Permission: String, Codable, CaseIterable, Sendable, Identifiable {
         switch self {
         case .accessibility: "Privacy_Accessibility"
         case .screenRecording: "Privacy_ScreenCapture"
-        case .fullDiskAccess: "Privacy_AllFiles"
         case .microphone: "Privacy_Microphone"
-        case .appManagement: "Privacy_AppBundles"
         }
     }
 
@@ -58,9 +45,7 @@ public enum Permission: String, Codable, CaseIterable, Sendable, Identifiable {
         switch self {
         case .accessibility: "Accessibility"
         case .screenRecording: "ScreenCapture"
-        case .fullDiskAccess: "SystemPolicyAllFiles"
         case .microphone: "Microphone"
-        case .appManagement: "SystemPolicyAppBundles"
         }
     }
 
@@ -69,7 +54,6 @@ public enum Permission: String, Codable, CaseIterable, Sendable, Identifiable {
     public var hasSystemPrompt: Bool {
         switch self {
         case .accessibility, .screenRecording, .microphone: true
-        case .fullDiskAccess, .appManagement: false
         }
     }
 }
