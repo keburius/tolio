@@ -1,6 +1,6 @@
 # Omni — Implementation Plan
 
-Status: **approved. Phase 0 done** (see §8).
+Status: **approved. Phases 0–1 done** (see §8).
 
 ## 0. Environment found
 
@@ -10,7 +10,7 @@ Status: **approved. Phase 0 done** (see §8).
 | Host OS | macOS 27.0.1, arm64 |
 | XcodeGen | 2.46.0 via Homebrew (build tool only) |
 | libarchive | The SDK ships `libarchive.tbd` but **no headers**. See decision D4 |
-| Signing | **No Apple Development certificate on this Mac.** Builds are ad-hoc signed (`Config/Base.xcconfig`). Add `Config/Signing.local.xcconfig` with your team to switch. Until then TCC grants reset on every rebuild |
+| Signing | Apple Development, Personal Team `M6TAWX2WCS`, pinned by SHA-1 in git-ignored `Config/Signing.local.xcconfig`. Without that file builds fall back to ad-hoc |
 
 ## 1. Repository layout
 
@@ -42,9 +42,9 @@ Dependency rule: feature modules depend on `OmniCore` plus the platform kits the
 | Module | Role | Depends on |
 |---|---|---|
 | `OmniCore` | `Feature` protocol, `FeatureRegistry`, `Lifetime`, `SettingsStore`, `Log`, `Permission`, `Command`/`CommandRegistry`, `KeyCombo`/`HotkeyBindings`. Foundation only, except `Feature.makeSettingsView()` returning `AnyView` | none |
-| `OmniPlatform` | `HotkeyManager` + `CarbonHotkeyBackend`, `PermissionsManager`, `LaunchAtLogin`, `HUD`, `HotkeyRecorderView`. Later: `FailOpenEventTap`, `AXElement`, `PasteboardSnapshot`, `FloatingPanel` | OmniCore |
+| `OmniPlatform` | `HotkeyManager` + `CarbonHotkeyBackend`, `PermissionsManager`, `LaunchAtLogin`, `HUD`, `HotkeyRecorderView`, `DirectoryWatcher` (FSEvents). Later: `FailOpenEventTap`, `AXElement`, `PasteboardSnapshot`, `FloatingPanel` | OmniCore |
 | `FeatureDiagnostics` | Test hotkey + palette command, proves the plumbing | Core, Platform |
-| `FeaturePalette` | Launcher, fuzzy matcher, calculator, units, currency | Core, Platform |
+| `FeaturePalette` | Launcher: `Logic/` (FuzzyMatcher, PaletteRanker, UsageHistory, Calculator, QuantityQuery, UnitConversion, CurrencyRates/ECBRateParser, CurrencyRateStore, QuickAnswerEngine, AppScanner, SettingsPaneCatalog) and `UI/` (PaletteFeature, PaletteController/PalettePanel, PaletteView, view model) | Core, Platform |
 | `FeatureClipboard` | History, SQLite store, snippets/expansion | Core, Platform, **GRDB** |
 | `FeatureWindows` | Snap layouts, AX frame engine, drag-to-edge | Core, Platform |
 | `FeatureSwitcher` | Window list, recency tracker, SCK thumbnails | Core, Platform |
@@ -226,7 +226,7 @@ Tests: allowlist property tests (generated hostile paths, symlinks, `..`, `/Syst
 | Phase | State |
 |---|---|
 | 0 Skeleton | **done** |
-| 1 Palette | not started |
+| 1 Palette | **done** |
 | 2 Clipboard + snippets | not started |
 | 3 Window management | not started |
 | 4 Window switcher | not started |
@@ -249,3 +249,19 @@ Tests: allowlist property tests (generated hostile paths, symlinks, `..`, `/Syst
 - Layout-aware key names in shortcuts (AZERTY etc.). Key codes are layout-independent, but labels assume ANSI.
 - Stopping a running feature when its permission is revoked mid-session. Today it only blocks the next start.
 - An automated hotkey press test. Synthesizing keystrokes needs Accessibility for the test runner, so it's a manual check.
+
+### Phase 1 — done
+- Palette: ⌃⌥Space (rebindable) opens a pre-built non-activating panel on the screen with the mouse. The frontmost app keeps focus. Esc/click-away closes.
+- Keyboard: type to search, ↑/↓ or ⌃N/⌃P, Page Up/Down, ↩ runs, ⌘↩ reveals an app in Finder.
+- Sources: installed apps (`/Applications`, `/System/Applications`, `~/Applications`, CoreServices apps, Finder; rescanned by FSEvents), System Settings panes (curated titles filtered to extensions installed on this macOS, plus Privacy sub-lists), and every enabled feature's commands plus app commands (Settings, Setup Guide, Quit).
+- Ranking: fuzzy subsequence matching with prefix, word-start, camelCase, and consecutive bonuses. Keywords count less than titles. Usage boost with a 14-day half-life, and the empty query shows recent items.
+- Quick answers: calculator (own parser: + − × ÷ ^ % mod, functions, constants), units (length, mass, temperature, volume, area, speed, duration, data), currency (ECB rates, cached in Application Support, refreshed at most every 6 h on palette open, 15-min backoff on failure, works offline from the cache). ↩ copies the number.
+- `omni://palette` opens the palette (only that action; links can't run other commands).
+- Open time, measured from command dispatch to the panel drawn: 30 ms cold, 2.6–4.3 ms warm (log category `palette`; also shown in Settings).
+- 54 new tests (100 total).
+
+### Phase 1 — deferred / limits
+- The ECB doesn't publish GEL (and ~130 other currencies), so `usd in gel` explains that rather than converting. Adding a second rate source would be a second network endpoint and needs your OK.
+- Dynamic palette providers (clipboard history search) arrive with Phase 2. Today commands are static per feature.
+- Settings pane titles are English only. macOS ships no public localized names for them.
+- Hotkey-to-screen latency isn't measured end to end (Carbon delivery is outside our clock). The figure above starts when the hotkey handler runs.

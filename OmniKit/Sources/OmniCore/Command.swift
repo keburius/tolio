@@ -33,6 +33,8 @@ public struct Command: Identifiable, Sendable {
 public protocol CommandRegistering: AnyObject {
     func register(_ command: Command, owner: FeatureID)
     func unregisterAll(owner: FeatureID)
+    /// Commands of all enabled features, for the palette to search.
+    var allCommands: [Command] { get }
 }
 
 /// Holds the commands of all enabled features.

@@ -65,4 +65,7 @@ public struct FeatureContext {
     public func registerCommand(_ command: Command) {
         commands.register(command, owner: featureID)
     }
+
+    /// Commands registered by all enabled features (and the app itself).
+    public var availableCommands: [Command] { commands.allCommands }
 }
