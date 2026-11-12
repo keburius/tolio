@@ -597,3 +597,26 @@ Sources: the FoundationModels interface in the installed SDK (MacOSX 27.2, Xcode
 | Q3 | "Attach Selection" via Accessibility only (it won't work in most Electron/Chromium apps, where Clipboard still does), and a 6,000-character cap per attachment? | Yes |
 | Q4 | Ask on by default when the Mac supports it (Settings → Launcher can turn it off)? | Yes |
 
+
+## 10. Capture Text (Screenshots feature)
+
+- **Replaces "Copy Text from Screen"** (same action ID `screenshots.text`, so there's one command, not two).
+  - The new default shortcut is ⌘⇧2 (it was ⌃⌥⌘O); you can rebind it. macOS doesn't use ⌘⇧2.
+  - It's reachable from the Launcher command "Capture Text" and from the Screenshot icon's menu.
+- **Flow:** the selection overlay (drag an area or click a window), then Vision text recognition plus barcode detection on the same image. The text goes to the clipboard and a notice says "Copied N characters". No editor window.
+- **QR codes and barcodes:** if any are found, their content is copied instead of the recognized text (several are joined with new lines). If the content is a web link (http/https), the notice gets an **Open** button.
+- **Append:** holding ⇧ when the selection ends adds the new text to the previous capture (a new line between them, or a space in paragraph mode). Otherwise the capture replaces it. The last capture is kept in memory only, until Omni quits.
+- **Clipboard History:** the clipboard item carries the marker type `com.george.omni.capturedText`. History records it with the source "Captured text" (a text.viewfinder icon in the history list) instead of the app under the selection.
+- **Empty result:** the notice says "No text found" and the clipboard is left unchanged.
+- **Settings:**
+  - Line breaks: keep them, or join everything into one paragraph.
+  - Recognition languages: chosen from `VNRecognizeTextRequest.supportedRecognitionLanguages()` (accurate level) on this Mac.
+  - Automatic language detection: off by default, because some macOS 27 versions are slow with it.
+  - Read captured text aloud: off by default; it uses AVSpeechSynthesizer and stops when the next capture starts.
+- **Vision on this Mac** (macOS 27.0.1, accurate, revision 3) recognizes 33 languages:
+  - English, French, Italian, German, Spanish, Portuguese (Brazil)
+  - Chinese (Simplified and Traditional), Cantonese (Simplified and Traditional), Korean, Japanese
+  - Russian, Ukrainian, Thai, Vietnamese, Arabic, Najdi Arabic, Turkish, Indonesian, Czech, Danish, Dutch
+  - Norwegian (no, nn, nb), Malay, Polish, Romanian, Swedish, Finnish, Hindi, Marathi
+  - **Georgian is not supported.** The fast level offers only the first six.
+- **Tests:** line-break handling (keep, join, whitespace, blank lines), append (with and without a previous capture, both modes, Shift without a previous capture), the empty case (nothing to write, clipboard unchanged), barcode priority and link detection, and the captured-text marker in clipboard history.
