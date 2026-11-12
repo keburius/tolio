@@ -17,9 +17,9 @@ public enum CaptureError: Error, CustomStringConvertible {
 
     public var description: String {
         switch self {
-        case .noPermission: "Omni needs Screen Recording permission to capture the screen."
-        case .nothingToCapture: "That area isn't on any display."
-        case let .failed(message): "Capture failed: \(message)"
+        case .noPermission: L10n.Screenshots.errorNoPermission
+        case .nothingToCapture: L10n.Screenshots.errorNothingToCapture
+        case let .failed(message): L10n.Screenshots.errorFailed(message)
         }
     }
 }
@@ -87,7 +87,7 @@ enum ScreenCapturer {
         let image = try await SCScreenshotManager.captureImage(contentFilter: filter, configuration: configuration)
         guard shadow else { return Capture(image: image, scale: scale, date: Date()) }
         guard let bounds = AlphaBounds.visibleRect(of: image), let trimmed = image.cropping(to: bounds) else {
-            throw CaptureError.failed("the window came out empty")
+            throw CaptureError.failed(L10n.Screenshots.errorEmptyWindow)
         }
         return Capture(image: trimmed, scale: scale, date: Date())
     }
@@ -106,7 +106,7 @@ enum ScreenCapturer {
             // The display's own color space, so the main part keeps its exact pixel values.
             space: pieces.first?.1.colorSpace ?? CGColorSpace(name: CGColorSpace.sRGB)!,
             bitmapInfo: CGImageAlphaInfo.premultipliedFirst.rawValue | CGBitmapInfo.byteOrder32Little.rawValue
-        ) else { throw CaptureError.failed("out of memory") }
+        ) else { throw CaptureError.failed(L10n.Screenshots.errorOutOfMemory) }
         context.setFillColor(CGColor(gray: 0, alpha: 1)) // areas between displays
         context.fill(CGRect(x: 0, y: 0, width: plan.pixelWidth, height: plan.pixelHeight))
         context.interpolationQuality = .none // enlarge 1x parts without blurring
@@ -114,7 +114,7 @@ enum ScreenCapturer {
             let d = piece.destination
             context.draw(image, in: CGRect(x: d.minX, y: CGFloat(plan.pixelHeight) - d.maxY, width: d.width, height: d.height))
         }
-        guard let image = context.makeImage() else { throw CaptureError.failed("compositing failed") }
+        guard let image = context.makeImage() else { throw CaptureError.failed(L10n.Screenshots.errorCompositing) }
         return image
     }
 }
@@ -137,7 +137,7 @@ enum CaptureOutput {
     static func save(_ image: CGImage, scale: CGFloat, to folder: URL, date: Date) throws -> URL {
         try FileManager.default.createDirectory(at: folder, withIntermediateDirectories: true)
         let url = FileNaming.uniqueURL(in: folder, kind: .screenshot, date: date)
-        guard let data = pngData(image, scale: scale) else { throw CaptureError.failed("PNG encoding failed") }
+        guard let data = pngData(image, scale: scale) else { throw CaptureError.failed(L10n.Screenshots.errorEncoding) }
         try data.write(to: url, options: .withoutOverwriting)
         return url
     }
