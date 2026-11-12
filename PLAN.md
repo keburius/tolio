@@ -1,6 +1,6 @@
 # Omni — Implementation Plan
 
-Status: **approved. Phases 0–8 and Interface and onboarding done** (see §8 and DESIGN.md).
+Status: **approved. Phases 0–8 and Interface and onboarding done; next: Ask AI in the Launcher (planned below, waiting for approval)** (see §8 and DESIGN.md).
 
 ## 0. Environment found
 
@@ -209,6 +209,7 @@ Risks: the mixed-DPI composite of a cross-display area has no single "correct" p
 | 7 Text selection | **done** |
 | 8 Screenshots | **done** |
 | Interface and onboarding | **done** |
+| Ask AI in the Launcher | planned (§9), waiting for approval |
 
 ### Phase 0 — done
 - `make build | test | release | run`. Warnings fail the build (`Scripts/check-warnings.sh`). Release is universal (arm64 + x86_64), hardened runtime.
@@ -481,4 +482,118 @@ Design: DESIGN.md (approved). UI only; feature behaviour unchanged except where 
 - Not localized (left as data): macOS System Settings pane names, bank and search engine brand names, and unit abbreviations.
 - Not added: a fixture test for `check-strings.sh` and per-feature menu-content tests (the menus need running features).
 - The language picker shows English only.
+
+## 9. Phase plan: Ask AI in the Launcher (on-device only)
+
+### What the framework offers (checked 2026-11-12)
+Sources: the FoundationModels interface in the installed SDK (MacOSX 27.2, Xcode 26.1 toolchain; this Mac runs macOS 27.0.1 on Apple silicon) and Apple's documentation (`developer.apple.com/documentation/foundationmodels`: SystemLanguageModel, Availability, LanguageModelSession, streamResponse, GenerationError, LanguageModelError, the "Generating content…" article).
+- **Model:** `SystemLanguageModel.default` is "an on-device Apple Foundation Model", available since macOS 26; Apple lists it as working offline.
+  - The framework also has `PrivateCloudComputeLanguageModel`, a cloud model (macOS 27, entitlement-gated, daily quota).
+  - **Omni never references it.** A unit test checks this by searching the module's source for the type name.
+- **Availability:** `.available`, or `.unavailable(.deviceNotEligible | .appleIntelligenceNotEnabled | .modelNotReady)`.
+  - `modelNotReady` covers the model still downloading.
+  - The model object is Observable, so its availability can change while Omni runs.
+  - Below macOS 26 the framework doesn't exist, so Omni reports "needs macOS 26".
+- **Sessions:**
+  - A `LanguageModelSession` keeps the conversation (its transcript) across calls and handles one request at a time (`isResponding`).
+  - `streamResponse(to:)` yields snapshots of the answer so far.
+  - The context limit is 4,096 tokens for instructions, prompts and answers together. Going over it throws `contextSizeExceeded`.
+- **Errors:** macOS 26 throws `LanguageModelSession.GenerationError`; macOS 27 throws `LanguageModelError` and related types.
+  - Cases include refusal, guardrail violation, unsupported language or locale, context too large, rate limited, and assets unavailable.
+  - Both families are mapped to Omni's own small set (see Engine).
+- **Strengths:** Apple notes the on-device model is weak at math, code and logical reasoning. The Launcher's calculator keeps handling math.
+
+### Design
+- **New module `OmniAI`** (depends on OmniCore only). The Launcher (FeaturePalette) depends on it, just as features use OmniPlatform.
+  - `AnswerEngine` protocol: `availability`, `newConversation(instructions:)`. `AnswerConversation`: `stream(prompt) -> AsyncThrowingStream<String, Error>` (text so far).
+  - The only implementation is `SystemModelEngine` (FoundationModels, inside `#if canImport(FoundationModels)` and `if #available(macOS 26, *)`).
+  - FoundationModels is **weak-linked** (`-weak_framework FoundationModels`) so Omni still launches on macOS 14 and 15. `otool -l` will be checked to confirm.
+  - No other provider, no network code, no API keys.
+- **`AskSession`** (OmniAI, @MainActor, pure enough to test with a fake engine):
+  - Holds the turns (question, attachment, answer, state).
+  - States: idle, answering, answered, stopped (Esc, partial text kept), failed(kind).
+  - Operations:
+    - `ask(question, attachment)` runs one answer at a time.
+    - `cancel()` cancels the task.
+    - `reset()` drops the conversation and turns.
+    - A context overflow starts a fresh conversation with a one-line notice ("Started over: the conversation got too long").
+- **Error kinds Omni maps to:** `cantAnswer` (refusal, guardrail, empty answer), `unsupportedLanguage`, `unavailable` (assets missing or the model became unavailable), `busy` (rate limited), `other`.
+  - `cantAnswer` and `unsupportedLanguage` offer **"Search the web for “…”"**.
+  - The others show one plain sentence.
+- **Instructions to the model:** be brief and plain; if unsure, or if the question needs current information, say so instead of guessing. The maximum answer length stays at the framework default unless testing shows rambling.
+- **Launcher trigger:**
+  - **Tab** on any non-empty query asks it, and a query starting with **"?"** switches to Ask mode as you type ("? how do I …").
+  - When Ask is unavailable, Tab and "?" behave exactly as today (Tab does nothing; "?" is ordinary text).
+- **Ask mode panel:** the results list is replaced by the conversation:
+  - Your question, then the answer streaming in as selectable text, with a spinner while it runs.
+  - Attachment chips with ✕.
+  - A notice under the answers: "Answered on this Mac by Apple's model. It can be wrong and doesn't know about recent events."
+  - A hint line: "↩ Copy · ⌘↩ Paste · Tab Ask · Esc Stop".
+- **Keys in Ask mode** (needs your OK, Q1):
+
+  | Key | Action |
+  |---|---|
+  | Tab, or ↩ while a follow-up is typed | Asks the follow-up in the same conversation |
+  | ↩ with an empty field | Copies the latest answer and closes |
+  | ⌘↩ | Pastes the latest answer into the app that was active before the Launcher, then closes. Uses the existing temporary-pasteboard ⌘V, so your clipboard is restored |
+  | Esc while answering | Stops the answer; partial text kept, marked "Stopped" |
+  | Esc otherwise | Closes the Launcher, as today |
+
+- **Context:** follow-ups stay in one session until the Launcher closes. Closing (Esc, click away, running a result) calls `reset()`, so the next question starts fresh. Nothing is kept in memory after closing or written to disk.
+- **Attachments** (explicit only; never automatic):
+  - "Attach Clipboard" (⌘⇧V, also a button) adds the clipboard's plain text.
+    - It's refused when the clipboard holds password-manager or concealed content, or isn't text.
+  - "Attach Selection" (⌘⇧S, also a button) adds the text selected in the previously active app.
+    - It reads through Accessibility only; Ask won't briefly copy the selection.
+    - It's skipped in password fields, while secure input is on, and in password managers.
+    - The Accessibility reader moves from Text Actions to OmniPlatform so both use it; Text Actions' behaviour is unchanged.
+  - **Size limit:** about 6,000 characters per attachment, because of the 4,096-token context. A longer attachment is refused with "too long to attach" (Q3).
+- **Privacy:**
+  - Only the typed question plus any attachment you added goes to the model.
+  - Questions and answers never appear in logs (only kinds, counts, durations and error kinds) and aren't added to Launcher usage history.
+  - The on-device model makes no network call. Omni's only network use stays the two currency feeds.
+- **Availability UI:**
+  - Ask is hidden completely when unavailable: no Tab or "?" mode, no hints.
+  - Availability is checked each time the Launcher opens (no polling).
+  - Settings → Launcher shows one line, with a button where it helps:
+    - Available: "Ask is ready: press Tab on any question, or start with ?" plus a switch to turn Ask off.
+    - Intel or other unsupported Mac: "This Mac can't run Apple Intelligence."
+    - macOS 14–25: "Needs macOS 26 or later."
+    - Apple Intelligence off: "Turn on Apple Intelligence in System Settings → Apple Intelligence & Siri." [Open Settings]
+    - Model downloading: "Apple Intelligence is still downloading its model. Ask turns on by itself when it's ready."
+- **"Search the web for …":**
+  - The Launcher doesn't have this row yet; only Text Actions has a web search. It will be added as a row offered when the model can't answer (Q2).
+  - Opening it hands the query to your browser, the same as Text Actions' Search; it only happens when you choose it.
+  - `SearchEngine` moves from Text Actions to OmniCore so both share it.
+
+### Tests (fake engine, no model needed)
+- Availability mapping for every reason, plus "OS too old" and "framework missing".
+- Unsupported Mac: Tab and "?" don't enter Ask mode, and the Settings line says why.
+- Streaming: snapshots replace the text, and the final state is answered.
+- Cancellation: Esc ends the stream task, keeps the partial text, sets the stopped state, and the next question works.
+- Context:
+  - A follow-up reuses the same conversation, so the fake sees both prompts in one conversation.
+  - Close → `reset()` → the next question gets a new conversation with no turns.
+  - Overflow → a new conversation plus the notice.
+- Error kinds: refusal and unsupported language offer web search; busy shows a message.
+- Attachments:
+  - The prompt contains an attachment only when it was attached.
+  - Concealed clipboard content and over-long text are refused.
+- One answer at a time: asking while answering is ignored.
+- A source scan confirms OmniAI and FeaturePalette never mention `PrivateCloudComputeLanguageModel` and never pass a question or answer to a logger call.
+
+### Risks
+- **Answer quality:** the small on-device model can be wrong or vague. The notice says so, and the instructions ask it to admit when it doesn't know.
+- **Context:** 4,096 tokens is small. Long follow-ups start over (with a notice), and attachments are capped.
+- **Languages:** not every language is supported (Georgian very likely isn't). Unsupported questions get the "can't answer" message with web search.
+- **First answer:** may be slow while the model loads. Omni prewarms the session when Ask mode starts.
+- **Live testing:** depends on Apple Intelligence being on and the model downloaded on this Mac; the tests use a fake engine.
+
+### Decisions needed
+| # | Question | My recommendation |
+|---|---|---|
+| Q1 | Keys in Ask mode: Tab or ↩ (with text typed) asks a follow-up; ↩ on an empty field copies; ⌘↩ pastes; Esc stops, then closes. | As described |
+| Q2 | "Search the web for …" is new in the Launcher. Show it only when the model can't answer, or also as the Launcher's general "no results" row? Which search engine: share one setting with Text Actions (moved to General), or a separate Launcher setting? | Only when the model can't answer; one shared engine setting in General (default Google) |
+| Q3 | "Attach Selection" via Accessibility only (it won't work in most Electron/Chromium apps, where Clipboard still does), and a 6,000-character cap per attachment? | Yes |
+| Q4 | Ask on by default when the Mac supports it (Settings → Launcher can turn it off)? | Yes |
 
