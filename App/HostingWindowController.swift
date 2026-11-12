@@ -10,14 +10,19 @@ final class HostingWindowController<Content: View>: NSObject, NSWindowDelegate {
     private let window: NSWindow
     private let permissions: PermissionsManager
     private var isMonitoring = false
+    private let onClose: (() -> Void)?
 
     /// - Parameter fullSizeContent: let SwiftUI lay out under the title bar
     ///   and manage the toolbar and safe areas itself. Required for
     ///   `NavigationSplitView`; without it SwiftUI's toolbar inset and scroll
     ///   edge effect are applied on top of AppKit's title bar, hiding the
     ///   first rows of the detail pane.
-    init(title: String, size: NSSize, permissions: PermissionsManager, fullSizeContent: Bool = false, content: Content) {
+    init(
+        title: String, size: NSSize, permissions: PermissionsManager, fullSizeContent: Bool = false,
+        content: Content, onClose: (() -> Void)? = nil
+    ) {
         self.permissions = permissions
+        self.onClose = onClose
         var style: NSWindow.StyleMask = [.titled, .closable, .miniaturizable, .resizable]
         if fullSizeContent { style.insert(.fullSizeContentView) }
         window = NSWindow(
@@ -50,6 +55,7 @@ final class HostingWindowController<Content: View>: NSObject, NSWindowDelegate {
     }
 
     func windowWillClose(_ notification: Notification) {
+        onClose?()
         if isMonitoring {
             permissions.stopMonitoring()
             isMonitoring = false

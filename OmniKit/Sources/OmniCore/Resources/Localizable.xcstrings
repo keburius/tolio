@@ -12,6 +12,160 @@
         }
       }
     },
+    "app.about": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "About Omni"
+          }
+        }
+      }
+    },
+    "app.featureIsOff": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ is off."
+          }
+        }
+      }
+    },
+    "app.featureNeedsPermission": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ needs %@ permission."
+          }
+        }
+      }
+    },
+    "app.iconTooltip": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@: %@"
+          }
+        }
+      }
+    },
+    "app.name": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Omni"
+          }
+        }
+      }
+    },
+    "app.openControlPanel": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open Control Panel"
+          }
+        }
+      }
+    },
+    "app.openControlPanel.action": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open the control panel"
+          }
+        }
+      }
+    },
+    "app.quit": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quit Omni"
+          }
+        }
+      }
+    },
+    "app.recordingTooltip": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recording %@. Click to stop."
+          }
+        }
+      }
+    },
+    "app.settings": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Settings…"
+          }
+        }
+      }
+    },
+    "app.settings.command": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Omni Settings"
+          }
+        }
+      }
+    },
+    "app.setupGuide": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Setup Guide…"
+          }
+        }
+      }
+    },
+    "app.setupGuide.command": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Omni Setup Guide"
+          }
+        }
+      }
+    },
+    "app.stopRecording": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stop recording"
+          }
+        }
+      }
+    },
     "common.add": {
       "extractionState": "manual",
       "localizations": {
@@ -276,6 +430,490 @@
         }
       }
     },
+    "onboarding.choose.everything": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Everything"
+          }
+        }
+      }
+    },
+    "onboarding.choose.more": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "More"
+          }
+        }
+      }
+    },
+    "onboarding.choose.recommended": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recommended"
+          }
+        }
+      }
+    },
+    "onboarding.choose.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Start with our picks or choose your own. You can change this any time in Settings."
+          }
+        }
+      }
+    },
+    "onboarding.choose.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose what you want"
+          }
+        }
+      }
+    },
+    "onboarding.done.note": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Only shortcuts of the features you chose are listed. All of them are in Settings → Shortcuts, where you can change them."
+          }
+        }
+      }
+    },
+    "onboarding.done.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You're set. A few shortcuts to remember:"
+          }
+        }
+      }
+    },
+    "onboarding.finish": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Finish"
+          }
+        }
+      }
+    },
+    "onboarding.getStarted": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Get Started"
+          }
+        }
+      }
+    },
+    "onboarding.icon.clipboard": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Clipboard"
+          }
+        }
+      }
+    },
+    "onboarding.icon.keepAwake": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Keep Awake"
+          }
+        }
+      }
+    },
+    "onboarding.icon.launcher": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Launcher"
+          }
+        }
+      }
+    },
+    "onboarding.icon.screenshots": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Screenshots"
+          }
+        }
+      }
+    },
+    "onboarding.icon.windows": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Windows"
+          }
+        }
+      }
+    },
+    "onboarding.intro": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Omni adds the shortcuts your Mac is missing: one menu bar app for screenshots, clipboard history, window layouts, staying awake, and quick launching."
+          }
+        }
+      }
+    },
+    "onboarding.needs": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "needs %@"
+          }
+        }
+      }
+    },
+    "onboarding.orClickIcon": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open the control panel (or click Omni's menu bar icon)"
+          }
+        }
+      }
+    },
+    "onboarding.permissions.none": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The features you chose don't need any permissions."
+          }
+        }
+      }
+    },
+    "onboarding.permissions.optionalSuffix": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(optional)"
+          }
+        }
+      }
+    },
+    "onboarding.permissions.reopen": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reopen Omni"
+          }
+        }
+      }
+    },
+    "onboarding.permissions.reopenNote": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Switched it on but it still says “Not allowed”? Some permissions start working after Omni reopens."
+          }
+        }
+      }
+    },
+    "onboarding.permissions.skip": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Skip for Now"
+          }
+        }
+      }
+    },
+    "onboarding.permissions.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Allow what your features need"
+          }
+        }
+      }
+    },
+    "onboarding.permissions.usedBy": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Used by: %@"
+          }
+        }
+      }
+    },
+    "onboarding.staysOnMac": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Everything stays on this Mac."
+          }
+        }
+      }
+    },
+    "onboarding.tryIt": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Try It: Open the Panel"
+          }
+        }
+      }
+    },
+    "onboarding.windowTitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Welcome to Omni"
+          }
+        }
+      }
+    },
+    "panel.layout.centerThird": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Center third"
+          }
+        }
+      }
+    },
+    "panel.layout.leftHalf": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Left half"
+          }
+        }
+      }
+    },
+    "panel.layout.leftThird": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Left third"
+          }
+        }
+      }
+    },
+    "panel.layout.maximize": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Maximize"
+          }
+        }
+      }
+    },
+    "panel.layout.rightHalf": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Right half"
+          }
+        }
+      }
+    },
+    "panel.layout.rightThird": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Right third"
+          }
+        }
+      }
+    },
+    "panel.noWindow": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No window to arrange. Click a window, then open the panel again."
+          }
+        }
+      }
+    },
+    "panel.nothingCopied": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nothing copied yet. Copy something to see it here."
+          }
+        }
+      }
+    },
+    "panel.options": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Options"
+          }
+        }
+      }
+    },
+    "panel.recentlyCopied": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recently copied"
+          }
+        }
+      }
+    },
+    "panel.showAll": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show All"
+          }
+        }
+      }
+    },
+    "panel.stop": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stop · %@"
+          }
+        }
+      }
+    },
+    "panel.turnOnClips": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Turn on %@ to see what you copied here."
+          }
+        }
+      }
+    },
+    "panel.turnOnLayouts": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Turn on %@ to arrange windows from here."
+          }
+        }
+      }
+    },
+    "panel.window": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Window"
+          }
+        }
+      }
+    },
+    "panel.windowNamed": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Window · %@, “%@”"
+          }
+        }
+      }
+    },
+    "panel.windowOfApp": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Window · %@"
+          }
+        }
+      }
+    },
     "permission.accessibility": {
       "extractionState": "manual",
       "localizations": {
@@ -470,6 +1108,722 @@
           "stringUnit": {
             "state": "translated",
             "value": "Used by %@"
+          }
+        }
+      }
+    },
+    "settings.cannotUndo": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This can't be undone."
+          }
+        }
+      }
+    },
+    "settings.diagnostics": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Diagnostics"
+          }
+        }
+      }
+    },
+    "settings.erase": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Erase"
+          }
+        }
+      }
+    },
+    "settings.eraseData": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Erase Data…"
+          }
+        }
+      }
+    },
+    "settings.eraseQuestion": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Erase %@?"
+          }
+        }
+      }
+    },
+    "settings.features": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Features"
+          }
+        }
+      }
+    },
+    "settings.general.approveLoginItem": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Approve Omni in Login Items to finish."
+          }
+        }
+      }
+    },
+    "settings.general.english": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "English"
+          }
+        }
+      }
+    },
+    "settings.general.language": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Language"
+          }
+        }
+      }
+    },
+    "settings.general.languageNote": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "More languages can be added later."
+          }
+        }
+      }
+    },
+    "settings.general.openAtLogin": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open Omni at login"
+          }
+        }
+      }
+    },
+    "settings.general.openLoginItems": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open Login Items"
+          }
+        }
+      }
+    },
+    "settings.general.openSetupGuide": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open Setup Guide…"
+          }
+        }
+      }
+    },
+    "settings.general.resetAll": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reset All Settings…"
+          }
+        }
+      }
+    },
+    "settings.general.resetAllExplanation": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Every feature's options, all shortcuts and the menu bar layout go back to their defaults. Which features are on and the things you made are kept."
+          }
+        }
+      }
+    },
+    "settings.general.resetAllQuestion": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reset all settings?"
+          }
+        }
+      }
+    },
+    "settings.general.version": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Version"
+          }
+        }
+      }
+    },
+    "settings.gesture": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "gesture"
+          }
+        }
+      }
+    },
+    "settings.menuBar.clickDoes": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Click: %@"
+          }
+        }
+      }
+    },
+    "settings.menuBar.icons": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Icons in the menu bar"
+          }
+        }
+      }
+    },
+    "settings.menuBar.moveLeft": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Move Left"
+          }
+        }
+      }
+    },
+    "settings.menuBar.moveRight": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Move Right"
+          }
+        }
+      }
+    },
+    "settings.menuBar.notchNote": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "On Macs with a notch, macOS hides menu bar icons that don't fit. If an icon is missing, try “One icon only”."
+          }
+        }
+      }
+    },
+    "settings.menuBar.quickActions": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quick actions"
+          }
+        }
+      }
+    },
+    "settings.menuBar.quickActionsHelp": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Drag to reorder, left to right as in the menu bar. Right-click any icon for its options."
+          }
+        }
+      }
+    },
+    "settings.menuBar.separate": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Separate icons for quick actions"
+          }
+        }
+      }
+    },
+    "settings.menuBar.single": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "One icon only: everything is in the control panel"
+          }
+        }
+      }
+    },
+    "settings.menuBar.statsNote": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "System Stats has its own menu bar item. In one-icon mode its numbers move into the control panel instead."
+          }
+        }
+      }
+    },
+    "settings.needs": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ needs %@."
+          }
+        }
+      }
+    },
+    "settings.noMatch": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No settings match “%@”."
+          }
+        }
+      }
+    },
+    "settings.page.general": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "General"
+          }
+        }
+      }
+    },
+    "settings.page.menuBar": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Menu Bar"
+          }
+        }
+      }
+    },
+    "settings.page.overview": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Overview"
+          }
+        }
+      }
+    },
+    "settings.page.permissions": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Permissions"
+          }
+        }
+      }
+    },
+    "settings.page.shortcuts": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shortcuts"
+          }
+        }
+      }
+    },
+    "settings.pausedBanner": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Omni needs %@ permission. %@ Until then this feature is paused."
+          }
+        }
+      }
+    },
+    "settings.problemTurnOffOn": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Turn it off and on again to retry."
+          }
+        }
+      }
+    },
+    "settings.resetExplanation": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Options and shortcuts go back to their defaults. Your on/off choice and the things you made are kept."
+          }
+        }
+      }
+    },
+    "settings.resetQuestion": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reset %@ settings?"
+          }
+        }
+      }
+    },
+    "settings.resetToDefaults": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reset to Defaults…"
+          }
+        }
+      }
+    },
+    "settings.search": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Search settings"
+          }
+        }
+      }
+    },
+    "settings.section.permissions": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Permissions"
+          }
+        }
+      }
+    },
+    "settings.section.settings": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Settings"
+          }
+        }
+      }
+    },
+    "settings.section.shortcuts": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shortcuts"
+          }
+        }
+      }
+    },
+    "settings.shortcuts.action": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Action"
+          }
+        }
+      }
+    },
+    "settings.shortcuts.alreadyUsed": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Already used by “%@”."
+          }
+        }
+      }
+    },
+    "settings.shortcuts.feature": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Feature"
+          }
+        }
+      }
+    },
+    "settings.shortcuts.filter": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Filter"
+          }
+        }
+      }
+    },
+    "settings.shortcuts.gestures": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gestures"
+          }
+        }
+      }
+    },
+    "settings.shortcuts.noMatch": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No shortcuts match “%@”."
+          }
+        }
+      }
+    },
+    "settings.shortcuts.offNote": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shortcuts of features that are off are shown in grey and can still be changed."
+          }
+        }
+      }
+    },
+    "settings.shortcuts.offSuffix": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(off)"
+          }
+        }
+      }
+    },
+    "settings.shortcuts.onOnly": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Features that are on"
+          }
+        }
+      }
+    },
+    "settings.shortcuts.refused": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Another app already uses this shortcut."
+          }
+        }
+      }
+    },
+    "settings.shortcuts.resetAll": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reset All Shortcuts…"
+          }
+        }
+      }
+    },
+    "settings.shortcuts.resetAllQuestion": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reset all shortcuts to their defaults?"
+          }
+        }
+      }
+    },
+    "settings.shortcuts.sameAs": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Same as “%@”. One of them won't work."
+          }
+        }
+      }
+    },
+    "settings.shortcuts.sameAsOff": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Same as “%@”; they'll clash when both are on."
+          }
+        }
+      }
+    },
+    "settings.shortcuts.shortcut": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shortcut"
+          }
+        }
+      }
+    },
+    "settings.shortcuts.showAll": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "All"
+          }
+        }
+      }
+    },
+    "settings.shortcuts.usedByAnotherApp": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Used by another app."
+          }
+        }
+      }
+    },
+    "settings.updatesByItself": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The status updates by itself."
+          }
+        }
+      }
+    },
+    "settings.waitingBanner": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld feature is waiting for a permission."
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld features are waiting for a permission."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "settings.windowTitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Omni Settings"
           }
         }
       }

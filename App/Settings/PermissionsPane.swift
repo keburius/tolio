@@ -4,14 +4,17 @@ import SwiftUI
 
 /// Every permission, which features use it, and its current state.
 struct PermissionsPane: View {
-    let permissions: PermissionsManager
-    let features: FeatureRegistry
+    let services: AppServices
+    let navigation: SettingsNavigation
 
     var body: some View {
         Form {
             Section {
+                Text(L10n.Permissions.nothingLeavesMac).font(.callout).foregroundStyle(.secondary)
+            }
+            Section {
                 ForEach(Permission.allCases) { permission in
-                    PermissionRow(permission: permission, permissions: permissions, note: usage(of: permission))
+                    PermissionRow(permission: permission, permissions: services.permissions, note: usage(of: permission))
                 }
             }
         }
@@ -19,11 +22,14 @@ struct PermissionsPane: View {
     }
 
     private func usage(of permission: Permission) -> String {
-        let required = features.features.filter { $0.requiredPermissions.contains(permission) }.map(\.displayName)
-        let optional = features.features.filter { $0.optionalPermissions.contains(permission) }.map(\.displayName)
+        let features = services.visibleFeatures(includingHidden: navigation.showsHiddenFeatures)
+            .filter { services.features.isWanted($0.id) }
+        let required = features.filter { $0.requiredPermissions.contains(permission) }.map(\.displayName)
+        let optional = features.filter { $0.optionalPermissions.contains(permission) }.map(\.displayName)
+        let list = ListFormatter()
         var parts: [String] = []
-        if !required.isEmpty { parts.append("Needed by " + required.joined(separator: ", ")) }
-        if !optional.isEmpty { parts.append("Optional for " + optional.joined(separator: ", ")) }
-        return parts.isEmpty ? "No enabled feature uses this yet." : parts.joined(separator: ". ")
+        if let text = list.string(from: required), !required.isEmpty { parts.append(L10n.Permissions.usedBy(text)) }
+        if let text = list.string(from: optional), !optional.isEmpty { parts.append(L10n.Permissions.optionalFor(text)) }
+        return parts.isEmpty ? L10n.Permissions.unused : parts.joined(separator: " · ")
     }
 }

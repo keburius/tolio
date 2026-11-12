@@ -1,52 +1,79 @@
 import OmniCore
+import OmniPlatform
 import SwiftUI
 
-/// Sidebar destinations of the Settings window.
-enum SettingsPane: Hashable {
-    case general
-    case permissions
-    case shortcuts
-    case feature(FeatureID)
-}
-
-/// Settings window: app panes plus one pane per feature.
+/// Settings window: app pages, one page per feature, and search.
 struct SettingsRootView: View {
     let services: AppServices
+    let navigation: SettingsNavigation
+    let menuBarEntries: () -> [QuickAccessID: MenuBarController.Entry]
     let onShowOnboarding: () -> Void
-    @State private var selection: SettingsPane? = .general
 
     var body: some View {
         NavigationSplitView {
-            List(selection: $selection) {
-                Section("Omni") {
-                    Label("General", systemImage: "gearshape").tag(SettingsPane.general)
-                    Label("Permissions", systemImage: "lock.shield").tag(SettingsPane.permissions)
-                    Label("Shortcuts", systemImage: "keyboard").tag(SettingsPane.shortcuts)
-                }
-                Section("Features") {
-                    ForEach(services.features.features, id: \.id) { feature in
+            sidebar
+                .navigationSplitViewColumnWidth(min: 200, ideal: 220)
+        } detail: {
+            detail
+        }
+        .searchable(text: Bindable(navigation).query, placement: .sidebar, prompt: L10n.SettingsUI.searchPrompt)
+    }
+
+    @ViewBuilder private var sidebar: some View {
+        if navigation.query.trimmingCharacters(in: .whitespaces).isEmpty {
+            List(selection: Binding(get: { navigation.page }, set: { if let page = $0 { navigation.open(page) } })) {
+                Label(L10n.SettingsUI.overview, systemImage: "square.grid.2x2").tag(SettingsPage.overview)
+                Label(L10n.SettingsUI.menuBar, systemImage: "menubar.rectangle").tag(SettingsPage.menuBar)
+                Label(L10n.SettingsUI.shortcuts, systemImage: "keyboard").tag(SettingsPage.shortcuts)
+                Label(L10n.SettingsUI.permissions, systemImage: "lock.shield").tag(SettingsPage.permissions)
+                Label(L10n.SettingsUI.general, systemImage: "gearshape").tag(SettingsPage.general)
+                Section(L10n.SettingsUI.features) {
+                    ForEach(services.visibleFeatures(includingHidden: navigation.showsHiddenFeatures), id: \.id) { feature in
                         FeatureSidebarRow(feature: feature, status: services.features.status(of: feature.id))
-                            .tag(SettingsPane.feature(feature.id))
+                            .tag(SettingsPage.feature(feature.id))
                     }
                 }
             }
-            .navigationSplitViewColumnWidth(min: 190, ideal: 210)
-        } detail: {
-            detail
+        } else {
+            searchResults
+        }
+    }
+
+    @ViewBuilder private var searchResults: some View {
+        let results = services.settingsIndex(includingHidden: navigation.showsHiddenFeatures).search(navigation.query)
+        if results.isEmpty {
+            EmptyState(symbol: "magnifyingglass", message: L10n.SettingsUI.noSettingsMatch(navigation.query))
+                .frame(maxHeight: .infinity, alignment: .top)
+        } else {
+            List(results) { item in
+                Button {
+                    navigation.open(item.page, anchor: item.anchor)
+                } label: {
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(item.label).lineLimit(1)
+                        Text(item.pageTitle).font(.caption).foregroundStyle(.secondary).lineLimit(1)
+                    }
+                }
+                .buttonStyle(.plain)
+            }
         }
     }
 
     @ViewBuilder private var detail: some View {
-        switch selection ?? .general {
-        case .general:
-            GeneralPane(launchAtLogin: services.launchAtLogin, onShowOnboarding: onShowOnboarding)
-        case .permissions:
-            PermissionsPane(permissions: services.permissions, features: services.features)
+        switch navigation.page {
+        case .overview:
+            OverviewPane(services: services, navigation: navigation)
+        case .menuBar:
+            MenuBarPane(services: services, entries: menuBarEntries)
         case .shortcuts:
-            ShortcutsPane(hotkeys: services.hotkeys, features: services.features)
+            ShortcutsPane(services: services, navigation: navigation)
+        case .permissions:
+            PermissionsPane(services: services, navigation: navigation)
+        case .general:
+            GeneralPane(services: services, onShowOnboarding: onShowOnboarding)
         case let .feature(id):
             if let feature = services.features.feature(id) {
-                FeaturePane(feature: feature, features: services.features, permissions: services.permissions)
+                FeaturePane(feature: feature, services: services, navigation: navigation).id(id)
             }
         }
     }
@@ -57,31 +84,23 @@ private struct FeatureSidebarRow: View {
     let status: FeatureRegistry.Status
 
     var body: some View {
+        let badge = StatusBadge(status.badge)
         HStack {
             Label(feature.displayName, systemImage: feature.symbolName)
             Spacer()
-            Circle().fill(status.color).frame(width: 7, height: 7).help(status.label)
+            Circle().fill(badge.color).frame(width: 7, height: 7)
         }
-    }
-}
-
-extension FeatureRegistry.Status {
-    var color: Color {
-        switch self {
-        case .off: .secondary.opacity(0.4)
-        case .running: .green
-        case .waitingForPermissions: .orange
-        case .failed: .red
-        }
+        .help(statusText)
+        .accessibilityElement(children: .combine)
+        .accessibilityValue(statusText)
     }
 
-    var label: String {
-        switch self {
-        case .off: "Off"
-        case .running: "On"
-        case let .waitingForPermissions(missing):
-            "Waiting for " + missing.map(\.displayName).sorted().joined(separator: ", ")
-        case let .failed(reason): "Failed: \(reason)"
+    private var statusText: String {
+        switch status.badge {
+        case .working: L10n.Status.working
+        case .needsPermission: L10n.Status.needsPermission
+        case .off: L10n.Status.off
+        case let .problem(detail): L10n.Status.problem(detail)
         }
     }
 }
