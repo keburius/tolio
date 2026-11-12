@@ -27,8 +27,8 @@ struct ControlPanelView: View {
             Divider()
             footer
         }
+        .frame(width: 368, alignment: .leading)
         .padding(OmniStyle.s4)
-        .frame(width: 400)
         .omniPanelBackground(material: .regularMaterial)
     }
 
@@ -264,7 +264,8 @@ struct LayoutGrid: View {
     let action: (String) -> Void
 
     var body: some View {
-        HStack(spacing: OmniStyle.s2) {
+        // Buttons share the row's width, so the grid never pushes the panel wider.
+        HStack(spacing: OmniStyle.s1) {
             ForEach(layouts) { layout in
                 Button { action(layout.id) } label: {
                     VStack(spacing: 3) {
@@ -277,12 +278,12 @@ struct LayoutGrid: View {
                             }
                             .padding(.vertical, 2)
                         }
-                        .frame(width: 44, height: 26)
+                        .frame(width: 40, height: 24)
                         Text(layout.title).font(.caption2).lineLimit(1).minimumScaleFactor(0.7)
                         if let shortcut = layout.shortcut { Text(shortcut).font(.caption2.monospacedDigit()).foregroundStyle(.secondary) }
                     }
-                    .frame(width: 54)
-                    .padding(3)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 3)
                     .contentShape(Rectangle())
                 }
                 .buttonStyle(.plain)

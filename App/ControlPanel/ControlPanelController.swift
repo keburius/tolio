@@ -270,6 +270,7 @@ private struct LayoutGridPanel: View {
                 Text(L10n.Panel.noWindow).font(.callout).foregroundStyle(.secondary).frame(width: 300, alignment: .leading)
             }
         }
+        .frame(width: 360, alignment: .leading)
         .padding(OmniStyle.s3)
         .omniPanelBackground()
     }
