@@ -13,7 +13,7 @@ import SwiftUI
 @Observable
 public final class SystemStatsFeature: Feature {
     static let itemsKey = SettingKey.feature("systemstats", "items", default: Set<StatItem>([.cpu, .memory, .network]))
-    static let intervalKey = SettingKey.feature("systemstats", "interval", default: 2.0)
+    static let intervalKey = SettingKey.feature("systemstats", "interval", default: 5.0)
 
     public let id: FeatureID = "systemstats"
     public let displayName = "System Stats"
@@ -72,7 +72,7 @@ public final class SystemStatsFeature: Feature {
     /// One repeating timer at the chosen interval (with tolerance so macOS can coalesce wakeups).
     func restartTimer() {
         timer?.invalidate()
-        let interval = settings?.value(Self.intervalKey) ?? 2
+        let interval = settings?.value(Self.intervalKey) ?? 5
         let timer = Timer(timeInterval: interval, repeats: true) { [weak self] _ in
             MainActor.assumeIsolated { self?.tick() }
         }

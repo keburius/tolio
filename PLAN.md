@@ -347,7 +347,7 @@ Tests: allowlist property tests (generated hostile paths, symlinks, `..`, `/Syst
 - **System Stats** (off by default):
   - Readings: CPU (host_processor_info deltas), memory (Activity Monitor formula: app + wired + compressed), startup disk free (read every 60 s), network throughput (getifaddrs, physical links, 32-bit wrap handled), battery (IOPS).
   - Menu bar: separate item with selectable text items; icon only if none are selected; fixed width so neighbors don't shift. Detail popover with gauges.
-  - Refresh: one timer (1/2/5 s, 25% tolerance).
+  - Refresh: one timer (1/2/5 s, default 5 s after the measurements below; 25% tolerance).
   - **Temperatures and fans skipped**: on Apple silicon they're only readable through undocumented, chip-specific SMC/HID keys.
 - **Idle CPU measurements** (60 s, `ps` CPU time plus `top`, after warm-up):
   - Without System Stats (your feature set): 0.05–0.20%, 0–14 wakeups/s (mostly the 0.5 s clipboard poll).
