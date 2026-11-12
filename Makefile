@@ -25,8 +25,12 @@ release: gen
 	@set -o pipefail; $(XCB) -configuration Release ARCHS='arm64 x86_64' ONLY_ACTIVE_ARCH=NO build 2>&1 | tee build/release.log | grep -E '(error|warning):|BUILD (SUCCEEDED|FAILED)' || exit 1
 	@Scripts/check-warnings.sh build/release.log
 
+# Waits up to 5 s for a running Omni to exit; launching while it is still
+# shutting down makes LaunchServices fail with -600.
 run: build
 	@pkill -x Omni || true
+	@for i in $$(seq 1 50); do pgrep -x Omni >/dev/null || break; sleep 0.1; done
+	@if pgrep -x Omni >/dev/null; then echo "Omni did not exit; sending SIGKILL"; pkill -9 -x Omni; sleep 0.5; fi
 	@open $(APP)
 
 clean:

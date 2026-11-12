@@ -1,9 +1,9 @@
-// Signing. No Apple Development certificate exists yet, so builds are ad-hoc signed
-// ("Sign to Run Locally"). To sign with a real identity, create Config/Signing.local.xcconfig
-// (git-ignored) containing:
-//   CODE_SIGN_STYLE = Automatic
-//   CODE_SIGN_IDENTITY = Apple Development
-//   DEVELOPMENT_TEAM = <your team id>
+// Signing. Defaults to ad-hoc ("Sign to Run Locally") so a fresh clone builds anywhere.
+// A stable identity matters: macOS ties privacy grants (Accessibility, Screen Recording)
+// to the signature. Create Config/Signing.local.xcconfig (git-ignored) containing:
+//   CODE_SIGN_STYLE = Manual
+//   CODE_SIGN_IDENTITY = <SHA-1 from `security find-identity -v -p codesigning`>
+//   DEVELOPMENT_TEAM = <OU field of that certificate>
 CODE_SIGN_STYLE = Manual
 CODE_SIGN_IDENTITY = -
 DEVELOPMENT_TEAM =
