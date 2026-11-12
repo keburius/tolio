@@ -11,26 +11,32 @@ public enum WindowAction: String, CaseIterable, Codable, Sendable {
 
     public var title: String {
         switch self {
-        case .leftHalf: "Left Half"
-        case .rightHalf: "Right Half"
-        case .topHalf: "Top Half"
-        case .bottomHalf: "Bottom Half"
-        case .firstThird: "First Third"
-        case .centerThird: "Center Third"
-        case .lastThird: "Last Third"
-        case .firstTwoThirds: "First Two Thirds"
-        case .lastTwoThirds: "Last Two Thirds"
-        case .topLeft: "Top Left Quarter"
-        case .topRight: "Top Right Quarter"
-        case .bottomLeft: "Bottom Left Quarter"
-        case .bottomRight: "Bottom Right Quarter"
-        case .maximize: "Maximize"
-        case .center: "Center"
-        case .nextDisplay: "Move to Next Display"
-        case .previousDisplay: "Move to Previous Display"
-        case .restore: "Restore Previous Size"
+        case .leftHalf: L10n.Windows.leftHalf
+        case .rightHalf: L10n.Windows.rightHalf
+        case .topHalf: L10n.Windows.topHalf
+        case .bottomHalf: L10n.Windows.bottomHalf
+        case .firstThird: L10n.Windows.firstThird
+        case .centerThird: L10n.Windows.centerThird
+        case .lastThird: L10n.Windows.lastThird
+        case .firstTwoThirds: L10n.Windows.firstTwoThirds
+        case .lastTwoThirds: L10n.Windows.lastTwoThirds
+        case .topLeft: L10n.Windows.topLeft
+        case .topRight: L10n.Windows.topRight
+        case .bottomLeft: L10n.Windows.bottomLeft
+        case .bottomRight: L10n.Windows.bottomRight
+        case .maximize: L10n.Windows.maximize
+        case .center: L10n.Windows.center
+        case .nextDisplay: L10n.Windows.nextDisplay
+        case .previousDisplay: L10n.Windows.previousDisplay
+        case .restore: L10n.Windows.restore
         }
     }
+
+    /// ID of this action's hotkey and palette command.
+    public var hotkeyID: String { "windows.\(rawValue)" }
+
+    /// The global shortcut registered for this action.
+    public var hotkey: HotkeyAction { HotkeyAction(id: hotkeyID, title: title, defaultCombo: defaultCombo) }
 
     public var symbolName: String {
         switch self {

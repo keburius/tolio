@@ -48,7 +48,7 @@ final class SwitcherController {
         tracker.touchFocusedWindow()
         catalog.reload(options: options(), recency: tracker.recency.order)
         guard machine.begin(count: catalog.records.count, backward: backward) else {
-            HUD.show("No windows to switch to", symbol: "macwindow")
+            HUD.show(L10n.Switcher.noWindows, symbol: "macwindow")
             return
         }
         model.records = catalog.records
@@ -115,7 +115,7 @@ final class SwitcherController {
         case let .closeWindow(index):
             guard catalog.records.indices.contains(index) else { return }
             if catalog.handle(for: catalog.records[index].id)?.close() != true {
-                HUD.show("This window can't be closed from here", symbol: "xmark.circle")
+                HUD.show(L10n.Switcher.cantClose, symbol: "xmark.circle")
             }
             reloadSoon(after: .milliseconds(300))
         }

@@ -118,7 +118,7 @@ final class SnapPreview {
         panel.collectionBehavior = [.canJoinAllSpaces, .transient, .fullScreenAuxiliary]
         let view = NSView()
         view.wantsLayer = true
-        view.layer?.cornerRadius = 10
+        view.layer?.cornerRadius = OmniStyle.cardRadius
         view.layer?.backgroundColor = NSColor.controlAccentColor.withAlphaComponent(0.2).cgColor
         view.layer?.borderColor = NSColor.controlAccentColor.withAlphaComponent(0.7).cgColor
         view.layer?.borderWidth = 2
@@ -127,7 +127,7 @@ final class SnapPreview {
     }()
 
     func show(axFrame: CGRect) {
-        let frame = ScreenGeometry.toAppKit(axFrame, primaryHeight: ScreenFrames.primaryHeight).insetBy(dx: 4, dy: 4)
+        let frame = ScreenGeometry.toAppKit(axFrame, primaryHeight: ScreenFrames.primaryHeight).insetBy(dx: OmniStyle.s1, dy: OmniStyle.s1)
         panel.setFrame(frame, display: true)
         panel.orderFrontRegardless()
     }

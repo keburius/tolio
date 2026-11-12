@@ -85,11 +85,11 @@ final class WindowManager {
     private func report(_ outcome: Outcome) -> Outcome {
         switch outcome {
         case .done: break
-        case .noWindow: HUD.show("No window to arrange", symbol: "macwindow")
-        case .fullScreen: HUD.show("Window is in full screen", symbol: "arrow.up.left.and.arrow.down.right")
-        case .nothingToRestore: HUD.show("Nothing to restore", symbol: "arrow.uturn.backward")
-        case .onlyOneDisplay: HUD.show("Only one display connected", symbol: "display")
-        case .unreadable: HUD.show("This window can't be arranged", symbol: "exclamationmark.triangle")
+        case .noWindow: HUD.show(L10n.Windows.noWindow, symbol: "macwindow")
+        case .fullScreen: HUD.show(L10n.Windows.fullScreen, symbol: "arrow.up.left.and.arrow.down.right")
+        case .nothingToRestore: HUD.show(L10n.Windows.nothingToRestore, symbol: "arrow.uturn.backward")
+        case .onlyOneDisplay: HUD.show(L10n.Windows.onlyOneDisplay, symbol: "display")
+        case .unreadable: HUD.show(L10n.Windows.cantArrange, symbol: "exclamationmark.triangle")
         }
         return outcome
     }

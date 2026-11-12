@@ -3,24 +3,42 @@ import OmniCore
 import OmniPlatform
 import SwiftUI
 
-/// Snap windows to halves, thirds, quarters; maximize, center, move between
-/// displays, restore; optional drag-to-edge snapping.
+/// Window Layouts: snap windows to halves, thirds, quarters; maximize,
+/// center, move between displays, restore; optional drag-to-edge snapping.
 @MainActor
 @Observable
 public final class WindowsFeature: Feature {
     static let gapKey = SettingKey.feature("windows", "gap", default: 0)
     static let dragSnapKey = SettingKey.feature("windows", "dragToEdge", default: false)
+    /// Gap sizes offered in Settings and the menu bar icon's menu, in points.
+    static let gapChoices = [0, 4, 8, 12, 16, 24]
+
+    /// One hotkey per layout, the same list `enable` registers.
+    public static var hotkeys: [HotkeyAction] { WindowAction.allCases.map(\.hotkey) }
+
+    enum Anchor {
+        static let gap = "windows.gap"
+        static let dragToEdge = "windows.dragToEdge"
+    }
 
     public let id: FeatureID = "windows"
-    public let displayName = "Window Management"
-    public let summary = "Snap windows to halves, thirds, and quarters, move them between displays, and restore them."
+    public var displayName: String { L10n.Windows.displayName }
+    public var summary: String { L10n.Windows.summary }
     public let symbolName = "rectangle.split.2x1"
     public let requiredPermissions: Set<Permission> = [.accessibility]
+    public var declaredHotkeys: [HotkeyAction] { Self.hotkeys }
+
+    public var settingsEntries: [SettingsEntry] {
+        [
+            SettingsEntry(anchor: Anchor.gap, label: L10n.Windows.gap, keywords: ["snap", "tile", "spacing", "margin", "padding"]),
+            SettingsEntry(anchor: Anchor.dragToEdge, label: L10n.Windows.dragToEdge, keywords: ["snap", "tile", "drag", "edge", "corner"]),
+        ]
+    }
 
     private(set) var dragError: String?
-    @ObservationIgnored private var manager: WindowManager?
+    @ObservationIgnored private(set) var manager: WindowManager?
     @ObservationIgnored private var snapper: DragSnapper?
-    @ObservationIgnored private var settings: SettingsStore?
+    @ObservationIgnored private(set) var settings: SettingsStore?
 
     public init() {}
 
@@ -31,11 +49,11 @@ public final class WindowsFeature: Feature {
         self.manager = manager
 
         for action in WindowAction.allCases {
-            context.registerHotkey(HotkeyAction(id: "windows.\(action.rawValue)", title: action.title, defaultCombo: action.defaultCombo)) {
+            context.registerHotkey(action.hotkey) {
                 manager.perform(action)
             }
             context.registerCommand(Command(
-                id: "windows.\(action.rawValue)", title: action.title, subtitle: "Window",
+                id: action.hotkeyID, title: action.title, subtitle: L10n.Windows.commandSubtitle,
                 keywords: ["window", "snap", "move", "resize"], symbolName: action.symbolName
             ) { manager.perform(action) })
         }
@@ -67,7 +85,7 @@ public final class WindowsFeature: Feature {
                 self.snapper = snapper
                 dragError = nil
             } catch {
-                dragError = String(describing: error)
+                dragError = L10n.Windows.dragToEdgeFailed
             }
         } else {
             snapper?.stop()
@@ -75,29 +93,15 @@ public final class WindowsFeature: Feature {
             dragError = nil
         }
     }
-}
 
-struct WindowsSettingsView: View {
-    let feature: WindowsFeature
-    let settings: SettingsStore
+    /// Changes the drag-to-edge setting and starts or stops the listener.
+    func setDragSnapping(_ isOn: Bool) {
+        settings?.set(isOn, for: Self.dragSnapKey)
+        updateDragSnapping()
+    }
 
-    var body: some View {
-        Picker("Gap between windows", selection: settings.binding(WindowsFeature.gapKey)) {
-            ForEach([0, 4, 8, 12, 16, 24], id: \.self) { Text($0 == 0 ? "None" : "\($0) pt").tag($0) }
-        }
-        Toggle("Snap by dragging a window to a screen edge", isOn: Binding(
-            get: { settings.value(WindowsFeature.dragSnapKey) },
-            set: {
-                settings.set($0, for: WindowsFeature.dragSnapKey)
-                feature.updateDragSnapping()
-            }
-        ))
-        Text("Edges snap to halves, corners to quarters, the top edge maximizes. Edges shared with another display don't snap.")
-            .font(.caption).foregroundStyle(.secondary)
-        if let error = feature.dragError {
-            Text(error).font(.caption).foregroundStyle(.red)
-        }
-        Text("Shortcuts are under Shortcuts; every action is also in the palette.")
-            .font(.caption).foregroundStyle(.secondary)
+    /// "None" or "8 pt".
+    static func gapTitle(_ points: Int) -> String {
+        points == 0 ? L10n.Common.none : L10n.Windows.gapPoints(points)
     }
 }

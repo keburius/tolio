@@ -265,6 +265,638 @@
         }
       }
     },
+    "keepawake.command.for": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Keep Awake for %@"
+          }
+        }
+      }
+    },
+    "keepawake.command.off": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stop Keeping Awake"
+          }
+        }
+      }
+    },
+    "keepawake.command.on": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Keep Awake"
+          }
+        }
+      }
+    },
+    "keepawake.command.onSubtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Until turned off"
+          }
+        }
+      }
+    },
+    "keepawake.displayName": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Keep Awake"
+          }
+        }
+      }
+    },
+    "keepawake.duration.hours": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld Hour"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld Hours"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "keepawake.duration.minutes": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld Minute"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld Minutes"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "keepawake.erase.description": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "the %lld app in Keep Awake's list"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "the %lld apps in Keep Awake's list"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "keepawake.hotkey.toggle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Keep Awake on / off"
+          }
+        }
+      }
+    },
+    "keepawake.menu.for": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "For %@"
+          }
+        }
+      }
+    },
+    "keepawake.menu.keepDisplayOn": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Keep the Display On"
+          }
+        }
+      }
+    },
+    "keepawake.menu.onUntil": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "On, until %@"
+          }
+        }
+      }
+    },
+    "keepawake.menu.onUntilOff": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "On, until turned off"
+          }
+        }
+      }
+    },
+    "keepawake.menu.turnOff": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Turn Off"
+          }
+        }
+      }
+    },
+    "keepawake.menu.untilTurnedOff": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Until Turned Off"
+          }
+        }
+      }
+    },
+    "keepawake.notice.sleepAllowed": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sleep allowed again"
+          }
+        }
+      }
+    },
+    "keepawake.quick.clickHint": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "turn on or off"
+          }
+        }
+      }
+    },
+    "keepawake.quick.detailOn": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "on"
+          }
+        }
+      }
+    },
+    "keepawake.quick.detailUntil": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "until %@"
+          }
+        }
+      }
+    },
+    "keepawake.settings.appsSection": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Also keep awake while these apps run"
+          }
+        }
+      }
+    },
+    "keepawake.settings.for": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "For…"
+          }
+        }
+      }
+    },
+    "keepawake.settings.keepDisplayOn": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Keep the display on too"
+          }
+        }
+      }
+    },
+    "keepawake.settings.noApps": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No apps yet. Add an app to stay awake while it's running."
+          }
+        }
+      }
+    },
+    "keepawake.settings.status": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Status"
+          }
+        }
+      }
+    },
+    "keepawake.settings.stop": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stop"
+          }
+        }
+      }
+    },
+    "keepawake.settings.unnamedApp": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "App"
+          }
+        }
+      }
+    },
+    "keepawake.status.appRunning": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "while %@ is running"
+          }
+        }
+      }
+    },
+    "keepawake.status.appsRunning": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "while %@ are running"
+          }
+        }
+      }
+    },
+    "keepawake.status.keepingAwake": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Keeping awake %@"
+          }
+        }
+      }
+    },
+    "keepawake.status.reasons": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ and %@"
+          }
+        }
+      }
+    },
+    "keepawake.status.until": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "until %@"
+          }
+        }
+      }
+    },
+    "keepawake.status.untilOff": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "until you turn it off"
+          }
+        }
+      }
+    },
+    "keepawake.summary": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stops your Mac from going to sleep for as long as you choose."
+          }
+        }
+      }
+    },
+    "lockkeyboard.command.start": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lock Keyboard for Cleaning"
+          }
+        }
+      }
+    },
+    "lockkeyboard.displayName": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lock Keyboard"
+          }
+        }
+      }
+    },
+    "lockkeyboard.duration.minutes": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld minute"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld minutes"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "lockkeyboard.duration.seconds": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld second"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld seconds"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "lockkeyboard.hotkey.start": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lock keyboard now"
+          }
+        }
+      }
+    },
+    "lockkeyboard.lockNow": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lock Keyboard Now"
+          }
+        }
+      }
+    },
+    "lockkeyboard.menu.unlockAfter": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Unlock Automatically After"
+          }
+        }
+      }
+    },
+    "lockkeyboard.notice.couldNotLock": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Couldn't lock the keyboard. Check that Omni has the Accessibility permission."
+          }
+        }
+      }
+    },
+    "lockkeyboard.notice.unlocked": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Keyboard unlocked"
+          }
+        }
+      }
+    },
+    "lockkeyboard.notice.unlockedStopped": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Keyboard unlocked: macOS stopped the lock"
+          }
+        }
+      }
+    },
+    "lockkeyboard.notice.unlockedTimeLimit": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Keyboard unlocked (time limit)"
+          }
+        }
+      }
+    },
+    "lockkeyboard.overlay.help": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Click with your mouse or trackpad to unlock."
+          }
+        }
+      }
+    },
+    "lockkeyboard.overlay.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Keyboard locked for cleaning"
+          }
+        }
+      }
+    },
+    "lockkeyboard.overlay.unlock": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Unlock Keyboard"
+          }
+        }
+      }
+    },
+    "lockkeyboard.overlay.unlocksIn": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Unlocks automatically in %@"
+          }
+        }
+      }
+    },
+    "lockkeyboard.quick.clickHint": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "lock now"
+          }
+        }
+      }
+    },
+    "lockkeyboard.settings.help": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "All keys, including media and brightness keys, are blocked. The power button and Touch ID can't be blocked. Click Unlock with the mouse, or wait for the time limit. If macOS stops the lock for any reason, the keyboard works again immediately."
+          }
+        }
+      }
+    },
+    "lockkeyboard.settings.unlockAfter": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Unlock automatically after"
+          }
+        }
+      }
+    },
+    "lockkeyboard.summary": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Locks the keyboard so you can wipe it. Unlock with the mouse."
+          }
+        }
+      }
+    },
     "meta.catalogLoaded": {
       "extractionState": "manual",
       "localizations": {
@@ -514,6 +1146,633 @@
           "stringUnit": {
             "state": "translated",
             "value": "Working"
+          }
+        }
+      }
+    },
+    "switcher.appWithState": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ · %@"
+          }
+        }
+      }
+    },
+    "switcher.command.search": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Switch to Window…"
+          }
+        }
+      }
+    },
+    "switcher.displayName": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Window Switcher"
+          }
+        }
+      }
+    },
+    "switcher.gesture.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Switch windows"
+          }
+        }
+      }
+    },
+    "switcher.notice.cantClose": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This window can't be closed from here"
+          }
+        }
+      }
+    },
+    "switcher.notice.noWindows": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No windows to switch to"
+          }
+        }
+      }
+    },
+    "switcher.notice.paused": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Window Switcher paused: macOS stopped its keyboard listener"
+          }
+        }
+      }
+    },
+    "switcher.search.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Window"
+          }
+        }
+      }
+    },
+    "switcher.settings.includeHidden": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Include windows of hidden apps"
+          }
+        }
+      }
+    },
+    "switcher.settings.includeMinimized": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Include minimized windows"
+          }
+        }
+      }
+    },
+    "switcher.settings.includeOtherSpaces": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Include windows on other Spaces"
+          }
+        }
+      }
+    },
+    "switcher.settings.otherSpacesHelp": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Windows on other Spaces need Screen Recording to be listed. Choosing one brings its app forward; macOS decides whether to switch Space."
+          }
+        }
+      }
+    },
+    "switcher.settings.replacesAppSwitcher": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ (replaces the app switcher)"
+          }
+        }
+      }
+    },
+    "switcher.settings.stoppedHelp": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "macOS stopped the switcher's keyboard listener, so it has been paused and your keyboard works normally. Turn Window Switcher off and on to restart it."
+          }
+        }
+      }
+    },
+    "switcher.settings.thumbnails": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show live previews (needs Screen Recording)"
+          }
+        }
+      }
+    },
+    "switcher.settings.trigger": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shortcut"
+          }
+        }
+      }
+    },
+    "switcher.settings.triggerHelp": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hold the key and press Tab to move forward (add ⇧ to go back), then let go to switch. While it's open: arrows move, ↩ switches, Esc cancels, Q quits the app, W closes the window."
+          }
+        }
+      }
+    },
+    "switcher.state.hidden": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hidden"
+          }
+        }
+      }
+    },
+    "switcher.state.minimized": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Minimized"
+          }
+        }
+      }
+    },
+    "switcher.state.open": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open"
+          }
+        }
+      }
+    },
+    "switcher.state.otherSpace": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Other Space"
+          }
+        }
+      }
+    },
+    "switcher.summary": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hold ⌥ and press Tab to jump to any window, not just any app."
+          }
+        }
+      }
+    },
+    "windows.action.bottomHalf": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bottom Half"
+          }
+        }
+      }
+    },
+    "windows.action.bottomLeft": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bottom Left Quarter"
+          }
+        }
+      }
+    },
+    "windows.action.bottomRight": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bottom Right Quarter"
+          }
+        }
+      }
+    },
+    "windows.action.center": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Center"
+          }
+        }
+      }
+    },
+    "windows.action.centerThird": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Center Third"
+          }
+        }
+      }
+    },
+    "windows.action.firstThird": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "First Third"
+          }
+        }
+      }
+    },
+    "windows.action.firstTwoThirds": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "First Two Thirds"
+          }
+        }
+      }
+    },
+    "windows.action.lastThird": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Last Third"
+          }
+        }
+      }
+    },
+    "windows.action.lastTwoThirds": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Last Two Thirds"
+          }
+        }
+      }
+    },
+    "windows.action.leftHalf": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Left Half"
+          }
+        }
+      }
+    },
+    "windows.action.maximize": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Maximize"
+          }
+        }
+      }
+    },
+    "windows.action.nextDisplay": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Move to Next Display"
+          }
+        }
+      }
+    },
+    "windows.action.previousDisplay": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Move to Previous Display"
+          }
+        }
+      }
+    },
+    "windows.action.restore": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Restore Previous Size"
+          }
+        }
+      }
+    },
+    "windows.action.rightHalf": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Right Half"
+          }
+        }
+      }
+    },
+    "windows.action.topHalf": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Top Half"
+          }
+        }
+      }
+    },
+    "windows.action.topLeft": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Top Left Quarter"
+          }
+        }
+      }
+    },
+    "windows.action.topRight": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Top Right Quarter"
+          }
+        }
+      }
+    },
+    "windows.command.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Window"
+          }
+        }
+      }
+    },
+    "windows.displayName": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Window Layouts"
+          }
+        }
+      }
+    },
+    "windows.menu.dragToEdge": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Snap by Dragging to Screen Edges"
+          }
+        }
+      }
+    },
+    "windows.menu.gap": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gap Between Windows"
+          }
+        }
+      }
+    },
+    "windows.notice.cantArrange": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This window can't be arranged"
+          }
+        }
+      }
+    },
+    "windows.notice.fullScreen": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Window is in full screen"
+          }
+        }
+      }
+    },
+    "windows.notice.noWindow": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No window to arrange"
+          }
+        }
+      }
+    },
+    "windows.notice.nothingToRestore": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nothing to restore"
+          }
+        }
+      }
+    },
+    "windows.notice.onlyOneDisplay": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Only one display connected"
+          }
+        }
+      }
+    },
+    "windows.quick.clickHint": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "show layouts"
+          }
+        }
+      }
+    },
+    "windows.settings.dragToEdge": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Snap by dragging a window to a screen edge"
+          }
+        }
+      }
+    },
+    "windows.settings.dragToEdgeFailed": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Snapping by dragging couldn't start. Check that Omni has the Accessibility permission, then turn it off and on."
+          }
+        }
+      }
+    },
+    "windows.settings.dragToEdgeHelp": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Edges snap to halves, corners to quarters, the top edge maximizes. Edges shared with another display don't snap."
+          }
+        }
+      }
+    },
+    "windows.settings.gap": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gap between windows"
+          }
+        }
+      }
+    },
+    "windows.settings.gapPoints": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld pt"
+          }
+        }
+      }
+    },
+    "windows.settings.shortcutsHelp": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Change the shortcuts above or on the Shortcuts page. Every layout is also in the Launcher."
+          }
+        }
+      }
+    },
+    "windows.summary": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Snap windows to halves, thirds and corners with a shortcut."
           }
         }
       }

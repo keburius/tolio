@@ -1,4 +1,5 @@
 import Foundation
+import OmniCore
 
 /// A manual keep-awake session. Not persisted: a restart starts with `.off`.
 public enum KeepAwakeSession: Equatable, Sendable {
@@ -27,17 +28,28 @@ public enum KeepAwakePolicy {
         var reasons: [String] = []
         switch effective(session, now: now) {
         case .off: break
-        case .indefinite: reasons.append("until you turn it off")
-        case let .until(end): reasons.append("until \(end.formatted(timeStyle))")
+        case .indefinite: reasons.append(L10n.KeepAwake.reasonUntilOff)
+        case let .until(end): reasons.append(L10n.KeepAwake.reasonUntil(end.formatted(timeStyle)))
         }
         if !activeRuleApps.isEmpty {
-            reasons.append("while \(activeRuleApps.sorted().joined(separator: ", ")) \(activeRuleApps.count == 1 ? "is" : "are") running")
+            let names = activeRuleApps.sorted().joined(separator: ", ")
+            reasons.append(activeRuleApps.count == 1 ? L10n.KeepAwake.reasonAppRunning(names) : L10n.KeepAwake.reasonAppsRunning(names))
         }
-        return reasons.isEmpty ? nil : "Keeping awake " + reasons.joined(separator: " and ")
+        guard let first = reasons.first else { return nil }
+        let joined = reasons.dropFirst().reduce(first) { L10n.KeepAwake.reasons($0, $1) }
+        return L10n.KeepAwake.keepingAwake(joined)
     }
 
-    /// Preset durations offered in the palette and Settings.
-    public static let presets: [(title: String, minutes: Int)] = [
-        ("15 Minutes", 15), ("30 Minutes", 30), ("1 Hour", 60), ("2 Hours", 120), ("5 Hours", 300),
-    ]
+    /// Preset durations offered in the palette, Settings and the menu bar icon.
+    public static let presetMinutes = [15, 30, 60, 120, 300]
+
+    /// Preset durations with their titles ("15 Minutes", "1 Hour").
+    public static var presets: [(title: String, minutes: Int)] {
+        presetMinutes.map { (durationTitle(minutes: $0), $0) }
+    }
+
+    /// "15 Minutes", "2 Hours".
+    public static func durationTitle(minutes: Int) -> String {
+        minutes >= 60 && minutes % 60 == 0 ? L10n.KeepAwake.hours(minutes / 60) : L10n.KeepAwake.minutes(minutes)
+    }
 }
