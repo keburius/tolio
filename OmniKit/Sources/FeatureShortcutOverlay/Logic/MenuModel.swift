@@ -1,4 +1,5 @@
 import Foundation
+import OmniCore
 
 /// One menu bar item or menu item, read from Accessibility (or a test fixture).
 public struct MenuNode: Equatable, Sendable {
@@ -48,7 +49,7 @@ public enum ShortcutCatalog {
             collect(menu.children, path: [], into: &entries, seen: &seen, includeDisabled: includeDisabled, idPrefix: "\(menuIndex)")
             guard !entries.isEmpty else { continue }
             // Section titles must be unique for SwiftUI identity.
-            var title = menu.title.isEmpty ? "Menu" : menu.title
+            var title = menu.title.isEmpty ? L10n.Cheatsheet.untitledMenu : menu.title
             if let count = usedTitles[title] {
                 usedTitles[title] = count + 1
                 title += " (\(count + 1))"

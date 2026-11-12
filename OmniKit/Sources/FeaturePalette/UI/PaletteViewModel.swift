@@ -25,6 +25,8 @@ final class PaletteViewModel {
     }
     private(set) var results: [PaletteItem] = []
     private(set) var selection = 0
+    /// Shown instead of results when there are none to show (nil: show nothing).
+    private(set) var emptyMessage: String?
     /// Bumped to ask the view to focus the search field.
     private(set) var focusRequest = 0
 
@@ -76,6 +78,8 @@ final class PaletteViewModel {
             results = scoped.provider.results(for: scoped.query, limit: 50).map {
                 PaletteItem(result: $0, provider: scoped.provider)
             }
+            emptyMessage = !results.isEmpty ? nil
+                : scoped.query.isEmpty ? scoped.provider.emptyMessage : L10n.Launcher.noResults(scoped.query)
             selection = 0
             onResultsChanged?()
             return
@@ -95,6 +99,7 @@ final class PaletteViewModel {
         }
         let top = ranked.prefix(Self.topRankedBeforeProviders)
         results = answers + top + provided + ranked.dropFirst(top.count)
+        emptyMessage = results.isEmpty && !trimmed.isEmpty ? L10n.Launcher.noResults(trimmed) : nil
         selection = 0
         onResultsChanged?()
     }

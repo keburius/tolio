@@ -26,10 +26,10 @@ public struct PaletteItem: Identifiable, Sendable {
 
         var label: String {
             switch self {
-            case .answer: "Result"
-            case .app: "Application"
-            case .setting: "System Settings"
-            case .command: "Command"
+            case .answer: L10n.Launcher.kindResult
+            case .app: L10n.Launcher.kindApp
+            case .setting: L10n.Launcher.kindSetting
+            case .command: L10n.Launcher.kindCommand
             case .provided: ""
             }
         }

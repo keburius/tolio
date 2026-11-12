@@ -12,7 +12,7 @@ import SwiftUI
 public final class PaletteFeature: Feature {
     public static let toggleHotkey = HotkeyAction(
         id: "palette.toggle",
-        title: "Open command palette",
+        title: L10n.Launcher.openTitle,
         defaultCombo: KeyCombo(keyCode: 49, modifiers: [.control, .option]) // ⌃⌥Space
     )
     /// Command id other parts of the app (e.g. the omni:// URL) use to open the palette.
@@ -25,8 +25,8 @@ public final class PaletteFeature: Feature {
     static let usageKey = SettingKey.feature("palette", "usage", default: UsageHistory())
 
     public let id: FeatureID = "palette"
-    public let displayName = "Command Palette"
-    public let summary = "Launch apps, open settings, run commands, calculate, and convert units and currencies."
+    public var displayName: String { L10n.Launcher.name }
+    public var summary: String { L10n.Launcher.summary }
     public let symbolName = "magnifyingglass"
     public let requiredPermissions: Set<Permission> = []
     public let isEnabledByDefault = true
@@ -76,7 +76,7 @@ public final class PaletteFeature: Feature {
         context.registerHotkey(Self.toggleHotkey) { [weak self] in self?.toggle(startedAt: .now) }
         context.setPaletteHandler { [weak self] query in self?.show(startedAt: .now, query: query) }
         context.registerCommand(Command(
-            id: Self.showCommandID, title: "Open Command Palette", symbolName: symbolName
+            id: Self.showCommandID, title: L10n.Launcher.openTitle, symbolName: symbolName
         ) { [weak self] in self?.show(startedAt: .now) })
     }
 
@@ -139,7 +139,7 @@ public final class PaletteFeature: Feature {
         }
         let paneItems = panes.map { pane in
             PaletteItem(
-                id: "setting:\(pane.url.absoluteString)", title: pane.title, subtitle: "System Settings",
+                id: "setting:\(pane.url.absoluteString)", title: pane.title, subtitle: L10n.Launcher.kindSetting,
                 icon: .file(settingsIcon), kind: .setting, keywords: pane.keywords, action: .openURL(pane.url)
             )
         }
@@ -188,7 +188,7 @@ public final class PaletteFeature: Feature {
             guard !text.isEmpty else { return }
             NSPasteboard.general.clearContents()
             NSPasteboard.general.setString(text, forType: .string)
-            HUD.show("Copied \(text)", symbol: "doc.on.clipboard")
+            HUD.show(L10n.Launcher.copied(text), symbol: "doc.on.clipboard")
         case let .provided(primary, alternateAction):
             if alternate, let alternateAction {
                 alternateAction()
@@ -209,4 +209,7 @@ public final class PaletteFeature: Feature {
     func clearUsage() {
         context?.settings.reset(Self.usageKey)
     }
+
+    /// Settings while on (nil while off).
+    var currentSettings: SettingsStore? { context?.settings }
 }

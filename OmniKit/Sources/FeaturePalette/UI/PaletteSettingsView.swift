@@ -2,36 +2,42 @@ import OmniCore
 import OmniPlatform
 import SwiftUI
 
-/// Settings for the command palette.
+/// Settings for the Launcher.
 struct PaletteSettingsView: View {
     let feature: PaletteFeature
     let settings: SettingsStore
 
     var body: some View {
-        LabeledContent("Indexed apps") {
+        LabeledContent(L10n.Launcher.appsFound) {
             HStack {
                 Text("\(feature.appCount)").monospacedDigit()
-                Button("Rescan") { feature.rebuildIndex() }
+                Button(L10n.Launcher.findAgain) { feature.rebuildIndex() }
             }
         }
+        .settingsAnchor(PaletteAnchor.apps)
         if let ms = feature.lastOpenMilliseconds {
-            LabeledContent("Last open time") { Text("\(ms, specifier: "%.1f") ms").monospacedDigit() }
+            LabeledContent(L10n.Launcher.lastOpenTime) { Text(L10n.Launcher.milliseconds(ms)).monospacedDigit() }
         }
-        Toggle("Download currency rates", isOn: settings.binding(PaletteFeature.currencyFetchKey))
-        Text("Omni's only network requests: one small public file from each bank below, at most every 6 hours, when you open the palette. Nothing is sent.")
+        Toggle(L10n.Launcher.downloadRates, isOn: settings.binding(PaletteFeature.currencyFetchKey))
+            .settingsAnchor(PaletteAnchor.currencyFetch)
+        Text(L10n.Launcher.downloadRatesHelp)
             .font(.caption).foregroundStyle(.secondary)
-        LabeledContent("Default target currency") {
-            TextField("", text: Binding(
+        LabeledContent(L10n.Launcher.defaultCurrency) {
+            TextField(L10n.Launcher.defaultCurrency, text: Binding(
                 get: { settings.value(PaletteFeature.defaultCurrencyKey) },
                 set: { settings.set(String($0.uppercased().prefix(3)), for: PaletteFeature.defaultCurrencyKey) }
             ))
+            .labelsHidden()
             .frame(width: 60)
             .multilineTextAlignment(.trailing)
         }
+        .settingsAnchor(PaletteAnchor.defaultCurrency)
         ForEach(feature.rateStores, id: \.source.name) { store in
             RateStatusRow(store: store, fetchEnabled: settings.value(PaletteFeature.currencyFetchKey))
         }
-        Button("Clear Usage History") { feature.clearUsage() }
+        Button(L10n.Launcher.clearUsage) { feature.clearUsage() }
+            .help(L10n.Launcher.clearUsageHelp)
+            .settingsAnchor(PaletteAnchor.clearUsage)
     }
 }
 
@@ -43,11 +49,11 @@ private struct RateStatusRow: View {
         LabeledContent(store.source.name) {
             HStack {
                 if let current = store.rates {
-                    Text("\(current.date) · \(current.rates.count) currencies")
+                    Text(L10n.Launcher.ratesStatus(date: current.date, currencies: current.rates.count))
                 } else {
-                    Text("Not downloaded").foregroundStyle(.secondary)
+                    Text(L10n.Launcher.notDownloaded).foregroundStyle(.secondary)
                 }
-                Button(store.isFetching ? "Updating…" : "Update Now") {
+                Button(store.isFetching ? L10n.Launcher.updating : L10n.Launcher.updateNow) {
                     Task { await store.refresh() }
                 }
                 .disabled(store.isFetching || !fetchEnabled)

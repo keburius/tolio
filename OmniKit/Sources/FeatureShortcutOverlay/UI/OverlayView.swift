@@ -1,5 +1,7 @@
 import AppKit
 import Observation
+import OmniCore
+import OmniPlatform
 import SwiftUI
 
 /// What the overlay shows.
@@ -53,7 +55,7 @@ struct OverlayView: View {
     @FocusState private var searchFocused: Bool
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
+        VStack(alignment: .leading, spacing: OmniStyle.s3) {
             header
             Divider()
             content
@@ -61,8 +63,11 @@ struct OverlayView: View {
         .padding(OverlayModel.padding)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .background(VisualEffectBackground())
-        .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
-        .overlay(RoundedRectangle(cornerRadius: 16, style: .continuous).strokeBorder(.white.opacity(0.12)))
+        .clipShape(RoundedRectangle(cornerRadius: OmniStyle.panelRadius, style: .continuous))
+        .overlay(
+            RoundedRectangle(cornerRadius: OmniStyle.panelRadius, style: .continuous)
+                .strokeBorder(OmniStyle.increaseContrast ? Color(nsColor: .separatorColor) : .white.opacity(0.12))
+        )
         .onChange(of: model.mode, initial: true) { _, mode in searchFocused = mode == .pinned }
     }
 
@@ -73,17 +78,17 @@ struct OverlayView: View {
             }
             Text(model.appName).font(.title2.weight(.semibold)).lineLimit(1)
             if model.truncated {
-                Text("Large menu: showing the first items read")
+                Text(L10n.Cheatsheet.truncated)
                     .font(.caption).foregroundStyle(.secondary)
             }
             Spacer()
             if model.mode == .pinned {
-                TextField("Filter", text: $model.query)
+                TextField(L10n.Cheatsheet.filter, text: $model.query)
                     .textFieldStyle(.roundedBorder)
                     .frame(width: 220)
                     .focused($searchFocused)
             } else {
-                Text("Click an item to run it").font(.caption).foregroundStyle(.secondary)
+                Text(L10n.Cheatsheet.clickToRun).font(.caption).foregroundStyle(.secondary)
             }
         }
         .frame(height: OverlayModel.titleBarHeight - 24)
@@ -92,14 +97,17 @@ struct OverlayView: View {
     @ViewBuilder private var content: some View {
         switch model.status {
         case .loading where model.sections.isEmpty:
-            centered { ProgressView().controlSize(.small); Text("Reading menus…").foregroundStyle(.secondary) }
+            centered { ProgressView().controlSize(.small); Text(L10n.Cheatsheet.reading).foregroundStyle(.secondary) }
         case .unavailable where model.sections.isEmpty:
-            centered { Text("\(model.appName) doesn't expose its menus to Accessibility.").foregroundStyle(.secondary) }
+            centered { Text(L10n.Cheatsheet.menusUnreadable(model.appName)).foregroundStyle(.secondary) }
         default:
             if model.visibleSections.isEmpty {
                 centered {
-                    Text(model.query.isEmpty ? "No keyboard shortcuts in \(model.appName)'s menus." : "No matches.")
-                        .foregroundStyle(.secondary)
+                    EmptyState(
+                        symbol: "command",
+                        message: model.query.isEmpty
+                            ? L10n.Cheatsheet.noShortcuts(model.appName) : L10n.Common.noMatches(model.query)
+                    )
                 }
             } else {
                 ScrollView(.vertical) {
@@ -155,7 +163,7 @@ private struct EntryRow: View {
         .buttonStyle(.plain)
         .opacity(entry.isEnabled ? 1 : 0.45)
         .onHover { hovering = $0 }
-        .help(entry.isEnabled ? entry.title : "\(entry.title) (not available right now)")
+        .help(entry.isEnabled ? entry.title : L10n.Cheatsheet.unavailableHelp(entry.title))
     }
 }
 

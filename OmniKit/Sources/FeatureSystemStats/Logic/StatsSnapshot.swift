@@ -1,4 +1,5 @@
 import Foundation
+import OmniCore
 
 /// The items that can appear in the menu bar.
 public enum StatItem: String, CaseIterable, Codable, Sendable {
@@ -6,11 +7,11 @@ public enum StatItem: String, CaseIterable, Codable, Sendable {
 
     public var title: String {
         switch self {
-        case .cpu: "CPU"
-        case .memory: "Memory"
-        case .disk: "Disk"
-        case .network: "Network"
-        case .battery: "Battery"
+        case .cpu: L10n.Stats.cpu
+        case .memory: L10n.Stats.memory
+        case .disk: L10n.Stats.disk
+        case .network: L10n.Stats.network
+        case .battery: L10n.Stats.battery
         }
     }
 }
@@ -55,11 +56,11 @@ public struct StatsSnapshot: Equatable, Sendable {
     /// reading yet (e.g. network before the second sample) are skipped.
     public func menuBarText(items: Set<StatItem>) -> String {
         var parts: [String] = []
-        if items.contains(.cpu), let cpu { parts.append("CPU \(StatsFormat.percent(cpu))") }
+        if items.contains(.cpu), let cpu { parts.append(L10n.Stats.menuCPU(StatsFormat.percent(cpu))) }
         if items.contains(.memory), let used = memoryUsed, let total = memoryTotal, total > 0 {
-            parts.append("MEM \(StatsFormat.percent(Double(used) / Double(total)))")
+            parts.append(L10n.Stats.menuMemory(StatsFormat.percent(Double(used) / Double(total))))
         }
-        if items.contains(.disk), let free = diskFree { parts.append("SSD \(StatsFormat.storage(free)) free") }
+        if items.contains(.disk), let free = diskFree { parts.append(L10n.Stats.menuDisk(StatsFormat.storage(free))) }
         if items.contains(.network), let down = downloadRate, let up = uploadRate {
             parts.append("↓\(StatsFormat.rate(down)) ↑\(StatsFormat.rate(up))")
         }
@@ -67,5 +68,24 @@ public struct StatsSnapshot: Equatable, Sendable {
             parts.append("\(battery.isCharging ? "⚡︎" : "")\(battery.percent)%")
         }
         return parts.joined(separator: "  ")
+    }
+
+    /// One readable line for the control panel: the chosen items in full
+    /// words, plus the battery whenever there is one, e.g.
+    /// "CPU 12% · Memory 61% · ↓ 1.2 MB/s ↑ 40 KB/s · Battery 84%".
+    public func summaryLine(items: Set<StatItem>) -> String {
+        var parts: [String] = []
+        if items.contains(.cpu), let cpu { parts.append(L10n.Stats.lineCPU(StatsFormat.percent(cpu))) }
+        if items.contains(.memory), let used = memoryUsed, let total = memoryTotal, total > 0 {
+            parts.append(L10n.Stats.lineMemory(StatsFormat.percent(Double(used) / Double(total))))
+        }
+        if items.contains(.disk), let free = diskFree { parts.append(L10n.Stats.lineDisk(StatsFormat.storage(free))) }
+        if items.contains(.network), let down = downloadRate, let up = uploadRate {
+            parts.append("↓ \(StatsFormat.rate(down)) ↑ \(StatsFormat.rate(up))")
+        }
+        if let battery {
+            parts.append(L10n.Stats.lineBattery("\(battery.isCharging ? "⚡︎" : "")\(battery.percent)%"))
+        }
+        return parts.joined(separator: " · ")
     }
 }
