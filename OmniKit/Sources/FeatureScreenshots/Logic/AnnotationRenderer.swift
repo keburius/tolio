@@ -73,6 +73,10 @@ public enum AnnotationRenderer {
             drawImage(patch, in: clipped, context: context)
         case let .text(origin, string, fontSize):
             drawText(string, at: origin, fontSize: fontSize, color: annotation.color, in: context)
+        case let .stroke(points):
+            context.setLineCap(.round)
+            context.addPath(Self.smoothPath(points))
+            context.strokePath()
         case let .step(center, diameter):
             let circle = CGRect(x: center.x - diameter / 2, y: center.y - diameter / 2, width: diameter, height: diameter)
             context.fillEllipse(in: circle)
@@ -85,6 +89,25 @@ public enum AnnotationRenderer {
             let textColor: RGBAColor = annotation.color == .white || annotation.color == .yellow ? .black : .white
             drawText(number, at: CGPoint(x: center.x - size.width / 2, y: center.y - size.height / 2), fontSize: fontSize, color: textColor, in: context)
         }
+    }
+
+    /// A smooth line through the points: quadratic curves between midpoints,
+    /// so a fast scribble doesn't look jagged. One point draws a dot.
+    static func smoothPath(_ points: [CGPoint]) -> CGPath {
+        let path = CGMutablePath()
+        guard let first = points.first else { return path }
+        path.move(to: first)
+        guard points.count > 1 else {
+            path.addLine(to: first) // round cap makes it a dot
+            return path
+        }
+        for index in 1..<points.count {
+            let previous = points[index - 1], current = points[index]
+            let mid = CGPoint(x: (previous.x + current.x) / 2, y: (previous.y + current.y) / 2)
+            path.addQuadCurve(to: mid, control: previous)
+        }
+        path.addLine(to: points[points.count - 1])
+        return path
     }
 
     // MARK: - Text

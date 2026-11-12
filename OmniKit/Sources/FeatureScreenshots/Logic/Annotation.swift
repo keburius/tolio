@@ -33,6 +33,8 @@ public struct Annotation: Equatable, Identifiable, Sendable {
         case highlight(CGRect)
         /// Numbered by order among steps (1, 2, 3 …), so deleting one renumbers the rest.
         case step(center: CGPoint, diameter: CGFloat)
+        /// A freehand brush stroke through these points.
+        case stroke([CGPoint])
     }
 
     public var id: UUID
@@ -64,8 +66,13 @@ public struct Annotation: Equatable, Identifiable, Sendable {
         case let .blur(r): copy.kind = .blur(shift(r))
         case let .highlight(r): copy.kind = .highlight(shift(r))
         case let .step(center, diameter): copy.kind = .step(center: shift(center), diameter: diameter)
+        case let .stroke(points): copy.kind = .stroke(points.map(shift))
         }
         return copy
+    }
+
+    public var isStroke: Bool {
+        if case .stroke = kind { true } else { false }
     }
 
     /// True for marks too small to keep (a click without a drag).
@@ -75,6 +82,7 @@ public struct Annotation: Equatable, Identifiable, Sendable {
         case let .box(r), let .blur(r), let .highlight(r): r.width < 3 || r.height < 3
         case let .text(_, string, _): string.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
         case .step: false
+        case let .stroke(points): points.isEmpty
         }
     }
 }
@@ -190,6 +198,11 @@ public struct AnnotationDocument: Equatable, Sendable {
                 if CGRect(origin: origin, size: s).insetBy(dx: -tolerance, dy: -tolerance).contains(point) { return annotation.id }
             case let .step(center, diameter):
                 if hypot(point.x - center.x, point.y - center.y) <= diameter / 2 + tolerance { return annotation.id }
+            case let .stroke(points):
+                if points.count == 1, hypot(point.x - points[0].x, point.y - points[0].y) <= pad { return annotation.id }
+                for (a, b) in zip(points, points.dropFirst()) where Self.distance(point, toSegment: a, b) <= pad {
+                    return annotation.id
+                }
             }
         }
         return nil

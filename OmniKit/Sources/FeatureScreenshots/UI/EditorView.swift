@@ -75,12 +75,22 @@ struct EditorView: View {
             if model.document.crop != nil {
                 Button(L10n.Screenshots.resetCrop) { model.resetCrop() }.buttonStyle(.borderless)
             }
+            Button { model.deleteSelection() } label: { Image(systemName: "trash") }
+                .buttonStyle(.borderless)
+                .disabled(model.selection == nil)
+                .help(L10n.Screenshots.deleteSelected)
+                .accessibilityLabel(L10n.Screenshots.deleteSelected)
             Spacer(minLength: OmniStyle.s3)
-            Button { actions.copyText() } label: { Label(L10n.Screenshots.copyText, systemImage: "text.viewfinder") }
+            // Icon-only so they never get cut to "…" in a narrow window; names are in the tooltips.
+            Button { actions.copyText() } label: { Image(systemName: "text.viewfinder") }
                 .help(L10n.Screenshots.copyTextHelp)
-            Button { actions.pin() } label: { Label(L10n.Screenshots.pin, systemImage: "pin") }
+                .accessibilityLabel(L10n.Screenshots.copyText)
+            Button { actions.pin() } label: { Image(systemName: "pin") }
                 .help(L10n.Screenshots.pinHelp)
-            Button { actions.copy() } label: { Label(L10n.Screenshots.copy, systemImage: "doc.on.doc") }
+                .accessibilityLabel(L10n.Screenshots.pin)
+            Button { actions.copy() } label: { Image(systemName: "doc.on.doc") }
+                .help(L10n.Screenshots.copy)
+                .accessibilityLabel(L10n.Screenshots.copy)
                 .keyboardShortcut("c", modifiers: .command)
             Button { actions.save() } label: { Label(L10n.Screenshots.save, systemImage: "square.and.arrow.down") }
                 .keyboardShortcut("s", modifiers: .command)
@@ -172,6 +182,10 @@ struct EditorView: View {
         case let .box(r), let .blur(r), let .highlight(r): return r
         case let .text(origin, string, size): return CGRect(origin: origin, size: AnnotationRenderer.textSize(string, fontSize: size))
         case let .step(center, d): return CGRect(x: center.x - d / 2, y: center.y - d / 2, width: d, height: d)
+        case let .stroke(points):
+            let xs = points.map(\.x), ys = points.map(\.y)
+            guard let minX = xs.min(), let maxX = xs.max(), let minY = ys.min(), let maxY = ys.max() else { return nil }
+            return CGRect(x: minX, y: minY, width: maxX - minX, height: maxY - minY).insetBy(dx: -annotation.lineWidth / 2, dy: -annotation.lineWidth / 2)
         }
     }
 

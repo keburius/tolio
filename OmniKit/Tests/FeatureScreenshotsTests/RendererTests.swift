@@ -164,3 +164,50 @@ struct AlphaBoundsTests {
         #expect(AlphaBounds.visibleRect(of: try #require(context.makeImage())) == nil)
     }
 }
+
+@MainActor
+struct BrushTests {
+    @Test func strokeMovesHitsAndDrops() {
+        var doc = AnnotationDocument(pixelWidth: 200, pixelHeight: 200, scale: 1)
+        let stroke = Annotation(kind: .stroke([CGPoint(x: 10, y: 10), CGPoint(x: 60, y: 10), CGPoint(x: 60, y: 60)]), lineWidth: 4)
+        doc.add(stroke)
+        doc.add(Annotation(kind: .stroke([])))
+        #expect(doc.annotations.count == 1) // an empty stroke isn't kept
+        let size: (String, CGFloat) -> CGSize = { _, _ in .zero }
+        #expect(doc.hitTest(CGPoint(x: 35, y: 12), tolerance: 2, textSize: size) == stroke.id)
+        #expect(doc.hitTest(CGPoint(x: 35, y: 35), tolerance: 2, textSize: size) == nil)
+        doc.move(stroke.id, by: CGVector(dx: 5, dy: 5))
+        #expect(doc.annotations[0].kind == .stroke([CGPoint(x: 15, y: 15), CGPoint(x: 65, y: 15), CGPoint(x: 65, y: 65)]))
+    }
+
+    @Test func strokeIsDrawnAlongItsPath() throws {
+        let base = Synthetic.gradient(width: 100, height: 100)
+        var doc = AnnotationDocument(pixelWidth: 100, pixelHeight: 100, scale: 1)
+        doc.add(Annotation(kind: .stroke([CGPoint(x: 10, y: 50), CGPoint(x: 50, y: 50), CGPoint(x: 90, y: 50)]), color: .blue, lineWidth: 6))
+        let out = try #require(AnnotationRenderer.render(doc, base: base))
+        let a = Synthetic.pixels(out), b = Synthetic.pixels(base)
+        #expect(Synthetic.pixel(a, width: 100, x: 50, y: 50) != Synthetic.pixel(b, width: 100, x: 50, y: 50))
+        #expect(Synthetic.pixel(a, width: 100, x: 50, y: 10) == Synthetic.pixel(b, width: 100, x: 50, y: 10))
+    }
+
+    @Test func brushIsTheDefaultAndDeleteRemovesSelection() throws {
+        let model = EditorModel(capture: Capture(image: Synthetic.gradient(width: 100, height: 100), scale: 1, date: Date()))
+        #expect(model.tool == .brush)
+        model.pointerDown(CGPoint(x: 10, y: 10))
+        model.pointerDragged(CGPoint(x: 30, y: 20))
+        model.pointerDragged(CGPoint(x: 30.3, y: 20)) // under a pixel: skipped
+        model.pointerUp(CGPoint(x: 50, y: 40))
+        let stroke = try #require(model.document.annotations.first)
+        guard case let .stroke(points) = stroke.kind else { Issue.record("not a stroke"); return }
+        #expect(points.count == 3)
+        #expect(model.selection == nil) // drawing doesn't select
+        model.tool = .box
+        model.pointerDown(CGPoint(x: 60, y: 60))
+        model.pointerUp(CGPoint(x: 90, y: 90))
+        #expect(model.selection != nil)
+        model.deleteSelection()
+        #expect(model.document.annotations.count == 1)
+        model.undo()
+        #expect(model.document.annotations.count == 2)
+    }
+}

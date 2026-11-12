@@ -168,6 +168,8 @@ public extension L10n {
 
         public static var editorWindowTitle: String { tr("screenshots.editor.windowTitle", "Screenshot") }
         public static var toolSelect: String { tr("screenshots.tool.select", "Select and move (V)") }
+        public static var toolBrush: String { tr("screenshots.tool.brush", "Brush (P)") }
+        public static var deleteSelected: String { tr("screenshots.deleteSelected", "Delete selected mark (⌫)") }
         public static var toolArrow: String { tr("screenshots.tool.arrow", "Arrow (A)") }
         public static var toolBox: String { tr("screenshots.tool.box", "Box (R)") }
         public static var toolText: String { tr("screenshots.tool.text", "Text (T)") }

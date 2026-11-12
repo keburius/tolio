@@ -7,12 +7,13 @@ import OmniCore
 @Observable
 final class EditorModel {
     enum Tool: String, CaseIterable, Identifiable {
-        case select, arrow, box, text, highlight, blur, step, crop
+        case select, brush, arrow, box, text, highlight, blur, step, crop
         var id: String { rawValue }
 
         var title: String {
             switch self {
             case .select: L10n.Screenshots.toolSelect
+            case .brush: L10n.Screenshots.toolBrush
             case .arrow: L10n.Screenshots.toolArrow
             case .box: L10n.Screenshots.toolBox
             case .text: L10n.Screenshots.toolText
@@ -26,6 +27,7 @@ final class EditorModel {
         var symbol: String {
             switch self {
             case .select: "cursorarrow"
+            case .brush: "scribble.variable"
             case .arrow: "arrow.up.right"
             case .box: "rectangle"
             case .text: "textformat"
@@ -39,6 +41,7 @@ final class EditorModel {
         var key: Character {
             switch self {
             case .select: "v"
+            case .brush: "p"
             case .arrow: "a"
             case .box: "r"
             case .text: "t"
@@ -61,7 +64,7 @@ final class EditorModel {
 
     let capture: Capture
     private(set) var document: AnnotationDocument
-    var tool: Tool = .arrow {
+    var tool: Tool = .brush {
         didSet {
             commitText()
             if tool == .highlight && color == .red { color = .yellow }
@@ -153,6 +156,8 @@ final class EditorModel {
         case .select:
             commitText()
             selection = document.hitTest(point, tolerance: 6 * document.scale) { AnnotationRenderer.textSize($0, fontSize: $1) }
+        case .brush:
+            draft = Annotation(kind: .stroke([point]), color: color, lineWidth: lineWidth * 1.4)
         case .arrow:
             draft = Annotation(kind: .arrow(from: point, to: point), color: color, lineWidth: lineWidth)
         case .box:
@@ -192,6 +197,12 @@ final class EditorModel {
                 movedDuringDrag = true
             }
             document.move(id, by: delta)
+        case .brush:
+            // Skip points closer than a pixel; they add size, not detail.
+            if case var .stroke(points) = draft?.kind, let last = points.last, hypot(point.x - last.x, point.y - last.y) >= 1 {
+                points.append(point)
+                draft?.kind = .stroke(points)
+            }
         case .arrow:
             draft?.kind = .arrow(from: start, to: point)
         case .box:
@@ -214,7 +225,9 @@ final class EditorModel {
             let finished = draft
             self.draft = nil
             change { $0.add(finished) }
-            if !finished.isDegenerate { selection = finished.id }
+            // Shapes stay selected so Delete or a color change applies to them;
+            // brush strokes don't, so drawing isn't interrupted by outlines.
+            if !finished.isDegenerate, !finished.isStroke { selection = finished.id }
         }
         if let crop = draftCrop {
             draftCrop = nil

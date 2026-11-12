@@ -3299,6 +3299,17 @@
         }
       }
     },
+    "screenshots.deleteSelected": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete selected mark (⌫)"
+          }
+        }
+      }
+    },
     "screenshots.displayName": {
       "extractionState": "manual",
       "localizations": {
@@ -4452,6 +4463,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Box (R)"
+          }
+        }
+      }
+    },
+    "screenshots.tool.brush": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Brush (P)"
           }
         }
       }
