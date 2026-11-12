@@ -25,6 +25,12 @@ struct PermissionRow: View {
                         Task { _ = await permissions.request(permission) }
                     }
                 }
+                if state == .denied && permission != .appManagement {
+                    Button("Reset…") {
+                        Task { _ = await permissions.resetAndRequest(permission) }
+                    }
+                    .help("Already switched on in System Settings but still not granted? This removes Omni's old entry and asks again.")
+                }
             }
         }
         .padding(.vertical, 4)

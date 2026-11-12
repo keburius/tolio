@@ -66,6 +66,29 @@ public final class PermissionsManager: PermissionChecking {
         return state(of: permission)
     }
 
+    /// Removes Omni's entry for `permission` from the privacy database
+    /// (`tccutil reset <service> <bundle id>`; affects only Omni), then asks again.
+    ///
+    /// Needed when System Settings shows Omni switched on but macOS still
+    /// reports it as not granted: the entry was made for an earlier code
+    /// signature (e.g. an ad-hoc development build) and no longer matches.
+    public func resetAndRequest(_ permission: Permission) async -> PermissionState {
+        guard let bundleID = Bundle.main.bundleIdentifier else { return state(of: permission) }
+        let process = Process()
+        process.executableURL = URL(fileURLWithPath: "/usr/bin/tccutil")
+        process.arguments = ["reset", permission.tccService, bundleID]
+        do {
+            try process.run()
+            process.waitUntilExit()
+        } catch {
+            return state(of: permission)
+        }
+        var requested = settings.value(Self.requestedKey)
+        requested.remove(permission)
+        settings.set(requested, for: Self.requestedKey)
+        return await request(permission)
+    }
+
     public func openSettings(for permission: Permission) {
         NSWorkspace.shared.open(permission.settingsURL)
     }

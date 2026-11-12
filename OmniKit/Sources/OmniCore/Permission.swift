@@ -53,6 +53,17 @@ public enum Permission: String, Codable, CaseIterable, Sendable, Identifiable {
         URL(string: "x-apple.systempreferences:com.apple.preference.security?\(settingsAnchor)")!
     }
 
+    /// The TCC service name `tccutil` uses for this permission.
+    public var tccService: String {
+        switch self {
+        case .accessibility: "Accessibility"
+        case .screenRecording: "ScreenCapture"
+        case .fullDiskAccess: "SystemPolicyAllFiles"
+        case .microphone: "Microphone"
+        case .appManagement: "SystemPolicyAppBundles"
+        }
+    }
+
     /// Whether macOS shows its own prompt when asked. If not, the user must
     /// add Omni by hand in System Settings.
     public var hasSystemPrompt: Bool {
