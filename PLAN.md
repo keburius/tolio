@@ -1,6 +1,6 @@
 # Omni — Implementation Plan
 
-Status: **approved. Phases 0–7 done** (see §8).
+Status: **approved. Phases 0–8 done** (see §8).
 
 ## 0. Environment found
 
@@ -53,7 +53,7 @@ Dependency rule: feature modules depend on `OmniCore` plus the platform kits the
 | `FeatureSystemStats` | `Logic/` (StatsMath, StatsFormat, StatsSnapshot), `Runtime/` SystemSampler, `UI/` (menu bar item, popover, settings) | Core, Platform |
 | `FeatureShortcutOverlay` | `Logic/` (HoldGesture, ShortcutFormatter, MenuModel: ShortcutCatalog + ColumnPacker), `Runtime/` (MenuReader + MenuCache, ModifierTap), `UI/` (OverlayController, OverlayView, ShortcutOverlayFeature) | Core, Platform |
 | `FeatureTextActions` | `Logic/` (TextSelection, TextAnalysis + SearchEngine, SelectionGuard, SelectionTrigger, CopyFallback), `Actions/` (TextAction protocol + built-ins), `Runtime/` (SelectionReader, SelectionTap), `UI/` (PopupController, PopupView, TextActionsFeature) | Core, Platform |
-| `FeatureScreenshots` | Capture, editor, pin, OCR, recording | Core, Platform |
+| `FeatureScreenshots` | `Logic/` (CaptureGeometry, FileNaming, Annotation + AnnotationDocument, AnnotationRenderer, AlphaBounds, ScrollStitcher, TextRecognizer), `Runtime/` (ScreenCapturer + CaptureOutput, ScreenRecorder, ScrollingCapture), `UI/` (SelectionOverlay, EditorModel/EditorView, CaptureWindows + pin, RecordingController, ScreenshotsFeature) | Core, Platform |
 | `FeatureFileRules` | Rule engine, FSEvents watcher, undo log | Core, Platform |
 | `FeatureUninstaller` | Related-file finder with allowlist | Core, Platform |
 | `FeatureArchives` | libarchive wrapper | Core, Platform, `CLibArchive` |
@@ -233,7 +233,7 @@ Tests: allowlist property tests (generated hostile paths, symlinks, `..`, `/Syst
 | 5 Utilities | **done** |
 | 6 Shortcut overlay | **done** |
 | 7 Text selection | **done** |
-| 8 Screenshots | not started |
+| 8 Screenshots | **done** |
 | 9 File rules | not started |
 | 10 Uninstaller + archives | not started |
 
@@ -420,3 +420,51 @@ Tests: allowlist property tests (generated hostile paths, symlinks, `..`, `/Syst
 - Restore re-writes data, so types an app only promised (lazy data) are materialized, and the restored item carries Omni's marker type.
 - Translate is Apple's panel; whether it runs on-device depends on the system's Translation settings. Search and Open Link hand the text to the browser only when clicked.
 - The bar is placed at the mouse-up point when the app doesn't report selection bounds (all fallback reads).
+
+### Phase 8 — done
+- **Screenshots** (Screen Recording; optional Microphone and Accessibility; off by default). It does no background work; it only registers hotkeys.
+- Shortcuts, all rebindable:
+  - ⌃⌥⌘4: area or window. Drag an area or click a window, with the hovered window highlighted.
+  - ⌃⌥⌘3: the screen under the pointer.
+  - ⌃⌥⌘O: capture text (OCR).
+  - ⌃⌥⌘R: start or stop recording.
+  - Scrolling capture: Experimental, off, no default shortcut.
+  - Palette commands exist for each.
+- Overlay: one panel per display at `.screenSaver` level, dimmed, showing a live pixel-size label and a hint. Esc or right-click cancels. The overlay is removed and given 120 ms before capturing.
+- Pixel correctness:
+  - Each display is captured at its native scale (`CaptureGeometry.plan`, snapped to the pixel grid).
+  - Areas across displays are composited at the highest scale, with the lower-scale part enlarged nearest-neighbour.
+  - PNGs are saved at 72 × scale dpi (144 on Retina).
+  - Live checks on the Retina display:
+    - A 100.5 × 24 pt area gave 201 × 48 px.
+    - Full screen: 3600 × 2338 px.
+    - A 100 × 24 pt area was **byte-identical to `screencapture -R`** (0 of 38,400 bytes differ, both Display P3, 144 dpi).
+- Window capture: `SCContentFilter(desktopIndependentWindow:)` at `pointPixelScale`.
+  - With shadow: the window is rendered unscaled on a canvas 150 pt larger on each side, then trimmed to the visible pixels (`AlphaBounds`).
+  - The shadow was missing at first: asking for the window's own size made ScreenCaptureKit shrink the window to fit its shadow, which was found live and fixed.
+  - Verified: 1958 × 2214 px with shadow, and the window inside exactly 1734 × 1990 (1:1).
+- After capture (setting): open the editor (default), copy, save, or pin. The save folder defaults to macOS's screenshot location (`com.apple.screencapture location`, else Desktop). Names look like "Screenshot 2026-11-12 at 17.20.31.png", with "(2)" etc. on collisions.
+- Editor:
+  - Tools: select/move, arrow, box, text (click to type, click existing text to edit), highlight, blur (pixelate + blur, so text can't be recovered), numbered steps (renumber on delete), crop. Seven colours, single-letter tool keys, ⌘Z / ⇧⌘Z, Delete.
+  - Copy (⌘C), Save (⌘S), Pin, Copy Text (OCR).
+  - The preview and the export share one CoreGraphics renderer. With no marks the export returns the original image (bit-exact, tested).
+- Pin: floating, movable, resizable with aspect kept, on all Spaces. Its menu has Copy, Save, Edit…, Opacity and Close; Esc also closes it.
+- OCR: Vision `VNRecognizeTextRequest` (accurate, automatic language), on device. Lines are ordered top to bottom; the text is copied to the clipboard.
+- Recording:
+  - `SCStream` → `AVAssetWriter` MP4, H.264 (default) or HEVC, 30 or 60 fps, pointer optional. Even pixel dimensions; one display per recording.
+  - Omni's own windows are excluded. A ● m:ss menu bar item stops it, as does the shortcut. The file is revealed in Finder.
+  - System audio (`capturesAudio`, excluding Omni's own) and the microphone (macOS 15+ `captureMicrophone`) go to separate AAC tracks.
+  - Verified: a 3.1 s recording at 802 × 602 (401 × 301 pt area, made even), H.264 at about 30 fps, plus an AAC system-audio track.
+- Scrolling capture (Experimental flag): scrolls the area with posted scroll events, captures each page, and joins them by row fingerprints.
+  - Fixed headers and footers are detected and kept once. Blank rows don't count as matches.
+  - Stops at the end of the content, if no overlap is found, on Esc, at 30 pages, or at 30,000 px.
+- 25 new tests (306 total): mixed-DPI plans, snapping, even recording sizes, file naming, bit-exact and crop rendering, marks only changing their area, step renumbering, hit testing, arrowheads, stitching (plain, header/footer, end, no overlap, blank rows, real image round trip), alpha bounds, and OCR of rendered text.
+
+### Phase 8 — deferred / limits
+- Mixed-DPI and external displays were tested by math only (no second display here).
+- Microphone on macOS 14 is not supported (it needs macOS 15's ScreenCaptureKit microphone). The plan's separate `AVCaptureSession` path was left out because it couldn't be tested on this Mac. The setting says "macOS 15 or later".
+- System audio and the microphone are two tracks, not mixed. QuickTime plays both; some players play only the first.
+- A recording covers one display; an area across displays records the part on the display holding its centre.
+- The first OCR after installing a new build can take about a minute while macOS prepares the text model (measured: 58–70 s once, then 0.06–0.2 s). A "Recognizing text…" notice shows meanwhile.
+- Scrolling capture moves the pointer to the area during the capture and restores it afterwards. It was tested on synthetic pages only, not live (that would scroll a window in use).
+- No "capture the same area again", no delayed/timer capture, and no editor zoom beyond fit-to-window.

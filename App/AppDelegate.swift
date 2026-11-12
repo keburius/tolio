@@ -3,6 +3,7 @@ import FeatureClipboard
 import FeatureDiagnostics
 import FeatureKeepAwake
 import FeatureKeyboardClean
+import FeatureScreenshots
 import FeaturePalette
 import FeatureShortcutOverlay
 import FeatureSwitcher
@@ -53,6 +54,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         services.features.register(SystemStatsFeature())
         services.features.register(ShortcutOverlayFeature())
         services.features.register(TextActionsFeature())
+        services.features.register(ScreenshotsFeature())
         services.features.register(DiagnosticsFeature())
     }
 

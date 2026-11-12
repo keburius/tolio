@@ -52,6 +52,8 @@ targets:
         product: FeatureShortcutOverlay
       - package: OmniKit
         product: FeatureTextActions
+      - package: OmniKit
+        product: FeatureScreenshots
     info:
       path: App/Info.plist
       properties:
@@ -97,5 +99,6 @@ schemes:
         - package: OmniKit/FeatureSystemStatsTests
         - package: OmniKit/FeatureShortcutOverlayTests
         - package: OmniKit/FeatureTextActionsTests
+        - package: OmniKit/FeatureScreenshotsTests
     archive:
       config: Release
