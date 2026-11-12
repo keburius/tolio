@@ -14,10 +14,6 @@ enum ScreenshotsAnchor {
     static let systemAudio = "screenshots.systemAudio"
     static let microphone = "screenshots.microphone"
     static let scrolling = "screenshots.scrolling"
-    static let lineBreaks = "screenshots.captureText.lineBreaks"
-    static let languages = "screenshots.captureText.languages"
-    static let autoLanguage = "screenshots.captureText.autoLanguage"
-    static let speak = "screenshots.captureText.speak"
 }
 
 extension ScreenshotsFeature {
@@ -33,10 +29,6 @@ extension ScreenshotsFeature {
             SettingsEntry(anchor: ScreenshotsAnchor.systemAudio, label: S.systemAudio, keywords: ["audio", "sound", "video"]),
             SettingsEntry(anchor: ScreenshotsAnchor.microphone, label: S.microphone, keywords: ["mic", "voice", "audio", "video"]),
             SettingsEntry(anchor: ScreenshotsAnchor.scrolling, label: S.scrollingToggle, keywords: ["long screenshot", "scroll", "experimental"]),
-            SettingsEntry(anchor: ScreenshotsAnchor.lineBreaks, label: S.lineBreaks, keywords: ["ocr", "capture text", "paragraph"]),
-            SettingsEntry(anchor: ScreenshotsAnchor.languages, label: S.recognitionLanguages, keywords: ["ocr", "language", "capture text"]),
-            SettingsEntry(anchor: ScreenshotsAnchor.autoLanguage, label: S.autoLanguage, keywords: ["ocr", "detect", "language"]),
-            SettingsEntry(anchor: ScreenshotsAnchor.speak, label: S.speakAloud, keywords: ["read aloud", "speech", "voice"]),
         ]
     }
 }
@@ -66,7 +58,6 @@ struct ScreenshotsSettingsView: View {
             Text(S.resolutionNote)
                 .font(.caption).foregroundStyle(.secondary)
         }
-        CaptureTextSettings(settings: settings)
         Section(S.sectionRecording) {
             Picker(S.frameRate, selection: settings.binding(ScreenshotsFeature.fpsKey)) {
                 Text(S.fps(30)).tag(30)
@@ -102,59 +93,5 @@ struct ScreenshotsSettingsView: View {
         panel.directoryURL = ScreenshotsFeature.folder(settings)
         guard panel.runModal() == .OK, let url = panel.url else { return }
         settings.set(url.path, for: ScreenshotsFeature.folderKey)
-    }
-}
-
-/// Capture Text options.
-private struct CaptureTextSettings: View {
-    let settings: SettingsStore
-    private typealias S = L10n.Screenshots
-    @State private var supported: [String] = []
-
-    var body: some View {
-        Section(S.sectionCaptureText) {
-            Picker(S.lineBreaks, selection: settings.binding(ScreenshotsFeature.lineBreakKey)) {
-                Text(S.lineBreaksKeep).tag(LineBreakMode.keep)
-                Text(S.lineBreaksJoin).tag(LineBreakMode.join)
-            }
-            .settingsAnchor(ScreenshotsAnchor.lineBreaks)
-            LabeledContent(S.recognitionLanguages) {
-                Menu(summary) {
-                    Button(S.languagesMatchMac) { settings.set([], for: ScreenshotsFeature.languagesKey) }
-                    Divider()
-                    ForEach(supported, id: \.self) { code in
-                        Toggle(Self.name(code), isOn: Binding(
-                            get: { chosen.contains(code) },
-                            set: { on in
-                                var list = chosen
-                                if on { if !list.contains(code) { list.append(code) } } else { list.removeAll { $0 == code } }
-                                settings.set(list, for: ScreenshotsFeature.languagesKey)
-                            }
-                        ))
-                    }
-                }
-                .fixedSize()
-            }
-            .settingsAnchor(ScreenshotsAnchor.languages)
-            Toggle(S.autoLanguage, isOn: settings.binding(ScreenshotsFeature.autoLanguageKey))
-                .settingsAnchor(ScreenshotsAnchor.autoLanguage)
-            Text(S.autoLanguageNote).font(.caption).foregroundStyle(.secondary)
-            Toggle(S.speakAloud, isOn: settings.binding(ScreenshotsFeature.speakKey))
-                .settingsAnchor(ScreenshotsAnchor.speak)
-            Text(S.captureTextNote).font(.caption).foregroundStyle(.secondary)
-        }
-        .onAppear { if supported.isEmpty { supported = TextRecognizer.supportedLanguages() } }
-    }
-
-    private var chosen: [String] { settings.value(ScreenshotsFeature.languagesKey) }
-
-    private var summary: String {
-        let list = chosen
-        if list.isEmpty { return S.languagesMatchMacSummary(CaptureTextController.languages(settings).map(Self.name).joined(separator: ", ")) }
-        return list.map(Self.name).joined(separator: ", ")
-    }
-
-    static func name(_ code: String) -> String {
-        Locale.current.localizedString(forIdentifier: code) ?? code
     }
 }

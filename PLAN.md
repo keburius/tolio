@@ -598,11 +598,12 @@ Sources: the FoundationModels interface in the installed SDK (MacOSX 27.2, Xcode
 | Q4 | Ask on by default when the Mac supports it (Settings → Launcher can turn it off)? | Yes |
 
 
-## 10. Capture Text (Screenshots feature)
+## 10. Capture Text (its own feature)
 
-- **Replaces "Copy Text from Screen"** (same action ID `screenshots.text`, so there's one command, not two).
-  - The new default shortcut is ⌘⇧2 (it was ⌃⌥⌘O); you can rebind it. macOS doesn't use ⌘⇧2.
-  - It's reachable from the Launcher command "Capture Text" and from the Screenshot icon's menu.
+- **A separate feature, "Capture Text"** (`capturetext`, Screen Recording), with its own switch, Settings page and menu bar icon (`text.viewfinder`: left-click captures, right-click shows options; on by default in the menu bar layout).
+  - It replaces Screenshots' "Copy Text from Screen" (⌃⌥⌘O). The shortcut is now ⌘⇧2 (`capturetext.capture`, rebindable; macOS doesn't use ⌘⇧2), plus the Launcher command "Capture Text".
+  - It lives in the FeatureScreenshots module so it can share the selection overlay and Vision code. The screenshot editor's Copy Text uses its settings.
+  - Anyone who had Screenshots on gets it turned on once (migration).
 - **Flow:** the selection overlay (drag an area or click a window), then Vision text recognition plus barcode detection on the same image. The text goes to the clipboard and a notice says "Copied N characters". No editor window.
 - **QR codes and barcodes:** if any are found, their content is copied instead of the recognized text (several are joined with new lines). If the content is a web link (http/https), the notice gets an **Open** button.
 - **Append:** holding ⇧ when the selection ends adds the new text to the previous capture (a new line between them, or a space in paragraph mode). Otherwise the capture replaces it. The last capture is kept in memory only, until Omni quits.

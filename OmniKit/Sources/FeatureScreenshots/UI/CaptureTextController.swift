@@ -34,7 +34,7 @@ final class CaptureTextController {
         HUD.show(L10n.Screenshots.recognizingText, symbol: "text.viewfinder", duration: .seconds(10))
         let options = TextRecognizer.Options(
             languages: Self.languages(settings),
-            automaticLanguageDetection: settings.value(ScreenshotsFeature.autoLanguageKey)
+            automaticLanguageDetection: settings.value(CaptureTextFeature.autoLanguageKey)
         )
         let result: TextRecognizer.Result
         do {
@@ -45,7 +45,7 @@ final class CaptureTextController {
         }
         let outcome = composer.compose(
             lines: result.lines, codes: result.codes,
-            mode: settings.value(ScreenshotsFeature.lineBreakKey), append: append
+            mode: settings.value(CaptureTextFeature.lineBreakKey), append: append
         )
         // Counts only; never the text.
         log.info("Capture Text: \(result.lines.count) lines, \(result.codes.count) codes")
@@ -71,7 +71,7 @@ final class CaptureTextController {
 
     /// The chosen languages, or the user's macOS languages Vision supports.
     static func languages(_ settings: SettingsStore) -> [String] {
-        let chosen = settings.value(ScreenshotsFeature.languagesKey)
+        let chosen = settings.value(CaptureTextFeature.languagesKey)
         if !chosen.isEmpty { return chosen }
         let supported = TextRecognizer.supportedLanguages()
         let preferred = Locale.preferredLanguages.compactMap { language in
@@ -91,7 +91,7 @@ final class CaptureTextController {
     }
 
     private func speakIfWanted(_ text: String, settings: SettingsStore) {
-        guard settings.value(ScreenshotsFeature.speakKey) else { return }
+        guard settings.value(CaptureTextFeature.speakKey) else { return }
         speech.speak(AVSpeechUtterance(string: String(text.prefix(4000))))
     }
 }

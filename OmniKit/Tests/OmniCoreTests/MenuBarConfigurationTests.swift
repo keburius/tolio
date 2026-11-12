@@ -7,13 +7,13 @@ struct MenuBarConfigurationTests {
         let config = MenuBarConfiguration.standard
         #expect(config.mode == .separate)
         #expect(config.entries.map(\.id) == QuickAccessID.allCases)
-        #expect(config.entries.filter(\.isVisible).map(\.id) == [.keepAwake, .screenshot, .clipboard])
+        #expect(config.entries.filter(\.isVisible).map(\.id) == [.keepAwake, .screenshot, .captureText, .clipboard])
     }
 
     @Test func iconsDependOnFeaturesBeingOn() {
         let config = MenuBarConfiguration.standard
         #expect(config.iconsToShow(available: [.keepAwake, .clipboard, .recording]) == [.keepAwake, .clipboard])
-        #expect(config.iconsToShow(available: Set(QuickAccessID.allCases)) == [.keepAwake, .screenshot, .clipboard])
+        #expect(config.iconsToShow(available: Set(QuickAccessID.allCases)) == [.keepAwake, .screenshot, .captureText, .clipboard])
     }
 
     @Test func singleModeShowsNoIconsButKeepsChoices() {
@@ -22,13 +22,13 @@ struct MenuBarConfigurationTests {
         config.mode = .single
         #expect(config.iconsToShow(available: Set(QuickAccessID.allCases)).isEmpty)
         config.mode = .separate
-        #expect(config.iconsToShow(available: Set(QuickAccessID.allCases)) == [.keepAwake, .screenshot, .clipboard, .recording])
+        #expect(config.iconsToShow(available: Set(QuickAccessID.allCases)) == [.keepAwake, .screenshot, .captureText, .clipboard, .recording])
     }
 
     @Test func moveByOffsetClamps() {
         var config = MenuBarConfiguration.standard
-        config.move(.clipboard, by: -1)
-        #expect(config.entries.prefix(3).map(\.id) == [.keepAwake, .clipboard, .screenshot])
+        config.move(.clipboard, by: -2)
+        #expect(config.entries.prefix(4).map(\.id) == [.keepAwake, .clipboard, .screenshot, .captureText])
         config.move(.clipboard, by: -10)
         #expect(config.entries.first?.id == .clipboard)
         config.move(.keepAwake, by: 99)
@@ -39,11 +39,11 @@ struct MenuBarConfigurationTests {
         var config = MenuBarConfiguration.standard
         // Drag the first item below the third.
         config.move(fromOffsets: IndexSet(integer: 0), toOffset: 3)
-        #expect(config.entries.prefix(3).map(\.id) == [.screenshot, .clipboard, .keepAwake])
+        #expect(config.entries.prefix(3).map(\.id) == [.screenshot, .captureText, .keepAwake])
         // Drag the last item to the top.
-        config.move(fromOffsets: IndexSet(integer: 5), toOffset: 0)
+        config.move(fromOffsets: IndexSet(integer: 6), toOffset: 0)
         #expect(config.entries.first?.id == .windowLayouts)
-        #expect(config.entries.count == 6)
+        #expect(config.entries.count == 7)
     }
 
     @Test func codableRoundTripAndUnknownIDs() throws {

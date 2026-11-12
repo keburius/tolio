@@ -51,7 +51,6 @@ extension ScreenshotsFeature {
         var entries: [MenuEntry] = [
             item(S.captureArea, Self.areaHotkey, \.area),
             item(S.captureScreen, Self.screenHotkey, \.screen),
-            item(S.captureText, Self.textHotkey, \.text),
         ]
         if settings.value(Self.scrollingKey) {
             entries.append(item(S.scrollingCapture, Self.scrollingHotkey, \.scrolling))

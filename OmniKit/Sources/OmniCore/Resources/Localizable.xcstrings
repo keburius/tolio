@@ -243,6 +243,17 @@
         }
       }
     },
+    "capturetext.summary": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copy the text, QR code or barcode from any part of the screen."
+          }
+        }
+      }
+    },
     "cheatsheet.appFallback": {
       "extractionState": "manual",
       "localizations": {
@@ -3277,6 +3288,17 @@
         }
       }
     },
+    "screenshots.captureText.appendHint": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hold ⇧ while selecting to add to the last capture"
+          }
+        }
+      }
+    },
     "screenshots.captureText.appended": {
       "extractionState": "manual",
       "localizations": {
@@ -3306,6 +3328,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Helps with mixed languages but can make recognition much slower on some macOS versions."
+          }
+        }
+      }
+    },
+    "screenshots.captureText.clickHint": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "capture text"
           }
         }
       }

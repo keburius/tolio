@@ -25,9 +25,9 @@ public struct MenuBarConfiguration: Codable, Equatable, Sendable {
 
     public static let key = SettingKey("app.menuBar", default: MenuBarConfiguration.standard)
 
-    /// Keep Awake, Screenshot and Clipboard on; the rest available but off.
+    /// Keep Awake, Screenshot, Capture Text and Clipboard on; the rest available but off.
     public static let standard = MenuBarConfiguration(mode: .separate, entries: QuickAccessID.allCases.map {
-        Entry(id: $0, isVisible: [.keepAwake, .screenshot, .clipboard].contains($0))
+        Entry(id: $0, isVisible: standardVisible.contains($0))
     })
 
     public init(mode: Mode, entries: [Entry]) {
@@ -67,7 +67,7 @@ public struct MenuBarConfiguration: Codable, Equatable, Sendable {
         }
     }
 
-    private static let standardVisible: Set<QuickAccessID> = [.keepAwake, .screenshot, .clipboard]
+    private static let standardVisible: Set<QuickAccessID> = [.keepAwake, .screenshot, .captureText, .clipboard]
 
     public func isVisible(_ id: QuickAccessID) -> Bool {
         entries.first { $0.id == id }?.isVisible ?? false

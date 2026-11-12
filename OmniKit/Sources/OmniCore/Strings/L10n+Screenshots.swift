@@ -174,6 +174,11 @@ public extension L10n {
             plural("screenshots.captureText.copiedCode", one: "Copied a code (%lld character)", other: "Copied a code (%lld characters)", count)
         }
         public static var open: String { tr("screenshots.captureText.open", "Open") }
+        public static var captureTextSummary: String {
+            tr("capturetext.summary", "Copy the text, QR code or barcode from any part of the screen.")
+        }
+        public static var captureTextClickHint: String { tr("screenshots.captureText.clickHint", "capture text") }
+        public static var appendHint: String { tr("screenshots.captureText.appendHint", "Hold ⇧ while selecting to add to the last capture") }
         public static var sectionCaptureText: String { tr("screenshots.section.captureText", "Capture Text") }
         public static var lineBreaks: String { tr("screenshots.captureText.lineBreaks", "Line breaks") }
         public static var lineBreaksKeep: String { tr("screenshots.captureText.lineBreaks.keep", "Keep them") }

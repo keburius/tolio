@@ -41,6 +41,7 @@ public struct SettingsEntry: Hashable, Sendable {
 public enum QuickAccessID: String, Codable, CaseIterable, Sendable {
     case keepAwake = "keepawake"
     case screenshot
+    case captureText = "capturetext"
     case clipboard
     case recording
     case lockKeyboard = "lockkeyboard"

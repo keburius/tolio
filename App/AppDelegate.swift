@@ -85,6 +85,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private func migrateSettings() {
         guard services.settings.value(AppServices.onboardingCompletedKey) else { return }
         var wanted = services.settings.value(FeatureRegistry.wantedKey)
+        // Capture Text used to be part of Screenshots & Recording; it stays
+        // on for people who had that on.
+        if wanted["capturetext"] == nil, wanted["screenshots"] == true {
+            wanted["capturetext"] = true
+            services.settings.set(wanted, for: FeatureRegistry.wantedKey)
+        }
         if wanted["diagnostics"] == nil {
             wanted["diagnostics"] = true
             services.settings.set(wanted, for: FeatureRegistry.wantedKey)
@@ -104,6 +110,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         services.features.register(ShortcutOverlayFeature())
         services.features.register(TextActionsFeature())
         services.features.register(ScreenshotsFeature())
+        services.features.register(CaptureTextFeature())
         services.features.register(DiagnosticsFeature())
     }
 

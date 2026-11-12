@@ -43,17 +43,10 @@ public final class ScreenshotsFeature: Feature {
     static let microphoneKey = SettingKey.feature("screenshots", "microphone", default: false)
     static let recordCursorKey = SettingKey.feature("screenshots", "recordCursor", default: true)
     static let scrollingKey = SettingKey.feature("screenshots", "experimentalScrolling", default: false)
-    static let lineBreakKey = SettingKey.feature("screenshots", "captureText.lineBreaks", default: LineBreakMode.keep)
-    /// Empty = the user's macOS languages that Vision supports.
-    static let languagesKey = SettingKey.feature("screenshots", "captureText.languages", default: [String]())
-    static let autoLanguageKey = SettingKey.feature("screenshots", "captureText.autoLanguage", default: false)
-    static let speakKey = SettingKey.feature("screenshots", "captureText.speak", default: false)
 
     static func combo(_ keyCode: UInt32) -> KeyCombo { KeyCombo(keyCode: keyCode, modifiers: [.control, .option, .command]) }
     public static let areaHotkey = HotkeyAction(id: "screenshots.area", title: L10n.Screenshots.hotkeyArea, defaultCombo: combo(21)) // ⌃⌥⌘4
     public static let screenHotkey = HotkeyAction(id: "screenshots.screen", title: L10n.Screenshots.hotkeyScreen, defaultCombo: combo(20)) // ⌃⌥⌘3
-    /// Capture Text, ⌘⇧2 (macOS doesn't use it).
-    public static let textHotkey = HotkeyAction(id: "screenshots.text", title: L10n.Screenshots.hotkeyText, defaultCombo: KeyCombo(keyCode: 19, modifiers: [.command, .shift]))
     public static let recordHotkey = HotkeyAction(id: "screenshots.record", title: L10n.Screenshots.hotkeyRecord, defaultCombo: combo(15)) // ⌃⌥⌘R
     public static let scrollingHotkey = HotkeyAction(id: "screenshots.scrolling", title: L10n.Screenshots.hotkeyScrolling, defaultCombo: nil)
 
@@ -66,19 +59,20 @@ public final class ScreenshotsFeature: Feature {
     public let optionalPermissions: Set<Permission> = [.microphone, .accessibility]
 
     public var declaredHotkeys: [HotkeyAction] {
-        [Self.areaHotkey, Self.screenHotkey, Self.textHotkey, Self.recordHotkey, Self.scrollingHotkey]
+        [Self.areaHotkey, Self.screenHotkey, Self.recordHotkey, Self.scrollingHotkey]
     }
 
     typealias Action = @MainActor @Sendable () -> Void
 
     /// The actions behind the shortcuts, kept for the menu bar icons.
     struct Actions {
-        let area, screen, text, record, scrolling: Action
+        let area, screen, record, scrolling: Action
     }
 
     @ObservationIgnored var settings: SettingsStore?
     @ObservationIgnored var actions: Actions?
     @ObservationIgnored private var windows: CaptureWindows?
+    /// The editor's Copy Text uses Capture Text's recognition and settings.
     @ObservationIgnored let captureTextController = CaptureTextController()
     /// Observed, so the menu bar icons can follow the recording state.
     private(set) var recording: RecordingController?
@@ -115,24 +109,21 @@ public final class ScreenshotsFeature: Feature {
         }
         let area = run { [weak self] in await self?.captureArea() }
         let screen = run { [weak self] in await self?.captureScreen() }
-        let text = run { [weak self] in await self?.captureText() }
         let record: Action = { [weak self] in
             guard let self else { return }
             if recording.isRecording { Task { await recording.stop() } } else { run { await self.startRecording() }() }
         }
         let scrolling = run { [weak self] in await self?.captureScrolling() }
-        actions = Actions(area: area, screen: screen, text: text, record: record, scrolling: scrolling)
+        actions = Actions(area: area, screen: screen, record: record, scrolling: scrolling)
 
         context.registerHotkey(Self.areaHotkey, handler: area)
         context.registerHotkey(Self.screenHotkey, handler: screen)
-        context.registerHotkey(Self.textHotkey, handler: text)
         context.registerHotkey(Self.recordHotkey, handler: record)
         context.registerHotkey(Self.scrollingHotkey) { if settings.value(Self.scrollingKey) { scrolling() } }
 
         let later = Self.afterUICloses
         context.registerCommand(Command(id: "screenshots.area", title: L10n.Screenshots.captureArea, keywords: ["screenshot", "snip", "capture"], symbolName: "viewfinder", action: later(area)))
         context.registerCommand(Command(id: "screenshots.screen", title: L10n.Screenshots.captureScreen, keywords: ["screenshot", "full screen"], symbolName: "display", action: later(screen)))
-        context.registerCommand(Command(id: "screenshots.text", title: L10n.Screenshots.captureText, subtitle: L10n.Screenshots.captureTextSubtitle, keywords: ["ocr", "recognize", "text", "qr", "barcode", "copy text"], symbolName: "text.viewfinder", action: later(text)))
         context.registerCommand(Command(id: "screenshots.record", title: L10n.Screenshots.recordOrStop, keywords: ["video", "recording", "mp4"], symbolName: "record.circle", action: later(record)))
         context.registerCommand(Command(id: "screenshots.scrolling", title: L10n.Screenshots.scrollingCapture, keywords: ["long screenshot", "scroll"], symbolName: "arrow.up.and.down.text.horizontal") {
             if settings.value(Self.scrollingKey) { later(scrolling)() } else { HUD.show(L10n.Screenshots.turnOnScrolling, symbol: "flask") }
@@ -170,11 +161,6 @@ public final class ScreenshotsFeature: Feature {
         let mouse = NSEvent.mouseLocation
         guard let screen = NSScreen.screens.first(where: { $0.frame.contains(mouse) }) ?? NSScreen.main else { return }
         await finish { try await ScreenCapturer.capture(area: screen.frame) }
-    }
-
-    private func captureText() async {
-        guard let settings else { return }
-        await captureTextController.run(settings: settings)
     }
 
     private func captureScrolling() async {
