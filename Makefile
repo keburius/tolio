@@ -18,11 +18,13 @@ build: gen
 	@mkdir -p build
 	@set -o pipefail; $(XCB) build 2>&1 | tee build/build.log | grep -E '(error|warning):|BUILD (SUCCEEDED|FAILED)' || exit 1
 	@Scripts/check-warnings.sh build/build.log
+	@Scripts/check-strings.sh
 
 test: gen
 	@mkdir -p build
 	@set -o pipefail; $(XCB) test 2>&1 | tee build/test.log | grep -E '(error|warning):|✘|Test run with|TEST (SUCCEEDED|FAILED)|\*\* TEST' || exit 1
 	@Scripts/check-warnings.sh build/test.log
+	@Scripts/check-strings.sh
 
 release: gen
 	@mkdir -p build
