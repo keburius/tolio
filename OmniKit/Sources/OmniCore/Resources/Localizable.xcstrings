@@ -3024,6 +3024,83 @@
         }
       }
     },
+    "shared.combo.needsModifier": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add ⌘ or ⌃ to the shortcut."
+          }
+        }
+      }
+    },
+    "shared.combo.optionOnly": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "macOS doesn't allow shortcuts with only ⌥ or ⌥⇧. Add ⌘ or ⌃."
+          }
+        }
+      }
+    },
+    "shared.key.code": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Key %lld"
+          }
+        }
+      }
+    },
+    "shared.key.space": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Space"
+          }
+        }
+      }
+    },
+    "shared.listenerRefused": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "macOS didn't let Omni watch the keyboard and mouse. Check that Omni is allowed under Accessibility."
+          }
+        }
+      }
+    },
+    "shared.recorder.help": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Click, then press a shortcut. Esc cancels, Delete clears."
+          }
+        }
+      }
+    },
+    "shared.recorder.prompt": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Type shortcut…"
+          }
+        }
+      }
+    },
     "snippets.command.insert": {
       "extractionState": "manual",
       "localizations": {

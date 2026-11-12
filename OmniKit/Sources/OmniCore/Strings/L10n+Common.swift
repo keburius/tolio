@@ -81,3 +81,18 @@ public extension L10n {
         public static func shortcut(_ spoken: String) -> String { format("a11y.shortcut", "shortcut %@", spoken) }
     }
 }
+
+public extension L10n {
+    /// Shared controls and messages from OmniCore / OmniPlatform.
+    enum Shared {
+        public static var recorderHelp: String { tr("shared.recorder.help", "Click, then press a shortcut. Esc cancels, Delete clears.") }
+        public static var recorderPrompt: String { tr("shared.recorder.prompt", "Type shortcut…") }
+        public static var needsModifier: String { tr("shared.combo.needsModifier", "Add ⌘ or ⌃ to the shortcut.") }
+        public static var optionOnly: String { tr("shared.combo.optionOnly", "macOS doesn't allow shortcuts with only ⌥ or ⌥⇧. Add ⌘ or ⌃.") }
+        public static var space: String { tr("shared.key.space", "Space") }
+        public static func key(_ code: Int) -> String { format("shared.key.code", "Key %lld", code) }
+        public static var listenerRefused: String {
+            tr("shared.listenerRefused", "macOS didn't let Omni watch the keyboard and mouse. Check that Omni is allowed under Accessibility.")
+        }
+    }
+}

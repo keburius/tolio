@@ -19,7 +19,7 @@ public final class EventTap {
 
     public enum Failure: Error, CustomStringConvertible {
         case creationFailed
-        public var description: String { "macOS refused to create the event tap. Check Accessibility permission." }
+        public var description: String { L10n.Shared.listenerRefused }
     }
 
     private let mask: CGEventMask

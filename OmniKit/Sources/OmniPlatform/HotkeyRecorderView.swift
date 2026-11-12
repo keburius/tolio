@@ -39,7 +39,7 @@ public struct HotkeyRecorderView: View {
                     .frame(minWidth: 110)
                     .foregroundStyle(isRecording ? Color.accentColor : .primary)
             }
-            .help("Click, then press a shortcut. Esc cancels, Delete clears.")
+            .help(L10n.Shared.recorderHelp)
             if let error {
                 Text(error).font(.caption).foregroundStyle(.red)
             }
@@ -48,8 +48,8 @@ public struct HotkeyRecorderView: View {
     }
 
     private var label: String {
-        if isRecording { return "Type shortcut…" }
-        return combo?.displayString ?? "None"
+        if isRecording { return L10n.Shared.recorderPrompt }
+        return combo?.displayString ?? L10n.Common.none
     }
 
     private func toggle() {

@@ -38,8 +38,8 @@ public enum KeyComboIssue: Equatable, Sendable {
 
     public var message: String {
         switch self {
-        case .needsModifier: "Add ⌘ or ⌃ to the shortcut."
-        case .optionOnlyNotAllowed: "macOS doesn't allow shortcuts with only ⌥ or ⌥⇧. Add ⌘ or ⌃."
+        case .needsModifier: L10n.Shared.needsModifier
+        case .optionOnlyNotAllowed: L10n.Shared.optionOnly
         }
     }
 }
@@ -83,7 +83,7 @@ public enum KeyNames {
         20: "3", 21: "4", 22: "6", 23: "5", 24: "=", 25: "9", 26: "7", 27: "-", 28: "8",
         29: "0", 30: "]", 31: "O", 32: "U", 33: "[", 34: "I", 35: "P", 36: "↩", 37: "L",
         38: "J", 39: "'", 40: "K", 41: ";", 42: "\\", 43: ",", 44: "/", 45: "N", 46: "M",
-        47: ".", 48: "⇥", 49: "Space", 50: "`", 51: "⌫", 53: "⎋",
+        47: ".", 48: "⇥", 49: "␣", 50: "`", 51: "⌫", 53: "⎋",
         122: "F1", 120: "F2", 99: "F3", 118: "F4", 96: "F5", 97: "F6", 98: "F7", 100: "F8",
         101: "F9", 109: "F10", 103: "F11", 111: "F12", 105: "F13", 107: "F14", 113: "F15",
         106: "F16", 64: "F17", 79: "F18", 80: "F19", 90: "F20",
@@ -92,6 +92,6 @@ public enum KeyNames {
     ]
 
     public static func name(for keyCode: UInt32) -> String {
-        table[keyCode] ?? "Key \(keyCode)"
+        keyCode == 49 ? L10n.Shared.space : (table[keyCode] ?? L10n.Shared.key(Int(keyCode)))
     }
 }
