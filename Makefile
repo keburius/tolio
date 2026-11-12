@@ -1,0 +1,33 @@
+SHELL := /bin/bash
+PROJECT := Omni.xcodeproj
+SCHEME  := Omni
+DERIVED := build/DerivedData
+APP     := $(DERIVED)/Build/Products/Debug/Omni.app
+XCB     := xcodebuild -project $(PROJECT) -scheme $(SCHEME) -destination 'platform=macOS' -derivedDataPath $(DERIVED)
+
+.PHONY: gen build test run release clean
+
+gen:
+	@xcodegen generate --quiet
+
+build: gen
+	@mkdir -p build
+	@set -o pipefail; $(XCB) build 2>&1 | tee build/build.log | grep -E '(error|warning):|BUILD (SUCCEEDED|FAILED)' || exit 1
+	@Scripts/check-warnings.sh build/build.log
+
+test: gen
+	@mkdir -p build
+	@set -o pipefail; $(XCB) test 2>&1 | tee build/test.log | grep -E '(error|warning):|✘|Test run with|TEST (SUCCEEDED|FAILED)|\*\* TEST' || exit 1
+	@Scripts/check-warnings.sh build/test.log
+
+release: gen
+	@mkdir -p build
+	@set -o pipefail; $(XCB) -configuration Release ARCHS='arm64 x86_64' ONLY_ACTIVE_ARCH=NO build 2>&1 | tee build/release.log | grep -E '(error|warning):|BUILD (SUCCEEDED|FAILED)' || exit 1
+	@Scripts/check-warnings.sh build/release.log
+
+run: build
+	@pkill -x Omni || true
+	@open $(APP)
+
+clean:
+	rm -rf build Omni.xcodeproj
