@@ -1,4 +1,6 @@
 import AppKit
+import OmniCore
+import OmniPlatform
 import SwiftUI
 
 /// Grid of window tiles with thumbnails (or app icons) and titles.
@@ -6,8 +8,8 @@ struct SwitcherView: View {
     @Bindable var model: SwitcherModel
 
     static let tileSize = CGSize(width: 220, height: 176)
-    static let spacing: CGFloat = 10
-    static let padding: CGFloat = 16
+    static let spacing: CGFloat = OmniStyle.s3
+    static let padding: CGFloat = OmniStyle.s4
 
     /// Overlay size that fits `count` tiles within `maxSize`.
     static func size(for count: Int, maxSize: CGSize) -> CGSize {
@@ -42,7 +44,7 @@ struct SwitcherView: View {
                 }
             }
         }
-        .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 18))
+        .omniPanelBackground()
     }
 }
 
@@ -51,29 +53,33 @@ private struct WindowTile: View {
     let isSelected: Bool
     let model: SwitcherModel
 
+    static let previewSize = CGSize(width: 196, height: 118)
+
     var body: some View {
-        VStack(alignment: .leading, spacing: 6) {
+        VStack(alignment: .leading, spacing: OmniStyle.s2) {
             ZStack(alignment: .bottomLeading) {
                 preview
-                    .frame(width: 196, height: 118)
-                    .clipShape(RoundedRectangle(cornerRadius: 6))
+                    .frame(width: Self.previewSize.width, height: Self.previewSize.height)
+                    .clipShape(RoundedRectangle(cornerRadius: OmniStyle.controlRadius))
                     .opacity(record.state == .normal ? 1 : 0.55)
                 Image(nsImage: appIcon).resizable().frame(width: 28, height: 28).offset(x: -6, y: 6)
             }
-            .frame(width: 196, height: 118)
+            .frame(width: Self.previewSize.width, height: Self.previewSize.height)
             Text(record.title).font(.callout.weight(.medium)).lineLimit(1)
-            HStack(spacing: 4) {
+            HStack(spacing: OmniStyle.s1) {
                 Text(record.appName).lineLimit(1)
                 if let badge { Text("· \(badge)") }
             }
             .font(.caption)
             .foregroundStyle(.secondary)
         }
-        .padding(12)
+        .padding(OmniStyle.s3)
         .frame(width: SwitcherView.tileSize.width, height: SwitcherView.tileSize.height, alignment: .topLeading)
-        .background(isSelected ? Color.accentColor.opacity(0.28) : .clear, in: RoundedRectangle(cornerRadius: 12))
-        .overlay(RoundedRectangle(cornerRadius: 12).strokeBorder(isSelected ? Color.accentColor : .clear, lineWidth: 2))
+        .background(isSelected ? Color.accentColor.opacity(0.28) : .clear, in: RoundedRectangle(cornerRadius: OmniStyle.cardRadius))
+        .overlay(RoundedRectangle(cornerRadius: OmniStyle.cardRadius).strokeBorder(isSelected ? Color.accentColor : .clear, lineWidth: 2))
         .contentShape(Rectangle())
+        .accessibilityElement(children: .combine)
+        .accessibilityAddTraits(isSelected ? [.isButton, .isSelected] : .isButton)
     }
 
     @ViewBuilder private var preview: some View {
@@ -93,11 +99,6 @@ private struct WindowTile: View {
     }
 
     private var badge: String? {
-        switch record.state {
-        case .normal: nil
-        case .minimized: "Minimized"
-        case .hidden: "Hidden"
-        case .otherSpace: "Other Space"
-        }
+        record.state == .normal ? nil : record.state.label
     }
 }

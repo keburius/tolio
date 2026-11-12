@@ -15,12 +15,18 @@ public enum SwitcherTrigger: String, Codable, CaseIterable, Sendable {
         }
     }
 
-    var label: String {
+    /// The keys alone, e.g. "⌥ Tab" (not translated).
+    var keys: String {
         switch self {
-        case .option: "⌥ Tab"
-        case .command: "⌘ Tab (replaces the app switcher)"
-        case .control: "⌃ Tab"
+        case .option: "⌥ Tab" // l10n-ignore
+        case .command: "⌘ Tab" // l10n-ignore
+        case .control: "⌃ Tab" // l10n-ignore
         }
+    }
+
+    /// As shown in the trigger picker.
+    var label: String {
+        self == .command ? L10n.Switcher.replacesAppSwitcher(keys) : keys
     }
 }
 

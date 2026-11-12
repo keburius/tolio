@@ -89,21 +89,23 @@ private struct CleaningOverlay: View {
     var body: some View {
         ZStack {
             Color.black.opacity(0.82)
-            VStack(spacing: 18) {
+            VStack(spacing: OmniStyle.s4) {
                 Image(systemName: "keyboard").font(.system(size: 64, weight: .light))
-                Text("Keyboard locked for cleaning").font(.largeTitle.weight(.semibold))
+                    .accessibilityHidden(true)
+                Text(L10n.LockKeyboard.overlayTitle).font(.largeTitle.weight(.semibold))
                 if let session = controller.session {
-                    Text("Unlocks automatically in \(session.remainingText(at: controller.now))")
+                    Text(L10n.LockKeyboard.unlocksIn(session.remainingText(at: controller.now)))
                         .font(.title3).monospacedDigit().foregroundStyle(.secondary)
                 }
                 Button {
                     controller.end(.unlockedByUser)
                 } label: {
-                    Text("Unlock Keyboard").font(.title2.weight(.semibold)).padding(.horizontal, 28).padding(.vertical, 10)
+                    Text(L10n.LockKeyboard.unlockButton).font(.title2.weight(.semibold))
+                        .padding(.horizontal, OmniStyle.s5).padding(.vertical, OmniStyle.s3)
                 }
                 .buttonStyle(.borderedProminent)
                 .controlSize(.large)
-                Text("Click with your mouse or trackpad to unlock.").font(.callout).foregroundStyle(.secondary)
+                Text(L10n.LockKeyboard.overlayHelp).font(.callout).foregroundStyle(.secondary)
             }
             .foregroundStyle(.white)
         }
