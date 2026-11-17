@@ -7,7 +7,7 @@
 <p align="center">The shortcuts your Mac is missing, in one small menu bar app.<br>
 Free, private, and everything stays on your Mac.</p>
 
-<p align="center"><a href="https://buymeacoffee.com/keburius">☕ Buy me a coffee</a></p>
+<!-- BMC (hidden for now): <p align="center"><a href="https://buymeacoffee.com/keburius">☕ Buy me a coffee</a></p> -->
 
 ---
 
@@ -108,9 +108,11 @@ Tolio is written in Swift 6 with SwiftUI and AppKit. Each feature is its own mod
 
 - [GRDB.swift](https://github.com/groue/GRDB.swift) by Gwendal Roué (MIT License), vendored in `Vendor/GRDB`.
 
+<!-- BMC (hidden for now):
 ## Support
 
 Tolio is free. If it saves you time, you can [buy me a coffee ☕](https://buymeacoffee.com/keburius).
+-->
 
 ## License
 
