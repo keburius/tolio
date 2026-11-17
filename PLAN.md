@@ -211,6 +211,7 @@ Risks: the mixed-DPI composite of a cross-display area has no single "correct" p
 | Interface and onboarding | **done** |
 | Ask AI in the Launcher | parked on branch `ask-ai` for 1.0.1 (not finished, doesn't build) |
 | R0 Stabilize | **done** (`v0.9.0-rc0`) |
+| R1 Finish and verify | **done** (`v0.9.0-rc1`) |
 
 ### Phase 0 — done
 - `make build | test | release | run`. Warnings fail the build (`Scripts/check-warnings.sh`). Release is universal (arm64 + x86_64), hardened runtime.
@@ -769,3 +770,11 @@ Each phase has a **Done when** line, and nothing moves on until it's met. "You" 
 - **Test 2, Screenshots, Capture Text and editor (2026-11-17): passed** (checked by you):
   - editor: toolbar labels and minimum width, brush and cursor, Delete key removing the newest mark, Esc behaviour, red Delete discarding the screenshot, blue Copy
   - Capture Text: copy, ⇧ append, empty result, QR codes, the menu bar icon
+- **Tests 3–5 and the rest of the app (2026-11-17): passed** (checked by you): screen recording (set-up bar, outline, pause, mic mute, stop, discard to Trash, full screen), the clipboard dropdown, the control panel, the menu bar icons, onboarding and Settings.
+
+### R1: done
+- Every feature in 1.0 was checked live on your Mac and passed. Ask AI is not part of 1.0; it's parked on `ask-ai` for 1.0.1.
+- **Decided:** deleted clipboard images go to the Trash (logged by count). The "menu bar hides with Settings open" report was caused by duplicate Omni copies, which R0 removed.
+- **Known issues carried into R3:** not tested on an external display, an Intel Mac, or macOS 14/15.
+- Tagged `v0.9.0-rc1`.
+
