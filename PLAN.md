@@ -903,3 +903,17 @@ Each phase has a **Done when** line, and nothing moves on until it's met. "You" 
 - **Download button:** `https://github.com/keburius/tolio/releases/latest/download/Tolio.dmg`. `make dmg` now also writes `dist/Tolio.dmg` (the same file under a fixed name), so attaching it to every release keeps the button pointing at the newest version.
 
 - **Features section, detailed (same day):** 15 features in five groups (Capture, Clipboard & typing, Find & launch, Windows, Desktop & Mac), with jump links. Each feature has an icon, its shortcut, a one-line description and a checklist of what it does, all taken from the app's own texts and settings. A lone last card in a group spans the full width. While doing this I found that the README, CHANGELOG and page said the Launcher searches files (it doesn't) and that System Stats shows disk (it shows CPU, memory, network and battery), and fixed all of them.
+- **Visual features section (same day):** the long checklists are replaced by animated illustrations, with little text.
+  - **8 showcases**, alternating sides, each a pure-CSS animated scene:
+    - Screenshots: a selection grows, a brush stroke is drawn, a "Copied" notice appears.
+    - Recording: a pulsing red outline and a recording bar with a live waveform.
+    - Capture Text: a scan over a poster, then "Copied 41 characters".
+    - Clipboard: a new item slides in on top.
+    - Launcher: "20 usd" types itself and results appear.
+    - Window Layouts: windows snap to halves while ⌃⌥← is pressed.
+    - Switcher: a highlight moves across previews.
+    - Sticky Notes: notes pop onto the desktop after a right-click menu.
+  - Each showcase has only a title, its shortcut, one line and three short tags.
+  - **"And seven more helpers"**: compact cards with mini animations (snippet expanding, text-action bar, Energy bolt, keyboard lock, ⌘⌘ taps, stats bars, control panel tiles).
+  - `site.js` (loaded from the page itself, CSP `script-src 'self'`) fades sections in on scroll and pauses each animation while it's off screen.
+  - Without the script, everything shows and animates. With Reduce Motion, all motion stops and each scene shows its finished state (checked by rendering).
