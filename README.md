@@ -105,3 +105,7 @@ Tolio is written in Swift 6 with SwiftUI and AppKit. Each feature is its own mod
 ## Credits
 
 - [GRDB.swift](https://github.com/groue/GRDB.swift) by Gwendal Roué (MIT License), vendored in `Vendor/GRDB`.
+
+## License
+
+[MIT](LICENSE) © 2026 keburius

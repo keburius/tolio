@@ -891,4 +891,8 @@ Each phase has a **Done when** line, and nothing moves on until it's met. "You" 
   1. The signature: the Apple Development certificate shows your email to anyone who inspects the app. Ad-hoc signing hides it, but permissions then have to be granted again after every update.
   2. The commit author email (`…@lemondo.com` on all commits) becomes public with the history.
   3. Public or private repo, and the licence.
+- **Decided (2026-11-17):**
+  - **Signing:** keep the Apple Development certificate, so permissions survive updates.
+  - **Commit email:** the history was rewritten to `57075219+keburius@users.noreply.github.com` (all 58 commits, the 3 tags, and `ask-ai`). The repo-local `user.email` is set to it as well. A backup bundle was taken first.
+  - **Repo:** public, MIT licence (© 2026 keburius), also in About.
 
