@@ -102,13 +102,13 @@ public extension L10n {
 
         // MARK: Selection overlay
 
-        public static var hintScreenshot: String { tr("screenshots.overlay.screenshot", "Drag to capture an area, or click a window. Esc cancels.") }
-        public static var hintText: String { tr("screenshots.overlay.text", "Drag over the text to copy, or click a window. Esc cancels.") }
+        public static var hintScreenshot: String { tr("screenshots.overlay.screenshot", "Drag an area, or click a window · Esc cancels") }
+        public static var hintText: String { tr("screenshots.overlay.text", "Drag over the text to copy · Esc cancels") }
         public static var hintRecord: String {
-            tr("screenshots.overlay.record", "Drag to record an area, or click to record the whole screen. Esc cancels.")
+            tr("screenshots.overlay.record", "Drag an area to record, or click for the whole screen · Esc cancels")
         }
         public static var hintScrolling: String {
-            tr("screenshots.overlay.scrolling", "Drag over the part that scrolls. Tolio will scroll it and join the pages. Esc cancels.")
+            tr("screenshots.overlay.scrolling", "Drag over the part that scrolls · Esc cancels")
         }
         public static func sizeLabel(_ width: Int, _ height: Int) -> String {
             format("screenshots.overlay.size", "%lld × %lld px", width, height)

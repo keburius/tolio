@@ -4452,7 +4452,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Drag to record an area, or click to record the whole screen. Esc cancels."
+            "value": "Drag an area to record, or click for the whole screen · Esc cancels"
           }
         }
       }
@@ -4463,7 +4463,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Drag to capture an area, or click a window. Esc cancels."
+            "value": "Drag an area, or click a window · Esc cancels"
           }
         }
       }
@@ -4474,7 +4474,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Drag over the part that scrolls. Tolio will scroll it and join the pages. Esc cancels."
+            "value": "Drag over the part that scrolls · Esc cancels"
           }
         }
       }
@@ -4496,7 +4496,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Drag over the text to copy, or click a window. Esc cancels."
+            "value": "Drag over the text to copy · Esc cancels"
           }
         }
       }

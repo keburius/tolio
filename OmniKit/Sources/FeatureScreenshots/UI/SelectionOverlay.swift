@@ -22,7 +22,8 @@ enum OverlayMode {
         }
     }
 
-    var picksWindows: Bool { self == .screenshot || self == .text }
+    /// Only screenshots can pick a whole window; Capture Text always takes a dragged area.
+    var picksWindows: Bool { self == .screenshot }
 }
 
 /// Full-screen panels on every display for choosing what to capture.
@@ -151,34 +152,45 @@ private final class SelectionView: NSView {
         global.offsetBy(dx: -screenFrame.minX, dy: -screenFrame.minY)
     }
 
+    /// Before dragging the screen stays as it is: only a hint above the
+    /// pointer (and, for screenshots, a light outline around the window a
+    /// click would take). While dragging, everything outside the area dims.
     override func draw(_ dirtyRect: NSRect) {
-        let dim = NSColor.black.withAlphaComponent(0.3)
-        let highlight: CGRect? = state.selection ?? state.hovered?.frame
-        dim.setFill()
-        if let highlight {
-            let hole = local(highlight)
+        if let selection = state.selection {
+            let hole = local(selection)
+            NSColor.black.withAlphaComponent(0.3).setFill()
             let path = NSBezierPath(rect: bounds)
             path.append(NSBezierPath(rect: hole))
             path.windingRule = .evenOdd
             path.fill()
-            if state.selection == nil {
-                NSColor.systemBlue.withAlphaComponent(0.18).setFill()
-                hole.fill()
-            }
             let border = NSBezierPath(rect: hole.insetBy(dx: -0.5, dy: -0.5))
             border.lineWidth = 1
-            (state.selection == nil ? NSColor.systemBlue : NSColor.white).setStroke()
+            NSColor.white.setStroke()
             border.stroke()
-            if let selection = state.selection, selection.intersects(screenFrame) {
+            if selection.intersects(screenFrame) {
                 drawLabel(L10n.Screenshots.sizeLabel(Int((selection.width * scale).rounded()), Int((selection.height * scale).rounded())),
                           near: CGPoint(x: hole.maxX, y: hole.minY))
             }
-        } else {
-            bounds.fill()
+        } else if let window = state.hovered?.frame {
+            drawWindowOutline(local(window))
         }
-        if screenFrame.contains(NSEvent.mouseLocation) && state.start == nil {
-            drawHint(state.mode.hint)
+        let mouse = NSEvent.mouseLocation
+        if screenFrame.contains(mouse) && state.start == nil {
+            drawPointerHint(state.mode.hint, at: CGPoint(x: mouse.x - screenFrame.minX, y: mouse.y - screenFrame.minY))
         }
+    }
+
+    /// A light outline (white with a dark edge, visible on any background).
+    private func drawWindowOutline(_ rect: CGRect) {
+        let shape = rect.insetBy(dx: 1.5, dy: 1.5)
+        let dark = NSBezierPath(roundedRect: shape, xRadius: 10, yRadius: 10)
+        dark.lineWidth = 4
+        NSColor.black.withAlphaComponent(0.25).setStroke()
+        dark.stroke()
+        let light = NSBezierPath(roundedRect: shape, xRadius: 10, yRadius: 10)
+        light.lineWidth = 2
+        NSColor.white.withAlphaComponent(0.9).setStroke()
+        light.stroke()
     }
 
     private func drawLabel(_ text: String, near point: CGPoint) {
@@ -195,14 +207,17 @@ private final class SelectionView: NSView {
         string.draw(at: CGPoint(x: rect.minX + 5, y: rect.minY + 2))
     }
 
-    private func drawHint(_ text: String) {
-        let attributes: [NSAttributedString.Key: Any] = [.font: NSFont.systemFont(ofSize: 13, weight: .medium), .foregroundColor: NSColor.white]
+    /// A small pill just above the pointer (below it near the top edge).
+    private func drawPointerHint(_ text: String, at point: CGPoint) {
+        let attributes: [NSAttributedString.Key: Any] = [.font: NSFont.systemFont(ofSize: 12, weight: .medium), .foregroundColor: NSColor.white]
         let string = NSAttributedString(string: text, attributes: attributes)
         let size = string.size()
-        let rect = CGRect(x: bounds.midX - size.width / 2 - 14, y: bounds.maxY - 90, width: size.width + 28, height: size.height + 14)
-        NSColor.black.withAlphaComponent(0.65).setFill()
+        var rect = CGRect(x: point.x - size.width / 2 - 10, y: point.y + 22, width: size.width + 20, height: size.height + 10)
+        if rect.maxY > bounds.maxY - 4 { rect.origin.y = point.y - 30 - rect.height }
+        rect.origin.x = max(4, min(rect.minX, bounds.maxX - rect.width - 4))
+        NSColor.black.withAlphaComponent(0.75).setFill()
         NSBezierPath(roundedRect: rect, xRadius: rect.height / 2, yRadius: rect.height / 2).fill()
-        string.draw(at: CGPoint(x: rect.minX + 14, y: rect.minY + 7))
+        string.draw(at: CGPoint(x: rect.minX + 10, y: rect.minY + 5))
     }
 
     override func mouseMoved(with event: NSEvent) {
@@ -235,9 +250,9 @@ private final class SelectionView: NSView {
         switch state.mode {
         case .record:
             if let screen = NSScreen.screens.first(where: { $0.frame.contains(point) }) { onFinish(.area(screen.frame)) }
-        case .screenshot, .text:
+        case .screenshot:
             if let window = state.windows.first(where: { $0.frame.contains(point) }) { onFinish(.window(window)) }
-        case .scrolling:
+        case .text, .scrolling: // a plain click doesn't pick anything; keep waiting for a drag
             break
         }
         onChange()

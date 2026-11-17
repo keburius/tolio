@@ -867,3 +867,8 @@ Each phase has a **Done when** line, and nothing moves on until it's met. "You" 
   - Checked on your Mac: switching it off applied immediately. Your Mac is set this way now, and Tolio's undo flag is set.
   - 2 more tests (372 in total).
 - **Keep Editing** button on the countdown bar.
+- **Quieter selection screen** (all capture modes):
+  - Before you drag, the screen stays as it is. A small hint pill sits just above the pointer, e.g. "Drag an area, or click a window · Esc cancels".
+  - Screenshots no longer fill the window under the pointer with blue. They draw a light rounded outline (white with a dark edge) around the window a click would take.
+  - While dragging, everything outside the area dims, with the size label as before.
+  - **Capture Text never picks whole windows:** only a dragged area, and a plain click does nothing.
