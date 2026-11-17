@@ -766,3 +766,6 @@ Each phase has a **Done when** line, and nothing moves on until it's met. "You" 
   - the Finder extension switched on, with **"New Sticky Note" in the desktop's right-click menu**, opening the note where you clicked
   - notes coming back after a restart
   - the menu bar staying put while Settings is open (fixed by removing the duplicate Omni copies in R0)
+- **Test 2, Screenshots, Capture Text and editor (2026-11-17): passed** (checked by you):
+  - editor: toolbar labels and minimum width, brush and cursor, Delete key removing the newest mark, Esc behaviour, red Delete discarding the screenshot, blue Copy
+  - Capture Text: copy, ⇧ append, empty result, QR codes, the menu bar icon
