@@ -855,3 +855,8 @@ Each phase has a **Done when** line, and nothing moves on until it's met. "You" 
   - Recently Copied lists the last **10** items. Keys 1–9 open the first nine and 0 the tenth; the arrow keys go down the list.
 - **Screenshot editor on top:** the editor opens on the current Space (also over full-screen apps), in front, and stays above other apps' windows (`.floating`) until closed.
 - **⇧⌘4 is the default area-screenshot shortcut** (was ⌃⌥⌘4). macOS's own "Save picture of selected area as a file" also uses ⇧⌘4 and takes the key press first. Tolio reads (never changes) that system setting: while it's on and matches, Screenshots settings shows a warning with an "Open Keyboard Settings…" button (`MacScreenshotShortcut`, 4 tests).
+- **Editor opens active, with auto-copy:**
+  - The editor is now a non-activating panel (`EditorPanel`). It becomes the key window at once, so keys and typing work even when macOS won't make Tolio the active app (cooperative activation).
+  - A countdown banner at the bottom ("Copying to the clipboard…", ring and seconds) copies the screenshot and closes the editor after **3 seconds**. The first click, key press or scroll in the editor stops it for good.
+  - Setting: "Copy and close the editor after 3 seconds if you don't edit" (on by default; shown when "After capturing" is the editor).
+  - Opening the editor from a pinned image never starts the countdown.

@@ -75,6 +75,8 @@ final class EditorModel {
         didSet { recolorSelection() }
     }
     var selection: UUID?
+    /// Seconds left before an untouched editor copies and closes; nil when off.
+    var autoCopyRemaining: Double?
     var textEdit: TextEdit?
     /// The mark being drawn, shown but not yet in the document.
     private(set) var draft: Annotation?

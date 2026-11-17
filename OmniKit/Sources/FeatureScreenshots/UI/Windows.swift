@@ -7,6 +7,10 @@ import SwiftUI
 @MainActor
 final class CaptureWindows: NSObject, NSWindowDelegate {
     private var windows: [NSWindow] = []
+    /// Auto-copy countdowns of open editors.
+    private var countdowns: [ObjectIdentifier: Timer] = [:]
+    /// Seconds an untouched editor waits before copying and closing.
+    static let autoCopyDelay: TimeInterval = 3
     private let saveFolder: () -> URL
     private let log = Log.logger("screenshots")
 
@@ -16,12 +20,19 @@ final class CaptureWindows: NSObject, NSWindowDelegate {
 
     // MARK: - Editor
 
-    func openEditor(_ capture: Capture) {
+    /// Opens the editor in front and ready for keys. With `autoCopy`, a
+    /// visible countdown copies the screenshot and closes the editor unless
+    /// the user clicks or presses a key in it first.
+    func openEditor(_ capture: Capture, autoCopy: Bool = false) {
         let model = EditorModel(capture: capture)
-        let window = NSWindow(
-            contentRect: .zero, styleMask: [.titled, .closable, .miniaturizable, .resizable],
+        // A non-activating panel takes keyboard focus right away, even when
+        // macOS doesn't let Tolio become the active app.
+        let window = EditorPanel(
+            contentRect: .zero, styleMask: [.titled, .closable, .miniaturizable, .resizable, .nonactivatingPanel],
             backing: .buffered, defer: false
         )
+        window.hidesOnDeactivate = false
+        window.becomesKeyOnlyIfNeeded = false
         window.title = L10n.Screenshots.editorWindowTitle
         window.isReleasedWhenClosed = false
         window.delegate = self
@@ -68,8 +79,42 @@ final class CaptureWindows: NSObject, NSWindowDelegate {
         window.collectionBehavior = [.moveToActiveSpace, .fullScreenAuxiliary]
         windows.append(window)
         NSApp.activate()
+        window.makeKeyAndOrderFront(nil)
         window.orderFrontRegardless()
-        window.makeKey()
+        if autoCopy { startCountdown(window: window, model: model, copy: actions.copy) }
+    }
+
+    // MARK: - Auto-copy countdown
+
+    private func startCountdown(window: EditorPanel, model: EditorModel, copy: @escaping () -> Void) {
+        let id = ObjectIdentifier(window)
+        let deadline = Date().addingTimeInterval(Self.autoCopyDelay)
+        model.autoCopyRemaining = Self.autoCopyDelay
+        window.onCountdownEnd = copy
+        let timer = Timer(timeInterval: 0.05, repeats: true) { [weak self, weak model, weak window] _ in
+            MainActor.assumeIsolated {
+                guard let self, let model, model.autoCopyRemaining != nil else { self?.stopCountdown(id); return }
+                let left = deadline.timeIntervalSinceNow
+                if left <= 0 {
+                    self.stopCountdown(id)
+                    model.autoCopyRemaining = nil
+                    window?.onCountdownEnd?()
+                } else {
+                    model.autoCopyRemaining = left
+                }
+            }
+        }
+        RunLoop.main.add(timer, forMode: .common)
+        countdowns[id] = timer
+        // Any click, key press or scroll in the editor means "I'm editing".
+        window.onInteraction = { [weak self, weak model] in
+            model?.autoCopyRemaining = nil
+            self?.stopCountdown(id)
+        }
+    }
+
+    private func stopCountdown(_ id: ObjectIdentifier) {
+        countdowns.removeValue(forKey: id)?.invalidate()
     }
 
     @discardableResult
@@ -99,6 +144,7 @@ final class CaptureWindows: NSObject, NSWindowDelegate {
     func windowWillClose(_ notification: Notification) {
         guard let window = notification.object as? NSWindow else { return }
         windows.removeAll { $0 === window }
+        stopCountdown(ObjectIdentifier(window))
         // Release the SwiftUI tree (and the image) now.
         DispatchQueue.main.async { window.contentView = nil }
     }
@@ -106,6 +152,8 @@ final class CaptureWindows: NSObject, NSWindowDelegate {
     func closeAll() {
         for window in windows { window.delegate = nil; window.close() }
         windows.removeAll()
+        countdowns.values.forEach { $0.invalidate() }
+        countdowns.removeAll()
     }
 
     // MARK: - Pin
@@ -186,5 +234,28 @@ private struct PinView: View {
             Divider()
             Button(L10n.Common.close, action: onClose)
         }
+    }
+}
+
+/// The editor window: a non-activating panel that still becomes key, and
+/// reports the first sign of editing (click, key press, scroll).
+final class EditorPanel: NSPanel {
+    var onInteraction: (() -> Void)?
+    /// What the countdown does when it reaches zero (copy and close).
+    var onCountdownEnd: (() -> Void)?
+
+    override var canBecomeKey: Bool { true }
+    override var canBecomeMain: Bool { true }
+
+    override func sendEvent(_ event: NSEvent) {
+        switch event.type {
+        case .leftMouseDown, .rightMouseDown, .otherMouseDown, .keyDown, .scrollWheel:
+            if let onInteraction {
+                self.onInteraction = nil
+                onInteraction()
+            }
+        default: break
+        }
+        super.sendEvent(event)
     }
 }

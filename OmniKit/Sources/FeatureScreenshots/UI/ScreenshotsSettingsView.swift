@@ -8,6 +8,7 @@ enum ScreenshotsAnchor {
     static let afterCapture = "screenshots.afterCapture"
     static let folder = "screenshots.folder"
     static let shadow = "screenshots.windowShadow"
+    static let autoCopy = "screenshots.autoCopy"
     static let fps = "screenshots.fps"
     static let codec = "screenshots.codec"
     static let pointer = "screenshots.recordCursor"
@@ -23,6 +24,7 @@ extension ScreenshotsFeature {
             SettingsEntry(anchor: ScreenshotsAnchor.afterCapture, label: S.afterCapturing, keywords: ["editor", "copy", "save", "pin", "after"]),
             SettingsEntry(anchor: ScreenshotsAnchor.folder, label: S.saveTo, keywords: ["folder", "location", "directory", "save"]),
             SettingsEntry(anchor: ScreenshotsAnchor.shadow, label: S.windowShadow, keywords: ["shadow", "window"]),
+            SettingsEntry(anchor: ScreenshotsAnchor.autoCopy, label: S.autoCopyToggle, keywords: ["timer", "countdown", "clipboard", "auto", "close"]),
             SettingsEntry(anchor: ScreenshotsAnchor.fps, label: S.frameRate, keywords: ["fps", "frames", "video", "recording"]),
             SettingsEntry(anchor: ScreenshotsAnchor.codec, label: S.videoFormat, keywords: ["video", "codec", "hevc", "h.264", "mp4"]),
             SettingsEntry(anchor: ScreenshotsAnchor.pointer, label: S.showPointer, keywords: ["cursor", "mouse", "pointer", "video"]),
@@ -72,6 +74,10 @@ struct ScreenshotsSettingsView: View {
                 }
             }
             .settingsAnchor(ScreenshotsAnchor.folder)
+            if settings.value(ScreenshotsFeature.afterKey) == .editor {
+                Toggle(S.autoCopyToggle, isOn: settings.binding(ScreenshotsFeature.autoCopyKey))
+                    .settingsAnchor(ScreenshotsAnchor.autoCopy)
+            }
             Toggle(S.windowShadow, isOn: settings.binding(ScreenshotsFeature.shadowKey))
                 .settingsAnchor(ScreenshotsAnchor.shadow)
             Text(S.resolutionNote)

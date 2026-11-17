@@ -3818,6 +3818,28 @@
         }
       }
     },
+    "screenshots.editor.autoCopyHint": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Click or press a key to keep editing"
+          }
+        }
+      }
+    },
+    "screenshots.editor.autoCopyTitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copying to the clipboard…"
+          }
+        }
+      }
+    },
     "screenshots.editor.color": {
       "extractionState": "manual",
       "localizations": {
@@ -4717,6 +4739,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "After capturing"
+          }
+        }
+      }
+    },
+    "screenshots.settings.autoCopy": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copy and close the editor after 3 seconds if you don’t edit"
           }
         }
       }

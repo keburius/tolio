@@ -37,6 +37,8 @@ public final class ScreenshotsFeature: Feature {
     static let afterKey = SettingKey.feature("screenshots", "afterCapture", default: AfterCapture.editor)
     static let folderKey = SettingKey.feature("screenshots", "folder", default: "")
     static let shadowKey = SettingKey.feature("screenshots", "windowShadow", default: true)
+    /// Copy and close the editor after a few seconds if it isn't touched.
+    static let autoCopyKey = SettingKey.feature("screenshots", "autoCopy", default: true)
     static let fpsKey = SettingKey.feature("screenshots", "fps", default: 30)
     static let codecKey = SettingKey.feature("screenshots", "codec", default: VideoCodec.h264)
     static let systemAudioKey = SettingKey.feature("screenshots", "systemAudio", default: false)
@@ -209,7 +211,7 @@ public final class ScreenshotsFeature: Feature {
         guard let windows else { return }
         log.info("Captured \(capture.image.width)×\(capture.image.height) px at \(capture.scale)x")
         switch settings?.value(Self.afterKey) ?? .editor {
-        case .editor: windows.openEditor(capture)
+        case .editor: windows.openEditor(capture, autoCopy: settings?.value(Self.autoCopyKey) ?? true)
         case .copy:
             CaptureOutput.copy(capture.image, scale: capture.scale)
             HUD.show(L10n.Screenshots.screenshotCopied, symbol: "doc.on.doc")

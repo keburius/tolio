@@ -14,6 +14,9 @@ public extension L10n {
         public static var macShortcutConflict: String {
             tr("screenshots.settings.macShortcutConflict", "macOS also uses ⇧⌘4 for its own screenshots and gets the key press first. To use Tolio’s, open Keyboard Shortcuts → Screenshots and turn off “Save picture of selected area as a file”.")
         }
+        public static var autoCopyTitle: String { tr("screenshots.editor.autoCopyTitle", "Copying to the clipboard…") }
+        public static var autoCopyHint: String { tr("screenshots.editor.autoCopyHint", "Click or press a key to keep editing") }
+        public static var autoCopyToggle: String { tr("screenshots.settings.autoCopy", "Copy and close the editor after 3 seconds if you don’t edit") }
         public static var openKeyboardShortcuts: String { tr("screenshots.settings.openKeyboardShortcuts", "Open Keyboard Settings…") }
         public static var hotkeyScreen: String { tr("screenshots.hotkey.screen", "Capture screen") }
         public static var hotkeyText: String { tr("screenshots.hotkey.text", "Capture text") }
