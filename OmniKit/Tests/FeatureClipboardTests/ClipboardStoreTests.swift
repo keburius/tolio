@@ -19,7 +19,7 @@ struct ClipboardStoreTests {
     }
 
     @Test func insertsAndListsNewestFirst() throws {
-        let store = try ClipboardStore(directory: nil)
+        let store = try ClipboardStore(directory: nil, trash: TestTrash.shared.move)
         try store.insert(.text("first"), at: now)
         try store.insert(.text("second"), at: now.addingTimeInterval(1))
         #expect(try store.recent(limit: 10).map(\.text) == ["second", "first"])
@@ -28,11 +28,11 @@ struct ClipboardStoreTests {
     @Test func historySurvivesReopen() throws {
         let dir = tempDir()
         do {
-            let store = try ClipboardStore(directory: dir)
+            let store = try ClipboardStore(directory: dir, trash: TestTrash.shared.move)
             try store.insert(.text("persisted"), at: now)
             try store.insert(.image(pngData()), at: now.addingTimeInterval(1))
         }
-        let reopened = try ClipboardStore(directory: dir)
+        let reopened = try ClipboardStore(directory: dir, trash: TestTrash.shared.move)
         let records = try reopened.recent(limit: 10)
         #expect(records.map(\.kind) == [.image, .text])
         #expect(records.last?.text == "persisted")
@@ -42,13 +42,13 @@ struct ClipboardStoreTests {
 
     @Test func storeFolderIsPrivate() throws {
         let dir = tempDir()
-        _ = try ClipboardStore(directory: dir)
+        _ = try ClipboardStore(directory: dir, trash: TestTrash.shared.move)
         let permissions = try FileManager.default.attributesOfItem(atPath: dir.path)[.posixPermissions] as? Int
         #expect(permissions == 0o700)
     }
 
     @Test func duplicateMovesToTopInsteadOfDuplicating() throws {
-        let store = try ClipboardStore(directory: nil)
+        let store = try ClipboardStore(directory: nil, trash: TestTrash.shared.move)
         try store.insert(.text("a"), at: now)
         try store.insert(.text("b"), at: now.addingTimeInterval(1))
         try store.insert(.text("a"), at: now.addingTimeInterval(2))
@@ -57,7 +57,7 @@ struct ClipboardStoreTests {
     }
 
     @Test func imagesGetPNGAndThumbnailWithDimensions() throws {
-        let store = try ClipboardStore(directory: nil)
+        let store = try ClipboardStore(directory: nil, trash: TestTrash.shared.move)
         let record = try store.insert(.image(pngData(width: 300, height: 200)), at: now)
         #expect(record.pixelWidth == 300)
         #expect(record.pixelHeight == 200)
@@ -68,14 +68,14 @@ struct ClipboardStoreTests {
     }
 
     @Test func unreadableImageThrows() throws {
-        let store = try ClipboardStore(directory: nil)
+        let store = try ClipboardStore(directory: nil, trash: TestTrash.shared.move)
         #expect(throws: ClipboardStore.Failure.imageUnreadable) {
             try store.insert(.image(Data("not an image".utf8)), at: now)
         }
     }
 
     @Test func filesAreStoredAsReferences() throws {
-        let store = try ClipboardStore(directory: nil)
+        let store = try ClipboardStore(directory: nil, trash: TestTrash.shared.move)
         let urls = [URL(fileURLWithPath: "/tmp/a.txt"), URL(fileURLWithPath: "/tmp/b.pdf")]
         let record = try store.insert(.files(urls), at: now)
         #expect(record.fileURLs == urls)
@@ -83,7 +83,7 @@ struct ClipboardStoreTests {
     }
 
     @Test func searchUsesPrefixesAndPinnedFirst() throws {
-        let store = try ClipboardStore(directory: nil)
+        let store = try ClipboardStore(directory: nil, trash: TestTrash.shared.move)
         try store.insert(.text("meeting notes for tuesday"), at: now)
         let pinned = try store.insert(.text("tuesday standup link"), at: now.addingTimeInterval(-100))
         try store.insert(.text("unrelated"), at: now.addingTimeInterval(1))
@@ -94,7 +94,7 @@ struct ClipboardStoreTests {
     }
 
     @Test func searchFindsFilePathsAndPunctuation() throws {
-        let store = try ClipboardStore(directory: nil)
+        let store = try ClipboardStore(directory: nil, trash: TestTrash.shared.move)
         try store.insert(.files([URL(fileURLWithPath: "/Users/me/Report.pdf")]), at: now)
         try store.insert(.text("a -> b"), at: now)
         #expect(try store.search("report", limit: 10).count == 1)
@@ -102,7 +102,7 @@ struct ClipboardStoreTests {
     }
 
     @Test func pruneKeepsPinnedAndRespectsCountAndAge() throws {
-        let store = try ClipboardStore(directory: nil)
+        let store = try ClipboardStore(directory: nil, trash: TestTrash.shared.move)
         let old = try store.insert(.text("old pinned"), at: now.addingTimeInterval(-90 * 86_400))
         try store.setPinned(true, id: try #require(old.id))
         try store.insert(.text("old"), at: now.addingTimeInterval(-40 * 86_400))
@@ -113,16 +113,29 @@ struct ClipboardStoreTests {
         #expect(try store.recent(limit: 10).map(\.text) == ["old pinned", "new 4", "new 3", "new 2"])
     }
 
-    @Test func pruneDeletesImageFiles() throws {
-        let store = try ClipboardStore(directory: nil)
+    @Test func pruneMovesImageFilesToTheTrash() throws {
+        let trash = TestTrash()
+        let store = try ClipboardStore(directory: nil, trash: trash.move)
         let record = try store.insert(.image(pngData()), at: now.addingTimeInterval(-100 * 86_400))
         let file = try #require(store.imageURL(for: record))
         try store.prune(maxItems: 100, maxAge: 86_400, now: now)
         #expect(!FileManager.default.fileExists(atPath: file.path))
+        // The image and its thumbnail went through the Trash, not a plain delete.
+        #expect(trash.moved.count == 2)
+        #expect(trash.moved.contains(file.lastPathComponent))
+    }
+
+    @Test func clearingHistoryMovesImagesToTheTrash() throws {
+        let trash = TestTrash()
+        let store = try ClipboardStore(directory: nil, trash: trash.move)
+        _ = try store.insert(.image(pngData()), at: now)
+        _ = try store.insert(.text("words", app: nil, appName: nil), at: now)
+        try store.deleteAll(keepPinned: false)
+        #expect(trash.moved.count == 2) // text has no files
     }
 
     @Test func deleteAllCanKeepPinned() throws {
-        let store = try ClipboardStore(directory: nil)
+        let store = try ClipboardStore(directory: nil, trash: TestTrash.shared.move)
         let keep = try store.insert(.text("keep"), at: now)
         try store.insert(.text("drop"), at: now)
         try store.setPinned(true, id: try #require(keep.id))
@@ -145,5 +158,22 @@ struct ClipboardStoreTests {
             createdAt: now, pinned: false, byteSize: 0
         )
         #expect(record.title == "line one")
+    }
+}
+
+/// Stands in for Finder's Trash in tests: records the file name and removes
+/// the temporary file, so nothing lands in the real Trash.
+final class TestTrash: @unchecked Sendable {
+    static let shared = TestTrash()
+    private let lock = NSLock()
+    private var names: [String] = []
+
+    var moved: [String] { lock.withLock { names } }
+
+    var move: @Sendable (URL) throws -> Void {
+        { [self] url in
+            lock.withLock { names.append(url.lastPathComponent) }
+            try FileManager.default.removeItem(at: url)
+        }
     }
 }

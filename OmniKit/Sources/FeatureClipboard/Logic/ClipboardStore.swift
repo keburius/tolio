@@ -10,10 +10,14 @@ public final class ClipboardStore: Sendable {
     private let db: DatabaseQueue
     /// Folder for image files; nil only for in-memory stores without images.
     public let imagesDirectory: URL
+    /// Removes a file. Safety rule: destructive file operations go to the
+    /// Trash (and are logged), so this moves files there; tests inject a fake.
+    private let trash: @Sendable (URL) throws -> Void
 
     /// Opens (or creates) the store in `directory`. Pass nil for an
     /// in-memory database (tests); images then go to a temporary folder.
-    public init(directory: URL?) throws {
+    public init(directory: URL?, trash: @escaping @Sendable (URL) throws -> Void = ClipboardStore.moveToTrash) throws {
+        self.trash = trash
         if let directory {
             try FileManager.default.createDirectory(
                 at: directory, withIntermediateDirectories: true, attributes: [.posixPermissions: 0o700]
@@ -204,11 +208,29 @@ public final class ClipboardStore: Sendable {
         record.thumbnailFile.map { imagesDirectory.appendingPathComponent($0) }
     }
 
+    /// Moves the image and thumbnail files of deleted records to the Trash
+    /// and logs how many (never which). Missing files are ignored.
     private func removeFiles(of records: [ClipRecord]) {
+        var moved = 0
         for record in records {
             for name in [record.imageFile, record.thumbnailFile].compactMap({ $0 }) {
-                try? FileManager.default.removeItem(at: imagesDirectory.appendingPathComponent(name))
+                let url = imagesDirectory.appendingPathComponent(name)
+                guard FileManager.default.fileExists(atPath: url.path) else { continue }
+                do {
+                    try trash(url)
+                    moved += 1
+                } catch {
+                    Log.logger("clipboard").error("Couldn't move a clipboard image to the Trash: \((error as NSError).code)")
+                }
             }
         }
+        if moved > 0 {
+            Log.logger("clipboard").notice("Moved \(moved) clipboard image file(s) to the Trash")
+        }
+    }
+
+    /// The default: Finder's Trash.
+    public static let moveToTrash: @Sendable (URL) throws -> Void = { url in
+        try FileManager.default.trashItem(at: url, resultingItemURL: nil)
     }
 }
