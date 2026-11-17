@@ -5,7 +5,7 @@ DERIVED := build/DerivedData
 APP     := $(DERIVED)/Build/Products/Debug/Tolio.app
 XCB     := xcodebuild -project $(PROJECT) -scheme $(SCHEME) -destination 'platform=macOS' -derivedDataPath $(DERIVED)
 
-.PHONY: gen build test run release dmg clean strings
+.PHONY: gen build test run release dmg downloads clean strings
 
 gen:
 	@xcodegen generate --quiet
@@ -35,6 +35,10 @@ release: gen
 # ready to attach to a GitHub release.
 dmg: release
 	@Scripts/make-dmg.sh
+
+# How many times each release file was downloaded from GitHub.
+downloads:
+	@python3 Scripts/downloads.py
 
 # Waits up to 5 s for a running Tolio to exit; launching while it is still
 # shutting down makes LaunchServices fail with -600.

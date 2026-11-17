@@ -963,3 +963,6 @@ Each phase has a **Done when** line, and nothing moves on until it's met. "You" 
   - A mounted disk with the same name is ejected first. macOS asks once to let the terminal control Finder.
   - Checked by opening the result: labels are readable in dark mode. 9.6 MB.
 - **Website analytics (same day):** Vercel Web Analytics added as `<script defer src="/_vercel/insights/script.js">`. It counts anonymous page views with no cookies. It loads from the site's own address, so the CSP (`script-src 'self'`, `connect-src 'self'`) needs no change. The footer says the site counts visits anonymously. Download counts come from GitHub (each release asset's download count).
+- **Download tracking (same day):**
+  - All Download buttons go to `/download` (`website/download.html` + `download.js`). Vercel Web Analytics records that page view, so download clicks appear as **/download** with country, device and referrer. The page then starts the GitHub download after 0.7 s; without JS it redirects immediately via `<noscript>` meta refresh. It also shows the 3 install steps.
+  - Actual downloads, including direct GitHub links: `make downloads` (`Scripts/downloads.py`, GitHub release download counts).
