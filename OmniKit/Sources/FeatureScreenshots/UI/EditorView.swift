@@ -44,7 +44,9 @@ struct EditorView: View {
             }
             .background(Color(nsColor: .underPageBackgroundColor))
             .overlay(alignment: .bottom) {
-                if let remaining = model.autoCopyRemaining { AutoCopyBanner(remaining: remaining).padding(OmniStyle.s3) }
+                if let remaining = model.autoCopyRemaining {
+                    AutoCopyBanner(remaining: remaining) { model.autoCopyRemaining = nil }.padding(OmniStyle.s3)
+                }
             }
         }
         .onDeleteCommand { model.deleteSelection() }
@@ -256,6 +258,7 @@ private struct KeyShortcuts: View {
 /// "Copying in 3…" with a draining ring; any click or key press stops it.
 private struct AutoCopyBanner: View {
     let remaining: Double
+    let cancel: () -> Void
 
     var body: some View {
         let delay = CaptureWindows.autoCopyDelay
@@ -272,11 +275,13 @@ private struct AutoCopyBanner: View {
                 Text(L10n.Screenshots.autoCopyTitle).font(.callout.weight(.medium))
                 Text(L10n.Screenshots.autoCopyHint).font(.caption).foregroundStyle(.secondary)
             }
+            Button(L10n.Screenshots.autoCopyCancel, action: cancel)
+                .controlSize(.regular)
         }
         .padding(.horizontal, OmniStyle.s3)
         .padding(.vertical, OmniStyle.s2)
         .background(.regularMaterial, in: Capsule())
         .overlay(Capsule().strokeBorder(Color(nsColor: .separatorColor).opacity(0.5)))
-        .accessibilityElement(children: .combine)
+        .accessibilityElement(children: .contain)
     }
 }

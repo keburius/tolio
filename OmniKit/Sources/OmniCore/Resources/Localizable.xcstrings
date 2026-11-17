@@ -3818,6 +3818,17 @@
         }
       }
     },
+    "screenshots.editor.autoCopyCancel": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Keep Editing"
+          }
+        }
+      }
+    },
     "screenshots.editor.autoCopyHint": {
       "extractionState": "manual",
       "localizations": {
