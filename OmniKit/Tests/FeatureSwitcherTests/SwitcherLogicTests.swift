@@ -7,7 +7,7 @@ private let apps: [pid_t: WindowSources.App] = [
     1: .init(pid: 1, name: "Safari", bundleID: "com.apple.Safari", isHidden: false),
     2: .init(pid: 2, name: "Notes", bundleID: "com.apple.Notes", isHidden: false),
     3: .init(pid: 3, name: "Mail", bundleID: "com.apple.mail", isHidden: true),
-    ownPID: .init(pid: ownPID, name: "Omni", bundleID: "com.george.omni", isHidden: false),
+    ownPID: .init(pid: ownPID, name: "Tolio", bundleID: "com.george.tolio", isHidden: false),
 ]
 private let big = CGRect(x: 0, y: 0, width: 800, height: 600)
 

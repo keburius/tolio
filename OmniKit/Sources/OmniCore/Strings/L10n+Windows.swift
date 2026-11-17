@@ -44,7 +44,7 @@ public extension L10n {
             tr("windows.settings.dragToEdgeHelp", "Edges snap to halves, corners to quarters, the top edge maximizes. Edges shared with another display don't snap.")
         }
         public static var dragToEdgeFailed: String {
-            tr("windows.settings.dragToEdgeFailed", "Snapping by dragging couldn't start. Check that Omni has the Accessibility permission, then turn it off and on.")
+            tr("windows.settings.dragToEdgeFailed", "Snapping by dragging couldn't start. Check that Tolio has the Accessibility permission, then turn it off and on.")
         }
         public static var shortcutsHelp: String {
             tr("windows.settings.shortcutsHelp", "Change the shortcuts above or on the Shortcuts page. Every layout is also in the Launcher.")
@@ -155,7 +155,7 @@ public extension L10n {
         public static var unlockedTimeLimit: String { tr("lockkeyboard.notice.unlockedTimeLimit", "Keyboard unlocked (time limit)") }
         public static var unlocked: String { tr("lockkeyboard.notice.unlocked", "Keyboard unlocked") }
         public static var couldNotLock: String {
-            tr("lockkeyboard.notice.couldNotLock", "Couldn't lock the keyboard. Check that Omni has the Accessibility permission.")
+            tr("lockkeyboard.notice.couldNotLock", "Couldn't lock the keyboard. Check that Tolio has the Accessibility permission.")
         }
 
         // Overlay

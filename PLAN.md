@@ -747,7 +747,7 @@ Each phase has a **Done when** line, and nothing moves on until it's met. "You" 
 | # | Decision | My recommendation |
 |---|---|---|
 | D1 | Ask AI in 1.0, or later? | Park it for 1.0.1 if you want to ship sooner; it's the biggest unfinished piece |
-| D2 | Final app name | Choose before R2 (anything not "Omni") |
+| D2 | Final app name | **Decided: Tolio** (2026-11-17). Toolio was taken by a retail-planning company; Mivo, Orlu, Kelvo, Zavi and Volo were the other clear options |
 | D3 | Join the Apple Developer Program ($99/year)? | Yes, needed for warning-free installs and the Finder extension |
 | D4 | Repo private or public; licence | Private during the beta; decide the licence before going public |
 | D5 | Delete `.claude/worktrees/`? | Yes |
@@ -777,4 +777,29 @@ Each phase has a **Done when** line, and nothing moves on until it's met. "You" 
 - **Decided:** deleted clipboard images go to the Trash (logged by count). The "menu bar hides with Settings open" report was caused by duplicate Omni copies, which R0 removed.
 - **Known issues carried into R3:** not tested on an external display, an Intel Mac, or macOS 14/15.
 - Tagged `v0.9.0-rc1`.
+
+### R2: rename to Tolio (2026-11-17)
+- **Visible name:** "Omni" → **Tolio** everywhere users see it: app name, menus, Settings, onboarding, permission texts, the microphone prompt, and the Finder extension's name. All of it lives in the String Catalog.
+- **Identifiers:**
+  - Bundle IDs are now `com.george.tolio` and `com.george.tolio.FinderNote`.
+  - The link scheme is `tolio://` (palette, settings, panel, note).
+  - The log subsystem and Application Support folder are both `com.george.tolio`.
+  - The project, scheme and targets are `Tolio`, `Tolio.app` and `TolioFinderNote`.
+- **Kept on purpose:**
+  - The internal code names (OmniKit, OmniCore, OmniPlatform, …), which users never see.
+  - The three hidden pasteboard markers (`com.george.omni.internal`, `.capturedText`). Clipboard history stores the captured-text marker with each item, so renaming it would drop the "Captured text" label from existing items.
+- **Moving data from Omni** (`LegacyDataMigration`) runs once, before anything else on first launch:
+  - Settings: copies every Omni setting Tolio doesn't have yet.
+  - Files: moves Omni's Application Support folder across if Tolio has none.
+  - It never overwrites or deletes anything.
+  - Checked live: all 7 settings plus clipboard history, notes and currency rates came across. There are 4 new tests (366 in total).
+- **Cleanup:**
+  - Omni was quit.
+  - The old `Omni.app` build and `Omni.xcodeproj` were moved to the Trash.
+  - Omni was unregistered from LaunchServices, so only Tolio is registered.
+- **For the user to redo once:**
+  - macOS ties privacy permissions to the app ID, so give them to Tolio again under Settings → Permissions.
+  - Switch on "Tolio" under Finder in Login Items & Extensions for the desktop right-click.
+  - Turn "Open Tolio at login" back on if wanted.
+  - Old "Omni" entries can be removed from the System Settings lists.
 

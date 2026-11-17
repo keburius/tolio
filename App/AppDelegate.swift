@@ -139,11 +139,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         ) { NSApp.terminate(nil) }, owner: owner)
     }
 
-    /// `omni://palette` opens the Launcher, `omni://settings` Settings and
-    /// `omni://panel` the control panel (for automation). Only these fixed
+    /// `tolio://palette` opens the Launcher, `tolio://settings` Settings and
+    /// `tolio://panel` the control panel (for automation). Only these fixed
     /// actions are exposed: a link can't run arbitrary commands.
     func application(_ application: NSApplication, open urls: [URL]) {
-        for url in urls where url.scheme == "omni" {
+        for url in urls where url.scheme == "tolio" {
             switch url.host {
             case "palette": services.commands.allCommands.first { $0.id == PaletteFeature.showCommandID }?.action()
             case "settings": showSettings(nil)

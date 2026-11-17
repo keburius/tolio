@@ -1,6 +1,6 @@
 .DS_Store
 /build/
-/Omni.xcodeproj/
+/Tolio.xcodeproj/
 OmniKit/.build/
 OmniKit/.swiftpm/
 Config/Signing.local.xcconfig

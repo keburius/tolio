@@ -18,7 +18,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "About Omni"
+            "value": "About Tolio"
           }
         }
       }
@@ -139,7 +139,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Omni"
+            "value": "Tolio"
           }
         }
       }
@@ -172,7 +172,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Quit Omni"
+            "value": "Quit Tolio"
           }
         }
       }
@@ -205,7 +205,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Omni Settings"
+            "value": "Tolio Settings"
           }
         }
       }
@@ -227,7 +227,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Omni Setup Guide"
+            "value": "Tolio Setup Guide"
           }
         }
       }
@@ -392,7 +392,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Omni can't notice the key presses right now. Check that Omni is allowed under Accessibility in System Settings."
+            "value": "Tolio can't notice the key presses right now. Check that Tolio is allowed under Accessibility in System Settings."
           }
         }
       }
@@ -1451,7 +1451,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "A test shortcut that checks Omni's shortcuts work in every app."
+            "value": "A test shortcut that checks Tolio's shortcuts work in every app."
           }
         }
       }
@@ -1462,7 +1462,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Test Omni"
+            "value": "Test Tolio"
           }
         }
       }
@@ -2181,7 +2181,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "This is the only thing Omni downloads: one small public file from each bank below, at most every 6 hours, when you open the Launcher. Nothing about you is sent."
+            "value": "This is the only thing Tolio downloads: one small public file from each bank below, at most every 6 hours, when you open the Launcher. Nothing about you is sent."
           }
         }
       }
@@ -2381,7 +2381,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Couldn't lock the keyboard. Check that Omni has the Accessibility permission."
+            "value": "Couldn't lock the keyboard. Check that Tolio has the Accessibility permission."
           }
         }
       }
@@ -2678,7 +2678,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Omni adds the shortcuts your Mac is missing: one menu bar app for screenshots, clipboard history, window layouts, staying awake, and quick launching."
+            "value": "Tolio adds the shortcuts your Mac is missing: one menu bar app for screenshots, clipboard history, window layouts, staying awake, and quick launching."
           }
         }
       }
@@ -2700,7 +2700,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Open the control panel (or click Omni's menu bar icon)"
+            "value": "Open the control panel (or click Tolio's menu bar icon)"
           }
         }
       }
@@ -2733,7 +2733,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Reopen Omni"
+            "value": "Reopen Tolio"
           }
         }
       }
@@ -2744,7 +2744,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Switched it on but it still says “Not allowed”? Some permissions start working after Omni reopens."
+            "value": "Switched it on but it still says “Not allowed”? Some permissions start working after Tolio reopens."
           }
         }
       }
@@ -2810,7 +2810,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Welcome to Omni"
+            "value": "Welcome to Tolio"
           }
         }
       }
@@ -3008,7 +3008,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Lets Omni move windows, type snippets for you, read menus and selected text, and listen for shortcuts."
+            "value": "Lets Tolio move windows, type snippets for you, read menus and selected text, and listen for shortcuts."
           }
         }
       }
@@ -3096,7 +3096,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Already switched on in System Settings but still not allowed? This removes Omni's old entry and asks again."
+            "value": "Already switched on in System Settings but still not allowed? This removes Tolio's old entry and asks again."
           }
         }
       }
@@ -3118,7 +3118,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Lets Omni take screenshots, record your screen, and show window previews."
+            "value": "Lets Tolio take screenshots, record your screen, and show window previews."
           }
         }
       }
@@ -4066,7 +4066,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Omni needs Screen Recording permission to capture the screen."
+            "value": "Tolio needs Screen Recording permission to capture the screen."
           }
         }
       }
@@ -4452,7 +4452,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Drag over the part that scrolls. Omni will scroll it and join the pages. Esc cancels."
+            "value": "Drag over the part that scrolls. Tolio will scroll it and join the pages. Esc cancels."
           }
         }
       }
@@ -4859,7 +4859,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Select the part of a window that scrolls; Omni scrolls it and joins the pages into one tall image. Needs the Accessibility permission. Works best on plain documents and web pages; content that moves or changes while scrolling can't be joined."
+            "value": "Select the part of a window that scrolls; Tolio scrolls it and joins the pages into one tall image. Needs the Accessibility permission. Works best on plain documents and web pages; content that moves or changes while scrolling can't be joined."
           }
         }
       }
@@ -5123,7 +5123,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Approve Omni in Login Items to finish."
+            "value": "Approve Tolio in Login Items to finish."
           }
         }
       }
@@ -5167,7 +5167,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Open Omni at login"
+            "value": "Open Tolio at login"
           }
         }
       }
@@ -5442,7 +5442,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Omni needs %@ permission. %@ Until then this feature is paused."
+            "value": "Tolio needs %@ permission. %@ Until then this feature is paused."
           }
         }
       }
@@ -5762,7 +5762,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Omni Settings"
+            "value": "Tolio Settings"
           }
         }
       }
@@ -5817,7 +5817,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "macOS didn't let Omni watch the keyboard and mouse. Check that Omni is allowed under Accessibility."
+            "value": "macOS didn't let Tolio watch the keyboard and mouse. Check that Tolio is allowed under Accessibility."
           }
         }
       }
@@ -6700,7 +6700,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Off. Turn on “Omni” under Finder in System Settings → General → Login Items & Extensions."
+            "value": "Off. Turn on “Tolio” under Finder in System Settings → General → Login Items & Extensions."
           }
         }
       }
@@ -7353,7 +7353,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Needed for many apps, such as Slack, Discord and Chrome. Omni puts your previous clipboard back right away, and Clipboard History doesn't keep it. Never used in password fields, while macOS protects password entry, in password managers, or in Finder."
+            "value": "Needed for many apps, such as Slack, Discord and Chrome. Tolio puts your previous clipboard back right away, and Clipboard History doesn't keep it. Never used in password fields, while macOS protects password entry, in password managers, or in Finder."
           }
         }
       }
@@ -7760,7 +7760,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Snapping by dragging couldn't start. Check that Omni has the Accessibility permission, then turn it off and on."
+            "value": "Snapping by dragging couldn't start. Check that Tolio has the Accessibility permission, then turn it off and on."
           }
         }
       }

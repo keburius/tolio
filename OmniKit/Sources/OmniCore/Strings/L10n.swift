@@ -1,6 +1,6 @@
 import Foundation
 
-/// Every user-facing string in Omni.
+/// Every user-facing string in Tolio.
 ///
 /// Values live in one String Catalog, `OmniCore/Resources/Localizable.xcstrings`,
 /// so a translator edits a single file. Accessors are grouped by area in

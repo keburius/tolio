@@ -22,7 +22,7 @@ struct RecordingOptions: Sendable {
 /// All sample handling happens on one serial queue.
 final class ScreenRecorder: NSObject, SCStreamOutput, SCStreamDelegate, @unchecked Sendable {
     let url: URL
-    private let queue = DispatchQueue(label: "com.george.omni.recorder")
+    private let queue = DispatchQueue(label: "com.george.tolio.recorder")
     private var stream: SCStream?
     private let writer: AVAssetWriter
     private let videoInput: AVAssetWriterInput

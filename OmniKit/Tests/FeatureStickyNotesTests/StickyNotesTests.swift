@@ -122,16 +122,16 @@ struct NotePlacementTests {
 
 struct NoteURLTests {
     @Test func parsesNewNoteLinks() {
-        #expect(NoteURL.newNotePoint(URL(string: "omni://note/new?x=120&y=640")!) == .some(CGPoint(x: 120, y: 640)))
-        #expect(NoteURL.newNotePoint(URL(string: "omni://note/new")!) == .some(nil))
+        #expect(NoteURL.newNotePoint(URL(string: "tolio://note/new?x=120&y=640")!) == .some(CGPoint(x: 120, y: 640)))
+        #expect(NoteURL.newNotePoint(URL(string: "tolio://note/new")!) == .some(nil))
         #expect(NoteURL.newNotePoint(NoteURL.make(at: CGPoint(x: 5.7, y: 9.2))) == .some(CGPoint(x: 5, y: 9)))
     }
 
     @Test func rejectsOtherOrOddLinks() {
-        #expect(NoteURL.newNotePoint(URL(string: "omni://note/delete")!) == nil)
-        #expect(NoteURL.newNotePoint(URL(string: "omni://palette")!) == nil)
+        #expect(NoteURL.newNotePoint(URL(string: "tolio://note/delete")!) == nil)
+        #expect(NoteURL.newNotePoint(URL(string: "tolio://palette")!) == nil)
         #expect(NoteURL.newNotePoint(URL(string: "https://note/new")!) == nil)
         // Nonsense numbers fall back to "near the pointer".
-        #expect(NoteURL.newNotePoint(URL(string: "omni://note/new?x=nan&y=1e999")!) == .some(nil))
+        #expect(NoteURL.newNotePoint(URL(string: "tolio://note/new?x=nan&y=1e999")!) == .some(nil))
     }
 }

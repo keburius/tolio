@@ -3,15 +3,15 @@ import Foundation
 public extension L10n {
     /// The app shell: menu bar, control panel, Settings, onboarding.
     enum App {
-        public static var name: String { tr("app.name", "Omni") }
+        public static var name: String { tr("app.name", "Tolio") }
         public static var openControlPanel: String { tr("app.openControlPanel", "Open Control Panel") }
         public static var openControlPanelAction: String { tr("app.openControlPanel.action", "Open the control panel") }
         public static var settings: String { tr("app.settings", "Settings…") }
-        public static var settingsCommand: String { tr("app.settings.command", "Omni Settings") }
+        public static var settingsCommand: String { tr("app.settings.command", "Tolio Settings") }
         public static var setupGuide: String { tr("app.setupGuide", "Setup Guide…") }
-        public static var setupGuideCommand: String { tr("app.setupGuide.command", "Omni Setup Guide") }
-        public static var about: String { tr("app.about", "About Omni") }
-        public static var quit: String { tr("app.quit", "Quit Omni") }
+        public static var setupGuideCommand: String { tr("app.setupGuide.command", "Tolio Setup Guide") }
+        public static var about: String { tr("app.about", "About Tolio") }
+        public static var quit: String { tr("app.quit", "Quit Tolio") }
         public static var editMenu: String { tr("app.menu.edit", "Edit") }
         public static var undo: String { tr("app.menu.undo", "Undo") }
         public static var redo: String { tr("app.menu.redo", "Redo") }
@@ -48,7 +48,7 @@ public extension L10n {
     }
 
     enum SettingsUI {
-        public static var windowTitle: String { tr("settings.windowTitle", "Omni Settings") }
+        public static var windowTitle: String { tr("settings.windowTitle", "Tolio Settings") }
         public static var overview: String { tr("settings.page.overview", "Overview") }
         public static var menuBar: String { tr("settings.page.menuBar", "Menu Bar") }
         public static var shortcuts: String { tr("settings.page.shortcuts", "Shortcuts") }
@@ -62,7 +62,7 @@ public extension L10n {
         }
         public static func needs(_ feature: String, _ permission: String) -> String { format("settings.needs", "%@ needs %@.", feature, permission) }
         public static func pausedBanner(_ permission: String, _ why: String) -> String {
-            format("settings.pausedBanner", "Omni needs %@ permission. %@ Until then this feature is paused.", permission, why)
+            format("settings.pausedBanner", "Tolio needs %@ permission. %@ Until then this feature is paused.", permission, why)
         }
         public static var updatesByItself: String { tr("settings.updatesByItself", "The status updates by itself.") }
         public static var problemTurnOffOn: String { tr("settings.problemTurnOffOn", "Turn it off and on again to retry.") }
@@ -113,8 +113,8 @@ public extension L10n {
         public static func alreadyUsedBy(_ title: String) -> String { format("settings.shortcuts.alreadyUsed", "Already used by “%@”.", title) }
         public static var refusedByMac: String { tr("settings.shortcuts.refused", "Another app already uses this shortcut.") }
         // General page
-        public static var openAtLogin: String { tr("settings.general.openAtLogin", "Open Omni at login") }
-        public static var approveLoginItem: String { tr("settings.general.approveLoginItem", "Approve Omni in Login Items to finish.") }
+        public static var openAtLogin: String { tr("settings.general.openAtLogin", "Open Tolio at login") }
+        public static var approveLoginItem: String { tr("settings.general.approveLoginItem", "Approve Tolio in Login Items to finish.") }
         public static var openLoginItems: String { tr("settings.general.openLoginItems", "Open Login Items") }
         public static var openSetupGuide: String { tr("settings.general.openSetupGuide", "Open Setup Guide…") }
         public static var language: String { tr("settings.general.language", "Language") }
@@ -130,9 +130,9 @@ public extension L10n {
     }
 
     enum Onboarding {
-        public static var windowTitle: String { tr("onboarding.windowTitle", "Welcome to Omni") }
+        public static var windowTitle: String { tr("onboarding.windowTitle", "Welcome to Tolio") }
         public static var intro: String {
-            tr("onboarding.intro", "Omni adds the shortcuts your Mac is missing: one menu bar app for screenshots, clipboard history, window layouts, staying awake, and quick launching.")
+            tr("onboarding.intro", "Tolio adds the shortcuts your Mac is missing: one menu bar app for screenshots, clipboard history, window layouts, staying awake, and quick launching.")
         }
         public static var screenshots: String { tr("onboarding.icon.screenshots", "Screenshots") }
         public static var clipboard: String { tr("onboarding.icon.clipboard", "Clipboard") }
@@ -152,9 +152,9 @@ public extension L10n {
         public static var optionalSuffix: String { tr("onboarding.permissions.optionalSuffix", "(optional)") }
         public static var skipForNow: String { tr("onboarding.permissions.skip", "Skip for Now") }
         public static var reopenNote: String {
-            tr("onboarding.permissions.reopenNote", "Switched it on but it still says “Not allowed”? Some permissions start working after Omni reopens.")
+            tr("onboarding.permissions.reopenNote", "Switched it on but it still says “Not allowed”? Some permissions start working after Tolio reopens.")
         }
-        public static var reopenOmni: String { tr("onboarding.permissions.reopen", "Reopen Omni") }
+        public static var reopenOmni: String { tr("onboarding.permissions.reopen", "Reopen Tolio") }
         public static func usedBy(_ list: String) -> String { format("onboarding.permissions.usedBy", "Used by: %@", list) }
         public static var doneTitle: String { tr("onboarding.done.title", "You're set. A few shortcuts to remember:") }
         public static var doneNote: String {
@@ -162,6 +162,6 @@ public extension L10n {
         }
         public static var finish: String { tr("onboarding.finish", "Finish") }
         public static var tryIt: String { tr("onboarding.tryIt", "Try It: Open the Panel") }
-        public static var orClickIcon: String { tr("onboarding.orClickIcon", "Open the control panel (or click Omni's menu bar icon)") }
+        public static var orClickIcon: String { tr("onboarding.orClickIcon", "Open the control panel (or click Tolio's menu bar icon)") }
     }
 }

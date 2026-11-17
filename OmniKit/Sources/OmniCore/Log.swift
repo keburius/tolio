@@ -5,7 +5,7 @@ import os
 /// Privacy rule: never interpolate clipboard contents, selected text, or typed
 /// keystrokes into a log message. Log sizes, types, and counts instead.
 public enum Log {
-    public static let subsystem = "com.george.omni"
+    public static let subsystem = "com.george.tolio"
 
     /// Returns a logger for one category, e.g. a feature id or a service name.
     public static func logger(_ category: String) -> Logger {

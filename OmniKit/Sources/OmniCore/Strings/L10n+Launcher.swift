@@ -55,7 +55,7 @@ public extension L10n {
         }
         public static var downloadRates: String { tr("launcher.settings.downloadRates", "Download currency rates") }
         public static var downloadRatesHelp: String {
-            tr("launcher.settings.downloadRatesHelp", "This is the only thing Omni downloads: one small public file from each bank below, at most every 6 hours, when you open the Launcher. Nothing about you is sent.")
+            tr("launcher.settings.downloadRatesHelp", "This is the only thing Tolio downloads: one small public file from each bank below, at most every 6 hours, when you open the Launcher. Nothing about you is sent.")
         }
         public static var defaultCurrency: String { tr("launcher.settings.defaultCurrency", "Convert currencies to") }
         public static var clearUsage: String { tr("launcher.settings.clearUsage", "Clear Usage History") }
@@ -180,7 +180,7 @@ public extension L10n {
             tr("cheatsheet.settings.sourceHelp", "Shortcuts come from the app's menu bar. Shortcuts that only work inside a window, and aren't in a menu, can't be listed.")
         }
         public static var cannotWatchKeys: String {
-            tr("cheatsheet.settings.cannotWatchKeys", "Omni can't notice the key presses right now. Check that Omni is allowed under Accessibility in System Settings.")
+            tr("cheatsheet.settings.cannotWatchKeys", "Tolio can't notice the key presses right now. Check that Tolio is allowed under Accessibility in System Settings.")
         }
     }
 
@@ -188,10 +188,10 @@ public extension L10n {
     enum Diagnostics {
         public static var name: String { tr("diagnostics.name", "Diagnostics") }
         public static var summary: String {
-            tr("diagnostics.summary", "A test shortcut that checks Omni's shortcuts work in every app.")
+            tr("diagnostics.summary", "A test shortcut that checks Tolio's shortcuts work in every app.")
         }
         public static var testShortcut: String { tr("diagnostics.testShortcut", "Test shortcut") }
-        public static var testOmni: String { tr("diagnostics.testOmni", "Test Omni") }
+        public static var testOmni: String { tr("diagnostics.testOmni", "Test Tolio") }
         public static var testOmniSubtitle: String { tr("diagnostics.testOmni.subtitle", "Show the test notice") }
         public static var fired: String { tr("diagnostics.fired", "Test shortcut works") }
         public static var timesFired: String { tr("diagnostics.timesFired", "Times pressed") }

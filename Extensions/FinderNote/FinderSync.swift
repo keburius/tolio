@@ -4,7 +4,7 @@ import OmniCore
 
 /// Omni's Finder extension: adds "New Sticky Note" to the right-click menu
 /// of the desktop (and of Finder windows showing the Desktop folder). It's
-/// sandboxed and only asks Omni, through `omni://note/new`, to create a note
+/// sandboxed and only asks Omni, through `tolio://note/new`, to create a note
 /// where you clicked. It reads no files.
 final class FinderSync: FIFinderSync {
     /// Where the right-click happened (AppKit global), captured when the menu opens.
@@ -38,9 +38,9 @@ final class FinderSync: FIFinderSync {
     }
 }
 
-/// `omni://note/new?x=…&y=…` (same format Omni's `NoteURL` parses).
+/// `tolio://note/new?x=…&y=…` (same format Omni's `NoteURL` parses).
 private enum NoteURL {
     static func make(at point: CGPoint) -> URL {
-        URL(string: "omni://note/new?x=\(Int(point.x))&y=\(Int(point.y))")! // l10n-ignore
+        URL(string: "tolio://note/new?x=\(Int(point.x))&y=\(Int(point.y))")! // l10n-ignore
     }
 }

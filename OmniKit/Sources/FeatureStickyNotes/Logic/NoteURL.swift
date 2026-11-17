@@ -1,7 +1,7 @@
 import CoreGraphics
 import Foundation
 
-/// `omni://note/new?x=…&y=…`, sent by Omni's Finder extension from the
+/// `tolio://note/new?x=…&y=…`, sent by Omni's Finder extension from the
 /// desktop's right-click menu. Only this fixed action exists; a link can't
 /// write text into a note.
 public enum NoteURL {
@@ -9,7 +9,7 @@ public enum NoteURL {
 
     /// The requested top-left point (AppKit global coordinates), or nil for "near the pointer".
     public static func newNotePoint(_ url: URL) -> CGPoint?? {
-        guard url.scheme == "omni", url.host == host, url.path == "/new" else { return nil }
+        guard url.scheme == "tolio", url.host == host, url.path == "/new" else { return nil }
         let items = URLComponents(url: url, resolvingAgainstBaseURL: false)?.queryItems ?? []
         func number(_ name: String) -> CGFloat? {
             guard let raw = items.first(where: { $0.name == name })?.value, let value = Double(raw), value.isFinite,
@@ -21,6 +21,6 @@ public enum NoteURL {
     }
 
     public static func make(at point: CGPoint) -> URL {
-        URL(string: "omni://note/new?x=\(Int(point.x))&y=\(Int(point.y))")!
+        URL(string: "tolio://note/new?x=\(Int(point.x))&y=\(Int(point.y))")!
     }
 }

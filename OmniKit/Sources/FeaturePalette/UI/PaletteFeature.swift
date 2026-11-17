@@ -15,7 +15,7 @@ public final class PaletteFeature: Feature {
         title: L10n.Launcher.openTitle,
         defaultCombo: KeyCombo(keyCode: 49, modifiers: [.control, .option]) // ⌃⌥Space
     )
-    /// Command id other parts of the app (e.g. the omni:// URL) use to open the palette.
+    /// Command id other parts of the app (e.g. the tolio:// URL) use to open the palette.
     public static let showCommandID = "palette.show"
 
     static let currencyFetchKey = SettingKey.feature("palette", "currencyFetch", default: true)

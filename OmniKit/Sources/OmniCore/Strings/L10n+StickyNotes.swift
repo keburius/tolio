@@ -30,7 +30,7 @@ public extension L10n {
         public static var rightClickTitle: String { tr("stickynotes.rightClick", "“New Sticky Note” in the desktop’s right-click menu") }
         public static var rightClickOn: String { tr("stickynotes.rightClick.on", "On. Right-click an empty spot on the desktop.") }
         public static var rightClickOff: String {
-            tr("stickynotes.rightClick.off", "Off. Turn on “Omni” under Finder in System Settings → General → Login Items & Extensions.")
+            tr("stickynotes.rightClick.off", "Off. Turn on “Tolio” under Finder in System Settings → General → Login Items & Extensions.")
         }
         public static var settingsNote: String {
             tr("stickynotes.settingsNote", "Notes sit on the desktop, behind your windows; use “Keep on Top” on a note to float it. Drag a note by its top edge and resize it from any edge. Notes are saved on this Mac only.")

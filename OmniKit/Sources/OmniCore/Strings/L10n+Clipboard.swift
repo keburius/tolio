@@ -213,7 +213,7 @@ public extension L10n {
             tr("textactions.settings.copyBriefly", "When an app doesn't share its selection, copy it briefly (⌘C) and put your clipboard back")
         }
         public static var copyBrieflyNote: String {
-            tr("textactions.settings.copyBrieflyNote", "Needed for many apps, such as Slack, Discord and Chrome. Omni puts your previous clipboard back right away, and Clipboard History doesn't keep it. Never used in password fields, while macOS protects password entry, in password managers, or in Finder.")
+            tr("textactions.settings.copyBrieflyNote", "Needed for many apps, such as Slack, Discord and Chrome. Tolio puts your previous clipboard back right away, and Clipboard History doesn't keep it. Never used in password fields, while macOS protects password entry, in password managers, or in Finder.")
         }
         public static var neverShowIn: String { tr("textactions.settings.neverShowIn", "Never show in") }
     }

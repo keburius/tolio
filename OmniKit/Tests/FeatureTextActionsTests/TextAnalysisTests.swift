@@ -13,7 +13,7 @@ struct TextAnalysisTests {
 
     @Test func notWebURLs() {
         for text in ["hello world", "see https://example.com here", "me@example.com", "file:///etc/passwd",
-                     "javascript:alert(1)", "omni://palette", "localhost", "3.14", ""] {
+                     "javascript:alert(1)", "tolio://palette", "localhost", "3.14", ""] {
             #expect(TextAnalysis.webURL(in: text) == nil, "\(text)")
         }
     }

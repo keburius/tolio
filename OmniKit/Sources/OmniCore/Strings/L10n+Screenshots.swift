@@ -80,7 +80,7 @@ public extension L10n {
         }
         public static var scrollingToggle: String { tr("screenshots.settings.scrolling", "Scrolling capture") }
         public static var scrollingNote: String {
-            tr("screenshots.settings.scrollingNote", "Select the part of a window that scrolls; Omni scrolls it and joins the pages into one tall image. Needs the Accessibility permission. Works best on plain documents and web pages; content that moves or changes while scrolling can't be joined.")
+            tr("screenshots.settings.scrollingNote", "Select the part of a window that scrolls; Tolio scrolls it and joins the pages into one tall image. Needs the Accessibility permission. Works best on plain documents and web pages; content that moves or changes while scrolling can't be joined.")
         }
 
         // MARK: Selection overlay
@@ -91,7 +91,7 @@ public extension L10n {
             tr("screenshots.overlay.record", "Drag to record an area, or click to record the whole screen. Esc cancels.")
         }
         public static var hintScrolling: String {
-            tr("screenshots.overlay.scrolling", "Drag over the part that scrolls. Omni will scroll it and join the pages. Esc cancels.")
+            tr("screenshots.overlay.scrolling", "Drag over the part that scrolls. Tolio will scroll it and join the pages. Esc cancels.")
         }
         public static func sizeLabel(_ width: Int, _ height: Int) -> String {
             format("screenshots.overlay.size", "%lld × %lld px", width, height)
@@ -137,7 +137,7 @@ public extension L10n {
         // MARK: Errors
 
         public static var errorNoPermission: String {
-            tr("screenshots.error.noPermission", "Omni needs Screen Recording permission to capture the screen.")
+            tr("screenshots.error.noPermission", "Tolio needs Screen Recording permission to capture the screen.")
         }
         public static var errorNothingToCapture: String { tr("screenshots.error.nothingToCapture", "That area isn't on any display.") }
         public static func errorFailed(_ reason: String) -> String { format("screenshots.error.failed", "Capture failed: %@", reason) }
