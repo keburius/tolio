@@ -821,3 +821,4 @@ Each phase has a **Done when** line, and nothing moves on until it's met. "You" 
   Not changed: unifying the permission wording (low value, many strings), and the title-case window rows in the Shortcuts table (they double as menu titles).
 - 366 tests pass.
 
+- **Checked live by you (2026-11-17):** the menu bar icon, the About window and the onboarding icon look right. Tagged `v0.9.0-rc2`.
