@@ -917,3 +917,16 @@ Each phase has a **Done when** line, and nothing moves on until it's met. "You" 
   - **"And seven more helpers"**: compact cards with mini animations (snippet expanding, text-action bar, Energy bolt, keyboard lock, ⌘⌘ taps, stats bars, control panel tiles).
   - `site.js` (loaded from the page itself, CSP `script-src 'self'`) fades sections in on scroll and pauses each animation while it's off screen.
   - Without the script, everything shows and animates. With Reduce Motion, all motion stops and each scene shows its finished state (checked by rendering).
+- **Interactive hero (same day):**
+  - Ten glassy feature chips (icon, shortcut, name) drift slowly around the headline. They move with the pointer at different depths (parallax), and a soft violet spotlight follows the cursor.
+  - Fewer chips show on narrower screens and none on phones. With Reduce Motion they stay still.
+  - The menu bar mockup is a clickable demo (in `site.js`):
+    - T icon: opens and closes the panel.
+    - 📷: selection, flash, "Screenshot copied".
+    - ⏺: red outline and a live timer; click again to "save".
+    - ⚡: toggles a live 1-hour countdown.
+    - 🔒: "Keyboard locked" until clicked.
+    - Clipboard rows: move to the top and report "Copied …".
+    - The sticky note can be dragged.
+  - A "Try it: click the icons" hint fades out after the first use. Everything is real `<button>`s, keyboard-focusable, with a polite live region for the notices.
+  - Checked by driving clicks in a rendered page.
