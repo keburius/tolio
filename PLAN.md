@@ -930,3 +930,17 @@ Each phase has a **Done when** line, and nothing moves on until it's met. "You" 
     - The sticky note can be dragged.
   - A "Try it: click the icons" hint fades out after the first use. Everything is real `<button>`s, keyboard-focusable, with a polite live region for the notices.
   - Checked by driving clicks in a rendered page.
+- **Live desktop demo (same day, replaces the clickable mockup):**
+  - A miniature Mac desktop: menu bar with the active app name, Tolio's icon and an Energy bolt; wallpaper; a browser window with a "Q3 Roadmap" slide; a Notes window; a Dock.
+  - It plays **seven real use cases** as scenes with a moving pointer, on-screen keycaps, notices and typing:
+    1. Screenshot: ⇧⌘4 → editor → brush → auto-copy.
+    2. Copy text from an image: ⇧⌘2 → scan → paste into Notes.
+    3. Clipboard History: ⌃⌥V → pick an older item → pasted.
+    4. Launcher: "20 usd".
+    5. Window layouts: ⌃⌥← / ⌃⌥→.
+    6. Sticky note: right-click the desktop → New Sticky Note → typing.
+    7. Energy Mode: ⌃⌥⌘A.
+  - Tabs underneath show each scene's progress and jump to it; a caption explains the current scene.
+  - Positions are measured from the real elements, so it works at any size. It plays only while visible, and changing tabs cancels the running scene cleanly.
+  - No Apple logo in the menu bar.
+  - Checked by rendering each scene at desktop and phone widths.
