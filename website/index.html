@@ -88,6 +88,15 @@
 
 
 
+
+  /* Buy Me a Coffee (a plain link: no third-party script, nothing tracked) */
+  .nav-links .coffee-link { color: #1d1d1f; background: #ffdd00; padding: 6px 12px; border-radius: 999px; font-weight: 600; margin: -6px 0; }
+  .nav-links .coffee-link:hover { color: #1d1d1f; background: #ffe633; }
+  .coffee { margin: 44px auto 0; max-width: 560px; padding: 22px 24px; border-radius: var(--radius); background: rgba(255, 221, 0, 0.07); border: 1px solid rgba(255, 221, 0, 0.25); }
+  .coffee p { margin: 0 0 14px; color: var(--text); }
+  .btn-coffee { background: #ffdd00; color: #1d1d1f; box-shadow: 0 10px 30px rgba(255, 221, 0, 0.18); }
+  .btn-coffee:hover { background: #ffe633; }
+
   /* ===== Interactive hero ===== */
   main { overflow-x: clip; }
   .hero > *:not(.floaters):not(.spot) { position: relative; z-index: 1; }
@@ -474,7 +483,7 @@
   footer .wrap { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
 
   @media (max-width: 640px) {
-    .nav-links a:not(.gh) { display: none; }
+    .nav-links a:not(.gh):not(.coffee-link) { display: none; }
     h1 br { display: none; }
     .screen { height: 380px; }
     .note { left: 16px; bottom: 18px; width: 170px; }
@@ -496,6 +505,7 @@
     <a href="#install">Install</a>
     <a href="#privacy">Privacy</a>
     <a class="gh" href="https://github.com/keburius/tolio">GitHub</a>
+    <a class="coffee-link" href="https://buymeacoffee.com/keburius" rel="noopener">☕ Support</a>
   </nav>
 </header>
 
@@ -793,13 +803,17 @@
       </a>
     </div>
     <p class="meta">Version 1.0.0 · <a href="https://github.com/keburius/tolio/releases">All releases</a> · <a href="https://github.com/keburius/tolio/blob/main/CHANGELOG.md">What's new</a></p>
+    <div class="coffee reveal">
+      <p>Tolio is free and always will be. If it saves you time, you can buy me a coffee.</p>
+      <a class="btn btn-coffee" href="https://buymeacoffee.com/keburius" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h12v5a6 6 0 0 1-6 6h0a6 6 0 0 1-6-6z"/><path d="M17 10h1.5a2.5 2.5 0 0 1 0 5H17"/><path d="M9 3c0 1 1 1 1 2M13 3c0 1 1 1 1 2"/></svg>Buy me a coffee</a>
+    </div>
   </div>
 </main>
 
 <footer>
   <div class="wrap">
     <span>© 2026 keburius · MIT License</span>
-    <span><a href="https://github.com/keburius/tolio">GitHub</a> · <a href="https://github.com/keburius/tolio/issues">Report a problem</a></span>
+    <span><a href="https://github.com/keburius/tolio">GitHub</a> · <a href="https://github.com/keburius/tolio/issues">Report a problem</a> · <a href="https://buymeacoffee.com/keburius" rel="noopener">Buy me a coffee ☕</a></span>
   </div>
 </footer>
 

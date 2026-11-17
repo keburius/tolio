@@ -944,3 +944,4 @@ Each phase has a **Done when** line, and nothing moves on until it's met. "You" 
   - Positions are measured from the real elements, so it works at any size. It plays only while visible, and changing tabs cancels the running scene cleanly.
   - No Apple logo in the menu bar.
   - Checked by rendering each scene at desktop and phone widths.
+- **Buy Me a Coffee (same day):** `https://buymeacoffee.com/keburius` added as plain links: a yellow "☕ Support" button in the top bar (also on phones), a support box under the final Download button, and a footer link. Also `.github/FUNDING.yml` (`buy_me_a_coffee: keburius`, which shows a Sponsor button on GitHub) and a Support line in the README. Their widget script was left out on purpose: it would load third-party code that may track visitors. The link couldn't be checked from here (buymeacoffee.com answers 404 to every automated request); you'll confirm it by clicking.
