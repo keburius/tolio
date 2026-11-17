@@ -37,8 +37,27 @@ struct ScreenshotsSettingsView: View {
     let settings: SettingsStore
     private typealias S = L10n.Screenshots
 
+    /// Bumped when Tolio becomes active again (e.g. back from System Settings),
+    /// so the macOS-shortcut warning is re-checked.
+    @State private var activations = 0
+
+    /// macOS's own ⇧⌘4 is on and equals Tolio's area shortcut.
+    private var macShortcutConflict: Bool {
+        _ = activations
+        return MacScreenshotShortcut.conflicts(with: settings.value(HotkeyManager.bindingsKey).combo(for: ScreenshotsFeature.areaHotkey))
+    }
+
     var body: some View {
         Section(S.sectionScreenshots) {
+            if macShortcutConflict {
+                VStack(alignment: .leading, spacing: OmniStyle.s2) {
+                    Label(S.macShortcutConflict, systemImage: "exclamationmark.triangle.fill")
+                        .font(.callout).symbolRenderingMode(.multicolor)
+                    Button(S.openKeyboardShortcuts) {
+                        NSWorkspace.shared.open(URL(string: "x-apple.systempreferences:com.apple.Keyboard-Settings.extension")!) // l10n-ignore
+                    }
+                }
+            }
             Picker(S.afterCapturing, selection: settings.binding(ScreenshotsFeature.afterKey)) {
                 ForEach(AfterCapture.allCases, id: \.self) { Text($0.label).tag($0) }
             }
@@ -58,6 +77,7 @@ struct ScreenshotsSettingsView: View {
             Text(S.resolutionNote)
                 .font(.caption).foregroundStyle(.secondary)
         }
+        .onReceive(NotificationCenter.default.publisher(for: NSApplication.didBecomeActiveNotification)) { _ in activations += 1 }
         Section(S.sectionRecording) {
             Picker(S.frameRate, selection: settings.binding(ScreenshotsFeature.fpsKey)) {
                 Text(S.fps(30)).tag(30)

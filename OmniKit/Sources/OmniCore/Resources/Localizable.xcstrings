@@ -4787,6 +4787,17 @@
         }
       }
     },
+    "screenshots.settings.macShortcutConflict": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "macOS also uses ⇧⌘4 for its own screenshots and gets the key press first. To use Tolio’s, open Keyboard Shortcuts → Screenshots and turn off “Save picture of selected area as a file”."
+          }
+        }
+      }
+    },
     "screenshots.settings.microphone": {
       "extractionState": "manual",
       "localizations": {
@@ -4794,6 +4805,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Record the microphone (macOS 15 or later)"
+          }
+        }
+      }
+    },
+    "screenshots.settings.openKeyboardShortcuts": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open Keyboard Settings…"
           }
         }
       }

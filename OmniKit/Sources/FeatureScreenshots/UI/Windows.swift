@@ -62,9 +62,14 @@ final class CaptureWindows: NSObject, NSWindowDelegate {
         )
         window.setContentSize(size)
         window.center()
+        // Opens on the current Space (also over full-screen apps) and stays
+        // above other apps' windows until it's closed.
+        window.level = .floating
+        window.collectionBehavior = [.moveToActiveSpace, .fullScreenAuxiliary]
         windows.append(window)
         NSApp.activate()
-        window.makeKeyAndOrderFront(nil)
+        window.orderFrontRegardless()
+        window.makeKey()
     }
 
     @discardableResult

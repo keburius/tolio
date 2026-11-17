@@ -11,6 +11,10 @@ public extension L10n {
         // MARK: Shortcuts (sentence case, as in the shortcuts table)
 
         public static var hotkeyArea: String { tr("screenshots.hotkey.area", "Capture area or window") }
+        public static var macShortcutConflict: String {
+            tr("screenshots.settings.macShortcutConflict", "macOS also uses ⇧⌘4 for its own screenshots and gets the key press first. To use Tolio’s, open Keyboard Shortcuts → Screenshots and turn off “Save picture of selected area as a file”.")
+        }
+        public static var openKeyboardShortcuts: String { tr("screenshots.settings.openKeyboardShortcuts", "Open Keyboard Settings…") }
         public static var hotkeyScreen: String { tr("screenshots.hotkey.screen", "Capture screen") }
         public static var hotkeyText: String { tr("screenshots.hotkey.text", "Capture text") }
         public static var hotkeyRecord: String { tr("screenshots.hotkey.record", "Start or stop screen recording") }

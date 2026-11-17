@@ -45,7 +45,12 @@ public final class ScreenshotsFeature: Feature {
     static let scrollingKey = SettingKey.feature("screenshots", "experimentalScrolling", default: false)
 
     static func combo(_ keyCode: UInt32) -> KeyCombo { KeyCombo(keyCode: keyCode, modifiers: [.control, .option, .command]) }
-    public static let areaHotkey = HotkeyAction(id: "screenshots.area", title: L10n.Screenshots.hotkeyArea, defaultCombo: combo(21)) // ⌃⌥⌘4
+    /// ⇧⌘4, the shortcut people already know. macOS's own "selected area"
+    /// screenshot uses it too, so Settings explains how to switch that off.
+    public static let areaHotkey = HotkeyAction(
+        id: "screenshots.area", title: L10n.Screenshots.hotkeyArea,
+        defaultCombo: KeyCombo(keyCode: 21, modifiers: [.shift, .command])
+    )
     public static let screenHotkey = HotkeyAction(id: "screenshots.screen", title: L10n.Screenshots.hotkeyScreen, defaultCombo: combo(20)) // ⌃⌥⌘3
     public static let recordHotkey = HotkeyAction(id: "screenshots.record", title: L10n.Screenshots.hotkeyRecord, defaultCombo: combo(15)) // ⌃⌥⌘R
     public static let scrollingHotkey = HotkeyAction(id: "screenshots.scrolling", title: L10n.Screenshots.hotkeyScrolling, defaultCombo: nil)

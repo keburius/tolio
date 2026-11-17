@@ -853,3 +853,5 @@ Each phase has a **Done when** line, and nothing moves on until it's met. "You" 
   - Tiles are icon-only, with the shortcut underneath. A running recording's time or an active state's detail replaces the shortcut, and hovering shows the name and state.
   - The Window section is removed. The Window Layouts menu bar icon still opens its own layout grid.
   - Recently Copied lists the last **10** items. Keys 1–9 open the first nine and 0 the tenth; the arrow keys go down the list.
+- **Screenshot editor on top:** the editor opens on the current Space (also over full-screen apps), in front, and stays above other apps' windows (`.floating`) until closed.
+- **⇧⌘4 is the default area-screenshot shortcut** (was ⌃⌥⌘4). macOS's own "Save picture of selected area as a file" also uses ⇧⌘4 and takes the key press first. Tolio reads (never changes) that system setting: while it's on and matches, Screenshots settings shows a warning with an "Open Keyboard Settings…" button (`MacScreenshotShortcut`, 4 tests).
