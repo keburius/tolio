@@ -956,3 +956,9 @@ Each phase has a **Done when** line, and nothing moves on until it's met. "You" 
   - The hover effect now covers the **whole page**: a fixed background layer with three slowly drifting colour blobs, a dot grid that lights up around the pointer, and a violet glow following the pointer. The old hero-only spotlight was removed.
   - With Reduce Motion the blobs stay still. On touch screens the grid is faint and static.
 - **Buy Me a Coffee hidden for now (same day):** every part is commented out with the marker `BMC (hidden for now)`: the header button, the support box, the floating widget, the footer link and note, the README lines, and `.github/FUNDING.yml`. To bring it back, remove those comment markers (I can do it in one step). The CSP still allows their domains, which does nothing while hidden.
+- **Styled DMG (same day):** `make dmg` now builds a writable disk, lays out the Finder window with AppleScript, then compresses it.
+  - Background: `Scripts/dmg/background.tiff` (1x + 2x), drawn by `Scripts/dmg/make-background.swift`. It says "Drag Tolio to Applications", has an arrow, and the one-time "Open Anyway" hint.
+  - Window: 660 × 420, no toolbar, 112 pt icons, Tolio left and Applications right.
+  - The Tolio icon is used as the disk icon.
+  - A mounted disk with the same name is ejected first. macOS asks once to let the terminal control Finder.
+  - Checked by opening the result: labels are readable in dark mode. 9.6 MB.
