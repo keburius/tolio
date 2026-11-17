@@ -896,3 +896,9 @@ Each phase has a **Done when** line, and nothing moves on until it's met. "You" 
   - **Commit email:** the history was rewritten to `57075219+keburius@users.noreply.github.com` (all 58 commits, the 3 tags, and `ask-ai`). The repo-local `user.email` is set to it as well. A backup bundle was taken first.
   - **Repo:** public, MIT licence (© 2026 keburius), also in About.
 
+### Website (2026-11-17)
+- `website/` is a static landing page (`index.html`, the icon, a favicon and `vercel.json`), hosted on **Vercel from the GitHub repo**: Root Directory `website`, Framework "Other", no build command. Every push to `main` redeploys it.
+- **Content:** a hero with **Download for Mac**, a menu bar and control panel mockup, 12 feature cards with their shortcuts, install steps (including Open Anyway), privacy, and a footer.
+- **Code:** no JavaScript and no external fonts or scripts. Strict CSP and security headers in `vercel.json`. Checked at desktop (1280 px) and phone (390 px) widths.
+- **Download button:** `https://github.com/keburius/tolio/releases/latest/download/Tolio.dmg`. `make dmg` now also writes `dist/Tolio.dmg` (the same file under a fixed name), so attaching it to every release keeps the button pointing at the newest version.
+
