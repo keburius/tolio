@@ -758,3 +758,11 @@ Each phase has a **Done when** line, and nothing moves on until it's met. "You" 
 - **Fresh clone check:** `git clone` then `make test`, with no signing file (ad-hoc): build succeeded, 361 tests passed, no warnings in Omni code, string catalog up to date (689 keys), about 65 s. The clone's app was unregistered afterwards.
 - Tagged `v0.9.0-rc0`.
 
+
+### R1: live test results
+- **Test 1, Sticky Notes (2026-11-17): passed** (checked by you):
+  - turning the feature on and its icon; ⌃⌥⌘N; typing, resizing and moving
+  - colour and Keep on Top; delete and Undo
+  - the Finder extension switched on, with **"New Sticky Note" in the desktop's right-click menu**, opening the note where you clicked
+  - notes coming back after a restart
+  - the menu bar staying put while Settings is open (fixed by removing the duplicate Omni copies in R0)
