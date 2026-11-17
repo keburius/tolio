@@ -13,7 +13,7 @@ Free, private, and everything stays on your Mac.</p>
 
 | | |
 |---|---|
-| **Launcher** | ⌃⌥Space opens apps, files, settings and Tolio's commands. It also does math and currency conversions. |
+| **Launcher** | ⌃⌥Space opens apps, System Settings pages and Tolio's commands. It also does math, unit and currency conversions. |
 | **Clipboard History** | ⌃⌥V shows what you copied, with picture previews. Pin items and keep text snippets. |
 | **Screenshots & Recording** | ⇧⌘4 captures an area or a window, then opens an editor with a brush, boxes, numbered steps and text. Untouched captures are copied automatically after 3 seconds. You can record the screen with or without your microphone, pause, and mute. |
 | **Capture Text** | ⇧⌘2 copies the text in any part of the screen, and reads QR codes and barcodes. |
@@ -24,7 +24,7 @@ Free, private, and everything stays on your Mac.</p>
 | **Lock Keyboard** | ⌃⌥⌘L locks the keyboard so you can wipe it clean. Unlock it with the mouse. |
 | **Shortcut cheat sheet** | ⌃⌥⌘/ shows the current app's menu shortcuts. |
 | **Text selection actions** | Select text to search the web, open links or translate. |
-| **System Stats** | CPU, memory and disk in the menu bar. |
+| **System Stats** | CPU, memory, network and battery in the menu bar. |
 
 Turn each feature on or off in **Settings**. ⌃⌥⌘M opens the control panel from anywhere, and you can change every shortcut in Settings → Shortcuts.
 

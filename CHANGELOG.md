@@ -4,7 +4,7 @@
 
 The first version for friends.
 
-- **Launcher** (⌃⌥Space): apps, files, settings, commands, math and currency conversion.
+- **Launcher** (⌃⌥Space): apps, System Settings pages, commands, math, units and currency conversion.
 - **Clipboard History** (⌃⌥V) with picture previews, pinning and snippets.
 - **Screenshots** (⇧⌘4): area or window, an editor (brush, boxes, numbered steps, text), and automatic copying after 3 seconds if you don't edit. Includes a one-click switch to use ⇧⌘4 instead of macOS's own shortcut.
 - **Screen recording** (⌃⌥⌘R) with an options bar: microphone, system audio, pause, mute.

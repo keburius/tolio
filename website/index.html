@@ -126,6 +126,36 @@
   .card h3 kbd { font: 12.5px ui-monospace, SFMono-Regular, Menlo, monospace; color: var(--muted); background: rgba(255, 255, 255, 0.07); border-radius: 6px; padding: 2px 7px; white-space: nowrap; }
   .card p { margin: 0; color: var(--muted); font-size: 15.5px; }
 
+
+  /* Detailed features */
+  .jump { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin: -12px 0 36px; }
+  .jump a { padding: 7px 14px; border-radius: 999px; background: rgba(255, 255, 255, 0.06); border: 1px solid var(--line); color: var(--text); font-size: 14.5px; }
+  .jump a:hover { background: rgba(123, 108, 255, 0.2); text-decoration: none; }
+  .group { padding-top: 34px; scroll-margin-top: 20px; }
+  .group-head { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--line); }
+  .group-head h3 { margin: 0; font-size: 24px; letter-spacing: -0.01em; }
+  .group-head p { margin: 0; color: var(--muted); }
+  .details { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 460px), 1fr)); gap: 14px; }
+  .detail { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px; }
+  .detail header { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+  .detail .ico { width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; flex-shrink: 0; background: linear-gradient(145deg, rgba(123, 108, 255, 0.32), rgba(123, 108, 255, 0.12)); color: var(--accent-2); border: 1px solid rgba(123, 108, 255, 0.3); }
+  .detail .ico svg { width: 23px; height: 23px; }
+  .detail h4 { margin: 0; font-size: 19px; flex: 1; }
+  kbd { font: 12.5px ui-monospace, SFMono-Regular, Menlo, monospace; color: var(--text); background: rgba(255, 255, 255, 0.08); border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 6px; padding: 1px 6px; white-space: nowrap; }
+  .detail header kbd { color: var(--muted); }
+  .lead2 { margin: 0 0 12px; color: var(--text); font-size: 16px; }
+  .checks { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+  /* A lone last card in a group spans the row; its list uses two columns when wide. */
+  @media (min-width: 960px) {
+    .details > .detail:last-child:nth-child(odd) { grid-column: 1 / -1; }
+    .details > .detail:last-child:nth-child(odd) .checks { grid-template-columns: 1fr 1fr; column-gap: 28px; }
+  }
+  .checks li { position: relative; padding-left: 26px; color: var(--muted); font-size: 15px; line-height: 1.5; }
+  .checks li::before {
+    content: ""; position: absolute; left: 0; top: 3px; width: 17px; height: 17px; border-radius: 50%;
+    background: rgba(123, 108, 255, 0.2) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%239d92ff' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 12.5 4 4 8-9'/%3E%3C/svg%3E") center / 11px no-repeat;
+  }
+
   .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; counter-reset: step; }
   .step { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px; }
   .step::before {
@@ -219,32 +249,47 @@
   <section id="features">
     <div class="wrap">
       <h2>Everything in one place</h2>
-      <p class="sub">Turn on only what you need. Every shortcut can be changed in Settings.</p>
-      <div class="grid">
-        <div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h3l2-2h6l2 2h3v12H4z"/><circle cx="12" cy="13" r="3.5"/></svg></div>
-          <h3>Screenshots <kbd>⇧⌘4</kbd></h3><p>Capture an area or a window, then draw, box, number steps or add text. Leave it alone and it's copied after 3 seconds.</p></div>
-        <div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3" fill="currentColor"/></svg></div>
-          <h3>Screen recording <kbd>⌃⌥⌘R</kbd></h3><p>Record an area or the whole screen with your microphone and system sound. Pause and mute as you go.</p></div>
-        <div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 8V5a1 1 0 0 1 1-1h3M16 4h3a1 1 0 0 1 1 1v3M20 16v3a1 1 0 0 1-1 1h-3M8 20H5a1 1 0 0 1-1-1v-3"/><path d="M9 9h6M12 9v7"/></svg></div>
-          <h3>Capture Text <kbd>⇧⌘2</kbd></h3><p>Drag over any text on screen to copy it, even in images and videos. Reads QR codes and barcodes too.</p></div>
-        <div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="6" y="4" width="12" height="17" rx="2"/><path d="M9 4h6v3H9z"/></svg></div>
-          <h3>Clipboard History <kbd>⌃⌥V</kbd></h3><p>Everything you copied, with picture previews. Pin favourites and save text snippets you type often.</p></div>
-        <div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="6"/><path d="m20 20-4.5-4.5"/></svg></div>
-          <h3>Launcher <kbd>⌃⌥Space</kbd></h3><p>Open apps, files and settings, run Tolio's commands, do quick math and convert currencies.</p></div>
-        <div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 4h14v11l-5 5H5z"/><path d="M14 20v-5h5"/></svg></div>
-          <h3>Sticky Notes <kbd>⌃⌥⌘N</kbd></h3><p>Glass notes that live on your desktop. Add one from the shortcut or by right-clicking the desktop.</p></div>
-        <div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M12 5v14"/></svg></div>
-          <h3>Window Layouts <kbd>⌃⌥←→</kbd></h3><p>Snap windows to halves, thirds or full screen with a key, or drag them to a screen edge.</p></div>
-        <div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="7" y="3" width="13" height="10" rx="2"/><rect x="4" y="11" width="13" height="10" rx="2"/></svg></div>
-          <h3>Window Switcher <kbd>⌥Tab</kbd></h3><p>Jump straight to any window, not just any app, with previews of each one.</p></div>
-        <div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M13 3 5 14h6l-1 7 8-11h-6z"/></svg></div>
-          <h3>Energy Mode <kbd>⌃⌥⌘A</kbd></h3><p>Keep your Mac awake for an hour, until a set time, or while certain apps are running.</p></div>
-        <div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></div>
-          <h3>Lock Keyboard <kbd>⌃⌥⌘L</kbd></h3><p>Lock the keyboard so you can wipe it clean without typing nonsense. Unlock with the mouse.</p></div>
-        <div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3z"/></svg></div>
-          <h3>Shortcut cheat sheet <kbd>⌃⌥⌘/</kbd></h3><p>See every menu shortcut of the app you're in, and run any of them with a click.</p></div>
-        <div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 20V12M10 20V6M15 20v-9M20 20V4"/></svg></div>
-          <h3>Text actions and stats</h3><p>Select text to search, open links or translate. Show CPU, memory and disk in the menu bar.</p></div>
+      <p class="sub">Fifteen tools that feel like part of macOS. Turn on only what you need, and change any shortcut in Settings.</p>
+      <nav class="jump" aria-label="Feature groups"><a href="#capture">Capture</a><a href="#clipboard">Clipboard & typing</a><a href="#launch">Find & launch</a><a href="#windows">Windows</a><a href="#desktop">Desktop & Mac</a></nav>
+      <div class="group" id="capture">
+        <div class="group-head"><h3>Capture</h3><p>Screenshots, recordings and text, straight from your screen.</p></div>
+        <div class="details">
+          <article class="detail"><header><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h3l2-2h6l2 2h3v12H4z"/><circle cx="12" cy="13" r="3.5"/></svg></div><h4>Screenshots</h4><kbd>⇧⌘4</kbd></header><p class="lead2">Capture exactly what you want, mark it up in seconds, and get back to work.</p><ul class="checks"><li>Drag over an area, or click a window to take just that window (with or without its shadow). <kbd>⌃⌥⌘3</kbd> takes the whole screen.</li><li>An editor with brush, arrow, box, highlight, blur, numbered steps, text and crop, each one key away (P, A, R, H, B, N, T, C).</li><li>Leave it alone and it’s copied to the clipboard after 3 seconds. Start editing and it waits for you.</li><li>Copy, save, delete, or pin it floating above your windows, with adjustable opacity.</li><li>Full display sharpness at real size. Experimental scrolling capture joins long pages into one tall image.</li></ul></article>
+          <article class="detail"><header><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3" fill="currentColor"/></svg></div><h4>Screen recording</h4><kbd>⌃⌥⌘R</kbd></header><p class="lead2">Record a tutorial, a bug or a quick demo without opening another app.</p><ul class="checks"><li>Drag an area or click for the whole screen. The area stays outlined, so you always see what’s recorded.</li><li>An options bar: microphone, system audio, pointer, and 30 or 60 frames per second.</li><li>Pause, resume and mute the microphone while recording. Paused parts are cut from the video.</li><li>Saved as an MP4, with system audio and microphone on separate tracks.</li><li>Not happy with it? Discard it to the Trash in one click.</li></ul></article>
+          <article class="detail"><header><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8V5a1 1 0 0 1 1-1h3M16 4h3a1 1 0 0 1 1 1v3M20 16v3a1 1 0 0 1-1 1h-3M8 20H5a1 1 0 0 1-1-1v-3"/><path d="M9 9h6M12 9v7"/></svg></div><h4>Capture Text</h4><kbd>⇧⌘2</kbd></header><p class="lead2">Copy text you can’t select: in images, videos, screenshots, PDFs and stubborn apps.</p><ul class="checks"><li>Drag over any part of the screen. The text is on your clipboard a moment later.</li><li>Reads QR codes and barcodes, with an Open button for links.</li><li>Hold ⇧ when you finish selecting to add to your previous capture.</li><li>Keep line breaks or join them into one paragraph, and choose recognition languages.</li><li>Can read the text aloud. Recognition runs entirely on your Mac.</li></ul></article>
+        </div>
+      </div>
+      <div class="group" id="clipboard">
+        <div class="group-head"><h3>Clipboard & typing</h3><p>Never lose something you copied, and type less.</p></div>
+        <div class="details">
+          <article class="detail"><header><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="4" width="12" height="17" rx="2"/><path d="M9 4h6v3H9z"/></svg></div><h4>Clipboard History</h4><kbd>⌃⌥V</kbd></header><p class="lead2">Everything you copy is remembered, so you can paste it again later.</p><ul class="checks"><li>Text, links, images and files, with picture previews.</li><li>Open it with the shortcut or from the menu bar. Search it, and pin favourites so they’re never removed.</li><li>The last 10 copies are also in the control panel: press 1–9 or 0 to paste.</li><li>Passwords and other items marked secret by password managers are never stored.</li><li>You decide how much history to keep and for how long.</li></ul></article>
+          <article class="detail"><header><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 7 3 12l5 5M16 7l5 5-5 5"/></svg></div><h4>Snippets</h4></header><p class="lead2">Type a short code like <kbd>;sig</kbd> in any app and Tolio replaces it with your text.</p><ul class="checks"><li>Signatures, addresses, replies you send every day.</li><li>Placeholders for the date, time, your clipboard and where the cursor lands.</li><li>Works in every app, and never in password fields.</li></ul></article>
+          <article class="detail"><header><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h10M4 12h16M4 18h8"/><rect x="14" y="3" width="7" height="6" rx="1.5"/></svg></div><h4>Text selection actions</h4></header><p class="lead2">Select text anywhere and a small bar offers what you probably want to do next.</p><ul class="checks"><li>Copy, Search the Web, Open Link, Translate, UPPERCASE and lowercase.</li><li>Works when you select with the mouse or with ⇧ and the arrow keys.</li><li>Search with Google, DuckDuckGo, Bing or Kagi. Translate uses Apple’s own translation.</li><li>Works even in apps that don’t share their selection, and puts your clipboard back right away.</li></ul></article>
+        </div>
+      </div>
+      <div class="group" id="launch">
+        <div class="group-head"><h3>Find & launch</h3><p>One search box for apps, settings, commands and quick answers.</p></div>
+        <div class="details">
+          <article class="detail"><header><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="m20 20-4.5-4.5"/></svg></div><h4>Launcher</h4><kbd>⌃⌥Space</kbd></header><p class="lead2">Open anything in a few keystrokes, without reaching for the mouse.</p><ul class="checks"><li>Apps, System Settings pages, and every Tolio command.</li><li>Quick answers: math (<kbd>2+2</kbd>), units (<kbd>5 km in mi</kbd>) and currencies (<kbd>20 usd</kbd>).</li><li>Learns what you open often and puts it first.</li><li>Currency rates come from the European Central Bank and the National Bank of Georgia, and you can switch the download off.</li></ul></article>
+          <article class="detail"><header><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3z"/></svg></div><h4>Shortcut cheat sheet</h4><kbd>⌃⌥⌘/</kbd></header><p class="lead2">Forgot a shortcut? See every one the current app has.</p><ul class="checks"><li>Press ⌘ twice and hold to peek, then let go to hide it.</li><li>Lists every shortcut from the app’s menus, so nothing is hidden.</li><li>Click an item to run it. Open it with its shortcut to get a filter field.</li></ul></article>
+        </div>
+      </div>
+      <div class="group" id="windows">
+        <div class="group-head"><h3>Windows</h3><p>Tidy windows with a key, and jump straight to the one you need.</p></div>
+        <div class="details">
+          <article class="detail"><header><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M12 5v14"/></svg></div><h4>Window Layouts</h4><kbd>⌃⌥←/→</kbd></header><p class="lead2">Arrange windows side by side in an instant.</p><ul class="checks"><li>Halves with <kbd>⌃⌥←→↑↓</kbd>, thirds with <kbd>⌃⌥D F G</kbd>, two-thirds with <kbd>⌃⌥E T</kbd>.</li><li>Maximize <kbd>⌃⌥↩</kbd>, center <kbd>⌃⌥C</kbd>, restore <kbd>⌃⌥⌫</kbd>, move to the next display <kbd>⌃⌥⌘→</kbd>.</li><li>Or drag a window to a screen edge: sides for halves, corners for quarters, top to maximize.</li><li>A layout grid from the menu bar, and every layout in the Launcher too.</li></ul></article>
+          <article class="detail"><header><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="3" width="13" height="10" rx="2"/><rect x="4" y="11" width="13" height="10" rx="2"/></svg></div><h4>Window Switcher</h4><kbd>⌥Tab</kbd></header><p class="lead2">Switch to any window, not just any app.</p><ul class="checks"><li>Live previews of every window, so you pick the right one at a glance.</li><li>Add ⇧ to go back. Use the arrows and ↩, or press Q to quit an app and W to close a window.</li><li>Optionally include minimized windows, hidden apps and other desktops (Spaces).</li></ul></article>
+        </div>
+      </div>
+      <div class="group" id="desktop">
+        <div class="group-head"><h3>Desktop & Mac</h3><p>Small helpers for the rest of your day.</p></div>
+        <div class="details">
+          <article class="detail"><header><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h14v11l-5 5H5z"/><path d="M14 20v-5h5"/></svg></div><h4>Sticky Notes</h4><kbd>⌃⌥⌘N</kbd></header><p class="lead2">Glass notes that live right on your desktop.</p><ul class="checks"><li>Right-click an empty spot on the desktop and choose New Sticky Note.</li><li>Resize, move, pick a colour, and keep a note on top of other windows when you need it.</li><li>Saved automatically. Deleted one by mistake? Undo, or restore it later.</li><li>Show notes on one desktop or on every Space.</li></ul></article>
+          <article class="detail"><header><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 3 5 14h6l-1 7 8-11h-6z"/></svg></div><h4>Energy Mode</h4><kbd>⌃⌥⌘A</kbd></header><p class="lead2">Keep your Mac awake during downloads, presentations and long builds.</p><ul class="checks"><li>For 15 or 30 minutes, 1, 2 or 5 hours, or until you turn it off.</li><li>Keep the display on too, if you want.</li><li>Stays awake automatically while apps you choose are running.</li></ul></article>
+          <article class="detail"><header><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></div><h4>Lock Keyboard</h4><kbd>⌃⌥⌘L</kbd></header><p class="lead2">Clean your keyboard without typing gibberish into some window.</p><ul class="checks"><li>Blocks every key, including media and brightness keys.</li><li>Unlock with the mouse, or automatically after a time limit.</li><li>Fails safe: if anything goes wrong, your keyboard simply works again.</li></ul></article>
+          <article class="detail"><header><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 20V12M10 20V6M15 20v-9M20 20V4"/></svg></div><h4>System Stats</h4></header><p class="lead2">Keep an eye on your Mac from the menu bar.</p><ul class="checks"><li>CPU, memory, network and battery, right in the menu bar.</li><li>Choose what to show and how often it updates.</li><li>Click for details, including free disk space.</li></ul></article>
+          <article class="detail"><header><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M3 9h18M8 13h3M8 16h6"/></svg></div><h4>Control panel</h4><kbd>⌃⌥⌘M</kbd></header><p class="lead2">Everything Tolio does, one click or key away.</p><ul class="checks"><li>Quick tiles for screenshots, recording, clipboard, Energy Mode and Lock Keyboard, each with its shortcut.</li><li>Your last 10 copies, ready to paste.</li><li>Fully keyboard-driven: arrows, ↩ and number keys.</li></ul></article>
+        </div>
       </div>
     </div>
   </section>
