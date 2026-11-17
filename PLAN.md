@@ -962,3 +962,4 @@ Each phase has a **Done when** line, and nothing moves on until it's met. "You" 
   - The Tolio icon is used as the disk icon.
   - A mounted disk with the same name is ejected first. macOS asks once to let the terminal control Finder.
   - Checked by opening the result: labels are readable in dark mode. 9.6 MB.
+- **Website analytics (same day):** Vercel Web Analytics added as `<script defer src="/_vercel/insights/script.js">`. It counts anonymous page views with no cookies. It loads from the site's own address, so the CSP (`script-src 'self'`, `connect-src 'self'`) needs no change. The footer says the site counts visits anonymously. Download counts come from GitHub (each release asset's download count).
