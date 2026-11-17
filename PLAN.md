@@ -209,7 +209,8 @@ Risks: the mixed-DPI composite of a cross-display area has no single "correct" p
 | 7 Text selection | **done** |
 | 8 Screenshots | **done** |
 | Interface and onboarding | **done** |
-| Ask AI in the Launcher | planned (§9), waiting for approval |
+| Ask AI in the Launcher | parked on branch `ask-ai` for 1.0.1 (not finished, doesn't build) |
+| R0 Stabilize | **done** (`v0.9.0-rc0`) |
 
 ### Phase 0 — done
 - `make build | test | release | run`. Warnings fail the build (`Scripts/check-warnings.sh`). Release is universal (arm64 + x86_64), hardened runtime.
@@ -749,3 +750,11 @@ Each phase has a **Done when** line, and nothing moves on until it's met. "You" 
 | D3 | Join the Apple Developer Program ($99/year)? | Yes, needed for warning-free installs and the Finder extension |
 | D4 | Repo private or public; licence | Private during the beta; decide the licence before going public |
 | D5 | Delete `.claude/worktrees/`? | Yes |
+
+### R0: done (2026-11-17)
+- **Ask AI:** the unfinished work (OmniAI module, Launcher Ask mode, shared search-engine setting) is committed on branch **`ask-ai`** (`d7038ca`). It doesn't build yet and comes back for 1.0.1. `main` stays at the last working state.
+- **Helper worktrees:** the four, all fully merged and with no unsaved changes, were removed with `git worktree remove`, and their branches deleted.
+- **One registered Omni:** their copies of Omni, an old Release build and an Xcode-built copy were unregistered from LaunchServices. Only `build/DerivedData/Build/Products/Debug/Omni.app` is registered now, so `omni://` links can't start a second Omni.
+- **Fresh clone check:** `git clone` then `make test`, with no signing file (ad-hoc): build succeeded, 361 tests passed, no warnings in Omni code, string catalog up to date (689 keys), about 65 s. The clone's app was unregistered afterwards.
+- Tagged `v0.9.0-rc0`.
+
