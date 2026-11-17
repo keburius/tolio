@@ -23,7 +23,6 @@ struct ControlPanelView: View {
                 turnOnRow(id: id, feature: feature)
             }
             clips
-            windowSection
             Divider()
             footer
         }
@@ -99,29 +98,6 @@ struct ControlPanelView: View {
         }
     }
 
-    // MARK: Window layouts
-
-    @ViewBuilder private var windowSection: some View {
-        VStack(alignment: .leading, spacing: OmniStyle.s2) {
-            switch model.window {
-            case let .window(app, title):
-                SectionHeader(L10n.Panel.windowSection)
-                Text(title.map { L10n.Panel.windowTitle(app, $0) } ?? app).font(.callout).foregroundStyle(.secondary).lineLimit(1).truncationMode(.middle)
-                LayoutGrid(layouts: model.layouts, focused: model.showsFocusRing ? model.focus.current : nil) { actions.activate(.layout($0)) }
-            case .none:
-                SectionHeader(L10n.Panel.windowSection)
-                Text(L10n.Panel.noWindow).font(.callout).foregroundStyle(.secondary)
-            case let .featureOff(name):
-                SectionHeader(L10n.Panel.windowSection)
-                HStack {
-                    Text(L10n.Panel.turnOnToArrange(name)).font(.callout).foregroundStyle(.secondary)
-                    Spacer()
-                    Button(L10n.Common.turnOn) { actions.turnOn(.windowLayouts) }.controlSize(.small)
-                }
-            }
-        }
-    }
-
     // MARK: Footer
 
     private var footer: some View {
@@ -176,10 +152,10 @@ private struct TileButton: View {
                         Image(systemName: "exclamationmark.triangle.fill").font(.system(size: 9)).foregroundStyle(.orange).offset(x: 8, y: -4)
                     }
                 }
-                Text(title).font(.caption.weight(.medium)).lineLimit(2).multilineTextAlignment(.center).minimumScaleFactor(0.8)
-                Text(subtitle).font(.caption2.monospacedDigit()).foregroundStyle(.secondary).lineLimit(1)
+                // Icon only; the line below shows the shortcut (or the live state).
+                Text(subtitle).font(.caption.monospacedDigit()).foregroundStyle(.secondary).lineLimit(1).minimumScaleFactor(0.8)
             }
-            .frame(width: 66, height: 78)
+            .frame(width: 66, height: 56)
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
@@ -189,8 +165,9 @@ private struct TileButton: View {
                 .strokeBorder(focused ? Color.accentColor : Color(nsColor: .separatorColor).opacity(OmniStyle.increaseContrast ? 1 : 0.4), lineWidth: focused ? 2 : 1)
         }
         .opacity(isOff ? 0.55 : 1)
+        .help(helpText)
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel([title, subtitle].joined(separator: ", "))
+        .accessibilityLabel([helpText, subtitle].joined(separator: ", "))
         .accessibilityAddTraits(.isButton)
     }
 
@@ -207,12 +184,21 @@ private struct TileButton: View {
         return tile.title
     }
 
+    /// Shortcut under the icon; a running timer or an active state's detail takes its place.
     private var subtitle: String {
         switch tile.state {
-        case .off: L10n.Common.off
-        case .needsPermission: L10n.Status.needsPermission
-        case let .ready(_, detail): detail ?? tile.shortcut ?? ""
-        case .recording: tile.shortcut ?? ""
+        case let .recording(elapsed): elapsed
+        case let .ready(_, detail?): detail
+        default: tile.shortcut ?? "–" // l10n-ignore
+        }
+    }
+
+    /// The name and state, shown on hover since the tile has no title.
+    private var helpText: String {
+        switch tile.state {
+        case .off: [tile.title, L10n.Common.off].joined(separator: " — ") // l10n-ignore
+        case .needsPermission: [tile.title, L10n.Status.needsPermission].joined(separator: " — ") // l10n-ignore
+        default: title
         }
     }
 

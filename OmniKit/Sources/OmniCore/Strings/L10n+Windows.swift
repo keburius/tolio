@@ -93,15 +93,15 @@ public extension L10n {
         }
     }
 
-    /// Keep Awake (feature id `keepawake`).
+    /// Energy Mode, formerly Keep Awake (feature id `keepawake`).
     enum KeepAwake {
-        public static var displayName: String { tr("keepawake.displayName", "Keep Awake") }
+        public static var displayName: String { tr("keepawake.displayName", "Energy Mode") }
         public static var summary: String { tr("keepawake.summary", "Stops your Mac from going to sleep for as long as you choose.") }
-        public static var toggleHotkey: String { tr("keepawake.hotkey.toggle", "Keep Awake on / off") }
-        public static var commandOn: String { tr("keepawake.command.on", "Keep Awake") }
+        public static var toggleHotkey: String { tr("keepawake.hotkey.toggle", "Energy Mode on / off") }
+        public static var commandOn: String { tr("keepawake.command.on", "Turn On Energy Mode") }
         public static var commandOnSubtitle: String { tr("keepawake.command.onSubtitle", "Until turned off") }
-        public static func commandFor(_ duration: String) -> String { format("keepawake.command.for", "Keep Awake for %@", duration) }
-        public static var commandOff: String { tr("keepawake.command.off", "Stop Keeping Awake") }
+        public static func commandFor(_ duration: String) -> String { format("keepawake.command.for", "Energy Mode for %@", duration) }
+        public static var commandOff: String { tr("keepawake.command.off", "Turn Off Energy Mode") }
         public static var sleepAllowed: String { tr("keepawake.notice.sleepAllowed", "Sleep allowed again") }
 
         // Durations
@@ -138,7 +138,7 @@ public extension L10n {
 
         // Erase
         public static func eraseDescription(_ count: Int) -> String {
-            plural("keepawake.erase.description", one: "the %lld app in Keep Awake's list", other: "the %lld apps in Keep Awake's list", count)
+            plural("keepawake.erase.description", one: "the %lld app in Energy Mode's list", other: "the %lld apps in Energy Mode's list", count)
         }
     }
 

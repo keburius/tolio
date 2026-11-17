@@ -1506,7 +1506,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Keep Awake for %@"
+            "value": "Energy Mode for %@"
           }
         }
       }
@@ -1517,7 +1517,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Stop Keeping Awake"
+            "value": "Turn Off Energy Mode"
           }
         }
       }
@@ -1528,7 +1528,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Keep Awake"
+            "value": "Turn On Energy Mode"
           }
         }
       }
@@ -1550,7 +1550,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Keep Awake"
+            "value": "Energy Mode"
           }
         }
       }
@@ -1610,13 +1610,13 @@
               "one": {
                 "stringUnit": {
                   "state": "translated",
-                  "value": "the %lld app in Keep Awake's list"
+                  "value": "the %lld app in Energy Mode's list"
                 }
               },
               "other": {
                 "stringUnit": {
                   "state": "translated",
-                  "value": "the %lld apps in Keep Awake's list"
+                  "value": "the %lld apps in Energy Mode's list"
                 }
               }
             }
@@ -1630,7 +1630,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Keep Awake on / off"
+            "value": "Energy Mode on / off"
           }
         }
       }
@@ -2634,7 +2634,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Keep Awake"
+            "value": "Energy Mode"
           }
         }
       }
@@ -2954,17 +2954,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Turn on %@ to see what you copied here."
-          }
-        }
-      }
-    },
-    "panel.turnOnLayouts": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Turn on %@ to arrange windows from here."
           }
         }
       }

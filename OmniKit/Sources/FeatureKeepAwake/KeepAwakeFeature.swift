@@ -50,16 +50,16 @@ public final class KeepAwakeFeature: Feature {
         context.registerHotkey(Self.toggleHotkey) { [weak self] in self?.toggle() }
         context.registerCommand(Command(
             id: "keepawake.on", title: L10n.KeepAwake.commandOn, subtitle: L10n.KeepAwake.commandOnSubtitle,
-            keywords: ["caffeine", "sleep", "awake"], symbolName: symbolName
+            keywords: ["energy", "caffeine", "sleep", "awake", "keep awake"], symbolName: symbolName
         ) { [weak self] in self?.start(.indefinite) })
         for preset in KeepAwakePolicy.presets {
             context.registerCommand(Command(
-                id: "keepawake.\(preset.minutes)", title: L10n.KeepAwake.commandFor(preset.title), keywords: ["caffeine", "sleep", "awake"],
+                id: "keepawake.\(preset.minutes)", title: L10n.KeepAwake.commandFor(preset.title), keywords: ["energy", "caffeine", "sleep", "awake", "keep awake"],
                 symbolName: "timer"
             ) { [weak self] in self?.start(minutes: preset.minutes) })
         }
         context.registerCommand(Command(
-            id: "keepawake.off", title: L10n.KeepAwake.commandOff, keywords: ["caffeine", "sleep"], symbolName: "moon.zzz"
+            id: "keepawake.off", title: L10n.KeepAwake.commandOff, keywords: ["energy", "caffeine", "sleep", "awake"], symbolName: "moon.zzz"
         ) { [weak self] in self?.start(.off) })
         updateRuleObservers()
     }

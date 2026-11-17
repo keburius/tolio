@@ -80,7 +80,6 @@ final class ControlPanelController {
         ShortcutLookupText.controlPanel = shortcuts.text(for: AppHotkeys.controlPanel.id)
         model.tiles = makeTiles()
         model.clips = makeClips()
-        model.window = makeWindow()
         model.layouts = ControlPanelModel.layoutSpecs.map { spec in
             ControlPanelModel.Layout(id: spec.command, title: spec.title(), shortcut: shortcuts.text(for: spec.command), span: spec.span)
         }
@@ -121,7 +120,7 @@ final class ControlPanelController {
         guard let clipboard = services.features.feature("clipboard") else { return .empty }
         guard services.features.status(of: clipboard.id) == .running else { return .featureOff(clipboard.displayName) }
         guard let provider = services.commands.allProviders.first(where: { $0.keyword == "clip" }) else { return .empty }
-        let results = provider.results(for: "", limit: 3)
+        let results = provider.results(for: "", limit: ControlPanelModel.recentCount)
         return results.isEmpty ? .empty : .items(results)
     }
 
@@ -223,8 +222,10 @@ final class ControlPanelController {
                 activate(current)
             }
         default:
-            if let digit = event.charactersIgnoringModifiers.flatMap(Int.init), (1...3).contains(digit) {
-                activate(.recent(digit - 1))
+            // 1–9 open the first nine copies, 0 the tenth.
+            if let digit = event.charactersIgnoringModifiers.flatMap(Int.init), (0...9).contains(digit) {
+                let index = digit == 0 ? 9 : digit - 1
+                if case let .items(results) = model.clips, results.indices.contains(index) { activate(.recent(index)) }
                 return true
             }
             return false

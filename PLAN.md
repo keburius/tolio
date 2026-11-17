@@ -846,3 +846,10 @@ Each phase has a **Done when** line, and nothing moves on until it's met. "You" 
    - `~/Library/Caches/com.george.tolio`
 4. Optional: in System Settings → Privacy & Security, remove Tolio from Accessibility, Screen Recording and Microphone. In General → Login Items, remove it if it's listed.
 
+
+### Small fixes before R4 (2026-11-17, requested by you)
+- **Keep Awake → Energy Mode:** renamed everywhere it shows: feature name, Settings, onboarding, menu, Launcher commands ("Turn On Energy Mode", "Energy Mode for 1 hour", "Turn Off Energy Mode") and the shortcut name. "energy" was added to its Launcher search words, and "keep awake" still finds it. The internal ID stays `keepawake`, so settings carry over.
+- **Control panel:**
+  - Tiles are icon-only, with the shortcut underneath. A running recording's time or an active state's detail replaces the shortcut, and hovering shows the name and state.
+  - The Window section is removed. The Window Layouts menu bar icon still opens its own layout grid.
+  - Recently Copied lists the last **10** items. Keys 1–9 open the first nine and 0 the tenth; the arrow keys go down the list.

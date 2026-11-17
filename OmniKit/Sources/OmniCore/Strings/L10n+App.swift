@@ -36,7 +36,6 @@ public extension L10n {
         public static var noWindow: String { tr("panel.noWindow", "No window to arrange. Click a window, then open the control panel again.") }
         public static var nothingCopied: String { tr("panel.nothingCopied", "Nothing copied yet. Copy something to see it here.") }
         public static func turnOnToSeeClips(_ feature: String) -> String { format("panel.turnOnClips", "Turn on %@ to see what you copied here.", feature) }
-        public static func turnOnToArrange(_ feature: String) -> String { format("panel.turnOnLayouts", "Turn on %@ to arrange windows from here.", feature) }
         public static func stop(_ time: String) -> String { format("panel.stop", "Stop · %@", time) }
         public static var leftHalf: String { tr("panel.layout.leftHalf", "Left half") }
         public static var rightHalf: String { tr("panel.layout.rightHalf", "Right half") }
@@ -137,7 +136,7 @@ public extension L10n {
         public static var screenshots: String { tr("onboarding.icon.screenshots", "Screenshots") }
         public static var clipboard: String { tr("onboarding.icon.clipboard", "Clipboard") }
         public static var windows: String { tr("onboarding.icon.windows", "Windows") }
-        public static var keepAwake: String { tr("onboarding.icon.keepAwake", "Keep Awake") }
+        public static var keepAwake: String { tr("onboarding.icon.keepAwake", "Energy Mode") }
         public static var launcher: String { tr("onboarding.icon.launcher", "Launcher") }
         public static var staysOnMac: String { tr("onboarding.staysOnMac", "Everything stays on this Mac.") }
         public static var getStarted: String { tr("onboarding.getStarted", "Get Started") }
