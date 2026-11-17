@@ -42,6 +42,8 @@ struct ScreenshotsSettingsView: View {
     /// Bumped when Tolio becomes active again (e.g. back from System Settings),
     /// so the macOS-shortcut warning is re-checked.
     @State private var activations = 0
+    @State private var confirmingSwitch = false
+    @State private var needsLogout = false
 
     /// macOS's own ⇧⌘4 is on and equals Tolio's area shortcut.
     private var macShortcutConflict: Bool {
@@ -55,9 +57,25 @@ struct ScreenshotsSettingsView: View {
                 VStack(alignment: .leading, spacing: OmniStyle.s2) {
                     Label(S.macShortcutConflict, systemImage: "exclamationmark.triangle.fill")
                         .font(.callout).symbolRenderingMode(.multicolor)
-                    Button(S.openKeyboardShortcuts) {
-                        NSWorkspace.shared.open(URL(string: "x-apple.systempreferences:com.apple.Keyboard-Settings.extension")!) // l10n-ignore
+                    HStack {
+                        Button(S.useShortcutForTolio) { confirmingSwitch = true }
+                            .buttonStyle(.borderedProminent)
+                        Button(S.openKeyboardShortcuts) {
+                            NSWorkspace.shared.open(URL(string: "x-apple.systempreferences:com.apple.Keyboard-Settings.extension")!) // l10n-ignore
+                        }
                     }
+                }
+                .confirmationDialog(S.useShortcutConfirmTitle, isPresented: $confirmingSwitch) {
+                    Button(S.useShortcutConfirmButton) { switchMacShortcut(enabled: false) }
+                } message: {
+                    Text(S.useShortcutConfirmMessage)
+                }
+            } else if settings.value(ScreenshotsFeature.turnedOffMacShortcutKey) {
+                LabeledContent {
+                    Button(S.restoreMacShortcut) { switchMacShortcut(enabled: true) }
+                } label: {
+                    Text(needsLogout ? S.macShortcutNeedsLogout : S.macShortcutIsOff)
+                        .font(.callout).foregroundStyle(.secondary)
                 }
             }
             Picker(S.afterCapturing, selection: settings.binding(ScreenshotsFeature.afterKey)) {
@@ -109,6 +127,13 @@ struct ScreenshotsSettingsView: View {
             Text(S.scrollingNote)
                 .font(.caption).foregroundStyle(.secondary)
         }
+    }
+
+    private func switchMacShortcut(enabled: Bool) {
+        let applied = MacScreenshotShortcut.setMacShortcutEnabled(enabled)
+        settings.set(!enabled, for: ScreenshotsFeature.turnedOffMacShortcutKey)
+        needsLogout = !applied
+        activations += 1
     }
 
     private func chooseFolder() {

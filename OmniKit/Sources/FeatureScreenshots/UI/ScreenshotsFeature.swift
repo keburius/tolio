@@ -38,6 +38,8 @@ public final class ScreenshotsFeature: Feature {
     static let folderKey = SettingKey.feature("screenshots", "folder", default: "")
     static let shadowKey = SettingKey.feature("screenshots", "windowShadow", default: true)
     /// Copy and close the editor after a few seconds if it isn't touched.
+    /// Set when Tolio switched off macOS's own ⇧⌘4 (so it can offer to undo that).
+    static let turnedOffMacShortcutKey = SettingKey.feature("screenshots", "turnedOffMacShortcut", default: false)
     static let autoCopyKey = SettingKey.feature("screenshots", "autoCopy", default: true)
     static let fpsKey = SettingKey.feature("screenshots", "fps", default: 30)
     static let codecKey = SettingKey.feature("screenshots", "codec", default: VideoCodec.h264)

@@ -4842,6 +4842,28 @@
         }
       }
     },
+    "screenshots.settings.macShortcutIsOff": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "macOS’s own ⇧⌘4 is off, so it opens Tolio’s screenshot."
+          }
+        }
+      }
+    },
+    "screenshots.settings.macShortcutNeedsLogout": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Saved. It takes effect after you log out and back in."
+          }
+        }
+      }
+    },
     "screenshots.settings.microphone": {
       "extractionState": "manual",
       "localizations": {
@@ -4882,6 +4904,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Screenshots keep your display's full sharpness and open at their real size."
+          }
+        }
+      }
+    },
+    "screenshots.settings.restoreMacShortcut": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Turn macOS’s Back On"
           }
         }
       }
@@ -4981,6 +5014,50 @@
           "stringUnit": {
             "state": "translated",
             "value": "Use macOS Setting"
+          }
+        }
+      }
+    },
+    "screenshots.settings.useShortcutConfirmButton": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Turn Off macOS’s ⇧⌘4"
+          }
+        }
+      }
+    },
+    "screenshots.settings.useShortcutConfirmMessage": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tolio will switch off “Save picture of selected area as a file” in your keyboard shortcuts, so ⇧⌘4 opens Tolio’s screenshot. You can turn it back on here at any time."
+          }
+        }
+      }
+    },
+    "screenshots.settings.useShortcutConfirmTitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Turn off macOS’s own ⇧⌘4?"
+          }
+        }
+      }
+    },
+    "screenshots.settings.useShortcutForTolio": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Use ⇧⌘4 for Tolio"
           }
         }
       }

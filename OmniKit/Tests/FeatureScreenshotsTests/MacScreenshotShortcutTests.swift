@@ -30,3 +30,24 @@ import OmniCore
         #expect(!MacScreenshotShortcut.conflicts(with: nil, symbolicHotKeys: entry(enabled: true)))
     }
 }
+
+@Suite struct MacScreenshotShortcutUpdateTests {
+    @Test func turningOffKeepsTheComboAndOtherShortcuts() {
+        let before: [String: Any] = [
+            "30": ["enabled": true, "value": ["type": "standard", "parameters": [52, 21, 1_179_648]]],
+            "28": ["enabled": true],
+        ]
+        let after = MacScreenshotShortcut.updating(before, enabled: false)
+        let entry = after["30"] as? [String: Any]
+        #expect(entry?["enabled"] as? Bool == false)
+        #expect((entry?["value"] as? [String: Any])?["parameters"] as? [Int] == [52, 21, 1_179_648])
+        #expect((after["28"] as? [String: Any])?["enabled"] as? Bool == true)
+        #expect(!MacScreenshotShortcut.conflicts(with: KeyCombo(keyCode: 21, modifiers: [.shift, .command]), symbolicHotKeys: after))
+    }
+
+    @Test func missingEntryGetsMacDefaultAndCanBeRestored() {
+        let off = MacScreenshotShortcut.updating(nil, enabled: false)
+        let on = MacScreenshotShortcut.updating(off, enabled: true)
+        #expect(MacScreenshotShortcut.conflicts(with: KeyCombo(keyCode: 21, modifiers: [.shift, .command]), symbolicHotKeys: on))
+    }
+}

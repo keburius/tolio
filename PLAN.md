@@ -860,3 +860,10 @@ Each phase has a **Done when** line, and nothing moves on until it's met. "You" 
   - A countdown banner at the bottom ("Copying to the clipboard…", ring and seconds) copies the screenshot and closes the editor after **3 seconds**. The first click, key press or scroll in the editor stops it for good.
   - Setting: "Copy and close the editor after 3 seconds if you don't edit" (on by default; shown when "After capturing" is the editor).
   - Opening the editor from a pinned image never starts the countdown.
+- **One-click ⇧⌘4 for Tolio** (your choice):
+  - While macOS's "Save picture of selected area as a file" is on and equals Tolio's area shortcut, Screenshots settings shows the warning plus **"Use ⇧⌘4 for Tolio"**.
+  - After a confirmation, Tolio switches only that entry off in `com.apple.symbolichotkeys`, keeping its key combination. It applies the change at once with the same `activateSettings -u` System Settings uses; if that's unavailable, it says the change takes effect after logging out.
+  - **"Turn macOS's Back On"** reverses it. The change is logged as on/off only.
+  - Checked on your Mac: switching it off applied immediately. Your Mac is set this way now, and Tolio's undo flag is set.
+  - 2 more tests (372 in total).
+- **Keep Editing** button on the countdown bar.

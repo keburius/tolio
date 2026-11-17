@@ -18,6 +18,15 @@ public extension L10n {
         public static var autoCopyHint: String { tr("screenshots.editor.autoCopyHint", "Click or press a key to keep editing") }
         public static var autoCopyCancel: String { tr("screenshots.editor.autoCopyCancel", "Keep Editing") }
         public static var autoCopyToggle: String { tr("screenshots.settings.autoCopy", "Copy and close the editor after 3 seconds if you don’t edit") }
+        public static var useShortcutForTolio: String { tr("screenshots.settings.useShortcutForTolio", "Use ⇧⌘4 for Tolio") }
+        public static var useShortcutConfirmTitle: String { tr("screenshots.settings.useShortcutConfirmTitle", "Turn off macOS’s own ⇧⌘4?") }
+        public static var useShortcutConfirmMessage: String {
+            tr("screenshots.settings.useShortcutConfirmMessage", "Tolio will switch off “Save picture of selected area as a file” in your keyboard shortcuts, so ⇧⌘4 opens Tolio’s screenshot. You can turn it back on here at any time.")
+        }
+        public static var useShortcutConfirmButton: String { tr("screenshots.settings.useShortcutConfirmButton", "Turn Off macOS’s ⇧⌘4") }
+        public static var restoreMacShortcut: String { tr("screenshots.settings.restoreMacShortcut", "Turn macOS’s Back On") }
+        public static var macShortcutIsOff: String { tr("screenshots.settings.macShortcutIsOff", "macOS’s own ⇧⌘4 is off, so it opens Tolio’s screenshot.") }
+        public static var macShortcutNeedsLogout: String { tr("screenshots.settings.macShortcutNeedsLogout", "Saved. It takes effect after you log out and back in.") }
         public static var openKeyboardShortcuts: String { tr("screenshots.settings.openKeyboardShortcuts", "Open Keyboard Settings…") }
         public static var hotkeyScreen: String { tr("screenshots.hotkey.screen", "Capture screen") }
         public static var hotkeyText: String { tr("screenshots.hotkey.text", "Capture text") }
