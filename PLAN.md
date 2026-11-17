@@ -872,3 +872,4 @@ Each phase has a **Done when** line, and nothing moves on until it's met. "You" 
   - Screenshots no longer fill the window under the pointer with blue. They draw a light rounded outline (white with a dark edge) around the window a click would take.
   - While dragging, everything outside the area dims, with the size label as before.
   - **Capture Text never picks whole windows:** only a dragged area, and a plain click does nothing.
+  - Fix (same day): the transparent overlay let clicks fall through to the app below (text got selected, Esc did nothing). The panel now sets `ignoresMouseEvents = false`, fills itself with a near-invisible colour, and makes its view first responder so Esc works.

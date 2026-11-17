@@ -89,6 +89,9 @@ final class SelectionOverlay {
             panel.hasShadow = false
             panel.isReleasedWhenClosed = false
             panel.acceptsMouseMovedEvents = true
+            // The overlay draws nothing before a drag; without this macOS would
+            // pass clicks on its transparent pixels to the app underneath.
+            panel.ignoresMouseEvents = false
             panel.collectionBehavior = [.canJoinAllSpaces, .fullScreenAuxiliary, .stationary]
             let view = SelectionView(frame: CGRect(origin: .zero, size: screen.frame.size), screenFrame: screen.frame, scale: screen.backingScaleFactor, state: state)
             view.onFinish = { [weak self] result in self?.finish(result) }
@@ -99,7 +102,10 @@ final class SelectionOverlay {
             panels.append(panel)
         }
         let mouse = NSEvent.mouseLocation
-        (panels.first { $0.frame.contains(mouse) } ?? panels.first)?.makeKey()
+        if let panel = panels.first(where: { $0.frame.contains(mouse) }) ?? panels.first {
+            panel.makeKey()
+            panel.makeFirstResponder(panel.contentView) // so Esc reaches the view
+        }
         NSCursor.crosshair.push()
     }
 
@@ -156,6 +162,10 @@ private final class SelectionView: NSView {
     /// pointer (and, for screenshots, a light outline around the window a
     /// click would take). While dragging, everything outside the area dims.
     override func draw(_ dirtyRect: NSRect) {
+        // An almost invisible fill keeps every pixel "hit", so clicks and drags
+        // always land on the overlay (belt and braces with ignoresMouseEvents).
+        NSColor.black.withAlphaComponent(0.002).setFill()
+        bounds.fill()
         if let selection = state.selection {
             let hole = local(selection)
             NSColor.black.withAlphaComponent(0.3).setFill()
