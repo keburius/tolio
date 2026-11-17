@@ -96,6 +96,7 @@
   .coffee p { margin: 0 0 14px; color: var(--text); }
   .btn-coffee { background: #ffdd00; color: #1d1d1f; box-shadow: 0 10px 30px rgba(255, 221, 0, 0.18); }
   .btn-coffee:hover { background: #ffe633; }
+  .bmc-btn { display: flex; justify-content: center; min-height: 60px; }
 
   /* ===== Interactive hero ===== */
   main { overflow-x: clip; }
@@ -805,17 +806,21 @@
     <p class="meta">Version 1.0.0 · <a href="https://github.com/keburius/tolio/releases">All releases</a> · <a href="https://github.com/keburius/tolio/blob/main/CHANGELOG.md">What's new</a></p>
     <div class="coffee reveal">
       <p>Tolio is free and always will be. If it saves you time, you can buy me a coffee.</p>
-      <a class="btn btn-coffee" href="https://buymeacoffee.com/keburius" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h12v5a6 6 0 0 1-6 6h0a6 6 0 0 1-6-6z"/><path d="M17 10h1.5a2.5 2.5 0 0 1 0 5H17"/><path d="M9 3c0 1 1 1 1 2M13 3c0 1 1 1 1 2"/></svg>Buy me a coffee</a>
+      <div class="bmc-btn">
+        <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="keburius" data-color="#FFDD00" data-emoji=""  data-font="Cookie" data-text="Buy me a coffee" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff" ></script>
+        <noscript><a class="btn btn-coffee" href="https://buymeacoffee.com/keburius" rel="noopener">☕ Buy me a coffee</a></noscript>
+      </div>
     </div>
   </div>
 </main>
 
 <footer>
   <div class="wrap">
-    <span>© 2026 keburius · MIT License</span>
+    <span>© 2026 keburius · MIT License · The coffee button and widget load from buymeacoffee.com.</span>
     <span><a href="https://github.com/keburius/tolio">GitHub</a> · <a href="https://github.com/keburius/tolio/issues">Report a problem</a> · <a href="https://buymeacoffee.com/keburius" rel="noopener">Buy me a coffee ☕</a></span>
   </div>
 </footer>
 
+<script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" data-id="keburius" data-description="Support me on Buy me a coffee!" data-message="" data-color="#5F7FFF" data-position="Right" data-x_margin="18" data-y_margin="18"></script>
 </body>
 </html>

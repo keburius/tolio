@@ -945,3 +945,9 @@ Each phase has a **Done when** line, and nothing moves on until it's met. "You" 
   - No Apple logo in the menu bar.
   - Checked by rendering each scene at desktop and phone widths.
 - **Buy Me a Coffee (same day):** `https://buymeacoffee.com/keburius` added as plain links: a yellow "☕ Support" button in the top bar (also on phones), a support box under the final Download button, and a footer link. Also `.github/FUNDING.yml` (`buy_me_a_coffee: keburius`, which shows a Sponsor button on GitHub) and a Support line in the README. Their widget script was left out on purpose: it would load third-party code that may track visitors. The link couldn't be checked from here (buymeacoffee.com answers 404 to every automated request); you'll confirm it by clicking.
+- **Official Buy Me a Coffee button and widget (same day, your choice):** both scripts are from `cdnjs.buymeacoffee.com` and were read before adding.
+  - **Button:** draws itself in the support box via `document.writeln` and loads the "Cookie" font from Google Fonts. A plain link remains as a no-JS fallback.
+  - **Widget:** a floating round button in the bottom-right that opens your Buy Me a Coffee page in a frame. It may set a "visited" cookie only when it has a message (yours is empty).
+  - The CSP in `vercel.json` now allows exactly these: scripts from cdnjs.buymeacoffee.com, fonts from fonts.gstatic.com and cdn.buymeacoffee.com, styles from fonts.googleapis.com, images from cdn.buymeacoffee.com, and frames from www.buymeacoffee.com.
+  - The footer says that the button and widget load from buymeacoffee.com. The nav "☕ Support" and footer links stay plain.
+  - Checked by rendering: both appear.
