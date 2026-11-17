@@ -6,3 +6,4 @@ OmniKit/.swiftpm/
 Config/Signing.local.xcconfig
 xcuserdata/
 .claude/
+/dist/

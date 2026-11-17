@@ -873,3 +873,22 @@ Each phase has a **Done when** line, and nothing moves on until it's met. "You" 
   - While dragging, everything outside the area dims, with the size label as before.
   - **Capture Text never picks whole windows:** only a dragged area, and a plain click does nothing.
   - Fix (same day): the transparent overlay let clicks fall through to the app below (text got selected, Esc did nothing). The panel now sets `ignoresMouseEvents = false`, fills itself with a near-invisible colour, and makes its view first responder so Esc works.
+
+### Change of plan: free GitHub release (2026-11-17, your decision)
+- **Not doing:** the paid Apple Developer Program, notarization, or the clean-account and VM tests. R3's remaining items and R4 as written are dropped.
+- **Instead:** Tolio is shared through GitHub Releases as a DMG. On first launch macOS asks once for approval (Open Anyway on macOS 15+, right-click → Open on 14). The README explains both, plus a Terminal alternative.
+- **`make dmg`:**
+  - Builds the universal Release.
+  - Checks it's arm64 + x86_64 and that the signature verifies.
+  - Packages `dist/Tolio-<version>.dmg` (Tolio.app + an Applications shortcut, HFS+ UDZO) and writes a `.sha256` file.
+  - An old DMG of the same version goes to the Trash.
+  - Result for 1.0.0: 9.8 MB, verified with `hdiutil verify`, contents checked.
+- **Added:**
+  - `README.md`: features, install, permissions, privacy, uninstall, build from source, credits.
+  - `CHANGELOG.md` for 1.0.0.
+  - `/dist/` added to `.gitignore`.
+- **Open before publishing:**
+  1. The signature: the Apple Development certificate shows your email to anyone who inspects the app. Ad-hoc signing hides it, but permissions then have to be granted again after every update.
+  2. The commit author email (`…@lemondo.com` on all commits) becomes public with the history.
+  3. Public or private repo, and the licence.
+

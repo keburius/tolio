@@ -5,7 +5,7 @@ DERIVED := build/DerivedData
 APP     := $(DERIVED)/Build/Products/Debug/Tolio.app
 XCB     := xcodebuild -project $(PROJECT) -scheme $(SCHEME) -destination 'platform=macOS' -derivedDataPath $(DERIVED)
 
-.PHONY: gen build test run release clean strings
+.PHONY: gen build test run release dmg clean strings
 
 gen:
 	@xcodegen generate --quiet
@@ -30,6 +30,11 @@ release: gen
 	@mkdir -p build
 	@set -o pipefail; $(XCB) -configuration Release ARCHS='arm64 x86_64' ONLY_ACTIVE_ARCH=NO build 2>&1 | tee build/release.log | grep -E '(error|warning):|BUILD (SUCCEEDED|FAILED)' || exit 1
 	@Scripts/check-warnings.sh build/release.log
+
+# Universal Release build packaged as dist/Tolio-<version>.dmg (+ .sha256),
+# ready to attach to a GitHub release.
+dmg: release
+	@Scripts/make-dmg.sh
 
 # Waits up to 5 s for a running Tolio to exit; launching while it is still
 # shutting down makes LaunchServices fail with -600.
