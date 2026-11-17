@@ -659,3 +659,93 @@ Sources: the FoundationModels interface in the installed SDK (MacOSX 27.2, Xcode
   - The menu bar timer stops while paused (`RecordingTimer`).
   - A muted microphone leaves silence in its track.
 - **Tests:** the paused stretch is cut out, two pauses add up, pausing before the first frame is harmless, and the timer stops while paused.
+
+## 13. Road to 1.0: release phases
+
+Goal: a version friends can download, open without warnings, set up in a minute and keep using. It's free, with no profit for now.
+
+Each phase has a **Done when** line, and nothing moves on until it's met. "You" means steps only you can do (payments, Apple account, testing on other Macs).
+
+### R0: Stabilize
+- Decide on Ask AI: finish it in R1, or park it on a branch (`ask-ai`) so `main` builds now.
+- Delete the leftover helper worktrees (`.claude/worktrees/`) and unregister their copies of Omni.
+- `main` always builds; `make test` and the string, warning and catalog checks all pass.
+- Tag `v0.9.0-rc0` as the starting point.
+- **Done when:** a fresh clone builds and passes all tests with one command, and only one Omni is ever registered.
+
+### R1: Finish and verify every feature
+- **Ask AI:** finish the Launcher integration and Settings. Weak-link FoundationModels and confirm with `otool` that Omni launches without it. Try it live with Apple Intelligence on and off.
+- **Check live, with you watching:**
+  - Sticky Notes, including the desktop right-click item once the Finder extension is on.
+  - The clipboard dropdown.
+  - The recording bar: pause, mute and discard.
+  - The editor: brush, Delete and Esc.
+  - Capture Text, the control panel, onboarding, and every Settings page.
+- **Open decisions:** clipboard image deletion (Trash vs. internal exception), and the "menu bar hides with Settings open" report.
+- Fix whatever the live checks find.
+- **Done when:** every feature's manual test list in this file passes on your Mac, and every known bug is fixed or listed under "Known issues".
+
+### R2: Identity and polish
+- **Name check:** "Omni" clashes with The Omni Group (OmniFocus and others). Pick a final name before anything goes public. It changes the display name and bundle id, and settings carry over through a migration.
+- **App icon:** a full macOS icon set, plus a matching menu bar template icon.
+- **Version and About:** version 1.0.0 with build numbers, and an About window with credits and third-party licences (GRDB is MIT).
+- **Defaults review:** which features are on for new users, which menu bar icons show, and Diagnostics hidden.
+- **Text pass:** read every user-facing string once in context, all 690+ of them in the catalog.
+- **Done when:** a new user sees a finished-looking app with a real icon and name, and nothing says "test".
+
+### R3: Quality, compatibility, privacy
+- **Clean-account test:** a new macOS user on your Mac runs onboarding, grants permissions, and gets every recommended feature working.
+- **Older macOS:** the minimum is macOS 14. Test on macOS 14 or 15 in a virtual machine (free on Apple silicon with Apple's Virtualization or UTM).
+  - Everything except Ask, microphone recording and Liquid Glass must work there, with the clear fallbacks already built.
+- **Intel:** the release build is universal. Ideally a friend with an Intel Mac tries it; otherwise it's listed as "untested on Intel".
+- **Performance:** idle CPU at or below about 0.3% with the recommended features, memory under about 150 MB, the Launcher opening in under 100 ms.
+- **Privacy audit:**
+  - Network: only the two currency feeds, plus Ask's on-device model (no network).
+  - Logs: no clipboard, note, question or selected text ever appears in them.
+  - Data: everything is stored in one folder, `~/Library/Application Support/com.george.omni`, plus preferences.
+- **Uninstall notes:** which files Omni leaves behind and how to remove them.
+- **Done when:** the checklist passes on a clean account and on an older macOS, and the privacy audit finds nothing.
+
+### R4: Signing and notarization
+- **You:** join the Apple Developer Program ($99/year) with your Apple ID.
+- **Me:** create the "Developer ID Application" certificate. Check hardened runtime and entitlements for the app and the Finder extension. Store a `notarytool` keychain profile; you approve the keychain prompt.
+- **`make release` does it all in one command:**
+  - builds a universal Release (Apple silicon + Intel)
+  - signs the app and the extension with Developer ID
+  - submits to Apple's notary service and staples the ticket
+  - packages a DMG (Omni + an Applications shortcut, with a background), signs it, notarizes and staples it too
+- **Verify:** `spctl` and `stapler validate` on the DMG and the app, then a fresh download on another user account opens without a single warning.
+- **Done when:** the downloaded DMG installs and opens on a Mac that has never seen Omni, with no "unverified developer" dialog, and the Finder extension can be turned on there.
+
+### R5: Publishing
+- **GitHub repo:** private while friends test, public later if you like.
+- **README:**
+  - what it does (screenshots or a short GIF)
+  - how to install
+  - each permission and why it's needed
+  - privacy ("nothing leaves your Mac except currency rates")
+  - how to uninstall
+- **LICENSE:** your choice (for example, all rights reserved while free, or MIT if you want it open).
+- **GitHub Release `v1.0.0`:** the notarized DMG, its SHA-256, and short release notes.
+- **Optional:** a one-page website on GitHub Pages with a download button.
+- **Done when:** you can send a friend one link, and they get from the link to a working Omni in under two minutes.
+
+### R6: Friends beta
+- Send it to 3–5 friends with different Macs and macOS versions.
+- Feedback goes to GitHub Issues (or one email address), with a short "how to report a problem" note in the README. It explains how to save a log, and logs never contain personal content.
+- Fix what they find and release `1.0.1`.
+- **Done when:** a week of use by friends turns up no new crash or blocker.
+
+### R7: Updates (optional)
+- **Simple (recommended first):** "Check for Updates…" opens the GitHub Releases page in the browser. Omni itself makes no extra network call.
+- **Automatic, later:** Sparkle with a signed update feed on GitHub Pages. It's **off unless the user turns it on**, because it adds a network call.
+- **Done when:** a friend on 1.0.0 can get to the latest version in one click.
+
+### Decisions needed before starting
+| # | Decision | My recommendation |
+|---|---|---|
+| D1 | Ask AI in 1.0, or later? | Park it for 1.0.1 if you want to ship sooner; it's the biggest unfinished piece |
+| D2 | Final app name | Choose before R2 (anything not "Omni") |
+| D3 | Join the Apple Developer Program ($99/year)? | Yes, needed for warning-free installs and the Finder extension |
+| D4 | Repo private or public; licence | Private during the beta; decide the licence before going public |
+| D5 | Delete `.claude/worktrees/`? | Yes |
