@@ -34,7 +34,7 @@ public extension L10n {
         // MARK: Messages
 
         public static var copied: String { tr("clipboard.hud.copied", "Copied") }
-        public static var copiedPressToPaste: String { tr("clipboard.hud.copiedPressToPaste", "Copied. Press ⌘V to paste") }
+        public static var copiedPressToPaste: String { tr("clipboard.hud.copiedPressToPaste", "Copied. Press ⌘V to paste.") }
         public static var itemGone: String { tr("clipboard.hud.itemGone", "That item is no longer available") }
         public static var clearedKeepingPinned: String {
             tr("clipboard.hud.clearedKeepingPinned", "Clipboard history cleared. Pinned items were kept.")
@@ -65,7 +65,7 @@ public extension L10n {
         public static func eraseDescription(_ count: Int) -> String {
             plural(
                 "clipboard.erase.description",
-                one: "%lld clipboard item",
+                one: "%lld clipboard item, even if pinned",
                 other: "all %lld clipboard items, including pinned ones",
                 count
             )
@@ -206,14 +206,14 @@ public extension L10n {
         public static var actions: String { tr("textactions.settings.actions", "Actions") }
         public static var searchWith: String { tr("textactions.settings.searchWith", "Search with") }
         public static var actionsNote: String {
-            tr("textactions.settings.actionsNote", "Search, Open Link and Translate act only when you click them. Search and Open Link hand the text to your browser; Translate uses Apple's translation panel (the same as Translate in context menus).")
+            tr("textactions.settings.actionsNote", "Search the Web, Open Link and Translate act only when you click them. Search the Web and Open Link hand the text to your browser; Translate uses Apple's translation panel (the same as Translate in context menus).")
         }
         public static var readingSelection: String { tr("textactions.settings.readingSelection", "Reading the selection") }
         public static var copyBriefly: String {
             tr("textactions.settings.copyBriefly", "When an app doesn't share its selection, copy it briefly (⌘C) and put your clipboard back")
         }
         public static var copyBrieflyNote: String {
-            tr("textactions.settings.copyBrieflyNote", "Needed for many apps, such as Slack, Discord and Chrome. Tolio puts your previous clipboard back right away, and Clipboard History doesn't keep it. Never used in password fields, while macOS protects password entry, in password managers, or in Finder.")
+            tr("textactions.settings.copyBrieflyNote", "Needed for many apps, such as Slack, Discord and Chrome. Tolio puts your previous clipboard back right away, and Clipboard History doesn't keep it. Never used in password fields, while you're typing a password, in password managers, or in Finder.")
         }
         public static var neverShowIn: String { tr("textactions.settings.neverShowIn", "Never show in") }
     }

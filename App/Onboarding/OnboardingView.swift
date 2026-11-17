@@ -59,7 +59,8 @@ struct OnboardingView: View {
     private var welcome: some View {
         VStack(spacing: OmniStyle.s5) {
             Spacer()
-            Image(systemName: "square.grid.3x3.square").font(.system(size: 54)).foregroundStyle(Color.accentColor).symbolRenderingMode(.hierarchical)
+            Image(nsImage: NSApp.applicationIconImage).resizable().frame(width: 88, height: 88)
+                .accessibilityHidden(true)
             Text(L10n.Onboarding.intro).font(.title3).multilineTextAlignment(.center).frame(maxWidth: 480)
             HStack(spacing: OmniStyle.s5) {
                 icon("camera.viewfinder", L10n.Onboarding.screenshots)

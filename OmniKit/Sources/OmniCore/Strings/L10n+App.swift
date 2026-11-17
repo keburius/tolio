@@ -33,7 +33,7 @@ public extension L10n {
         public static var showAll: String { tr("panel.showAll", "Show All") }
         public static var windowSection: String { tr("panel.window", "Window") }
         public static func windowTitle(_ app: String, _ title: String) -> String { format("panel.windowTitle", "%@ — “%@”", app, title) }
-        public static var noWindow: String { tr("panel.noWindow", "No window to arrange. Click a window, then open the panel again.") }
+        public static var noWindow: String { tr("panel.noWindow", "No window to arrange. Click a window, then open the control panel again.") }
         public static var nothingCopied: String { tr("panel.nothingCopied", "Nothing copied yet. Copy something to see it here.") }
         public static func turnOnToSeeClips(_ feature: String) -> String { format("panel.turnOnClips", "Turn on %@ to see what you copied here.", feature) }
         public static func turnOnToArrange(_ feature: String) -> String { format("panel.turnOnLayouts", "Turn on %@ to arrange windows from here.", feature) }
@@ -62,7 +62,7 @@ public extension L10n {
         }
         public static func needs(_ feature: String, _ permission: String) -> String { format("settings.needs", "%@ needs %@.", feature, permission) }
         public static func pausedBanner(_ permission: String, _ why: String) -> String {
-            format("settings.pausedBanner", "Tolio needs %@ permission. %@ Until then this feature is paused.", permission, why)
+            format("settings.pausedBanner", "Tolio needs %@ permission. %@ Until then, this feature is paused.", permission, why)
         }
         public static var updatesByItself: String { tr("settings.updatesByItself", "The status updates by itself.") }
         public static var problemTurnOffOn: String { tr("settings.problemTurnOffOn", "Turn it off and on again to retry.") }
@@ -106,7 +106,7 @@ public extension L10n {
         public static func sameAsOff(_ other: String) -> String { format("settings.shortcuts.sameAsOff", "Same as “%@”; they'll clash when both are on.", other) }
         public static var usedByAnotherApp: String { tr("settings.shortcuts.usedByAnotherApp", "Used by another app.") }
         public static var featureOffSuffix: String { tr("settings.shortcuts.offSuffix", "(off)") }
-        public static var offNote: String { tr("settings.shortcuts.offNote", "Shortcuts of features that are off are shown in grey and can still be changed.") }
+        public static var offNote: String { tr("settings.shortcuts.offNote", "Shortcuts for features that are off are shown in gray and can still be changed.") }
         public static var resetAllShortcuts: String { tr("settings.shortcuts.resetAll", "Reset All Shortcuts…") }
         public static var resetAllShortcutsQuestion: String { tr("settings.shortcuts.resetAllQuestion", "Reset all shortcuts to their defaults?") }
         public static func noShortcutsMatch(_ query: String) -> String { format("settings.shortcuts.noMatch", "No shortcuts match “%@”.", query) }
@@ -132,7 +132,7 @@ public extension L10n {
     enum Onboarding {
         public static var windowTitle: String { tr("onboarding.windowTitle", "Welcome to Tolio") }
         public static var intro: String {
-            tr("onboarding.intro", "Tolio adds the shortcuts your Mac is missing: one menu bar app for screenshots, clipboard history, window layouts, staying awake, and quick launching.")
+            tr("onboarding.intro", "Tolio adds the shortcuts your Mac is missing: one menu bar app for screenshots, clipboard history, window layouts, staying awake and quick launching.")
         }
         public static var screenshots: String { tr("onboarding.icon.screenshots", "Screenshots") }
         public static var clipboard: String { tr("onboarding.icon.clipboard", "Clipboard") }
@@ -155,13 +155,13 @@ public extension L10n {
             tr("onboarding.permissions.reopenNote", "Switched it on but it still says “Not allowed”? Some permissions start working after Tolio reopens.")
         }
         public static var reopenOmni: String { tr("onboarding.permissions.reopen", "Reopen Tolio") }
-        public static func usedBy(_ list: String) -> String { format("onboarding.permissions.usedBy", "Used by: %@", list) }
+        public static func usedBy(_ list: String) -> String { format("onboarding.permissions.usedBy", "Used by %@", list) }
         public static var doneTitle: String { tr("onboarding.done.title", "You're set. A few shortcuts to remember:") }
         public static var doneNote: String {
-            tr("onboarding.done.note", "Only shortcuts of the features you chose are listed. All of them are in Settings → Shortcuts, where you can change them.")
+            tr("onboarding.done.note", "Only shortcuts for the features you chose are listed. All of them are in Settings → Shortcuts, where you can change them.")
         }
         public static var finish: String { tr("onboarding.finish", "Finish") }
-        public static var tryIt: String { tr("onboarding.tryIt", "Try It: Open the Panel") }
+        public static var tryIt: String { tr("onboarding.tryIt", "Try It: Open the Control Panel") }
         public static var orClickIcon: String { tr("onboarding.orClickIcon", "Open the control panel (or click Tolio's menu bar icon)") }
     }
 }

@@ -38,8 +38,11 @@ final class MenuBarController: NSObject {
         main.autosaveName = "omni.main"
         super.init()
         if let button = main.button {
-            button.image = NSImage(systemSymbolName: "square.grid.3x3.square", accessibilityDescription: L10n.App.name)
-            button.image?.isTemplate = true
+            // Tolio's "T" glyph (template image, so macOS tints it for light and dark menu bars).
+            let image = NSImage(named: "MenuBarIcon")
+            image?.isTemplate = true
+            image?.accessibilityDescription = L10n.App.name
+            button.image = image
             button.imagePosition = .imageLeading
             button.target = self
             button.action = #selector(mainClicked(_:))

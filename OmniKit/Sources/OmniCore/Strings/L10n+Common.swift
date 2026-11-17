@@ -13,7 +13,7 @@ public extension L10n {
         public static var addApp: String { tr("common.addApp", "Add App") }
         public static var close: String { tr("common.close", "Close") }
         public static var reset: String { tr("common.reset", "Reset") }
-        public static var resetToDefault: String { tr("common.resetToDefault", "Reset to default") }
+        public static var resetToDefault: String { tr("common.resetToDefault", "Reset to Default") }
         public static var openSystemSettings: String { tr("common.openSystemSettings", "Open System Settings") }
         public static var allow: String { tr("common.allow", "Allow…") }
         public static var settingsEllipsis: String { tr("common.settingsEllipsis", "Settings…") }
@@ -70,7 +70,7 @@ public extension L10n {
         public static func optionalFor(_ features: String) -> String { format("permission.optionalFor", "Optional for %@", features) }
         public static var unused: String { tr("permission.unused", "No feature you turned on uses this.") }
         public static var nothingLeavesMac: String {
-            tr("permission.nothingLeaves", "macOS asks you to allow these yourself. Nothing you allow leaves this Mac.")
+            tr("permission.nothingLeaves", "macOS asks you to allow these yourself. Nothing Tolio sees leaves this Mac.")
         }
     }
 }
@@ -86,7 +86,7 @@ public extension L10n {
     /// Shared controls and messages from OmniCore / OmniPlatform.
     enum Shared {
         public static var recorderHelp: String { tr("shared.recorder.help", "Click, then press a shortcut. Esc cancels, Delete clears.") }
-        public static var recorderPrompt: String { tr("shared.recorder.prompt", "Type shortcut…") }
+        public static var recorderPrompt: String { tr("shared.recorder.prompt", "Press a shortcut…") }
         public static var needsModifier: String { tr("shared.combo.needsModifier", "Add ⌘ or ⌃ to the shortcut.") }
         public static var optionOnly: String { tr("shared.combo.optionOnly", "macOS doesn't allow shortcuts with only ⌥ or ⌥⇧. Add ⌘ or ⌃.") }
         public static var space: String { tr("shared.key.space", "Space") }

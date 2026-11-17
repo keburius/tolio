@@ -803,3 +803,21 @@ Each phase has a **Done when** line, and nothing moves on until it's met. "You" 
   - Turn "Open Tolio at login" back on if wanted.
   - Old "Omni" entries can be removed from the System Settings lists.
 
+### R2: identity and polish (2026-11-17)
+- **Icon:** you chose draft **D** from four (graphite, a white "T" whose top bar is a menu bar with three violet dots). It's in the full macOS icon set (`App/Assets.xcassets/AppIcon`, 16–1024 px) and on the onboarding welcome screen. The menu bar icon is now the same T as a template image that tints for light and dark menu bars, replacing the grid symbol.
+- **Version:** 1.0.0, build 1, set by `MARKETING_VERSION` / `CURRENT_PROJECT_VERSION` in `project.yml`.
+- **About:** the standard About panel plus `App/Resources/Credits.html`, with a one-line description and GRDB 7.12.0's MIT licence, generated from `Vendor/GRDB/LICENSE`. The copyright says "© 2026"; the name to add is still open.
+- **Defaults for new users** reviewed and kept:
+  - Features on: Launcher, Clipboard History and Keep Awake.
+  - Menu bar icons shown: the main icon plus those quick actions whose feature is on.
+  - Diagnostics is off and hidden (opens only with ⌥).
+- **Text pass:** a full review of all 689 strings found no blockers (no "Omni", no placeholder or test text, every format placeholder correct). Fixed 36 small issues:
+  - grammar and a wrong plural ("1 characters")
+  - developer jargon ("keyboard listener", "Last opened in")
+  - terms used inconsistently ("panel" vs "control panel", "my Mac" vs "your Mac", "SSD" vs "Disk")
+  - Apple style ("Reset to Default", no "…" on the "For" menu)
+  - clearer help texts
+
+  Not changed: unifying the permission wording (low value, many strings), and the title-case window rows in the Shortcuts table (they double as menu titles).
+- 366 tests pass.
+

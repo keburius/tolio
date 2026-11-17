@@ -5,7 +5,7 @@ public extension L10n {
     enum Screenshots {
         public static var displayName: String { tr("screenshots.displayName", "Screenshots & Recording") }
         public static var summary: String {
-            tr("screenshots.summary", "Capture, mark up and pin screenshots, copy text from images, record the screen.")
+            tr("screenshots.summary", "Capture, mark up and pin screenshots, copy text from images and record the screen.")
         }
 
         // MARK: Shortcuts (sentence case, as in the shortcuts table)
@@ -167,7 +167,7 @@ public extension L10n {
             plural("screenshots.captureText.copied", one: "Copied %lld character", other: "Copied %lld characters", count)
         }
         public static func appendedCharacters(_ added: Int, _ total: Int) -> String {
-            format("screenshots.captureText.appended", "Added %lld characters (%lld in total)", added, total)
+            format("screenshots.captureText.appended", "Added %lld more (%lld characters in total)", added, total)
         }
         public static func copiedLink(_ host: String) -> String { format("screenshots.captureText.copiedLink", "Copied a link to %@", host) }
         public static func copiedCode(_ count: Int) -> String {
@@ -178,14 +178,14 @@ public extension L10n {
             tr("capturetext.summary", "Copy the text, QR code or barcode from any part of the screen.")
         }
         public static var captureTextClickHint: String { tr("screenshots.captureText.clickHint", "capture text") }
-        public static var appendHint: String { tr("screenshots.captureText.appendHint", "Hold ⇧ while selecting to add to the last capture") }
+        public static var appendHint: String { tr("screenshots.captureText.appendHint", "Hold ⇧ when you finish selecting to add to your previous capture") }
         public static var sectionCaptureText: String { tr("screenshots.section.captureText", "Capture Text") }
         public static var lineBreaks: String { tr("screenshots.captureText.lineBreaks", "Line breaks") }
         public static var lineBreaksKeep: String { tr("screenshots.captureText.lineBreaks.keep", "Keep them") }
         public static var lineBreaksJoin: String { tr("screenshots.captureText.lineBreaks.join", "Join into one paragraph") }
         public static var recognitionLanguages: String { tr("screenshots.captureText.languages", "Recognition languages") }
-        public static var languagesMatchMac: String { tr("screenshots.captureText.languages.matchMac", "Same as my Mac's languages") }
-        public static func languagesMatchMacSummary(_ list: String) -> String { format("screenshots.captureText.languages.matchMacSummary", "Same as my Mac (%@)", list) }
+        public static var languagesMatchMac: String { tr("screenshots.captureText.languages.matchMac", "Same as your Mac's languages") }
+        public static func languagesMatchMacSummary(_ list: String) -> String { format("screenshots.captureText.languages.matchMacSummary", "Same as your Mac (%@)", list) }
         public static var autoLanguage: String { tr("screenshots.captureText.autoLanguage", "Detect the language automatically") }
         public static var autoLanguageNote: String {
             tr("screenshots.captureText.autoLanguageNote", "Helps with mixed languages but can make recognition much slower on some macOS versions.")

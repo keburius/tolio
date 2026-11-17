@@ -29,7 +29,7 @@ public extension L10n {
 
         // Notices
         public static var noWindow: String { tr("windows.notice.noWindow", "No window to arrange") }
-        public static var fullScreen: String { tr("windows.notice.fullScreen", "Window is in full screen") }
+        public static var fullScreen: String { tr("windows.notice.fullScreen", "This window is in full screen") }
         public static var nothingToRestore: String { tr("windows.notice.nothingToRestore", "Nothing to restore") }
         public static var onlyOneDisplay: String { tr("windows.notice.onlyOneDisplay", "Only one display connected") }
         public static var cantArrange: String { tr("windows.notice.cantArrange", "This window can't be arranged") }
@@ -41,10 +41,10 @@ public extension L10n {
         public static var dragToEdge: String { tr("windows.settings.dragToEdge", "Snap by dragging a window to a screen edge") }
         public static var dragToEdgeMenu: String { tr("windows.menu.dragToEdge", "Snap by Dragging to Screen Edges") }
         public static var dragToEdgeHelp: String {
-            tr("windows.settings.dragToEdgeHelp", "Edges snap to halves, corners to quarters, the top edge maximizes. Edges shared with another display don't snap.")
+            tr("windows.settings.dragToEdgeHelp", "Side edges snap to halves, corners to quarters, and the top edge maximizes. Edges shared with another display don't snap.")
         }
         public static var dragToEdgeFailed: String {
-            tr("windows.settings.dragToEdgeFailed", "Snapping by dragging couldn't start. Check that Tolio has the Accessibility permission, then turn it off and on.")
+            tr("windows.settings.dragToEdgeFailed", "Snapping by dragging couldn't start. Check that Tolio has the Accessibility permission, then turn this setting off and on.")
         }
         public static var shortcutsHelp: String {
             tr("windows.settings.shortcutsHelp", "Change the shortcuts above or on the Shortcuts page. Every layout is also in the Launcher.")
@@ -61,7 +61,7 @@ public extension L10n {
         public static var searchTitle: String { tr("switcher.search.title", "Window") }
         public static var noWindows: String { tr("switcher.notice.noWindows", "No windows to switch to") }
         public static var cantClose: String { tr("switcher.notice.cantClose", "This window can't be closed from here") }
-        public static var paused: String { tr("switcher.notice.paused", "Window Switcher paused: macOS stopped its keyboard listener") }
+        public static var paused: String { tr("switcher.notice.paused", "Window Switcher paused: macOS stopped it from reading the keyboard") }
 
         // Window states
         public static var stateOpen: String { tr("switcher.state.open", "Open") }
@@ -89,7 +89,7 @@ public extension L10n {
             tr("switcher.settings.otherSpacesHelp", "Windows on other Spaces need Screen Recording to be listed. Choosing one brings its app forward; macOS decides whether to switch Space.")
         }
         public static var stoppedHelp: String {
-            tr("switcher.settings.stoppedHelp", "macOS stopped the switcher's keyboard listener, so it has been paused and your keyboard works normally. Turn Window Switcher off and on to restart it.")
+            tr("switcher.settings.stoppedHelp", "macOS stopped Window Switcher from reading the keyboard, so it has been paused and your keyboard works normally. Turn Window Switcher off and on to restart it.")
         }
     }
 
@@ -118,11 +118,11 @@ public extension L10n {
 
         // Settings
         public static var status: String { tr("keepawake.settings.status", "Status") }
-        public static var forMenu: String { tr("keepawake.settings.for", "For…") }
+        public static var forMenu: String { tr("keepawake.settings.for", "For") }
         public static var stop: String { tr("keepawake.settings.stop", "Stop") }
         public static var keepDisplayOn: String { tr("keepawake.settings.keepDisplayOn", "Keep the display on too") }
         public static var appsSection: String { tr("keepawake.settings.appsSection", "Also keep awake while these apps run") }
-        public static var noApps: String { tr("keepawake.settings.noApps", "No apps yet. Add an app to stay awake while it's running.") }
+        public static var noApps: String { tr("keepawake.settings.noApps", "No apps yet. Add an app to keep your Mac awake while it's running.") }
         public static var unnamedApp: String { tr("keepawake.settings.unnamedApp", "App") }
 
         // Menu bar
@@ -172,7 +172,7 @@ public extension L10n {
         public static func seconds(_ count: Int) -> String { plural("lockkeyboard.duration.seconds", one: "%lld second", other: "%lld seconds", count) }
         public static func minutes(_ count: Int) -> String { plural("lockkeyboard.duration.minutes", one: "%lld minute", other: "%lld minutes", count) }
         public static var help: String {
-            tr("lockkeyboard.settings.help", "All keys, including media and brightness keys, are blocked. The power button and Touch ID can't be blocked. Click Unlock with the mouse, or wait for the time limit. If macOS stops the lock for any reason, the keyboard works again immediately.")
+            tr("lockkeyboard.settings.help", "All keys, including media and brightness keys, are blocked. The power button and Touch ID can't be blocked. Click Unlock Keyboard with the mouse, or wait for the time limit. If macOS stops the lock for any reason, the keyboard works again immediately.")
         }
         public static var clickHint: String { tr("lockkeyboard.quick.clickHint", "lock now") }
     }

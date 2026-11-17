@@ -11,7 +11,7 @@ public extension L10n {
         public static var clickHint: String { tr("stickynotes.clickHint", "new note") }
         public static var untitled: String { tr("stickynotes.untitled", "Empty note") }
         public static var restoreDeleted: String { tr("stickynotes.restoreDeleted", "Restore Deleted Note") }
-        public static var enableRightClick: String { tr("stickynotes.enableRightClick", "Add “New Sticky Note” to the Desktop’s Right-Click Menu…") }
+        public static var enableRightClick: String { tr("stickynotes.enableRightClick", "Add “New Sticky Note” to the Desktop's Right-Click Menu…") }
         public static var placeholder: String { tr("stickynotes.placeholder", "Write a note…") }
         public static var keepOnTop: String { tr("stickynotes.keepOnTop", "Keep on Top") }
         public static var colorAndOptions: String { tr("stickynotes.colorAndOptions", "Color and options") }
@@ -27,7 +27,7 @@ public extension L10n {
         public static var tintGray: String { tr("stickynotes.tint.gray", "Gray") }
         public static var defaultColor: String { tr("stickynotes.defaultColor", "Color of new notes") }
         public static var allSpaces: String { tr("stickynotes.allSpaces", "Show notes on every desktop (Space)") }
-        public static var rightClickTitle: String { tr("stickynotes.rightClick", "“New Sticky Note” in the desktop’s right-click menu") }
+        public static var rightClickTitle: String { tr("stickynotes.rightClick", "“New Sticky Note” in the desktop's right-click menu") }
         public static var rightClickOn: String { tr("stickynotes.rightClick.on", "On. Right-click an empty spot on the desktop.") }
         public static var rightClickOff: String {
             tr("stickynotes.rightClick.off", "Off. Turn on “Tolio” under Finder in System Settings → General → Login Items & Extensions.")

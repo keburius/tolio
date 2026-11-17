@@ -30,7 +30,7 @@ public extension L10n {
             tr("launcher.answer.ratesNotDownloaded", "Rates haven't been downloaded yet.")
         }
         public static var turnOnRates: String {
-            tr("launcher.answer.turnOnRates", "Turn on currency rate downloads in Settings.")
+            tr("launcher.answer.turnOnRates", "Turn on “Download currency rates” in Settings → Launcher.")
         }
         public static func rateMissing(_ code: String) -> String {
             format("launcher.answer.rateMissing", "%@ rate not available", code)
@@ -49,7 +49,7 @@ public extension L10n {
         // Settings.
         public static var appsFound: String { tr("launcher.settings.appsFound", "Apps found") }
         public static var findAgain: String { tr("launcher.settings.findAgain", "Look Again") }
-        public static var lastOpenTime: String { tr("launcher.settings.lastOpenTime", "Last opened in") }
+        public static var lastOpenTime: String { tr("launcher.settings.lastOpenTime", "Opening speed") }
         public static func milliseconds(_ ms: Double) -> String {
             format("launcher.settings.milliseconds", "%.1f ms", ms)
         }
@@ -88,7 +88,7 @@ public extension L10n {
         // Menu bar text (short).
         public static func menuCPU(_ value: String) -> String { format("stats.menu.cpu", "CPU %@", value) }
         public static func menuMemory(_ value: String) -> String { format("stats.menu.memory", "MEM %@", value) }
-        public static func menuDisk(_ value: String) -> String { format("stats.menu.disk", "SSD %@ free", value) }
+        public static func menuDisk(_ value: String) -> String { format("stats.menu.disk", "Disk %@ free", value) }
 
         // One-line summary for the control panel.
         public static func lineCPU(_ value: String) -> String { format("stats.line.cpu", "CPU %@", value) }
@@ -123,7 +123,7 @@ public extension L10n {
             plural("stats.settings.seconds", one: "%lld second", other: "%lld seconds", count)
         }
         public static var refreshHelp: String {
-            tr("stats.settings.refreshHelp", "Reading the numbers costs almost nothing, but redrawing the menu bar does, so a longer interval saves energy. Measured: about 1.7% CPU at 2 seconds, 0.7% at 5 seconds, 0.2% with only the icon.")
+            tr("stats.settings.refreshHelp", "Updating the menu bar uses a little energy, so a longer interval saves battery. About 1.7% CPU at 2 seconds, 0.7% at 5 seconds, 0.2% with only the icon.")
         }
         public static var temperaturesHelp: String {
             tr("stats.settings.temperaturesHelp", "Temperatures and fan speeds are left out on purpose: on Apple silicon Macs they can't be read reliably.")
@@ -151,7 +151,7 @@ public extension L10n {
             format("cheatsheet.itemUnavailableHelp", "%@ (not available right now)", item)
         }
         public static func couldNotRun(_ item: String) -> String { format("cheatsheet.couldNotRun", "Couldn't run “%@”", item) }
-        public static var truncated: String { tr("cheatsheet.truncated", "Very large menus: showing the first items only") }
+        public static var truncated: String { tr("cheatsheet.truncated", "Menus are very large, so only the first items are shown") }
         public static var filter: String { tr("cheatsheet.filter", "Filter") }
         public static var clickToRun: String { tr("cheatsheet.clickToRun", "Click an item to run it") }
         public static var reading: String { tr("cheatsheet.reading", "Reading menus…") }
@@ -171,7 +171,7 @@ public extension L10n {
         // Settings.
         public static var openWith: String { tr("cheatsheet.settings.openWith", "Open with") }
         public static var openWithHelp: String {
-            tr("cheatsheet.settings.openWithHelp", "Press the key twice and keep holding it: the cheat sheet stays while you hold. Click an item to run it. Its shortcut (⌃⌥⌘/ unless you changed it) or the Launcher keeps it open until you press Esc, with a filter field.")
+            tr("cheatsheet.settings.openWithHelp", "Press the key twice and keep holding it; the cheat sheet stays open while you hold. Click an item to run it. Opened with its shortcut (⌃⌥⌘/ by default) or from the Launcher, it stays open with a filter field until you press Esc.")
         }
         public static var includeDisabled: String {
             tr("cheatsheet.settings.includeDisabled", "Show items that are unavailable right now (dimmed)")
@@ -180,7 +180,7 @@ public extension L10n {
             tr("cheatsheet.settings.sourceHelp", "Shortcuts come from the app's menu bar. Shortcuts that only work inside a window, and aren't in a menu, can't be listed.")
         }
         public static var cannotWatchKeys: String {
-            tr("cheatsheet.settings.cannotWatchKeys", "Tolio can't notice the key presses right now. Check that Tolio is allowed under Accessibility in System Settings.")
+            tr("cheatsheet.settings.cannotWatchKeys", "Tolio can't detect key presses right now. Check that Tolio is allowed under Accessibility in System Settings.")
         }
     }
 

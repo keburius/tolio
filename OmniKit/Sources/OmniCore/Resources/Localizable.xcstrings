@@ -392,7 +392,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Tolio can't notice the key presses right now. Check that Tolio is allowed under Accessibility in System Settings."
+            "value": "Tolio can't detect key presses right now. Check that Tolio is allowed under Accessibility in System Settings."
           }
         }
       }
@@ -425,7 +425,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Press the key twice and keep holding it: the cheat sheet stays while you hold. Click an item to run it. Its shortcut (⌃⌥⌘/ unless you changed it) or the Launcher keeps it open until you press Esc, with a filter field."
+            "value": "Press the key twice and keep holding it; the cheat sheet stays open while you hold. Click an item to run it. Opened with its shortcut (⌃⌥⌘/ by default) or from the Launcher, it stays open with a filter field until you press Esc."
           }
         }
       }
@@ -524,7 +524,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Very large menus: showing the first items only"
+            "value": "Menus are very large, so only the first items are shown"
           }
         }
       }
@@ -626,7 +626,7 @@
               "one": {
                 "stringUnit": {
                   "state": "translated",
-                  "value": "%lld clipboard item"
+                  "value": "%lld clipboard item, even if pinned"
                 }
               },
               "other": {
@@ -690,7 +690,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Copied. Press ⌘V to paste"
+            "value": "Copied. Press ⌘V to paste."
           }
         }
       }
@@ -1352,7 +1352,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Reset to default"
+            "value": "Reset to Default"
           }
         }
       }
@@ -1762,7 +1762,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "For…"
+            "value": "For"
           }
         }
       }
@@ -1784,7 +1784,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "No apps yet. Add an app to stay awake while it's running."
+            "value": "No apps yet. Add an app to keep your Mac awake while it's running."
           }
         }
       }
@@ -1971,7 +1971,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Turn on currency rate downloads in Settings."
+            "value": "Turn on “Download currency rates” in Settings → Launcher."
           }
         }
       }
@@ -2203,7 +2203,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Last opened in"
+            "value": "Opening speed"
           }
         }
       }
@@ -2480,7 +2480,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "All keys, including media and brightness keys, are blocked. The power button and Touch ID can't be blocked. Click Unlock with the mouse, or wait for the time limit. If macOS stops the lock for any reason, the keyboard works again immediately."
+            "value": "All keys, including media and brightness keys, are blocked. The power button and Touch ID can't be blocked. Click Unlock Keyboard with the mouse, or wait for the time limit. If macOS stops the lock for any reason, the keyboard works again immediately."
           }
         }
       }
@@ -2579,7 +2579,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Only shortcuts of the features you chose are listed. All of them are in Settings → Shortcuts, where you can change them."
+            "value": "Only shortcuts for the features you chose are listed. All of them are in Settings → Shortcuts, where you can change them."
           }
         }
       }
@@ -2678,7 +2678,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Tolio adds the shortcuts your Mac is missing: one menu bar app for screenshots, clipboard history, window layouts, staying awake, and quick launching."
+            "value": "Tolio adds the shortcuts your Mac is missing: one menu bar app for screenshots, clipboard history, window layouts, staying awake and quick launching."
           }
         }
       }
@@ -2777,7 +2777,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Used by: %@"
+            "value": "Used by %@"
           }
         }
       }
@@ -2799,7 +2799,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Try It: Open the Panel"
+            "value": "Try It: Open the Control Panel"
           }
         }
       }
@@ -2887,7 +2887,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "No window to arrange. Click a window, then open the panel again."
+            "value": "No window to arrange. Click a window, then open the control panel again."
           }
         }
       }
@@ -3041,7 +3041,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "macOS asks you to allow these yourself. Nothing you allow leaves this Mac."
+            "value": "macOS asks you to allow these yourself. Nothing Tolio sees leaves this Mac."
           }
         }
       }
@@ -3448,7 +3448,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Hold ⇧ while selecting to add to the last capture"
+            "value": "Hold ⇧ when you finish selecting to add to your previous capture"
           }
         }
       }
@@ -3459,7 +3459,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Added %lld characters (%lld in total)"
+            "value": "Added %lld more (%lld characters in total)"
           }
         }
       }
@@ -3571,7 +3571,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Same as my Mac's languages"
+            "value": "Same as your Mac's languages"
           }
         }
       }
@@ -3582,7 +3582,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Same as my Mac (%@)"
+            "value": "Same as your Mac (%@)"
           }
         }
       }
@@ -4947,7 +4947,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Capture, mark up and pin screenshots, copy text from images, record the screen."
+            "value": "Capture, mark up and pin screenshots, copy text from images and record the screen."
           }
         }
       }
@@ -5442,7 +5442,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Tolio needs %@ permission. %@ Until then this feature is paused."
+            "value": "Tolio needs %@ permission. %@ Until then, this feature is paused."
           }
         }
       }
@@ -5607,7 +5607,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Shortcuts of features that are off are shown in grey and can still be changed."
+            "value": "Shortcuts for features that are off are shown in gray and can still be changed."
           }
         }
       }
@@ -5839,7 +5839,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Type shortcut…"
+            "value": "Press a shortcut…"
           }
         }
       }
@@ -6335,7 +6335,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "SSD %@ free"
+            "value": "Disk %@ free"
           }
         }
       }
@@ -6390,7 +6390,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Reading the numbers costs almost nothing, but redrawing the menu bar does, so a longer interval saves energy. Measured: about 1.7% CPU at 2 seconds, 0.7% at 5 seconds, 0.2% with only the icon."
+            "value": "Updating the menu bar uses a little energy, so a longer interval saves battery. About 1.7% CPU at 2 seconds, 0.7% at 5 seconds, 0.2% with only the icon."
           }
         }
       }
@@ -6589,7 +6589,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Add “New Sticky Note” to the Desktop’s Right-Click Menu…"
+            "value": "Add “New Sticky Note” to the Desktop's Right-Click Menu…"
           }
         }
       }
@@ -6689,7 +6689,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "“New Sticky Note” in the desktop’s right-click menu"
+            "value": "“New Sticky Note” in the desktop's right-click menu"
           }
         }
       }
@@ -6909,7 +6909,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Window Switcher paused: macOS stopped its keyboard listener"
+            "value": "Window Switcher paused: macOS stopped it from reading the keyboard"
           }
         }
       }
@@ -6986,7 +6986,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "macOS stopped the switcher's keyboard listener, so it has been paused and your keyboard works normally. Turn Window Switcher off and on to restart it."
+            "value": "macOS stopped Window Switcher from reading the keyboard, so it has been paused and your keyboard works normally. Turn Window Switcher off and on to restart it."
           }
         }
       }
@@ -7331,7 +7331,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Search, Open Link and Translate act only when you click them. Search and Open Link hand the text to your browser; Translate uses Apple's translation panel (the same as Translate in context menus)."
+            "value": "Search the Web, Open Link and Translate act only when you click them. Search the Web and Open Link hand the text to your browser; Translate uses Apple's translation panel (the same as Translate in context menus)."
           }
         }
       }
@@ -7353,7 +7353,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Needed for many apps, such as Slack, Discord and Chrome. Tolio puts your previous clipboard back right away, and Clipboard History doesn't keep it. Never used in password fields, while macOS protects password entry, in password managers, or in Finder."
+            "value": "Needed for many apps, such as Slack, Discord and Chrome. Tolio puts your previous clipboard back right away, and Clipboard History doesn't keep it. Never used in password fields, while you're typing a password, in password managers, or in Finder."
           }
         }
       }
@@ -7694,7 +7694,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Window is in full screen"
+            "value": "This window is in full screen"
           }
         }
       }
@@ -7760,7 +7760,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Snapping by dragging couldn't start. Check that Tolio has the Accessibility permission, then turn it off and on."
+            "value": "Snapping by dragging couldn't start. Check that Tolio has the Accessibility permission, then turn this setting off and on."
           }
         }
       }
@@ -7771,7 +7771,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Edges snap to halves, corners to quarters, the top edge maximizes. Edges shared with another display don't snap."
+            "value": "Side edges snap to halves, corners to quarters, and the top edge maximizes. Edges shared with another display don't snap."
           }
         }
       }
