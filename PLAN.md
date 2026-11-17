@@ -704,8 +704,8 @@ Each phase has a **Done when** line, and nothing moves on until it's met. "You" 
 - **Privacy audit:**
   - Network: only the two currency feeds, plus Ask's on-device model (no network).
   - Logs: no clipboard, note, question or selected text ever appears in them.
-  - Data: everything is stored in one folder, `~/Library/Application Support/com.george.omni`, plus preferences.
-- **Uninstall notes:** which files Omni leaves behind and how to remove them.
+  - Data: everything is stored in one folder, `~/Library/Application Support/com.george.tolio`, plus preferences.
+- **Uninstall notes:** which files Tolio leaves behind and how to remove them.
 - **Done when:** the checklist passes on a clean account and on an older macOS, and the privacy audit finds nothing.
 
 ### R4: Signing and notarization
@@ -822,3 +822,27 @@ Each phase has a **Done when** line, and nothing moves on until it's met. "You" 
 - 366 tests pass.
 
 - **Checked live by you (2026-11-17):** the menu bar icon, the About window and the onboarding icon look right. Tagged `v0.9.0-rc2`.
+
+### R3: automatic checks (2026-11-17)
+- **Network:** only `CurrencyRateStore` makes network requests (ECB and NBG feeds, ephemeral URLSession, no cookies or cache). The web search, link and QR "Open" actions hand a URL to your browser, only when you click them. Watched live: no open connections while idle.
+- **Logs:** every log line that includes values was checked. They contain only counts, sizes, durations, feature and shortcut IDs, error codes and system error messages, never clipboard text, notes, selected or recognized text, or file contents. GRDB errors don't include statement arguments (its default). There are no `print`/`NSLog` calls.
+- **Data Tolio stores:**
+  - `~/Library/Application Support/com.george.tolio/`: clipboard history (SQLite plus images, folder 0700), `notes.json`, the two currency caches.
+  - `~/Library/Preferences/com.george.tolio.plist`: settings.
+  - `~/Library/Containers/com.george.tolio.FinderNote/`: the Finder extension's sandbox, which holds nothing of yours.
+  - `~/Library/Caches/com.george.tolio/`: created by macOS for Vision (Capture Text).
+  - Screenshots and recordings go to the folder you chose (default: the macOS screenshot location, else the Desktop).
+- **Universal build:** the app and the Finder extension are both `arm64 x86_64` (29 MB). Minimum macOS 14.0. Every required system framework exists on macOS 14; Translation (macOS 15) is linked weakly.
+- **Memory:** 81 MB footprint with 13 features on (target under 150 MB). ✓
+- **CPU: needs work.** Tolio barely runs while you're away from the Mac (a 15-second sample shows almost no Tolio code running), but while you use the Mac it measured **2–13%** over 15-second windows, against a target of about 0.3% when idle and "not noticeable" when active. The suspects are the event taps that see every click, drag, key and scroll (Text Actions `SelectionTap`, window `DragSnapper`). Next: a sample while you work, then the fix.
+
+### Uninstall notes
+1. Quit Tolio (menu bar icon → Quit Tolio).
+2. Move `Tolio.app` to the Trash. This also removes the Finder extension inside it.
+3. Optional, to remove your data too: move these to the Trash:
+   - `~/Library/Application Support/com.george.tolio`
+   - `~/Library/Preferences/com.george.tolio.plist`
+   - `~/Library/Containers/com.george.tolio.FinderNote`
+   - `~/Library/Caches/com.george.tolio`
+4. Optional: in System Settings → Privacy & Security, remove Tolio from Accessibility, Screen Recording and Microphone. In General → Login Items, remove it if it's listed.
+
