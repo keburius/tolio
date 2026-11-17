@@ -98,6 +98,31 @@
   .btn-coffee:hover { background: #ffe633; }
   .bmc-btn { display: flex; justify-content: center; min-height: 60px; }
 
+
+  /* Header coffee button: Buy Me a Coffee's own button, scaled to the nav. */
+  .nav-links { align-items: center; }
+  .nav-bmc { display: inline-flex; zoom: 0.62; }
+  .nav-bmc a { margin: 0 !important; }
+
+  /* ===== Page-wide background: drifting colour, a dot grid and a glow that follow the pointer ===== */
+  .page-bg { position: fixed; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; }
+  .page-bg .blob { position: absolute; width: 46vmax; height: 46vmax; border-radius: 50%; filter: blur(80px); opacity: 0.22; }
+  .page-bg .b1 { background: #6c55ff; left: -12vmax; top: -10vmax; animation: blob1 26s ease-in-out infinite alternate; }
+  .page-bg .b2 { background: #1f8fb0; right: -16vmax; top: 30vh; opacity: 0.14; animation: blob2 32s ease-in-out infinite alternate; }
+  .page-bg .b3 { background: #b23a8f; left: 20vw; bottom: -22vmax; opacity: 0.12; animation: blob3 29s ease-in-out infinite alternate; }
+  @keyframes blob1 { to { transform: translate(18vw, 22vh) scale(1.15); } }
+  @keyframes blob2 { to { transform: translate(-22vw, -18vh) scale(0.9); } }
+  @keyframes blob3 { to { transform: translate(24vw, -26vh) scale(1.1); } }
+  .page-bg .dots {
+    position: absolute; inset: 0;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.55) 1px, transparent 1.5px); background-size: 26px 26px;
+    -webkit-mask-image: radial-gradient(260px circle at var(--cx, 50%) var(--cy, 20%), #000 0%, rgba(0, 0, 0, 0.35) 45%, transparent 100%);
+            mask-image: radial-gradient(260px circle at var(--cx, 50%) var(--cy, 20%), #000 0%, rgba(0, 0, 0, 0.35) 45%, transparent 100%);
+    opacity: 0.35;
+  }
+  .page-bg .glow { position: absolute; inset: 0; background: radial-gradient(520px circle at var(--cx, 50%) var(--cy, 20%), rgba(123, 108, 255, 0.16), transparent 65%); }
+  @media (hover: none) { .page-bg .dots { opacity: 0.12; } }
+
   /* ===== Interactive hero ===== */
   main { overflow-x: clip; }
   .hero > *:not(.floaters):not(.spot) { position: relative; z-index: 1; }
@@ -113,8 +138,6 @@
   .fl-in svg { width: 16px; height: 16px; color: var(--accent-2); }
   .fl-in b { font: 600 12.5px ui-monospace, SFMono-Regular, Menlo, monospace; color: var(--text); }
   @keyframes drift { 0%, 100% { transform: translateY(0) rotate(-1deg); } 50% { transform: translateY(-14px) rotate(1deg); } }
-  .spot { position: absolute; inset: -40px 0 auto; left: 50%; width: 100vw; height: 760px; transform: translateX(-50%); pointer-events: none; z-index: 0;
-    background: radial-gradient(420px circle at var(--sx, 50%) var(--sy, 30%), rgba(123, 108, 255, 0.13), transparent 70%); }
   @media (max-width: 1180px) { .fl { display: none; } .fl:nth-child(1), .fl:nth-child(5), .fl:nth-child(3), .fl:nth-child(8) { display: block; } .fl-in { opacity: 0.35; } }
   @media (max-width: 760px) { .floaters { display: none; } }
 
@@ -485,6 +508,8 @@
 
   @media (max-width: 640px) {
     .nav-links a:not(.gh):not(.coffee-link) { display: none; }
+    .nav-links .gh { display: none; }
+    .nav-bmc { zoom: 0.5; }
     h1 br { display: none; }
     .screen { height: 380px; }
     .note { left: 16px; bottom: 18px; width: 170px; }
@@ -498,6 +523,7 @@
 </style>
 </head>
 <body>
+<div class="page-bg" aria-hidden="true"><span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span><span class="dots"></span><span class="glow"></span></div>
 
 <header class="wrap nav">
   <a class="brand" href="#"><img src="icon.png" alt="">Tolio</a>
@@ -506,7 +532,7 @@
     <a href="#install">Install</a>
     <a href="#privacy">Privacy</a>
     <a class="gh" href="https://github.com/keburius/tolio">GitHub</a>
-    <a class="coffee-link" href="https://buymeacoffee.com/keburius" rel="noopener">☕ Support</a>
+    <span class="nav-bmc"><script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="keburius" data-color="#FFDD00" data-emoji=""  data-font="Cookie" data-text="Buy me a coffee" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff" ></script><noscript><a class="coffee-link" href="https://buymeacoffee.com/keburius" rel="noopener">☕ Support</a></noscript></span>
   </nav>
 </header>
 
@@ -524,7 +550,6 @@
       <div class="fl" style="left:9%;top:29%;--d:0.4;--delay:-10.4s"><div class="fl-in"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3" fill="currentColor"/></svg><b>⌃⌥⌘R</b><span>Record</span></div></div>
       <div class="fl" style="right:9%;top:29%;--d:0.4;--delay:-11.7s"><div class="fl-in"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><b>⌃⌥⌘L</b><span>Lock keyboard</span></div></div>
     </div>
-    <div class="spot" aria-hidden="true"></div>
     <img class="hero-icon" src="icon.png" alt="Tolio app icon">
     <h1>The shortcuts your Mac <br><span class="soft">is missing.</span></h1>
     <p class="lead">Screenshots with an editor, clipboard history, a launcher, window layouts, text capture and sticky notes, all in one small menu bar app. Free, and everything stays on your Mac.</p>

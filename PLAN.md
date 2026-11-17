@@ -951,3 +951,7 @@ Each phase has a **Done when** line, and nothing moves on until it's met. "You" 
   - The CSP in `vercel.json` now allows exactly these: scripts from cdnjs.buymeacoffee.com, fonts from fonts.gstatic.com and cdn.buymeacoffee.com, styles from fonts.googleapis.com, images from cdn.buymeacoffee.com, and frames from www.buymeacoffee.com.
   - The footer says that the button and widget load from buymeacoffee.com. The nav "☕ Support" and footer links stay plain.
   - Checked by rendering: both appear.
+- **Header coffee button and page-wide background (same day):**
+  - The header uses the official Buy Me a Coffee button (scaled to the nav; plain link without JS) instead of "☕ Support". On phones the GitHub link hides to make room.
+  - The hover effect now covers the **whole page**: a fixed background layer with three slowly drifting colour blobs, a dot grid that lights up around the pointer, and a violet glow following the pointer. The old hero-only spotlight was removed.
+  - With Reduce Motion the blobs stay still. On touch screens the grid is faint and static.

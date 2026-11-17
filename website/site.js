@@ -30,12 +30,14 @@ document.addEventListener("DOMContentLoaded", () => {
       if (frame) return;
       frame = requestAnimationFrame(() => {
         frame = 0;
+        // Page-wide glow and dot grid follow the pointer everywhere.
+        document.documentElement.style.setProperty("--cx", e.clientX + "px");
+        document.documentElement.style.setProperty("--cy", e.clientY + "px");
         const r = hero.getBoundingClientRect();
         if (r.bottom < 0) return;
         hero.style.setProperty("--mx", ((e.clientX / window.innerWidth) * 2 - 1).toFixed(3));
         hero.style.setProperty("--my", (((e.clientY - r.top) / r.height) * 2 - 1).toFixed(3));
-        hero.style.setProperty("--sx", e.clientX + "px");
-        hero.style.setProperty("--sy", (e.clientY - r.top + 40) + "px");
+
       });
     }, { passive: true });
   }
