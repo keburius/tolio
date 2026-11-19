@@ -1,6 +1,21 @@
 # Changelog
 
-## 1.1.0 (not released yet)
+## 2.0.0
+
+- **Tolio is now All Set.** New name, new app icon (an A whose crossbar is a checkmark) and a new menu bar icon. Your settings, data and permissions carry over.
+- **A new look everywhere.** Settings, onboarding and the control panel are redesigned: a dark window, glass icons for every feature, grouped rows and key caps for shortcuts.
+  - **Overview:** which features are on at a glance, a short tour, the most loved features as cards and the rest as rows.
+  - **Feature pages:** each one shows an example of what the feature does, its settings, shortcuts and permissions.
+  - **Shortcuts:** click any shortcut to change it, including every Window Layouts shortcut on its own page.
+  - **Permissions:** also shows Calendars, Reminders, Bluetooth and Music access.
+  - **New Profile page** with the version and a link to the source.
+- **New in General → Feel:** turn trackpad taps and tick sounds on or off for the whole app.
+- **Control panel:** eight quick actions, what's running now (Energy Mode with a switch, your next reminder with Snooze, System Stats) and more actions. Recent copies moved to the Clipboard button.
+- **Names:** Keep Awake is now **Energy Mode** and Sticky Notes are now **Desktop Notes**.
+- **New website** at the same address.
+
+Also in this release:
+
 
 - **Features are grouped.** Settings, the Overview, the setup guide and the website list them under groups:
   - **Clipboard:** Clipboard History, Snippets.
