@@ -4,28 +4,38 @@ public extension L10n {
     /// Screenshots & Recording: captures, the editor, pins and screen recording.
     enum Screenshots {
         public static var displayName: String { tr("screenshots.displayName", "Screenshots & Recording") }
+        public static var sidebarName: String { tr("screenshots.sidebarName", "Screenshots") }
         public static var summary: String {
-            tr("screenshots.summary", "Capture, mark up and pin screenshots, copy text from images and record the screen.")
+            tr("screenshots.summary", "Capture, mark up and pin screenshots, and record the screen.")
         }
+        public static var tagline: String { tr("screenshots.tagline", "Capture, mark up and record the screen.") }
+        public static var heroLabel: String {
+            tr("screenshots.hero", "Example: an area of the screen selected for a screenshot, 640 by 360")
+        }
+        public static var tabRecording: String { tr("screenshots.settings.tab.recording", "Recording") }
+        public static var settingsTabs: String { tr("screenshots.settings.tabs", "Screenshots and Recording settings") }
 
         // MARK: Shortcuts (sentence case, as in the shortcuts table)
 
         public static var hotkeyArea: String { tr("screenshots.hotkey.area", "Capture area or window") }
         public static var macShortcutConflict: String {
-            tr("screenshots.settings.macShortcutConflict", "macOS also uses ⇧⌘4 for its own screenshots and gets the key press first. To use Tolio’s, open Keyboard Shortcuts → Screenshots and turn off “Save picture of selected area as a file”.")
+            tr("screenshots.settings.macShortcutConflict", "macOS also uses ⇧⌘4 for its own screenshots and gets the key press first. To use All Set’s, open Keyboard Shortcuts → Screenshots and turn off “Save picture of selected area as a file”.")
         }
         public static var autoCopyTitle: String { tr("screenshots.editor.autoCopyTitle", "Copying to the clipboard…") }
         public static var autoCopyHint: String { tr("screenshots.editor.autoCopyHint", "Click or press a key to keep editing") }
         public static var autoCopyCancel: String { tr("screenshots.editor.autoCopyCancel", "Keep Editing") }
         public static var autoCopyToggle: String { tr("screenshots.settings.autoCopy", "Copy and close the editor after 3 seconds if you don’t edit") }
-        public static var useShortcutForTolio: String { tr("screenshots.settings.useShortcutForTolio", "Use ⇧⌘4 for Tolio") }
+        public static var useShortcutForAllSet: String { tr("screenshots.settings.useShortcutForTolio", "Use ⇧⌘4 for All Set") }
         public static var useShortcutConfirmTitle: String { tr("screenshots.settings.useShortcutConfirmTitle", "Turn off macOS’s own ⇧⌘4?") }
         public static var useShortcutConfirmMessage: String {
-            tr("screenshots.settings.useShortcutConfirmMessage", "Tolio will switch off “Save picture of selected area as a file” in your keyboard shortcuts, so ⇧⌘4 opens Tolio’s screenshot. You can turn it back on here at any time.")
+            tr("screenshots.settings.useShortcutConfirmMessage", "All Set will switch off “Save picture of selected area as a file” in your keyboard shortcuts, so ⇧⌘4 opens All Set’s screenshot. You can turn it back on here at any time.")
         }
         public static var useShortcutConfirmButton: String { tr("screenshots.settings.useShortcutConfirmButton", "Turn Off macOS’s ⇧⌘4") }
         public static var restoreMacShortcut: String { tr("screenshots.settings.restoreMacShortcut", "Turn macOS’s Back On") }
-        public static var macShortcutIsOff: String { tr("screenshots.settings.macShortcutIsOff", "macOS’s own ⇧⌘4 is off, so it opens Tolio’s screenshot.") }
+        /// "macOS’s own ⇧⌘4 is off…", with the shortcut (drawn as key caps) as the argument.
+        public static func macShortcutIsOff(_ shortcut: String) -> String {
+            format("screenshots.settings.macShortcutIsOff", "macOS’s own %@ is off, so it opens All Set’s screenshot.", shortcut)
+        }
         public static var macShortcutNeedsLogout: String { tr("screenshots.settings.macShortcutNeedsLogout", "Saved. It takes effect after you log out and back in.") }
         public static var openKeyboardShortcuts: String { tr("screenshots.settings.openKeyboardShortcuts", "Open Keyboard Settings…") }
         public static var hotkeyScreen: String { tr("screenshots.hotkey.screen", "Capture screen") }
@@ -91,13 +101,14 @@ public extension L10n {
         public static var codecHEVC: String { tr("screenshots.settings.codec.hevc", "HEVC (smaller files)") }
         public static var showPointer: String { tr("screenshots.settings.showPointer", "Show the pointer") }
         public static var systemAudio: String { tr("screenshots.settings.systemAudio", "Record system audio") }
-        public static var microphone: String { tr("screenshots.settings.microphone", "Record the microphone (macOS 15 or later)") }
+        public static var microphone: String { tr("screenshots.settings.microphone", "Record the microphone") }
+        public static var microphoneNote: String { tr("screenshots.settings.microphoneNote", "Needs macOS 15 or later.") }
         public static var recordingNote: String {
-            tr("screenshots.settings.recordingNote", "Recordings are saved as MP4 videos in the same folder. System audio and the microphone are saved as two audio tracks. To stop, press the recording shortcut again or click the recording timer in the menu bar.")
+            tr("screenshots.settings.recordingNote", "Recordings are saved as MP4 videos in the same folder. To stop, press the recording shortcut again or click the recording timer in the menu bar.")
         }
-        public static var scrollingToggle: String { tr("screenshots.settings.scrolling", "Scrolling capture") }
+        public static var scrollingToggle: String { tr("screenshots.settings.scrolling", "Scrolling capture (experimental)") }
         public static var scrollingNote: String {
-            tr("screenshots.settings.scrollingNote", "Select the part of a window that scrolls; Tolio scrolls it and joins the pages into one tall image. Needs the Accessibility permission. Works best on plain documents and web pages; content that moves or changes while scrolling can't be joined.")
+            tr("screenshots.settings.scrollingNote", "Select the part of a window that scrolls and All Set joins it into one tall image. Needs the Accessibility permission.")
         }
 
         // MARK: Selection overlay
@@ -154,7 +165,7 @@ public extension L10n {
         // MARK: Errors
 
         public static var errorNoPermission: String {
-            tr("screenshots.error.noPermission", "Tolio needs Screen Recording permission to capture the screen.")
+            tr("screenshots.error.noPermission", "All Set needs Screen Recording permission to capture the screen.")
         }
         public static var errorNothingToCapture: String { tr("screenshots.error.nothingToCapture", "That area isn't on any display.") }
         public static func errorFailed(_ reason: String) -> String { format("screenshots.error.failed", "Capture failed: %@", reason) }
@@ -193,6 +204,9 @@ public extension L10n {
         public static var open: String { tr("screenshots.captureText.open", "Open") }
         public static var captureTextSummary: String {
             tr("capturetext.summary", "Copy the text, QR code or barcode from any part of the screen.")
+        }
+        public static var captureTextHeroLabel: String {
+            tr("capturetext.hero", "Example: a frame around some text on screen, with the first line picked up and copied")
         }
         public static var captureTextClickHint: String { tr("screenshots.captureText.clickHint", "capture text") }
         public static var appendHint: String { tr("screenshots.captureText.appendHint", "Hold ⇧ when you finish selecting to add to your previous capture") }

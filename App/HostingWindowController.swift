@@ -19,12 +19,13 @@ final class HostingWindowController<Content: View>: NSObject, NSWindowDelegate {
     ///   first rows of the detail pane.
     init(
         title: String, size: NSSize, permissions: PermissionsManager, fullSizeContent: Bool = false,
-        content: Content, onClose: (() -> Void)? = nil
+        allSetChrome: Bool = false, resizable: Bool = true, content: Content, onClose: (() -> Void)? = nil
     ) {
         self.permissions = permissions
         self.onClose = onClose
-        var style: NSWindow.StyleMask = [.titled, .closable, .miniaturizable, .resizable]
-        if fullSizeContent { style.insert(.fullSizeContentView) }
+        var style: NSWindow.StyleMask = [.titled, .closable, .miniaturizable]
+        if resizable { style.insert(.resizable) }
+        if fullSizeContent || allSetChrome { style.insert(.fullSizeContentView) }
         window = NSWindow(
             contentRect: NSRect(origin: .zero, size: size),
             styleMask: style,
@@ -34,6 +35,18 @@ final class HostingWindowController<Content: View>: NSObject, NSWindowDelegate {
         super.init()
         if fullSizeContent { window.toolbarStyle = .unified }
         window.title = title
+        if allSetChrome {
+            // The All Set look: dark, no title bar, content under the traffic lights.
+            window.titlebarAppearsTransparent = true
+            window.titleVisibility = .hidden
+            window.appearance = NSAppearance(named: .darkAqua)
+            window.backgroundColor = NSColor(srgbRed: 0x1C / 255, green: 0x1C / 255, blue: 0x1E / 255, alpha: 1)
+            window.isMovableByWindowBackground = true
+            let toolbar = NSToolbar(identifier: "allset.chrome")
+            toolbar.showsBaselineSeparator = false
+            window.toolbar = toolbar
+            window.toolbarStyle = .unifiedCompact
+        }
         window.isReleasedWhenClosed = false
         window.contentViewController = NSHostingController(rootView: content)
         window.setContentSize(size)

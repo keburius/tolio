@@ -9,7 +9,6 @@ let package = Package(
         .library(name: "OmniCore", targets: ["OmniCore"]),
         .library(name: "OmniPlatform", targets: ["OmniPlatform"]),
         .library(name: "FeatureDiagnostics", targets: ["FeatureDiagnostics"]),
-        .library(name: "FeaturePalette", targets: ["FeaturePalette"]),
         .library(name: "FeatureClipboard", targets: ["FeatureClipboard"]),
         .library(name: "FeatureWindows", targets: ["FeatureWindows"]),
         .library(name: "FeatureSwitcher", targets: ["FeatureSwitcher"]),
@@ -20,6 +19,9 @@ let package = Package(
         .library(name: "FeatureTextActions", targets: ["FeatureTextActions"]),
         .library(name: "FeatureScreenshots", targets: ["FeatureScreenshots"]),
         .library(name: "FeatureStickyNotes", targets: ["FeatureStickyNotes"]),
+        .library(name: "FeatureDropRing", targets: ["FeatureDropRing"]),
+        .library(name: "FeatureDeskMinder", targets: ["FeatureDeskMinder"]),
+        .library(name: "FeatureIsland", targets: ["FeatureIsland"]),
     ],
     dependencies: [
         // Approved dependency (SQLite), vendored at 7.12.0. See Vendor/README.md.
@@ -29,7 +31,6 @@ let package = Package(
         .target(name: "OmniCore", resources: [.process("Resources")]),
         .target(name: "OmniPlatform", dependencies: ["OmniCore"]),
         .target(name: "FeatureDiagnostics", dependencies: ["OmniCore", "OmniPlatform"]),
-        .target(name: "FeaturePalette", dependencies: ["OmniCore", "OmniPlatform"]),
         .target(name: "FeatureClipboard", dependencies: [
             "OmniCore", "OmniPlatform", .product(name: "GRDB", package: "GRDB"),
         ]),
@@ -42,9 +43,11 @@ let package = Package(
         .target(name: "FeatureTextActions", dependencies: ["OmniCore", "OmniPlatform"]),
         .target(name: "FeatureScreenshots", dependencies: ["OmniCore", "OmniPlatform"]),
         .target(name: "FeatureStickyNotes", dependencies: ["OmniCore", "OmniPlatform"]),
+        .target(name: "FeatureDropRing", dependencies: ["OmniCore", "OmniPlatform"]),
+        .target(name: "FeatureDeskMinder", dependencies: ["OmniCore", "OmniPlatform"]),
+        .target(name: "FeatureIsland", dependencies: ["OmniCore", "OmniPlatform"]),
         .testTarget(name: "OmniCoreTests", dependencies: ["OmniCore"]),
         .testTarget(name: "OmniPlatformTests", dependencies: ["OmniPlatform"]),
-        .testTarget(name: "FeaturePaletteTests", dependencies: ["FeaturePalette", "OmniCore"]),
         .testTarget(name: "FeatureClipboardTests", dependencies: ["FeatureClipboard", "OmniCore", "OmniPlatform"]),
         .testTarget(name: "FeatureWindowsTests", dependencies: ["FeatureWindows", "OmniCore"]),
         .testTarget(name: "FeatureSwitcherTests", dependencies: ["FeatureSwitcher", "OmniCore"]),
@@ -55,5 +58,8 @@ let package = Package(
         .testTarget(name: "FeatureTextActionsTests", dependencies: ["FeatureTextActions", "OmniCore", "OmniPlatform"]),
         .testTarget(name: "FeatureScreenshotsTests", dependencies: ["FeatureScreenshots", "OmniCore"]),
         .testTarget(name: "FeatureStickyNotesTests", dependencies: ["FeatureStickyNotes", "OmniCore"]),
+        .testTarget(name: "FeatureDropRingTests", dependencies: ["FeatureDropRing", "OmniCore"]),
+        .testTarget(name: "FeatureDeskMinderTests", dependencies: ["FeatureDeskMinder", "OmniCore"]),
+        .testTarget(name: "FeatureIslandTests", dependencies: ["FeatureIsland", "OmniCore"]),
     ]
 )

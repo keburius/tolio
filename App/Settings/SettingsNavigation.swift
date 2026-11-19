@@ -1,6 +1,7 @@
 import Observation
 import OmniCore
 import OmniPlatform
+import SwiftUI
 
 /// Where Settings is and what it highlights. Shared by the sidebar, search and pages.
 @MainActor
@@ -45,6 +46,27 @@ extension AppServices {
         features.features.filter { includingHidden || !$0.isHidden }
     }
 
+    /// Visible features in the design's order (unknown ones last).
+    func sidebarFeatures(includingHidden: Bool) -> [any Feature] {
+        let order = FeatureLook.designOrder.map(\.rawValue) + ["snippets"]
+        func rank(_ feature: any Feature) -> Int {
+            if feature.id == "snippets" { return (order.firstIndex(of: "clipboard") ?? 0) * 2 + 1 }
+            return (order.firstIndex(of: feature.id.rawValue).map { $0 * 2 }) ?? 1000
+        }
+        return visibleFeatures(includingHidden: includingHidden).enumerated()
+            .sorted { (rank($0.element), $0.offset) < (rank($1.element), $1.offset) }
+            .map(\.element)
+    }
+
+    /// Visible features by group, in `FeatureGroup` order; empty groups are left out.
+    func featureGroups(includingHidden: Bool) -> [(group: FeatureGroup, features: [any Feature])] {
+        let visible = visibleFeatures(includingHidden: includingHidden)
+        return FeatureGroup.allCases.compactMap { group in
+            let members = visible.filter { $0.group == group }
+            return members.isEmpty ? nil : (group, members)
+        }
+    }
+
     /// The feature's main shortcut or gesture, for cards.
     func mainShortcutText(of feature: any Feature) -> String? {
         if let action = feature.declaredHotkeys.first, let combo = hotkeys.bindings.combo(for: action) {
@@ -66,6 +88,9 @@ extension AppServices {
             .init(page: .general, pageTitle: L10n.SettingsUI.general, label: L10n.SettingsUI.openSetupGuide, keywords: ["onboarding", "welcome", "tour"], anchor: "general.setup"),
             .init(page: .general, pageTitle: L10n.SettingsUI.general, label: L10n.SettingsUI.language, keywords: ["translation"], anchor: "general.language"),
             .init(page: .general, pageTitle: L10n.SettingsUI.general, label: L10n.SettingsUI.resetAllSettings, keywords: ["defaults"], anchor: "general.reset"),
+            .init(page: .general, pageTitle: L10n.SettingsUI.general, label: L10n.AllSet.hapticTaps, keywords: ["trackpad", "feedback", "vibration"], anchor: "general.feel"),
+            .init(page: .general, pageTitle: L10n.SettingsUI.general, label: L10n.AllSet.tickSounds, keywords: ["sound", "audio"], anchor: "general.feel"),
+            .init(page: .profile, pageTitle: L10n.AllSet.profile, label: L10n.AllSet.profile, keywords: ["license", "pro", "trial", "account", "about"]),
         ]
         for feature in visibleFeatures(includingHidden: includingHidden) {
             let page = SettingsPage.feature(feature.id)

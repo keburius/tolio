@@ -6,119 +6,184 @@ import SwiftUI
 @MainActor
 struct ControlPanelActions {
     var activate: (ControlPanelFocus.Target) -> Void
-    var turnOn: (QuickAccessID) -> Void
+    var turnOn: (String) -> Void
     var menu: (QuickAccessID) -> [MenuEntry]
     var settingsShortcut: String
 }
 
+/// The menu bar panel (design: "Control panel (menu bar)"): header, a grid
+/// of eight actions, what's running now, more actions, Settings and Quit.
 struct ControlPanelView: View {
     @Bindable var model: ControlPanelModel
     let actions: ControlPanelActions
 
     var body: some View {
-        VStack(alignment: .leading, spacing: OmniStyle.s3) {
+        VStack(alignment: .leading, spacing: 12) {
             header
-            tiles
-            if let id = model.turnOnPrompt, let tile = model.tiles.first(where: { $0.id == id }), case let .off(feature) = tile.state {
+            grid
+            if let id = model.turnOnPrompt, let action = model.action(id), case let .off(feature) = action.state {
                 turnOnRow(id: id, feature: feature)
             }
-            clips
-            Divider()
+            if !model.running.isEmpty { running }
+            if !model.more.isEmpty { more }
             footer
         }
-        .frame(width: 368, alignment: .leading)
-        .padding(OmniStyle.s4)
-        .omniPanelBackground(material: .regularMaterial)
+        .frame(width: 364, alignment: .leading)
+        .padding(14)
+        .background(RoundedRectangle(cornerRadius: 18, style: .continuous).fill(Color(red: 36 / 255, green: 37 / 255, blue: 44 / 255).opacity(0.92)))
+        .background(RoundedRectangle(cornerRadius: 18, style: .continuous).fill(.ultraThinMaterial))
+        .overlay(RoundedRectangle(cornerRadius: 18, style: .continuous).strokeBorder(Color.white.opacity(0.14), lineWidth: 1))
+        .overlay(alignment: .top) {
+            RoundedRectangle(cornerRadius: 18, style: .continuous).stroke(Color.white.opacity(0.10), lineWidth: 1)
+                .mask(LinearGradient(colors: [.white, .clear], startPoint: .top, endPoint: UnitPoint(x: 0.5, y: 0.04)))
+        }
+        .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
+        .allSetWindowStyle()
     }
 
     private var header: some View {
-        HStack {
-            Button { actions.activate(.settings) } label: { Text(L10n.App.name).font(.headline) }
-                .buttonStyle(.plain)
-                .help(L10n.App.settings)
+        HStack(spacing: 10) {
+            Button { actions.activate(.settings) } label: {
+                HStack(spacing: 10) {
+                    AllSetLogo(size: 30)
+                    Text(L10n.AllSet.appName).font(AS.font(16, .semibold)).foregroundStyle(AS.text)
+                }
+            }
+            .buttonStyle(.plain)
+            .help(L10n.App.settings)
             Spacer()
-            if let shortcut = ShortcutLookupText.controlPanel { ShortcutChip(shortcut) }
+            if let shortcut = ShortcutLookupText.controlPanel { KeyCaps(shortcut) }
         }
+        .padding(.horizontal, 2)
     }
 
-    // MARK: Tiles
+    // MARK: Grid
 
-    private var tiles: some View {
-        HStack(spacing: OmniStyle.s2) {
-            ForEach(model.tiles) { tile in
-                TileButton(tile: tile, focused: isFocused(.tile(tile.id))) { actions.activate(.tile(tile.id)) }
-                    .contextMenu { MenuEntriesView(entries: tileMenu(tile)) }
+    private var grid: some View {
+        LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 8), count: 4), spacing: 8) {
+            ForEach(model.grid) { action in
+                GridButton(action: action, focused: isFocused(.action(action.id))) { actions.activate(.action(action.id)) }
+                    .contextMenu { MenuEntriesView(entries: menu(for: action)) }
             }
         }
     }
 
-    private func tileMenu(_ tile: ControlPanelModel.Tile) -> [MenuEntry] {
-        if case .off = tile.state { return [] }
-        return actions.menu(tile.id)
+    private func menu(for action: ControlPanelModel.Action) -> [MenuEntry] {
+        guard case let .quickAccess(id) = action.kind, case .ready = action.state else {
+            if case .recording = action.state, case let .quickAccess(id) = action.kind { return actions.menu(id) }
+            return []
+        }
+        return actions.menu(id)
     }
 
-    private func turnOnRow(id: QuickAccessID, feature: String) -> some View {
+    private func turnOnRow(id: String, feature: String) -> some View {
         HStack {
-            Image(systemName: "info.circle").foregroundStyle(.secondary)
-            Text(L10n.App.featureIsOff(feature)).font(.callout)
+            Text(L10n.PanelUI.featureIsOff(feature)).font(AS.font(12.5)).foregroundStyle(AS.text)
             Spacer()
-            Button(L10n.Common.turnOn) { actions.turnOn(id) }.controlSize(.small)
+            Button(L10n.PanelUI.turnOn) { actions.turnOn(id) }.buttonStyle(.asPrimary)
         }
-        .padding(OmniStyle.s2)
-        .omniPanelBackground(radius: OmniStyle.controlRadius, material: .thinMaterial)
+        .padding(.horizontal, 10)
+        .frame(height: 40)
+        .background(RoundedRectangle(cornerRadius: 12, style: .continuous).fill(AS.cardFill))
+        .overlay(RoundedRectangle(cornerRadius: 12, style: .continuous).strokeBorder(AS.tileBorder, lineWidth: 1))
     }
 
-    // MARK: Clips
+    // MARK: Running now
 
-    @ViewBuilder private var clips: some View {
-        VStack(alignment: .leading, spacing: OmniStyle.s1) {
-            HStack {
-                SectionHeader(L10n.Panel.recentlyCopied)
-                Spacer()
-                if case .items = model.clips {
-                    Button(L10n.Panel.showAll) { actions.activate(.showAllClips) }
-                        .buttonStyle(.link).font(.caption)
-                        .overlay(focusRing(.showAllClips))
+    private var running: some View {
+        section(L10n.PanelUI.runningNow) {
+            ForEach(model.running) { row in
+                HStack(spacing: 10) {
+                    FeatureIcon(row.featureID, size: 26)
+                    VStack(alignment: .leading, spacing: 1) {
+                        Text(row.title).font(AS.font(13, .medium)).foregroundStyle(AS.text).lineLimit(1)
+                        Text(row.detail).font(AS.font(11.5).monospacedDigit()).foregroundStyle(AS.textSecondary).lineLimit(1)
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    switch row.control {
+                    case let .toggle(isOn):
+                        ASSwitch(row.title, isOn: Binding(get: { isOn }, set: { _ in actions.activate(.running(row.id)) }))
+                            .overlay(focusRing(.running(row.id)))
+                    case let .button(title):
+                        Button(title) { actions.activate(.running(row.id)) }
+                            .buttonStyle(SmallButtonStyle())
+                            .overlay(focusRing(.running(row.id)))
+                    case .none:
+                        EmptyView()
+                    }
                 }
+                .padding(.horizontal, 10)
+                .frame(height: 46)
             }
-            switch model.clips {
-            case let .items(results):
-                ForEach(Array(results.enumerated()), id: \.element.id) { index, result in
-                    ClipRow(index: index, result: result, focused: isFocused(.recent(index))) { actions.activate(.recent(index)) }
+        }
+    }
+
+    // MARK: More
+
+    private var more: some View {
+        section(L10n.PanelUI.more) {
+            ForEach(model.more) { action in
+                Button { actions.activate(.action(action.id)) } label: {
+                    HStack(spacing: 10) {
+                        FeatureIcon(action.featureID, size: 22)
+                        Text(action.title).font(AS.body).foregroundStyle(AS.text)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                        if case .off = action.state {
+                            Text(L10n.PanelUI.off).font(AS.font(11.5)).foregroundStyle(AS.textTertiary)
+                        } else if let shortcut = action.shortcut {
+                            KeyCaps(shortcut, spacing: 1.5)
+                        }
+                    }
+                    .padding(.horizontal, 10)
+                    .frame(height: 34)
+                    .contentShape(Rectangle())
                 }
-            case .empty:
-                Text(L10n.Panel.nothingCopied).font(.callout).foregroundStyle(.secondary).padding(.vertical, OmniStyle.s1)
-            case let .featureOff(name):
-                HStack {
-                    Text(L10n.Panel.turnOnToSeeClips(name)).font(.callout).foregroundStyle(.secondary)
-                    Spacer()
-                    Button(L10n.Common.turnOn) { actions.turnOn(.clipboard) }.controlSize(.small)
-                }
+                .buttonStyle(RowButtonStyle(focused: isFocused(.action(action.id))))
+                .opacity(isOff(action) ? 0.55 : 1)
             }
+        }
+    }
+
+    private func section<Content: View>(_ title: String, @ViewBuilder content: () -> Content) -> some View {
+        VStack(alignment: .leading, spacing: 6) {
+            Text(title).font(AS.font(11.5, .semibold)).foregroundStyle(AS.textSecondary)
+                .padding(.leading, 4)
+                .accessibilityAddTraits(.isHeader)
+            VStack(spacing: 0) {
+                ASDividedStack { content() }
+            }
+            .background(RoundedRectangle(cornerRadius: 12, style: .continuous).fill(AS.cardFill))
+            .overlay(RoundedRectangle(cornerRadius: 12, style: .continuous).strokeBorder(AS.tileBorder, lineWidth: 1))
+            .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
         }
     }
 
     // MARK: Footer
 
     private var footer: some View {
-        VStack(alignment: .leading, spacing: OmniStyle.s2) {
-            if let stats = model.statsLine {
-                Text(stats).font(.caption.monospacedDigit()).foregroundStyle(.secondary).lineLimit(1)
+        HStack {
+            Button { actions.activate(.settings) } label: {
+                HStack(spacing: 6) { Text(L10n.PanelUI.settings).font(AS.body).foregroundStyle(AS.text); KeyCaps(actions.settingsShortcut) }
+                    .padding(.horizontal, 8)
+                    .frame(height: 30)
+                    .contentShape(Rectangle())
             }
-            HStack {
-                Button { actions.activate(.settings) } label: {
-                    HStack(spacing: OmniStyle.s1) { Text(L10n.App.settings); ShortcutChip(actions.settingsShortcut) }
-                }
-                .buttonStyle(.borderless)
-                .overlay(focusRing(.settings))
-                Spacer()
-                Button { actions.activate(.quit) } label: {
-                    HStack(spacing: OmniStyle.s1) { Text(L10n.App.quit); ShortcutChip("⌘Q") } // l10n-ignore
-                }
-                .buttonStyle(.borderless)
-                .overlay(focusRing(.quit))
+            .buttonStyle(RowButtonStyle(focused: isFocused(.settings), radius: 7))
+            Spacer()
+            Button { actions.activate(.quit) } label: {
+                HStack(spacing: 6) { Text(L10n.PanelUI.quit).font(AS.body).foregroundStyle(AS.text); KeyCaps("⌘Q") } // l10n-ignore
+                    .padding(.horizontal, 8)
+                    .frame(height: 30)
+                    .contentShape(Rectangle())
             }
+            .buttonStyle(RowButtonStyle(focused: isFocused(.quit), radius: 7))
         }
+        .padding(.horizontal, -4)
+        .padding(.bottom, -4)
+    }
+
+    private func isOff(_ action: ControlPanelModel.Action) -> Bool {
+        if case .off = action.state { true } else { false }
     }
 
     private func isFocused(_ target: ControlPanelFocus.Target) -> Bool {
@@ -127,7 +192,7 @@ struct ControlPanelView: View {
 
     @ViewBuilder private func focusRing(_ target: ControlPanelFocus.Target) -> some View {
         if isFocused(target) {
-            RoundedRectangle(cornerRadius: OmniStyle.controlRadius).strokeBorder(Color.accentColor, lineWidth: 2).padding(-3)
+            RoundedRectangle(cornerRadius: AS.controlRadius).strokeBorder(AS.blue, lineWidth: 2).padding(-3)
         }
     }
 }
@@ -138,113 +203,118 @@ enum ShortcutLookupText {
     static var controlPanel: String?
 }
 
-private struct TileButton: View {
-    let tile: ControlPanelModel.Tile
+/// One of the eight grid buttons: glyph tile, name, shortcut (or live state).
+private struct GridButton: View {
+    let action: ControlPanelModel.Action
     let focused: Bool
-    let action: () -> Void
+    let perform: () -> Void
+    @State private var hovering = false
 
     var body: some View {
-        Button(action: action) {
-            VStack(spacing: OmniStyle.s1) {
+        Button(action: perform) {
+            VStack(spacing: 6) {
                 ZStack(alignment: .topTrailing) {
-                    Image(systemName: symbol).font(.system(size: 20)).frame(height: 24)
-                    if case .needsPermission = tile.state {
-                        Image(systemName: "exclamationmark.triangle.fill").font(.system(size: 9)).foregroundStyle(.orange).offset(x: 8, y: -4)
+                    icon
+                    if case .needsPermission = action.state {
+                        LineIcon(ASIcon.warning, size: 10, lineWidth: 2.2, color: AS.orange)
+                            .background(Circle().fill(AS.panel).padding(-2))
+                            .offset(x: 5, y: -4)
                     }
                 }
-                // Icon only; the line below shows the shortcut (or the live state).
-                Text(subtitle).font(.caption.monospacedDigit()).foregroundStyle(.secondary).lineLimit(1).minimumScaleFactor(0.8)
+                Text(title).font(AS.font(11.5, .medium)).foregroundStyle(AS.text).lineLimit(1).minimumScaleFactor(0.8)
+                subtitle.frame(height: 16)
             }
-            .frame(width: 66, height: 56)
+            .padding(.top, 10)
+            .padding(.bottom, 8)
+            .padding(.horizontal, 2)
+            .frame(maxWidth: .infinity)
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
-        .background(RoundedRectangle(cornerRadius: OmniStyle.cardRadius).fill(background))
+        .background(RoundedRectangle(cornerRadius: 12, style: .continuous).fill(background))
         .overlay {
-            RoundedRectangle(cornerRadius: OmniStyle.cardRadius)
-                .strokeBorder(focused ? Color.accentColor : Color(nsColor: .separatorColor).opacity(OmniStyle.increaseContrast ? 1 : 0.4), lineWidth: focused ? 2 : 1)
+            RoundedRectangle(cornerRadius: 12, style: .continuous)
+                .strokeBorder(focused ? AS.blue : AS.tileBorder, lineWidth: focused ? 2 : 1)
         }
         .opacity(isOff ? 0.55 : 1)
-        .help(helpText)
+        .onHover { hovering = $0 }
+        .help(help)
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel([helpText, subtitle].joined(separator: ", "))
+        .accessibilityLabel(help)
         .accessibilityAddTraits(.isButton)
     }
 
-    private var isOff: Bool { if case .off = tile.state { true } else { false } }
-
-    private var symbol: String {
-        if case .ready(true, _) = tile.state, tile.id == .keepAwake { return "cup.and.saucer.fill" }
-        if case .recording = tile.state { return "stop.circle.fill" }
-        return tile.symbol
-    }
-
-    private var title: String {
-        if case let .recording(elapsed) = tile.state { return L10n.Panel.stop(elapsed) }
-        return tile.title
-    }
-
-    /// Shortcut under the icon; a running timer or an active state's detail takes its place.
-    private var subtitle: String {
-        switch tile.state {
-        case let .recording(elapsed): elapsed
-        case let .ready(_, detail?): detail
-        default: tile.shortcut ?? "–" // l10n-ignore
+    @ViewBuilder private var icon: some View {
+        if case .recording = action.state {
+            GlassTile(size: 34, glow: AS.red) {
+                Image(systemName: "stop.fill").font(.system(size: 13, weight: .bold)).foregroundStyle(AS.red)
+            }
+        } else {
+            FeatureIcon(action.featureID, size: 34)
         }
     }
 
-    /// The name and state, shown on hover since the tile has no title.
-    private var helpText: String {
-        switch tile.state {
-        case .off: [tile.title, L10n.Common.off].joined(separator: " — ") // l10n-ignore
-        case .needsPermission: [tile.title, L10n.Status.needsPermission].joined(separator: " — ") // l10n-ignore
-        default: title
+    private var title: String {
+        if case let .recording(elapsed) = action.state { return elapsed }
+        return action.title
+    }
+
+    @ViewBuilder private var subtitle: some View {
+        if case .off = action.state {
+            Text(L10n.PanelUI.off).font(AS.font(10.5)).foregroundStyle(AS.textTertiary)
+        } else if let shortcut = action.shortcut {
+            KeyCaps(shortcut, spacing: 1.5, size: 16)
+        } else {
+            Color.clear
+        }
+    }
+
+    private var isOff: Bool { if case .off = action.state { true } else { false } }
+
+    private var help: String {
+        switch action.state {
+        case let .off(feature): L10n.PanelUI.featureIsOff(feature)
+        case .needsPermission: [action.title, L10n.Status.needsPermission].joined(separator: " — ") // l10n-ignore
+        case let .recording(elapsed): L10n.PanelUI.stop(elapsed)
+        case .ready: action.title
         }
     }
 
     private var background: Color {
-        switch tile.state {
-        case .ready(true, _): Color.accentColor.opacity(0.22)
-        case .recording: Color.red.opacity(0.22)
-        default: Color.primary.opacity(0.05)
+        switch action.state {
+        case .ready(true): AS.green.opacity(0.16)
+        case .recording: AS.red.opacity(0.20)
+        default: hovering ? Color.white.opacity(0.09) : AS.cardFill
         }
     }
 }
 
-private struct ClipRow: View {
-    let index: Int
-    let result: SearchResult
+/// A full-width row button with a hover fill and keyboard focus ring.
+private struct RowButtonStyle: ButtonStyle {
     let focused: Bool
-    let action: () -> Void
+    var radius: CGFloat = 0
+    @State private var hovering = false
 
-    var body: some View {
-        Button(action: action) {
-            HStack(spacing: OmniStyle.s2) {
-                Text("\(index + 1)").font(.caption.monospacedDigit()).foregroundStyle(.secondary).frame(width: 12)
-                icon.frame(width: 20, height: 20)
-                Text(result.title).lineLimit(1).truncationMode(.tail)
-                Spacer(minLength: OmniStyle.s2)
-                if let subtitle = result.subtitle { Text(subtitle).font(.caption).foregroundStyle(.secondary).lineLimit(1) }
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .background(RoundedRectangle(cornerRadius: radius, style: .continuous)
+                .fill(configuration.isPressed ? Color.white.opacity(0.12) : (hovering || focused ? Color.white.opacity(0.07) : .clear)))
+            .overlay {
+                if focused { RoundedRectangle(cornerRadius: max(radius, 6), style: .continuous).strokeBorder(AS.blue, lineWidth: 2) }
             }
-            .padding(.horizontal, OmniStyle.s1)
-            .padding(.vertical, 3)
-            .contentShape(Rectangle())
-        }
-        .buttonStyle(.plain)
-        .background(RoundedRectangle(cornerRadius: OmniStyle.controlRadius).fill(focused ? Color.accentColor.opacity(0.2) : .clear))
+            .onHover { hovering = $0 }
     }
+}
 
-    @ViewBuilder private var icon: some View {
-        switch result.icon {
-        case let .symbol(name): Image(systemName: name).foregroundStyle(.secondary)
-        case let .file(url): Image(nsImage: NSWorkspace.shared.icon(forFile: url.path)).resizable()
-        case let .image(url):
-            if let image = NSImage(contentsOf: url) {
-                Image(nsImage: image).resizable().aspectRatio(contentMode: .fit)
-                    .frame(width: 20, height: 20).clipShape(RoundedRectangle(cornerRadius: 3))
-            }
-            else { Image(systemName: "photo").foregroundStyle(.secondary) }
-        }
+/// The small "Snooze" button.
+private struct SmallButtonStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .font(AS.font(12))
+            .foregroundStyle(AS.text)
+            .padding(.horizontal, 9)
+            .frame(height: 22)
+            .background(RoundedRectangle(cornerRadius: 6, style: .continuous).fill(Color.white.opacity(configuration.isPressed ? 0.2 : 0.12)))
     }
 }
 
@@ -261,17 +331,17 @@ struct LayoutGrid: View {
                 Button { action(layout.id) } label: {
                     VStack(spacing: 3) {
                         ZStack(alignment: .leading) {
-                            RoundedRectangle(cornerRadius: 3).strokeBorder(.secondary, lineWidth: 1)
+                            RoundedRectangle(cornerRadius: 3).strokeBorder(AS.textSecondary, lineWidth: 1)
                             GeometryReader { geometry in
-                                RoundedRectangle(cornerRadius: 2).fill(Color.accentColor)
+                                RoundedRectangle(cornerRadius: 2).fill(Color(hex: 0xBD71E4))
                                     .frame(width: max(2, geometry.size.width * layout.span.width - 2))
                                     .offset(x: geometry.size.width * layout.span.x + 1)
                             }
                             .padding(.vertical, 2)
                         }
                         .frame(width: 40, height: 24)
-                        Text(layout.title).font(.caption2).lineLimit(1).minimumScaleFactor(0.7)
-                        if let shortcut = layout.shortcut { Text(shortcut).font(.caption2.monospacedDigit()).foregroundStyle(.secondary) }
+                        Text(layout.title).font(AS.font(10.5)).foregroundStyle(AS.text).lineLimit(1).minimumScaleFactor(0.7)
+                        if let shortcut = layout.shortcut { KeyCaps(shortcut, spacing: 1, size: 14) }
                     }
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 3)
@@ -280,7 +350,7 @@ struct LayoutGrid: View {
                 .buttonStyle(.plain)
                 .background {
                     if focused == .layout(layout.id) {
-                        RoundedRectangle(cornerRadius: OmniStyle.controlRadius).strokeBorder(Color.accentColor, lineWidth: 2)
+                        RoundedRectangle(cornerRadius: AS.controlRadius).strokeBorder(AS.blue, lineWidth: 2)
                     }
                 }
                 .help(layout.title)

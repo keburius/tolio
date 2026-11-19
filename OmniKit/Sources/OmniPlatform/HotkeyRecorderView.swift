@@ -34,22 +34,38 @@ public struct HotkeyRecorderView: View {
     public var body: some View {
         VStack(alignment: .trailing, spacing: 2) {
             Button(action: toggle) {
-                Text(label)
-                    .monospaced()
-                    .frame(minWidth: 110)
-                    .foregroundStyle(isRecording ? Color.accentColor : .primary)
+                Group {
+                    if isRecording {
+                        Text(L10n.Shared.recorderPrompt)
+                            .font(AS.font(12))
+                            .foregroundStyle(AS.text)
+                            .padding(.horizontal, 10)
+                            .frame(height: 24)
+                            .background(RoundedRectangle(cornerRadius: AS.controlRadius, style: .continuous).fill(AS.blue.opacity(0.25)))
+                            .overlay(RoundedRectangle(cornerRadius: AS.controlRadius, style: .continuous).strokeBorder(AS.blue, lineWidth: 1))
+                    } else if let combo {
+                        KeyCaps(combo.displayString)
+                            .padding(.horizontal, 3)
+                            .frame(height: 24)
+                    } else {
+                        Text(L10n.Common.none)
+                            .font(AS.font(12))
+                            .foregroundStyle(AS.textSecondary)
+                            .padding(.horizontal, 10)
+                            .frame(height: 24)
+                            .background(RoundedRectangle(cornerRadius: AS.controlRadius, style: .continuous).fill(AS.controlFill))
+                    }
+                }
+                .contentShape(Rectangle())
             }
+            .buttonStyle(.plain)
+            .accessibilityLabel(isRecording ? L10n.Shared.recorderPrompt : (combo.map { L10n.A11y.shortcut(KeySpeech.spoken($0.displayString)) } ?? L10n.Common.none))
             .help(L10n.Shared.recorderHelp)
             if let error {
-                Text(error).font(.caption).foregroundStyle(.red)
+                Text(error).font(AS.footnote).foregroundStyle(AS.red)
             }
         }
         .onDisappear(perform: stop)
-    }
-
-    private var label: String {
-        if isRecording { return L10n.Shared.recorderPrompt }
-        return combo?.displayString ?? L10n.Common.none
     }
 
     private func toggle() {

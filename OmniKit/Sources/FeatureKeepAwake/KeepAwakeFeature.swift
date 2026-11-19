@@ -28,7 +28,9 @@ public final class KeepAwakeFeature: Feature {
     public let id: FeatureID = "keepawake"
     public var displayName: String { L10n.KeepAwake.displayName }
     public var summary: String { L10n.KeepAwake.summary }
-    public let symbolName = "cup.and.saucer"
+    public var tagline: String { L10n.KeepAwake.tagline }
+    public let symbolName = "bolt"
+    public let group: FeatureGroup = .energy
     public let requiredPermissions: Set<Permission> = []
     public let isEnabledByDefault = true
     public var declaredHotkeys: [HotkeyAction] { [Self.toggleHotkey] }
@@ -73,6 +75,10 @@ public final class KeepAwakeFeature: Feature {
         return AnyView(KeepAwakeSettingsView(feature: self, settings: settings))
     }
 
+    public func makeSettingsHero() -> AnyView? {
+        AnyView(KeepAwakeHero())
+    }
+
     // MARK: - Control
 
     func toggle() {
@@ -97,7 +103,7 @@ public final class KeepAwakeFeature: Feature {
             endTimer = timer
         }
         apply()
-        HUD.show(statusText ?? L10n.KeepAwake.sleepAllowed, symbol: statusText == nil ? "moon.zzz" : "cup.and.saucer")
+        HUD.show(statusText ?? L10n.KeepAwake.sleepAllowed, symbol: statusText == nil ? "moon.zzz" : "bolt.fill")
     }
 
     /// Re-evaluates and holds or releases the assertion.

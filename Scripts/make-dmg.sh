@@ -1,38 +1,38 @@
 #!/bin/bash
-# Packages the universal Release build into dist/Tolio-<version>.dmg
-# (Tolio.app + an Applications shortcut, laid out over a background picture,
-# with the Tolio disk icon) and writes its SHA-256 next to it. Arranging the
+# Packages the universal Release build into dist/AllSet-<version>.dmg
+# (All Set.app + an Applications shortcut, laid out over a background picture,
+# with the All Set disk icon) and writes its SHA-256 next to it. Arranging the
 # window uses Finder, so macOS may ask once to let Terminal control Finder.
-# Also writes dist/Tolio.dmg, the same file under a fixed name: attached to
-# each GitHub release, it makes .../releases/latest/download/Tolio.dmg (the
+# Also writes dist/AllSet.dmg (and Tolio.dmg), the same file under fixed names: attached to
+# each GitHub release, they make .../releases/latest/download/AllSet.dmg and /Tolio.dmg (the
 # website's Download button) always point at the newest version.
 # Run through `make dmg`, which builds the Release app first.
 set -euo pipefail
 
-APP="build/DerivedData/Build/Products/Release/Tolio.app"
+APP="build/DerivedData/Build/Products/Release/All Set.app"
 [ -d "$APP" ] || { echo "No Release build at $APP (run: make release)"; exit 1; }
 
 VERSION=$(/usr/libexec/PlistBuddy -c "Print CFBundleShortVersionString" "$APP/Contents/Info.plist")
-NAME="Tolio-$VERSION"
+NAME="AllSet-$VERSION"
 DIST="dist"
 STAGE="build/dmg-stage"
 
 # Sanity checks: universal binary, valid signature.
-ARCHS=$(lipo -archs "$APP/Contents/MacOS/Tolio")
+ARCHS=$(lipo -archs "$APP/Contents/MacOS/All Set")
 [[ "$ARCHS" == *arm64* && "$ARCHS" == *x86_64* ]] || { echo "Not universal: $ARCHS"; exit 1; }
 codesign --verify --deep --strict "$APP"
 
 # Fresh staging folder (only build products live here).
 /bin/rm -rf "$STAGE"
 mkdir -p "$STAGE" "$DIST"
-ditto "$APP" "$STAGE/Tolio.app"
+ditto "$APP" "$STAGE/All Set.app"
 ln -s /Applications "$STAGE/Applications"
 
 if [ -e "$DIST/$NAME.dmg" ]; then
     # Never delete outright: an older build of the same version goes to the Trash.
-    trash "$DIST/$NAME.dmg" "$DIST/$NAME.dmg.sha256" "$DIST/Tolio.dmg" 2>/dev/null || true
+    trash "$DIST/$NAME.dmg" "$DIST/$NAME.dmg.sha256" "$DIST/AllSet.dmg" "$DIST/Tolio.dmg" 2>/dev/null || true
 fi
-VOL="Tolio $VERSION"
+VOL="All Set $VERSION"
 MOUNT="/Volumes/$VOL"
 RW="build/$NAME-rw.dmg"
 /bin/rm -f "$RW"
@@ -53,7 +53,7 @@ hdiutil create -quiet -volname "$VOL" -srcfolder "$STAGE" -fs HFS+ -format UDRW 
 /bin/rm -rf "$STAGE"
 hdiutil attach -quiet -readwrite -noverify -noautoopen "$RW"
 
-# 2. Lay out the Finder window: fixed size, no toolbar, big icons, Tolio left,
+# 2. Lay out the Finder window: fixed size, no toolbar, big icons, All Set left,
 #    Applications right (positions match Scripts/dmg/make-background.swift).
 SetFile -a C "$MOUNT"            # use .VolumeIcon.icns as the disk icon
 osascript <<APPLESCRIPT
@@ -69,7 +69,7 @@ tell application "Finder"
         set icon size of viewOptions to 112
         set text size of viewOptions to 13
         set background picture of viewOptions to file ".background:background.tiff"
-        set position of item "Tolio.app" of container window to {170, 190}
+        set position of item "All Set.app" of container window to {170, 190}
         set position of item "Applications" of container window to {490, 190}
         update without registering applications
         delay 1
@@ -86,6 +86,8 @@ hdiutil convert -quiet "$RW" -format UDZO -imagekey zlib-level=9 -o "$DIST/$NAME
 /bin/rm -f "$RW"
 
 (cd "$DIST" && shasum -a 256 "$NAME.dmg" > "$NAME.dmg.sha256")
+cp "$DIST/$NAME.dmg" "$DIST/AllSet.dmg"
+# The website still links .../latest/download/Tolio.dmg; keep that name working.
 cp "$DIST/$NAME.dmg" "$DIST/Tolio.dmg"
 SIGNER=$(codesign -dvv "$APP" 2>&1 | sed -n 's/^Authority=//p' | head -1)
 echo "Built $DIST/$NAME.dmg ($(du -h "$DIST/$NAME.dmg" | cut -f1), $ARCHS)"

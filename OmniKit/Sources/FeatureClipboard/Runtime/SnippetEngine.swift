@@ -47,16 +47,6 @@ final class SnippetEngine {
         buffer.reset()
     }
 
-    /// Inserts a snippet at the caret (used from the palette).
-    func insert(_ snippet: Snippet) {
-        let expansion = PlaceholderExpander.expand(
-            snippet.body, now: Date(), clipboard: NSPasteboard.general.string(forType: .string)
-        )
-        TemporaryPasteboard.paste(expansion.text) {
-            if let offset = expansion.cursorOffsetFromEnd, offset > 0 { KeySender.left(times: offset) }
-        }
-    }
-
     private func observe(type: CGEventType, event: CGEvent) {
         guard type == .keyDown else {
             buffer.reset() // A click may move the caret.

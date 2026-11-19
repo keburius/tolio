@@ -6,7 +6,7 @@ import Foundation
 /// - **Settings:** every key from Omni's preferences that Tolio doesn't have
 ///   yet is copied. Omni's preferences are left untouched.
 /// - **Files:** Omni's Application Support folder (clipboard history, notes,
-///   Launcher data) is *moved* to Tolio's, unless Tolio already has one.
+///   feature data) is *moved* to Tolio's, unless Tolio already has one.
 ///
 /// Nothing is deleted. Runs before anything else touches settings or files.
 public enum LegacyDataMigration {

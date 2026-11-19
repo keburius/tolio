@@ -5,6 +5,7 @@ public extension L10n {
     enum Windows {
         public static var displayName: String { tr("windows.displayName", "Window Layouts") }
         public static var summary: String { tr("windows.summary", "Snap windows to halves, thirds and corners with a shortcut.") }
+        public static var tagline: String { tr("windows.tagline", "Snap windows to halves, thirds and corners.") }
         public static var commandSubtitle: String { tr("windows.command.subtitle", "Window") }
 
         // Layouts
@@ -44,12 +45,17 @@ public extension L10n {
             tr("windows.settings.dragToEdgeHelp", "Side edges snap to halves, corners to quarters, and the top edge maximizes. Edges shared with another display don't snap.")
         }
         public static var dragToEdgeFailed: String {
-            tr("windows.settings.dragToEdgeFailed", "Snapping by dragging couldn't start. Check that Tolio has the Accessibility permission, then turn this setting off and on.")
-        }
-        public static var shortcutsHelp: String {
-            tr("windows.settings.shortcutsHelp", "Change the shortcuts above or on the Shortcuts page. Every layout is also in the Launcher.")
+            tr("windows.settings.dragToEdgeFailed", "Snapping by dragging couldn't start. Check that All Set has the Accessibility permission, then turn this setting off and on.")
         }
         public static var clickHint: String { tr("windows.quick.clickHint", "show layouts") }
+        public static var tabShortcuts: String { tr("windows.settings.tabShortcuts", "Shortcuts") }
+        public static var tabSettings: String { tr("windows.settings.tabSettings", "Settings") }
+        public static var tabsLabel: String { tr("windows.settings.tabsLabel", "Window Layouts settings") }
+        public static var gridHelp: String {
+            tr("windows.settings.gridHelp", "Click a shortcut, then press the new keys. Press Delete to clear it.")
+        }
+        public static var noShortcut: String { tr("windows.settings.noShortcut", "None") }
+        public static var heroLabel: String { tr("windows.hero.label", "Example: a window snapped to the left half of the screen") }
     }
 
     /// Window Switcher (feature id `switcher`).
@@ -57,8 +63,6 @@ public extension L10n {
         public static var displayName: String { tr("switcher.displayName", "Window Switcher") }
         public static var summary: String { tr("switcher.summary", "Hold ⌥ and press Tab to jump to any window, not just any app.") }
         public static var gestureTitle: String { tr("switcher.gesture.title", "Switch windows") }
-        public static var searchCommand: String { tr("switcher.command.search", "Switch to Window…") }
-        public static var searchTitle: String { tr("switcher.search.title", "Window") }
         public static var noWindows: String { tr("switcher.notice.noWindows", "No windows to switch to") }
         public static var cantClose: String { tr("switcher.notice.cantClose", "This window can't be closed from here") }
         public static var paused: String { tr("switcher.notice.paused", "Window Switcher paused: macOS stopped it from reading the keyboard") }
@@ -81,7 +85,9 @@ public extension L10n {
         public static var triggerHelp: String {
             tr("switcher.settings.triggerHelp", "Hold the key and press Tab to move forward (add ⇧ to go back), then let go to switch. While it's open: arrows move, ↩ switches, Esc cancels, Q quits the app, W closes the window.")
         }
-        public static var thumbnails: String { tr("switcher.settings.thumbnails", "Show live previews (needs Screen Recording)") }
+        public static var thumbnails: String { tr("switcher.settings.thumbnails", "Show live previews") }
+        public static var thumbnailsSubtitle: String { tr("switcher.settings.thumbnailsSubtitle", "Needs Screen Recording.") }
+        public static var heroLabel: String { tr("switcher.hero.label", "Example: the switcher open with three windows, the middle one chosen") }
         public static var includeMinimized: String { tr("switcher.settings.includeMinimized", "Include minimized windows") }
         public static var includeHidden: String { tr("switcher.settings.includeHidden", "Include windows of hidden apps") }
         public static var includeOtherSpaces: String { tr("switcher.settings.includeOtherSpaces", "Include windows on other Spaces") }
@@ -97,6 +103,7 @@ public extension L10n {
     enum KeepAwake {
         public static var displayName: String { tr("keepawake.displayName", "Energy Mode") }
         public static var summary: String { tr("keepawake.summary", "Stops your Mac from going to sleep for as long as you choose.") }
+        public static var tagline: String { tr("keepawake.tagline", "Keep your Mac awake when you need it.") }
         public static var toggleHotkey: String { tr("keepawake.hotkey.toggle", "Energy Mode on / off") }
         public static var commandOn: String { tr("keepawake.command.on", "Turn On Energy Mode") }
         public static var commandOnSubtitle: String { tr("keepawake.command.onSubtitle", "Until turned off") }
@@ -124,6 +131,13 @@ public extension L10n {
         public static var appsSection: String { tr("keepawake.settings.appsSection", "Also keep awake while these apps run") }
         public static var noApps: String { tr("keepawake.settings.noApps", "No apps yet. Add an app to keep your Mac awake while it's running.") }
         public static var unnamedApp: String { tr("keepawake.settings.unnamedApp", "App") }
+        public static var addAppLabel: String { tr("keepawake.settings.addAppLabel", "Add an app") }
+        public static var stayAwakeFor: String { tr("keepawake.settings.stayAwakeFor", "Stay awake for") }
+
+        // Illustration
+        public static var heroLabel: String { tr("keepawake.hero.label", "Example: Energy Mode keeping the Mac awake, with 45 minutes left") }
+        public static var heroTitle: String { tr("keepawake.hero.title", "Staying awake") }
+        public static var heroDetail: String { tr("keepawake.hero.detail", "45 minutes left") }
 
         // Menu bar
         public static var clickHint: String { tr("keepawake.quick.clickHint", "turn on or off") }
@@ -145,17 +159,20 @@ public extension L10n {
     /// Lock Keyboard (feature id `keyboardclean`).
     enum LockKeyboard {
         public static var displayName: String { tr("lockkeyboard.displayName", "Lock Keyboard") }
-        public static var summary: String { tr("lockkeyboard.summary", "Locks the keyboard so you can wipe it. Unlock with the mouse.") }
+        public static var summary: String { tr("lockkeyboard.summary", "Locks the keyboard so you can wipe it clean. Unlock with the mouse.") }
         public static var hotkey: String { tr("lockkeyboard.hotkey.start", "Lock keyboard now") }
         public static var command: String { tr("lockkeyboard.command.start", "Lock Keyboard for Cleaning") }
         public static var lockNow: String { tr("lockkeyboard.lockNow", "Lock Keyboard Now") }
+        public static var tagline: String { tr("lockkeyboard.tagline", "Lock the keys while you wipe them clean.") }
+        public static var lockNowSubtitle: String { tr("lockkeyboard.lockNowSubtitle", "Starts after a moment, so you can let go of the keys.") }
+        public static var heroLabel: String { tr("lockkeyboard.hero.label", "Example: a keyboard with a lock over it") }
 
         // Notices
         public static var unlockedStopped: String { tr("lockkeyboard.notice.unlockedStopped", "Keyboard unlocked: macOS stopped the lock") }
         public static var unlockedTimeLimit: String { tr("lockkeyboard.notice.unlockedTimeLimit", "Keyboard unlocked (time limit)") }
         public static var unlocked: String { tr("lockkeyboard.notice.unlocked", "Keyboard unlocked") }
         public static var couldNotLock: String {
-            tr("lockkeyboard.notice.couldNotLock", "Couldn't lock the keyboard. Check that Tolio has the Accessibility permission.")
+            tr("lockkeyboard.notice.couldNotLock", "Couldn't lock the keyboard. Check that All Set has the Accessibility permission.")
         }
 
         // Overlay

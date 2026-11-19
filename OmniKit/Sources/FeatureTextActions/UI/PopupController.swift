@@ -33,14 +33,12 @@ final class PopupController: NSObject {
     private var hideTask: Task<Void, Never>?
     private var observer: NSObjectProtocol?
     private let options: () -> PopupOptions
-    private let paletteOpener: (String) -> Void
     private let log = Log.logger("textactions")
     /// Seconds the popup stays without interaction.
     static let lifetime: Duration = .seconds(8)
 
-    init(options: @escaping () -> PopupOptions, openPalette: @escaping (String) -> Void) {
+    init(options: @escaping () -> PopupOptions) {
         self.options = options
-        self.paletteOpener = openPalette
         super.init()
         model.onPerform = { [weak self] id in self?.perform(id) }
         model.onReplace = { [weak self] text in self?.replaceSelection(with: text) }
@@ -295,11 +293,6 @@ extension PopupController: TextActionContext {
 
     func open(_ url: URL) {
         NSWorkspace.shared.open(url)
-    }
-
-    func openPalette(query: String) {
-        hide()
-        paletteOpener(query)
     }
 
     func showMessage(_ text: String, symbol: String) {

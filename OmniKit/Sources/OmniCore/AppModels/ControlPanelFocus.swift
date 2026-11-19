@@ -5,6 +5,10 @@ import Foundation
 public struct ControlPanelFocus: Equatable, Sendable {
     public enum Target: Hashable, Sendable {
         case tile(QuickAccessID)
+        /// A button in the control panel's grid or More list.
+        case action(String)
+        /// A row in "Running now" (its switch or button).
+        case running(String)
         case recent(Int)
         case showAllClips
         case layout(String)

@@ -157,7 +157,6 @@ struct ShortcutTableTests {
 
 struct OnboardingModelTests {
     let options: [OnboardingModel.Option] = [
-        .init(id: "palette", required: [], optional: []),
         .init(id: "clipboard", required: [], optional: [.accessibility]),
         .init(id: "windows", required: [.accessibility], optional: []),
         .init(id: "keepawake", required: [], optional: []),
@@ -167,7 +166,7 @@ struct OnboardingModelTests {
 
     @Test func recommendedByDefault() {
         let model = OnboardingModel(options: options)
-        #expect(model.chosen == ["palette", "clipboard", "windows", "keepawake", "screenshots"])
+        #expect(model.chosen == ["clipboard", "windows", "keepawake", "screenshots"])
         #expect(model.requiredPermissions == [.accessibility, .screenRecording])
         #expect(model.optionalPermissions == [.microphone])
     }
@@ -177,7 +176,7 @@ struct OnboardingModelTests {
         model.chooseNone()
         #expect(model.chosen.isEmpty && model.requiredPermissions.isEmpty)
         model.chooseEverything()
-        #expect(model.chosen.count == 6)
+        #expect(model.chosen.count == 5)
         model.chooseRecommended()
         #expect(!model.chosen.contains("snippets"))
     }
@@ -193,8 +192,8 @@ struct OnboardingModelTests {
     }
 
     @Test func changesOnlyWhatDiffers() {
-        let model = OnboardingModel(options: options, chosen: ["palette", "windows"])
-        let changes = model.changes(from: ["palette", "snippets"])
+        let model = OnboardingModel(options: options, chosen: ["clipboard", "windows"])
+        let changes = model.changes(from: ["clipboard", "snippets"])
         #expect(changes.map(\.0) == ["windows", "snippets"])
         #expect(changes.map(\.1) == [true, false])
     }

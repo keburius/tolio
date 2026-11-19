@@ -5,8 +5,8 @@ import OmniPlatform
 import os
 import SwiftUI
 
-/// Clipboard history: records text, images, and file references; searchable
-/// in the Launcher ("clip …" or ⌃⌥V); pin, delete, retention, exclusions.
+/// Clipboard history: records text, images, and file references; ⌃⌥V lists
+/// them, Settings searches them; pin, delete, retention, exclusions.
 /// UI metadata (menu, erase, settings search) is in `+UI.swift`.
 @MainActor
 @Observable
@@ -26,7 +26,9 @@ public final class ClipboardHistoryFeature: Feature {
     public let id: FeatureID = "clipboard"
     public var displayName: String { L10n.Clipboard.displayName }
     public var summary: String { L10n.Clipboard.summary }
+    public var tagline: String { L10n.Clipboard.tagline }
     public let symbolName = "doc.on.clipboard"
+    public let group: FeatureGroup = .clipboard
     public let requiredPermissions: Set<Permission> = []
     /// Only needed to paste directly; without it, items are copied.
     public let optionalPermissions: Set<Permission> = [.accessibility]
@@ -58,26 +60,23 @@ public final class ClipboardHistoryFeature: Feature {
         context.registerHotkey(Self.showHotkey) { [weak self] in self?.showHistory() }
         context.registerCommand(Command(
             id: "clipboard.show", title: L10n.Clipboard.commandShow, keywords: ["paste", "copy"], symbolName: symbolName
-        ) { context.openPalette(query: Self.historyQuery) })
+        ) { [weak self] in self?.showHistory() })
         context.registerCommand(Command(
             id: "clipboard.clear", title: L10n.Clipboard.commandClear, subtitle: L10n.Clipboard.commandClearSubtitle,
             symbolName: "trash"
         ) { [weak self] in self?.clear(keepPinned: true) })
     }
 
-    /// Launcher query that searches the history.
-    static let historyQuery = "clip "
-
     /// Shows the history list (a menu under the Clipboard icon, or at the
-    /// pointer if the icon is hidden). Falls back to the Launcher search.
+    /// pointer if the icon is hidden). Falls back to the search in Settings.
     func showHistory() {
         if QuickAccessCenter.showClickMenu?(.clipboard) == true { return }
         searchHistory()
     }
 
-    /// Opens the history search in the Launcher.
+    /// Opens the Clipboard page in Settings, which searches the whole history.
     func searchHistory() {
-        context?.openPalette(query: Self.historyQuery)
+        QuickAccessCenter.openSettings?(id)
     }
 
     public func disable() {
@@ -89,6 +88,10 @@ public final class ClipboardHistoryFeature: Feature {
     public func makeSettingsView() -> AnyView {
         guard let context else { return AnyView(EmptyView()) }
         return AnyView(ClipboardSettingsView(feature: self, settings: context.settings))
+    }
+
+    public func makeSettingsHero() -> AnyView? {
+        AnyView(ClipboardHero())
     }
 
     // MARK: - Operations

@@ -1,4 +1,4 @@
-name: Tolio
+name: AllSet
 options:
   bundleIdPrefix: com.george.tolio
   deploymentTarget:
@@ -9,8 +9,8 @@ configFiles:
   Release: Config/Base.xcconfig
 settings:
   base:
-    MARKETING_VERSION: "1.0.0"
-    CURRENT_PROJECT_VERSION: "1"
+    MARKETING_VERSION: "1.1.0"
+    CURRENT_PROJECT_VERSION: "2"
     SWIFT_VERSION: "6.0"
     SWIFT_STRICT_CONCURRENCY: complete
     SWIFT_TREAT_WARNINGS_AS_ERRORS: YES
@@ -21,16 +21,16 @@ packages:
   OmniKit:
     path: OmniKit
 targets:
-  Tolio:
+  AllSet:
     type: application
     platform: macOS
     sources:
       - path: App
         excludes:
           - Info.plist
-          - Tolio.entitlements
+          - AllSet.entitlements
     dependencies:
-      - target: TolioFinderNote
+      - target: AllSetFinderNote
       - package: OmniKit
         product: OmniCore
       - package: OmniKit
@@ -38,9 +38,13 @@ targets:
       - package: OmniKit
         product: FeatureDiagnostics
       - package: OmniKit
-        product: FeaturePalette
-      - package: OmniKit
         product: FeatureClipboard
+      - package: OmniKit
+        product: FeatureDropRing
+      - package: OmniKit
+        product: FeatureDeskMinder
+      - package: OmniKit
+        product: FeatureIsland
       - package: OmniKit
         product: FeatureWindows
       - package: OmniKit
@@ -62,7 +66,7 @@ targets:
     info:
       path: App/Info.plist
       properties:
-        CFBundleDisplayName: Tolio
+        CFBundleDisplayName: All Set
         NSHumanReadableCopyright: "© 2026 keburius. MIT License."
         CFBundleShortVersionString: "$(MARKETING_VERSION)"
         CFBundleVersion: "$(CURRENT_PROJECT_VERSION)"
@@ -72,20 +76,30 @@ targets:
         CFBundleURLTypes:
           - CFBundleURLName: com.george.tolio
             CFBundleURLSchemes: [tolio]
-        NSMicrophoneUsageDescription: "Tolio uses the microphone only while you record the screen with microphone audio turned on."
+        NSMicrophoneUsageDescription: "All Set uses the microphone only while you record the screen with microphone audio turned on."
+        NSRemindersFullAccessUsageDescription: "Desk Minder adds your reminders to Apple Reminders so they also alert on your iPhone and other devices."
+        NSCalendarsFullAccessUsageDescription: "Notch Island shows your week's events and counts down to your next meeting."
+        NSAppleEventsUsageDescription: "Notch Island reads what Music or Spotify is playing and controls playback, and its Dark Mode switch asks System Events to change the appearance."
+        NSCameraUsageDescription: "Notch Island's mirror shows your camera so you can check how you look before a call. Nothing is recorded."
+        NSDownloadsFolderUsageDescription: "Notch Island shows files that are still downloading, if you turn that on."
+        NSBluetoothAlwaysUsageDescription: "Notch Island shows a short notice when AirPods or other Bluetooth devices connect."
+        NSRemindersUsageDescription: "Desk Minder adds your reminders to Apple Reminders so they also alert on your iPhone and other devices."
     entitlements:
-      path: App/Tolio.entitlements
+      path: App/AllSet.entitlements
       properties:
         com.apple.security.device.audio-input: true
+        com.apple.security.device.camera: true
+        com.apple.security.personal-information.calendars: true
+        com.apple.security.automation.apple-events: true
     settings:
       base:
-        PRODUCT_NAME: Tolio
+        PRODUCT_NAME: All Set
         PRODUCT_BUNDLE_IDENTIFIER: com.george.tolio
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         ENABLE_HARDENED_RUNTIME: YES
         COMBINE_HIDPI_IMAGES: YES
         GENERATE_INFOPLIST_FILE: NO
-  TolioFinderNote:
+  AllSetFinderNote:
     type: app-extension
     platform: macOS
     sources:
@@ -99,7 +113,7 @@ targets:
     info:
       path: Extensions/FinderNote/Info.plist
       properties:
-        CFBundleDisplayName: Tolio
+        CFBundleDisplayName: All Set
         CFBundleShortVersionString: "$(MARKETING_VERSION)"
         CFBundleVersion: "$(CURRENT_PROJECT_VERSION)"
         LSMinimumSystemVersion: "$(MACOSX_DEPLOYMENT_TARGET)"
@@ -113,16 +127,16 @@ targets:
         com.apple.security.app-sandbox: true
     settings:
       base:
-        PRODUCT_NAME: TolioFinderNote
+        PRODUCT_NAME: AllSetFinderNote
         PRODUCT_BUNDLE_IDENTIFIER: com.george.tolio.FinderNote
         ENABLE_HARDENED_RUNTIME: YES
         GENERATE_INFOPLIST_FILE: NO
         SKIP_INSTALL: YES
 schemes:
-  Tolio:
+  AllSet:
     build:
       targets:
-        Tolio: all
+        AllSet: all
     run:
       config: Debug
     test:
@@ -130,8 +144,10 @@ schemes:
       targets:
         - package: OmniKit/OmniCoreTests
         - package: OmniKit/OmniPlatformTests
-        - package: OmniKit/FeaturePaletteTests
         - package: OmniKit/FeatureClipboardTests
+        - package: OmniKit/FeatureDropRingTests
+        - package: OmniKit/FeatureDeskMinderTests
+        - package: OmniKit/FeatureIslandTests
         - package: OmniKit/FeatureWindowsTests
         - package: OmniKit/FeatureSwitcherTests
         - package: OmniKit/FeatureKeepAwakeTests

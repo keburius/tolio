@@ -181,4 +181,16 @@ public protocol StatsLineProviding: AnyObject {
 public enum QuickAccessCenter {
     /// Set by the app. Returns false if the menu couldn't be shown.
     public static var showClickMenu: ((QuickAccessID) -> Bool)?
+    /// Set by the app: opens Settings at a feature's page.
+    public static var openSettings: ((FeatureID) -> Void)?
+}
+
+/// Implemented by Desk Minder so the control panel can show and snooze the
+/// next reminder.
+@MainActor
+public protocol NextReminderProviding: AnyObject {
+    /// The soonest reminder, or nil if none is set.
+    var nextReminder: (title: String, due: Date)? { get }
+    /// Snoozes the soonest reminder by the user's snooze length.
+    func snoozeNextReminder()
 }

@@ -42,15 +42,58 @@ struct KeyboardCleanSettingsView: View {
     let settings: SettingsStore
 
     var body: some View {
-        Picker(L10n.LockKeyboard.unlockAfter, selection: settings.binding(KeyboardCleanFeature.durationKey)) {
-            ForEach(CleaningSession.durationChoices, id: \.self) { seconds in
-                Text(KeyboardCleanFeature.durationTitle(seconds)).tag(seconds)
+        VStack(alignment: .leading, spacing: 14) {
+            ASSection(footer: L10n.LockKeyboard.help) {
+                ASRow(L10n.LockKeyboard.unlockAfter) {
+                    ASPopUp(
+                        L10n.LockKeyboard.unlockAfter, selection: settings.binding(KeyboardCleanFeature.durationKey),
+                        options: CleaningSession.durationChoices.map { ($0, KeyboardCleanFeature.durationTitle($0)) }
+                    )
+                }
+                .settingsAnchor(KeyboardCleanFeature.Anchor.duration)
+                ASRow(L10n.LockKeyboard.lockNow, subtitle: L10n.LockKeyboard.lockNowSubtitle) {
+                    Button(L10n.LockKeyboard.lockNow) { feature.startSoon() }
+                        .buttonStyle(.asSecondary)
+                }
+                .settingsAnchor(KeyboardCleanFeature.Anchor.lockNow)
             }
         }
-        .settingsAnchor(KeyboardCleanFeature.Anchor.duration)
-        Button(L10n.LockKeyboard.lockNow) { feature.startSoon() }
-            .settingsAnchor(KeyboardCleanFeature.Anchor.lockNow)
-        Text(L10n.LockKeyboard.help)
-            .font(.caption).foregroundStyle(.secondary)
+    }
+}
+
+/// The example at the top of the page: a keyboard with a lock over it.
+struct KeyboardCleanHero: View {
+    var body: some View {
+        ASStage(tint: Color(hex: 0xAEAEB2).opacity(0.26 / 0.30)) {
+            Canvas { context, _ in
+                let key = Color.white.opacity(0.12)
+                let body = Path(roundedRect: CGRect(x: 1, y: 1, width: 282, height: 132), cornerRadius: 16, style: .continuous)
+                context.fill(body, with: .color(Color(hex: 0x15161B)))
+                context.stroke(body, with: .color(.white.opacity(0.12)), lineWidth: 1.2)
+                for row in 0 ..< 3 {
+                    for column in 0 ..< 9 {
+                        let rect = CGRect(x: 14 + CGFloat(column) * 29, y: 14 + CGFloat(row) * 28, width: 22, height: 22)
+                        context.fill(Path(roundedRect: rect, cornerRadius: 5.5, style: .continuous), with: .color(key))
+                    }
+                }
+                context.fill(Path(roundedRect: CGRect(x: 72, y: 100, width: 140, height: 20), cornerRadius: 6, style: .continuous), with: .color(key))
+                // The lock badge.
+                let badge = Path(ellipseIn: CGRect(x: 142 - 36, y: 67 - 36, width: 72, height: 72))
+                context.fill(badge, with: .color(Color(hex: 0xAEAEB2)))
+                context.stroke(badge, with: .color(AS.stage), lineWidth: 5)
+                let lockColor = Color(hex: 0x1C1C1E)
+                context.fill(Path(roundedRect: CGRect(x: 128, y: 63, width: 28, height: 23), cornerRadius: 5.5, style: .continuous), with: .color(lockColor))
+                var shackle = Path()
+                shackle.move(to: CGPoint(x: 134, y: 63))
+                shackle.addLine(to: CGPoint(x: 134, y: 56))
+                shackle.addArc(center: CGPoint(x: 142, y: 56), radius: 8, startAngle: .degrees(180), endAngle: .degrees(0), clockwise: false)
+                shackle.addLine(to: CGPoint(x: 150, y: 63))
+                context.stroke(shackle, with: .color(lockColor), style: StrokeStyle(lineWidth: 4.5, lineCap: .round))
+            }
+            .frame(width: 284, height: 134)
+        }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(L10n.LockKeyboard.heroLabel)
+        .accessibilityAddTraits(.isImage)
     }
 }

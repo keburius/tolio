@@ -26,6 +26,7 @@ public final class SwitcherFeature: Feature {
     public var displayName: String { L10n.Switcher.displayName }
     public var summary: String { L10n.Switcher.summary }
     public let symbolName = "rectangle.stack"
+    public let group: FeatureGroup = .windows
     public let requiredPermissions: Set<Permission> = [.accessibility]
     /// Without it: app icons instead of thumbnails, and no other-Space windows.
     public let optionalPermissions: Set<Permission> = [.screenRecording]
@@ -83,10 +84,6 @@ public final class SwitcherFeature: Feature {
             tracker.stop()
             controller.close()
         }
-        context.registerSearchProvider(WindowSearchProvider(controller: controller))
-        context.registerCommand(Command(
-            id: "switcher.search", title: L10n.Switcher.searchCommand, keywords: ["window", "switch", "focus"], symbolName: symbolName
-        ) { context.openPalette(query: "win ") })
     }
 
     public func disable() {
@@ -97,5 +94,9 @@ public final class SwitcherFeature: Feature {
     public func makeSettingsView() -> AnyView {
         guard let settings else { return AnyView(EmptyView()) }
         return AnyView(SwitcherSettingsView(feature: self, settings: settings))
+    }
+
+    public func makeSettingsHero() -> AnyView? {
+        AnyView(SwitcherHero())
     }
 }

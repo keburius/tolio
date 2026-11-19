@@ -14,8 +14,8 @@ public struct OnboardingModel: Sendable {
         }
     }
 
-    /// Launcher, Clipboard History, Window Layouts, Keep Awake, Screenshots & Recording.
-    public static let recommended: Set<FeatureID> = ["palette", "clipboard", "windows", "keepawake", "screenshots"]
+    /// Clipboard History, Window Layouts, Energy Mode, Screenshots & Recording.
+    public static let recommended: Set<FeatureID> = ["clipboard", "windows", "keepawake", "screenshots"]
 
     public let options: [Option]
     public var chosen: Set<FeatureID>

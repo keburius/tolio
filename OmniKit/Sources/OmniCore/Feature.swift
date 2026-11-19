@@ -13,6 +13,8 @@ public protocol Feature: AnyObject {
     var summary: String { get }
     /// SF Symbol name.
     var symbolName: String { get }
+    /// The section it's listed under.
+    var group: FeatureGroup { get }
     /// Permissions without which the feature can't start.
     var requiredPermissions: Set<Permission> { get }
     /// Permissions that unlock parts of the feature.
@@ -46,11 +48,20 @@ public protocol Feature: AnyObject {
     var quickAccessItems: [QuickAccessItem] { get }
     /// True for internal features hidden from normal users (Diagnostics).
     var isHidden: Bool { get }
+    /// A few words for Overview cards ("What you copied, ready to paste again.").
+    var tagline: String { get }
+    /// The example illustration at the top of the feature's Settings page
+    /// (164 pt tall, full width), or nil for none. Shown while on or off.
+    func makeSettingsHero() -> AnyView?
+    /// True when the settings view shows (and lets you change) every
+    /// shortcut itself, so the page leaves out its own Shortcuts section.
+    var settingsViewEditsShortcuts: Bool { get }
 }
 
 public extension Feature {
     var optionalPermissions: Set<Permission> { [] }
     var isEnabledByDefault: Bool { false }
+    var group: FeatureGroup { .extras }
     var declaredHotkeys: [HotkeyAction] { [] }
     var gestures: [GestureShortcut] { [] }
     var settingsEntries: [SettingsEntry] { [] }
@@ -59,6 +70,9 @@ public extension Feature {
     func eraseData() {}
     var quickAccessItems: [QuickAccessItem] { [] }
     var isHidden: Bool { false }
+    var tagline: String { summary }
+    func makeSettingsHero() -> AnyView? { nil }
+    var settingsViewEditsShortcuts: Bool { false }
 }
 
 /// Services handed to a feature when it is enabled. Hotkeys and commands
@@ -101,24 +115,11 @@ public struct FeatureContext {
     /// Commands registered by all enabled features (and the app itself).
     public var availableCommands: [Command] { commands.allCommands }
 
-    /// Adds dynamic palette results; removed automatically on disable.
+    /// Adds dynamic results (e.g. recent copies for the control panel); removed automatically on disable.
     public func registerSearchProvider(_ provider: any SearchProvider) {
         commands.registerProvider(provider, owner: featureID)
     }
 
     /// Search providers of all enabled features.
     public var searchProviders: [any SearchProvider] { commands.allProviders }
-
-    /// Opens the palette with `query` prefilled (no-op if the palette is off).
-    public func openPalette(query: String) {
-        commands.openPalette(query: query)
-    }
-
-    /// For the palette feature only: receives `openPalette` requests.
-    /// Cleared automatically on disable.
-    public func setPaletteHandler(_ handler: @escaping @MainActor (String) -> Void) {
-        let commands = self.commands
-        commands.paletteHandler = handler
-        lifetime.add { commands.paletteHandler = nil }
-    }
 }

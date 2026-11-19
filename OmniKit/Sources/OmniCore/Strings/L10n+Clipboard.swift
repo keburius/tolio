@@ -5,13 +5,13 @@ public extension L10n {
     enum Clipboard {
         public static var displayName: String { tr("clipboard.displayName", "Clipboard History") }
         public static var summary: String {
-            tr("clipboard.summary", "Remembers what you copy so you can paste it again later.")
+            tr("clipboard.summary", "Remembers what you copy, so you can paste it again later.")
         }
+        public static var tagline: String { tr("clipboard.tagline", "What you copied, ready to paste again.") }
         public static var showHotkey: String { tr("clipboard.hotkey.show", "Show clipboard history") }
         public static var commandShow: String { tr("clipboard.command.show", "Clipboard History") }
         public static var commandClear: String { tr("clipboard.command.clear", "Clear Clipboard History") }
         public static var commandClearSubtitle: String { tr("clipboard.command.clear.subtitle", "Keeps pinned items") }
-        /// Section title in the Launcher.
         public static var searchTitle: String { tr("clipboard.search.title", "Clipboard") }
         public static var emptyHistory: String {
             tr("clipboard.empty", "Nothing copied yet. Copy something to see it here.")
@@ -101,6 +101,35 @@ public extension L10n {
         public static var passwordManagerNote: String {
             tr("clipboard.settings.passwordManagerNote", "Password manager, always excluded")
         }
+        public static var noOtherAppsExcluded: String { tr("clipboard.settings.noOtherAppsExcluded", "No other apps excluded.") }
+        public static var copiedItems: String { tr("clipboard.settings.copiedItems", "Copied items") }
+
+        // MARK: Settings example
+
+        public static var heroDescription: String {
+            tr("clipboard.hero.description", "Example: the clipboard history panel with seven copied items, two of them pictures")
+        }
+        public static var heroText1: String { tr("clipboard.hero.text1", "Thanks, see you on Friday at 10.") }
+        public static var heroText2: String { tr("clipboard.hero.text2", "Invoice 2026-114 is attached.") }
+        public static var heroText3: String { tr("clipboard.hero.text3", "Flat 12, third floor, ring twice.") }
+        public static var heroText4: String { tr("clipboard.hero.text4", "git commit -m \"Fix window snapping\"") }
+        public static var heroLink: String { tr("clipboard.hero.link", "apple.com/macos") }
+        public static func heroPicture(_ width: Int, _ height: Int) -> String {
+            format("clipboard.hero.picture", "Picture, %lld × %lld", width, height)
+        }
+        public static func heroSubtitle(_ kind: String, _ app: String) -> String {
+            format("clipboard.hero.subtitle", "%1$@ · %2$@", kind, app)
+        }
+        public static var heroKindText: String { tr("clipboard.hero.kind.text", "Text") }
+        public static var heroKindPicture: String { tr("clipboard.hero.kind.picture", "Picture") }
+        public static var heroKindLink: String { tr("clipboard.hero.kind.link", "Link") }
+        public static var heroAppNotes: String { tr("clipboard.hero.app.notes", "Notes") }
+        public static var heroAppPreview: String { tr("clipboard.hero.app.preview", "Preview") }
+        public static var heroAppSafari: String { tr("clipboard.hero.app.safari", "Safari") }
+        public static var heroAppMail: String { tr("clipboard.hero.app.mail", "Mail") }
+        public static var heroAppScreenshot: String { tr("clipboard.hero.app.screenshot", "Screenshot") }
+        public static var heroAppMessages: String { tr("clipboard.hero.app.messages", "Messages") }
+        public static var heroAppTerminal: String { tr("clipboard.hero.app.terminal", "Terminal") }
     }
 
     /// Text Snippets: feature text, settings, editor and errors.
@@ -109,9 +138,6 @@ public extension L10n {
         public static var summary: String {
             tr("snippets.summary", "Type a short code like ;sig in any app to insert text you use often.")
         }
-        public static var commandInsert: String { tr("snippets.command.insert", "Insert Snippet") }
-        /// Section title in the Launcher.
-        public static var searchTitle: String { tr("snippets.search.title", "Snippet") }
         public static var gestureTitle: String { tr("snippets.gesture.title", "Insert a snippet") }
         public static var gestureHow: String { tr("snippets.gesture.how", "Type its code, like ;sig") }
         public static var defaultDateTitle: String { tr("snippets.default.date", "Today's date") }
@@ -136,6 +162,12 @@ public extension L10n {
         public static var placeholdersHelp: String {
             tr("snippets.settings.placeholdersHelp", "Placeholders: {date}, {date:yyyy-MM-dd}, {time}, {time:HH:mm}, {clipboard}, {cursor}. Use {{ and }} for literal braces. Snippets never expand in password fields.")
         }
+
+        public static var heroDescription: String {
+            tr("snippets.hero.description", "Example: typing ;sig in a message turns into an email sign-off")
+        }
+        public static var heroExpanded: String { tr("snippets.hero.expanded", "Best regards,") }
+        public static var heroName: String { tr("snippets.hero.name", "Alex") }
 
         // MARK: Editor
 
@@ -167,7 +199,6 @@ public extension L10n {
         public static var uppercase: String { tr("textactions.action.uppercase", "UPPERCASE") }
         public static var lowercase: String { tr("textactions.action.lowercase", "lowercase") }
         public static var wordCount: String { tr("textactions.action.wordCount", "Word Count") }
-        public static var sendToLauncher: String { tr("textactions.action.sendToLauncher", "Send to Launcher") }
         public static var copied: String { tr("textactions.message.copied", "Copied") }
 
         public static func words(_ count: Int) -> String {
@@ -198,23 +229,33 @@ public extension L10n {
 
         public static var showAfter: String { tr("textactions.settings.showAfter", "Show the bar after") }
         public static var mouseTrigger: String {
-            tr("textactions.settings.mouseTrigger", "Selecting with the mouse (drag, double-click, ⇧-click)")
+            tr("textactions.settings.mouseTrigger", "Selecting with the mouse")
         }
+        public static var mouseTriggerHelp: String { tr("textactions.settings.mouseTriggerHelp", "Drag, double-click or ⇧-click.") }
         public static var keyboardTrigger: String {
             tr("textactions.settings.keyboardTrigger", "Selecting with ⇧ and arrow keys")
         }
         public static var actions: String { tr("textactions.settings.actions", "Actions") }
         public static var searchWith: String { tr("textactions.settings.searchWith", "Search with") }
         public static var actionsNote: String {
-            tr("textactions.settings.actionsNote", "Search the Web, Open Link and Translate act only when you click them. Search the Web and Open Link hand the text to your browser; Translate uses Apple's translation panel (the same as Translate in context menus).")
+            tr("textactions.settings.actionsNote", "Search the Web, Open Link and Translate act only when you click them. Search and Open Link hand the text to your browser; Translate uses Apple's translation panel.")
         }
         public static var readingSelection: String { tr("textactions.settings.readingSelection", "Reading the selection") }
         public static var copyBriefly: String {
-            tr("textactions.settings.copyBriefly", "When an app doesn't share its selection, copy it briefly (⌘C) and put your clipboard back")
+            tr("textactions.settings.copyBriefly", "When an app doesn't share its selection, copy it briefly and put your clipboard back")
         }
         public static var copyBrieflyNote: String {
-            tr("textactions.settings.copyBrieflyNote", "Needed for many apps, such as Slack, Discord and Chrome. Tolio puts your previous clipboard back right away, and Clipboard History doesn't keep it. Never used in password fields, while you're typing a password, in password managers, or in Finder.")
+            tr("textactions.settings.copyBrieflyNote", "Needed for apps such as Slack, Discord and Chrome. Clipboard History doesn't keep it. Never used in password fields or password managers.")
         }
         public static var neverShowIn: String { tr("textactions.settings.neverShowIn", "Never show in") }
+        public static var tabActions: String { tr("textactions.settings.tab.actions", "Actions") }
+        public static var tabWhenItShows: String { tr("textactions.settings.tab.whenItShows", "When it shows") }
+        public static var settingsTabs: String { tr("textactions.settings.tabs", "Text Actions settings") }
+        public static var noOtherAppsExcluded: String {
+            tr("textactions.settings.noOtherAppsExcluded", "Password managers are always excluded. No other apps excluded.")
+        }
+        public static var heroDescription: String {
+            tr("textactions.hero.description", "Example: a small bar of actions above some selected text")
+        }
     }
 }

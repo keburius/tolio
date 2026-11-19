@@ -10,41 +10,27 @@ struct SnippetsSettingsView: View {
     private var snippets: [Snippet] { settings.value(SnippetsFeature.snippetsKey) }
 
     var body: some View {
-        Group {
-            if snippets.isEmpty {
-                EmptyState(
-                    symbol: "text.badge.plus", message: L10n.Snippets.empty,
-                    actionTitle: L10n.Snippets.addSnippet, action: addSnippet
-                )
-                .settingsAnchor(SnippetsFeature.Anchor.list)
-            }
-            ForEach(snippets) { snippet in
-                HStack {
-                    Toggle("", isOn: Binding(
-                        get: { snippet.isEnabled },
-                        set: { enabled in update(snippet.id) { $0.isEnabled = enabled } }
-                    ))
-                    .labelsHidden()
-                    .accessibilityLabel(L10n.Snippets.enabledToggle(snippet.title))
-                    VStack(alignment: .leading, spacing: OmniStyle.s1) {
-                        Text(snippet.title)
-                        Text(snippet.abbreviation).font(.caption.monospaced()).foregroundStyle(.secondary)
+        VStack(alignment: .leading, spacing: 14) {
+            VStack(alignment: .leading, spacing: 6) {
+                ASSection(L10n.Snippets.list) {
+                    ForEach(snippets) { snippet in row(snippet) }
+                    HStack(spacing: 12) {
+                        if snippets.isEmpty {
+                            Text(L10n.Snippets.empty)
+                                .font(AS.font(12)).foregroundStyle(AS.textTertiary)
+                                .fixedSize(horizontal: false, vertical: true)
+                        }
+                        Spacer(minLength: 0)
+                        Button(L10n.Snippets.addSnippet, action: addSnippet)
+                            .buttonStyle(.asSecondary)
+                            .settingsAnchor(SnippetsFeature.Anchor.list)
                     }
-                    Spacer()
-                    Button(L10n.Snippets.edit) { editing = snippet }.buttonStyle(.borderless)
-                    Button { save(snippets.filter { $0.id != snippet.id }) } label: { Image(systemName: "trash") }
-                        .buttonStyle(.borderless)
-                        .help(L10n.Snippets.delete)
-                        .accessibilityLabel(L10n.Snippets.delete)
+                    .padding(.horizontal, 12)
+                    .frame(minHeight: 44)
                 }
+                ASFootnote(L10n.Snippets.placeholdersHelp)
+                    .settingsAnchor(SnippetsFeature.Anchor.placeholders)
             }
-            if !snippets.isEmpty {
-                Button(L10n.Snippets.addSnippet, action: addSnippet)
-                    .settingsAnchor(SnippetsFeature.Anchor.list)
-            }
-            Text(L10n.Snippets.placeholdersHelp)
-                .font(.caption).foregroundStyle(.secondary)
-                .settingsAnchor(SnippetsFeature.Anchor.placeholders)
         }
         .sheet(item: $editing) { snippet in
             SnippetEditor(snippet: snippet, others: snippets) { saved in
@@ -58,6 +44,32 @@ struct SnippetsSettingsView: View {
                 editing = nil
             }
         }
+    }
+
+    private func row(_ snippet: Snippet) -> some View {
+        HStack(spacing: 12) {
+            VStack(alignment: .leading, spacing: 2) {
+                Text(snippet.title).font(AS.body).foregroundStyle(AS.text).lineLimit(1)
+                Text(snippet.abbreviation).font(AS.font(11.5).monospaced()).foregroundStyle(AS.textTertiary)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            Button(L10n.Snippets.edit) { editing = snippet }
+                .buttonStyle(.asSecondary)
+            Button { save(snippets.filter { $0.id != snippet.id }) } label: {
+                LineIcon("M3 4.5h10M6.5 4.5V3h3v1.5M4.5 4.5l.7 8.5h5.6l.7-8.5", size: 14, color: AS.textSecondary)
+                    .frame(width: 24, height: 24)
+                    .contentShape(Rectangle())
+            }
+            .buttonStyle(.plain)
+            .help(L10n.Snippets.delete)
+            .accessibilityLabel(L10n.Snippets.delete)
+            ASSwitch(L10n.Snippets.enabledToggle(snippet.title), isOn: Binding(
+                get: { snippet.isEnabled },
+                set: { enabled in update(snippet.id) { $0.isEnabled = enabled } }
+            ))
+        }
+        .padding(.horizontal, 12)
+        .frame(minHeight: 52)
     }
 
     /// Opens the editor for a new snippet.
@@ -74,6 +86,46 @@ struct SnippetsSettingsView: View {
 
     private func save(_ all: [Snippet]) {
         settings.set(all, for: SnippetsFeature.snippetsKey)
+    }
+}
+
+/// The example at the top of the Snippets page: a typed code and the text
+/// it turns into.
+struct SnippetsHero: View {
+    var body: some View {
+        ASStage(tint: AS.blue) {
+            HStack(spacing: 18) {
+                card {
+                    HStack(spacing: 1) {
+                        Text(L10n.Snippets.codePrompt)
+                            .font(AS.font(17, .semibold).monospaced())
+                            .foregroundStyle(AS.text)
+                        Rectangle().fill(AS.blue).frame(width: 2, height: 20)
+                    }
+                }
+                LineIcon("M3 8h10M9 4l4 4-4 4", size: 22, lineWidth: 2, color: Color(hex: 0x2E92FF))
+                card {
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text(L10n.Snippets.heroExpanded)
+                        Text(L10n.Snippets.heroName)
+                    }
+                    .font(AS.font(15, .medium))
+                    .foregroundStyle(AS.text)
+                }
+            }
+        }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(L10n.Snippets.heroDescription)
+        .accessibilityAddTraits(.isImage)
+    }
+
+    private func card(@ViewBuilder _ content: () -> some View) -> some View {
+        content()
+            .padding(.horizontal, 18)
+            .frame(minWidth: 120, minHeight: 76)
+            .background(RoundedRectangle(cornerRadius: 14, style: .continuous).fill(AS.panel))
+            .overlay(RoundedRectangle(cornerRadius: 14, style: .continuous).strokeBorder(Color.white.opacity(0.10), lineWidth: 1))
+            .shadow(color: .black.opacity(0.45), radius: 16, y: 12)
     }
 }
 

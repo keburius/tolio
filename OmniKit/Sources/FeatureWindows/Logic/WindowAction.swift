@@ -32,7 +32,7 @@ public enum WindowAction: String, CaseIterable, Codable, Sendable {
         }
     }
 
-    /// ID of this action's hotkey and palette command.
+    /// ID of this action's hotkey and command.
     public var hotkeyID: String { "windows.\(rawValue)" }
 
     /// The global shortcut registered for this action.

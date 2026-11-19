@@ -63,6 +63,7 @@ public final class ScreenshotsFeature: Feature {
     public var displayName: String { L10n.Screenshots.displayName }
     public var summary: String { L10n.Screenshots.summary }
     public let symbolName = "camera.viewfinder"
+    public let group: FeatureGroup = .capture
     public let requiredPermissions: Set<Permission> = [.screenRecording]
     /// Microphone for recording with mic; Accessibility for scrolling capture.
     public let optionalPermissions: Set<Permission> = [.microphone, .accessibility]
@@ -143,7 +144,7 @@ public final class ScreenshotsFeature: Feature {
         settings = nil
     }
 
-    /// Runs `action` once the palette, menu or control panel that triggered
+    /// Runs `action` once the menu or control panel that triggered
     /// it has closed, so it doesn't end up in the capture.
     static func afterUICloses(_ action: @escaping Action) -> Action {
         { Task { @MainActor in try? await Task.sleep(for: .milliseconds(200)); action() } }

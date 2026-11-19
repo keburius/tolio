@@ -23,35 +23,6 @@ extension SwitcherFeature {
     }
 }
 
-/// Palette results for "win …".
-@MainActor
-final class WindowSearchProvider: SearchProvider {
-    let keyword = "win"
-    var title: String { L10n.Switcher.searchTitle }
-    private weak var controller: SwitcherController?
-
-    init(controller: SwitcherController) {
-        self.controller = controller
-    }
-
-    func results(for query: String, limit: Int) -> [SearchResult] {
-        guard let controller else { return [] }
-        let needle = query.lowercased()
-        return controller.currentWindows()
-            .filter { needle.isEmpty || $0.title.lowercased().contains(needle) || $0.appName.lowercased().contains(needle) }
-            .prefix(limit)
-            .map { record in
-                let appURL = NSRunningApplication(processIdentifier: record.pid)?.bundleURL
-                return SearchResult(
-                    id: "\(record.id)", title: record.title,
-                    subtitle: record.state == .normal ? record.appName : L10n.Switcher.appWithState(record.appName, record.state.label),
-                    icon: appURL.map { .file($0) } ?? .symbol("macwindow"),
-                    primaryAction: { [weak controller] in controller?.focus(record) }
-                )
-            }
-    }
-}
-
 extension WindowState {
     var label: String {
         switch self {
@@ -68,25 +39,67 @@ struct SwitcherSettingsView: View {
     let settings: SettingsStore
 
     var body: some View {
-        Picker(L10n.Switcher.trigger, selection: settings.binding(SwitcherFeature.triggerKey)) {
-            ForEach(SwitcherTrigger.allCases, id: \.self) { Text($0.label).tag($0) }
+        VStack(alignment: .leading, spacing: 14) {
+            ASSection(footer: L10n.Switcher.otherSpacesHelp) {
+                ASRow(L10n.Switcher.trigger, subtitle: L10n.Switcher.triggerHelp) {
+                    ASPopUp(
+                        L10n.Switcher.trigger, selection: settings.binding(SwitcherFeature.triggerKey),
+                        options: SwitcherTrigger.allCases.map { ($0, $0.label) }
+                    )
+                }
+                .settingsAnchor(SwitcherFeature.Anchor.trigger)
+                ASToggleRow(L10n.Switcher.thumbnails, subtitle: L10n.Switcher.thumbnailsSubtitle, isOn: settings.binding(SwitcherFeature.thumbnailsKey))
+                    .settingsAnchor(SwitcherFeature.Anchor.thumbnails)
+                ASToggleRow(L10n.Switcher.includeMinimized, isOn: settings.binding(SwitcherFeature.minimizedKey))
+                    .settingsAnchor(SwitcherFeature.Anchor.minimized)
+                ASToggleRow(L10n.Switcher.includeHidden, isOn: settings.binding(SwitcherFeature.hiddenKey))
+                    .settingsAnchor(SwitcherFeature.Anchor.hidden)
+                ASToggleRow(L10n.Switcher.includeOtherSpaces, isOn: settings.binding(SwitcherFeature.otherSpacesKey))
+                    .settingsAnchor(SwitcherFeature.Anchor.otherSpaces)
+            }
+            if feature.tapFailed {
+                ASCard(padding: 12) {
+                    HStack(alignment: .top, spacing: 10) {
+                        LineIcon(ASIcon.warning, size: 14, lineWidth: 2, color: AS.orange).padding(.top, 1)
+                        Text(L10n.Switcher.stoppedHelp).font(AS.body).foregroundStyle(AS.text)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+                }
+            }
         }
-        .settingsAnchor(SwitcherFeature.Anchor.trigger)
-        Text(L10n.Switcher.triggerHelp)
-            .font(.caption).foregroundStyle(.secondary)
-        Toggle(L10n.Switcher.thumbnails, isOn: settings.binding(SwitcherFeature.thumbnailsKey))
-            .settingsAnchor(SwitcherFeature.Anchor.thumbnails)
-        Toggle(L10n.Switcher.includeMinimized, isOn: settings.binding(SwitcherFeature.minimizedKey))
-            .settingsAnchor(SwitcherFeature.Anchor.minimized)
-        Toggle(L10n.Switcher.includeHidden, isOn: settings.binding(SwitcherFeature.hiddenKey))
-            .settingsAnchor(SwitcherFeature.Anchor.hidden)
-        Toggle(L10n.Switcher.includeOtherSpaces, isOn: settings.binding(SwitcherFeature.otherSpacesKey))
-            .settingsAnchor(SwitcherFeature.Anchor.otherSpaces)
-        Text(L10n.Switcher.otherSpacesHelp)
-            .font(.caption).foregroundStyle(.secondary)
-        if feature.tapFailed {
-            Text(L10n.Switcher.stoppedHelp)
-                .font(.caption).foregroundStyle(.orange)
+    }
+}
+
+/// The example at the top of the page: the switcher with three windows, the middle one chosen.
+struct SwitcherHero: View {
+    private static let tint = Color(hex: 0x7674DD)
+
+    var body: some View {
+        ASStage(tint: Self.tint.opacity(0.22 / 0.30)) {
+            HStack(spacing: 12) {
+                tile(selected: false)
+                tile(selected: true)
+                tile(selected: false)
+            }
+            .padding(16)
+            .background(RoundedRectangle(cornerRadius: 22, style: .continuous).fill(Color(hex: 0x15161B)))
+            .overlay(RoundedRectangle(cornerRadius: 22, style: .continuous).strokeBorder(Color.white.opacity(0.12), lineWidth: 1))
         }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(L10n.Switcher.heroLabel)
+        .accessibilityAddTraits(.isImage)
+    }
+
+    private func tile(selected: Bool) -> some View {
+        let shape = RoundedRectangle(cornerRadius: 10, style: .continuous)
+        return HStack(spacing: 4) {
+            ForEach(0 ..< 3, id: \.self) { _ in
+                Circle().fill(selected ? Color.white : Color.white.opacity(0.45)).frame(width: 5, height: 5)
+            }
+        }
+        .padding(12) // 3 pt border + 9 pt padding
+        .frame(width: 104, height: 74, alignment: .topLeading)
+        .background(shape.fill(selected ? Self.tint : Color.white.opacity(0.10)))
+        .overlay(shape.strokeBorder(selected ? Color.white : .clear, lineWidth: 3))
     }
 }

@@ -1,7 +1,7 @@
 import Foundation
 import OmniCore
 
-/// Launcher results for "clip …". An empty query lists the newest items
+/// Clipboard items for the control panel's recent copies. An empty query lists the newest items
 /// first (the control panel shows the first three).
 @MainActor
 final class ClipboardSearchProvider: SearchProvider {

@@ -10,7 +10,6 @@ final class FakeContext: TextActionContext {
     func copyToClipboard(_ text: String) { log.append("copy:\(text)") }
     func pasteClipboard() { log.append("paste") }
     func open(_ url: URL) { log.append("open:\(url.absoluteString)") }
-    func openPalette(query: String) { log.append("palette:\(query)") }
     func showMessage(_ text: String, symbol: String) { log.append("message:\(text)") }
     func translate(_ text: String, replaceable: Bool) { log.append("translate:\(replaceable)") }
     var searchEngine: SearchEngine { .duckDuckGo }
@@ -24,7 +23,7 @@ struct ActionTests {
 
     @Test func availabilityInEditableField() {
         let s = TextSelection(text: "Hello world", source: .accessibility, isEditable: true)
-        #expect(ids(s) == ["copy", "paste", "search", "translate", "uppercase", "lowercase", "count", "palette"])
+        #expect(ids(s) == ["copy", "paste", "search", "translate", "uppercase", "lowercase", "count"])
     }
 
     @Test func readOnlyTextHasNoReplacingActions() {
@@ -52,7 +51,7 @@ struct ActionTests {
     @Test func performs() {
         let context = FakeContext()
         let s = TextSelection(text: " two words\nline ", source: .accessibility, isEditable: true)
-        for id in ["copy", "search", "uppercase", "count", "palette", "translate"] {
+        for id in ["copy", "search", "uppercase", "count", "translate"] {
             TextActionCatalog.builtIn.first { $0.id == id }!.perform(s, context: context)
         }
         #expect(context.log == [
@@ -60,7 +59,6 @@ struct ActionTests {
             "open:https://duckduckgo.com/?q=two%20words%0Aline",
             "replace: TWO WORDS\nLINE ",
             "message:3 words, 16 characters, 2 lines",
-            "palette:two words line",
             "translate:true",
         ])
     }
