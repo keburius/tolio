@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Scheme
+   LastUpgradeVersion = "1430"
+   version = "1.7">
+   <BuildAction
+      parallelizeBuildables = "YES"
+      buildImplicitDependencies = "YES"
+      runPostActionsOnFailure = "NO">
+      <BuildActionEntries>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "97388345F3A91966E2B14D33"
+               BuildableName = "AllSet.app"
+               BlueprintName = "AllSet"
+               ReferencedContainer = "container:AllSet.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+      </BuildActionEntries>
+   </BuildAction>
+   <TestAction
+      buildConfiguration = "Debug"
+      selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
+      selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
+      shouldUseLaunchSchemeArgsEnv = "YES"
+      onlyGenerateCoverageForSpecifiedTargets = "NO">
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "97388345F3A91966E2B14D33"
+            BuildableName = "AllSet.app"
+            BlueprintName = "AllSet"
+            ReferencedContainer = "container:AllSet.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
+      <Testables>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "OmniCoreTests"
+               BuildableName = "OmniCoreTests"
+               BlueprintName = "OmniCoreTests"
+               ReferencedContainer = "container:OmniKit">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "OmniPlatformTests"
+               BuildableName = "OmniPlatformTests"
+               BlueprintName = "OmniPlatformTests"
+               ReferencedContainer = "container:OmniKit">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "FeatureClipboardTests"
+               BuildableName = "FeatureClipboardTests"
+               BlueprintName = "FeatureClipboardTests"
+               ReferencedContainer = "container:OmniKit">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "FeatureDropRingTests"
+               BuildableName = "FeatureDropRingTests"
+               BlueprintName = "FeatureDropRingTests"
+               ReferencedContainer = "container:OmniKit">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "FeatureDeskMinderTests"
+               BuildableName = "FeatureDeskMinderTests"
+               BlueprintName = "FeatureDeskMinderTests"
+               ReferencedContainer = "container:OmniKit">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "FeatureIslandTests"
+               BuildableName = "FeatureIslandTests"
+               BlueprintName = "FeatureIslandTests"
+               ReferencedContainer = "container:OmniKit">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "FeatureWindowsTests"
+               BuildableName = "FeatureWindowsTests"
+               BlueprintName = "FeatureWindowsTests"
+               ReferencedContainer = "container:OmniKit">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "FeatureSwitcherTests"
+               BuildableName = "FeatureSwitcherTests"
+               BlueprintName = "FeatureSwitcherTests"
+               ReferencedContainer = "container:OmniKit">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "FeatureKeepAwakeTests"
+               BuildableName = "FeatureKeepAwakeTests"
+               BlueprintName = "FeatureKeepAwakeTests"
+               ReferencedContainer = "container:OmniKit">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "FeatureKeyboardCleanTests"
+               BuildableName = "FeatureKeyboardCleanTests"
+               BlueprintName = "FeatureKeyboardCleanTests"
+               ReferencedContainer = "container:OmniKit">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "FeatureSystemStatsTests"
+               BuildableName = "FeatureSystemStatsTests"
+               BlueprintName = "FeatureSystemStatsTests"
+               ReferencedContainer = "container:OmniKit">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "FeatureShortcutOverlayTests"
+               BuildableName = "FeatureShortcutOverlayTests"
+               BlueprintName = "FeatureShortcutOverlayTests"
+               ReferencedContainer = "container:OmniKit">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "FeatureTextActionsTests"
+               BuildableName = "FeatureTextActionsTests"
+               BlueprintName = "FeatureTextActionsTests"
+               ReferencedContainer = "container:OmniKit">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "FeatureScreenshotsTests"
+               BuildableName = "FeatureScreenshotsTests"
+               BlueprintName = "FeatureScreenshotsTests"
+               ReferencedContainer = "container:OmniKit">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "FeatureStickyNotesTests"
+               BuildableName = "FeatureStickyNotesTests"
+               BlueprintName = "FeatureStickyNotesTests"
+               ReferencedContainer = "container:OmniKit">
+            </BuildableReference>
+         </TestableReference>
+      </Testables>
+      <CommandLineArguments>
+      </CommandLineArguments>
+   </TestAction>
+   <LaunchAction
+      buildConfiguration = "Debug"
+      selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
+      selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
+      launchStyle = "0"
+      useCustomWorkingDirectory = "NO"
+      ignoresPersistentStateOnLaunch = "NO"
+      debugDocumentVersioning = "YES"
+      debugServiceExtension = "internal"
+      allowLocationSimulation = "YES">
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "97388345F3A91966E2B14D33"
+            BuildableName = "AllSet.app"
+            BlueprintName = "AllSet"
+            ReferencedContainer = "container:AllSet.xcodeproj">
+         </BuildableReference>
+      </BuildableProductRunnable>
+      <CommandLineArguments>
+      </CommandLineArguments>
+   </LaunchAction>
+   <ProfileAction
+      buildConfiguration = "Release"
+      shouldUseLaunchSchemeArgsEnv = "YES"
+      savedToolIdentifier = ""
+      useCustomWorkingDirectory = "NO"
+      debugDocumentVersioning = "YES">
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "97388345F3A91966E2B14D33"
+            BuildableName = "AllSet.app"
+            BlueprintName = "AllSet"
+            ReferencedContainer = "container:AllSet.xcodeproj">
+         </BuildableReference>
+      </BuildableProductRunnable>
+   </ProfileAction>
+   <AnalyzeAction
+      buildConfiguration = "Debug">
+   </AnalyzeAction>
+   <ArchiveAction
+      buildConfiguration = "Release"
+      revealArchiveInOrganizer = "YES">
+   </ArchiveAction>
+</Scheme>
