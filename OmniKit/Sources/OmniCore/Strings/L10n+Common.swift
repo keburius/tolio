@@ -42,16 +42,16 @@ public extension L10n {
         public static func problem(_ detail: String) -> String { format("status.problem", "Problem: %@", detail) }
     }
 
-    /// Permission names and why Tolio asks for them.
+    /// Permission names and why All Set asks for them.
     enum Permissions {
         public static var accessibility: String { tr("permission.accessibility", "Accessibility") }
         public static var screenRecording: String { tr("permission.screenRecording", "Screen Recording") }
         public static var microphone: String { tr("permission.microphone", "Microphone") }
         public static var accessibilityWhy: String {
-            tr("permission.accessibility.why", "Lets Tolio move windows, type snippets for you, read menus and selected text, and listen for shortcuts.")
+            tr("permission.accessibility.why", "Lets All Set move windows, type snippets for you, read menus and selected text, and listen for shortcuts.")
         }
         public static var screenRecordingWhy: String {
-            tr("permission.screenRecording.why", "Lets Tolio take screenshots, record your screen, and show window previews.")
+            tr("permission.screenRecording.why", "Lets All Set take screenshots, record your screen, and show window previews.")
         }
         public static var microphoneWhy: String {
             tr("permission.microphone.why", "Only for screen recordings with your voice.")
@@ -64,13 +64,13 @@ public extension L10n {
         public static var optional: String { tr("permission.optional", "Optional") }
         public static var resetAndAskAgain: String { tr("permission.resetAndAskAgain", "Reset and Ask Again") }
         public static var resetHelp: String {
-            tr("permission.resetHelp", "Already switched on in System Settings but still not allowed? This removes Tolio's old entry and asks again.")
+            tr("permission.resetHelp", "Already switched on in System Settings but still not allowed? This removes All Set's old entry and asks again.")
         }
         public static func usedBy(_ features: String) -> String { format("permission.usedBy", "Used by %@", features) }
         public static func optionalFor(_ features: String) -> String { format("permission.optionalFor", "Optional for %@", features) }
         public static var unused: String { tr("permission.unused", "No feature you turned on uses this.") }
         public static var nothingLeavesMac: String {
-            tr("permission.nothingLeaves", "macOS asks you to allow these yourself. Nothing Tolio sees leaves this Mac.")
+            tr("permission.nothingLeaves", "macOS asks you to allow these yourself. Nothing All Set sees leaves this Mac.")
         }
     }
 }
@@ -92,7 +92,7 @@ public extension L10n {
         public static var space: String { tr("shared.key.space", "Space") }
         public static func key(_ code: Int) -> String { format("shared.key.code", "Key %lld", code) }
         public static var listenerRefused: String {
-            tr("shared.listenerRefused", "macOS didn't let Tolio watch the keyboard and mouse. Check that Tolio is allowed under Accessibility.")
+            tr("shared.listenerRefused", "macOS didn't let All Set watch the keyboard and mouse. Check that All Set is allowed under Accessibility.")
         }
     }
 }

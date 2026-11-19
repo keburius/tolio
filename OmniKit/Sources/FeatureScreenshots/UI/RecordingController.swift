@@ -61,6 +61,10 @@ final class RecordingController {
             isRecording = true
             startDate = Date()
             timer = RecordingTimer(start: Date())
+            LiveActivityCenter.shared.post(LiveActivity(
+                id: "screenshots.recording", leading: .symbol("record.circle.fill"), trailing: .elapsed(Date()),
+                title: L10n.Island.recording, tint: "red", priority: .high
+            ))
             hasMicrophone = options.microphone
             micMuted = false
             overlay?.showRecording()
@@ -122,6 +126,7 @@ final class RecordingController {
         isRecording = false
         startDate = nil
         timer = nil
+        LiveActivityCenter.shared.remove("screenshots.recording")
         hasMicrophone = false
         let discard = discardOnStop
         discardOnStop = false

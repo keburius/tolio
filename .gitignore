@@ -1,5 +1,6 @@
 .DS_Store
 /build/
+/AllSet.xcodeproj/
 /Tolio.xcodeproj/
 OmniKit/.build/
 OmniKit/.swiftpm/

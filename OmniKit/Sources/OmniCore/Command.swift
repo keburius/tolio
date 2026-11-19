@@ -1,7 +1,7 @@
 import Observation
 
-/// An entry the command palette can show and run. Every feature registers its
-/// commands here.
+/// A named action a feature offers (the control panel runs window layouts
+/// through these).
 public struct Command: Identifiable, Sendable {
     public let id: String
     public let title: String
@@ -28,20 +28,16 @@ public struct Command: Identifiable, Sendable {
     }
 }
 
-/// Registers palette commands and search providers on behalf of a feature.
+/// Registers commands and search providers on behalf of a feature.
 @MainActor
 public protocol CommandRegistering: AnyObject {
     func register(_ command: Command, owner: FeatureID)
     func registerProvider(_ provider: any SearchProvider, owner: FeatureID)
     /// Removes the owner's commands and providers.
     func unregisterAll(owner: FeatureID)
-    /// Commands of all enabled features, for the palette to search.
+    /// Commands of all enabled features.
     var allCommands: [Command] { get }
     var allProviders: [any SearchProvider] { get }
-    /// Opens the palette with `query` prefilled, if the palette is enabled.
-    func openPalette(query: String)
-    /// Set by the palette feature while enabled.
-    var paletteHandler: (@MainActor (String) -> Void)? { get set }
 }
 
 /// Holds the commands and search providers of all enabled features.
@@ -50,7 +46,6 @@ public protocol CommandRegistering: AnyObject {
 public final class CommandRegistry: CommandRegistering {
     public private(set) var commandsByOwner: [FeatureID: [Command]] = [:]
     @ObservationIgnored private var providersByOwner: [FeatureID: [any SearchProvider]] = [:]
-    @ObservationIgnored public var paletteHandler: (@MainActor (String) -> Void)?
 
     public init() {}
 
@@ -61,10 +56,6 @@ public final class CommandRegistry: CommandRegistering {
     public func registerProvider(_ provider: any SearchProvider, owner: FeatureID) {
         providersByOwner[owner, default: []].removeAll { $0.keyword == provider.keyword }
         providersByOwner[owner, default: []].append(provider)
-    }
-
-    public func openPalette(query: String) {
-        paletteHandler?(query)
     }
 
     /// All commands, sorted by title.

@@ -55,13 +55,4 @@ struct SearchProviderRegistryTests {
         registry.registerProvider(FakeProvider("clip"), owner: "a")
         #expect(registry.allProviders.count == 1)
     }
-
-    @Test func openPaletteForwardsToHandlerOnlyWhileSet() {
-        let registry = CommandRegistry()
-        var received: [String] = []
-        registry.openPalette(query: "ignored")
-        registry.paletteHandler = { received.append($0) }
-        registry.openPalette(query: "clip ")
-        #expect(received == ["clip "])
-    }
 }

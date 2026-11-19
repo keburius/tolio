@@ -13,17 +13,51 @@ Free, private, and everything stays on your Mac.</p>
 
 ## What it does
 
+Tolio's features come in eight groups.
+
+### Clipboard
 | | |
 |---|---|
-| **Launcher** | ⌃⌥Space opens apps, System Settings pages and Tolio's commands. It also does math, unit and currency conversions. |
-| **Clipboard History** | ⌃⌥V shows what you copied, with picture previews. Pin items and keep text snippets. |
-| **Screenshots & Recording** | ⇧⌘4 captures an area or a window, then opens an editor with a brush, boxes, numbered steps and text. Untouched captures are copied automatically after 3 seconds. You can record the screen with or without your microphone, pause, and mute. |
-| **Capture Text** | ⇧⌘2 copies the text in any part of the screen, and reads QR codes and barcodes. |
-| **Sticky Notes** | Glass notes on your desktop. Add one with ⌃⌥⌘N or by right-clicking the desktop. |
+| **Clipboard History** | ⌃⌥V shows what you copied, with picture previews. Pin the ones you need often. |
+| **Snippets** | Type a short code such as `;sig` anywhere and it becomes the full text. |
+
+### Windows
+| | |
+|---|---|
 | **Window Layouts** | ⌃⌥←/→/↑/↓ for halves, ⌃⌥D/F/G for thirds, ⌃⌥↩ to maximize. You can also drag windows to screen edges. |
 | **Window Switcher** | Hold ⌥ and press Tab to jump to any window, not just any app. |
-| **Energy Mode** | ⌃⌥⌘A keeps your Mac awake, for a set time or while certain apps run. |
+
+### Keyboard
+| | |
+|---|---|
 | **Lock Keyboard** | ⌃⌥⌘L locks the keyboard so you can wipe it clean. Unlock it with the mouse. |
+
+### Capture
+| | |
+|---|---|
+| **Screenshots & Recording** | ⇧⌘4 captures an area or a window, then opens an editor with a brush, boxes, numbered steps and text. Untouched captures are copied automatically after 3 seconds. ⌃⌥⌘R records the screen with or without your microphone; you can pause and mute. |
+| **Capture Text** | ⇧⌘2 copies the text in any part of the screen, and reads QR codes and barcodes. |
+
+### Files
+| | |
+|---|---|
+| **Drop Ring** | ⌃⌥⌘D, or a shake of the pointer while dragging, opens a ring of circles around the pointer. Drop files on a folder (copy or move), an app (open with), a person (new message or email, sent only when you press Send), a Shortcut, the Cargo shelf (collect files, then drag them all out at once) or the Trash. |
+
+### Island
+| | |
+|---|---|
+| **Notch Island** | The notch becomes a live island. Hover over it (or press ⌃⌥⌘I) to open Now Playing for Music and Spotify, with artwork, progress and controls, or swipe to your calendar. Beside the notch, small "wings" show the music, a recording timer or your next Desk Minder reminder. Notices drop down for charging, low battery, AirPods and volume changes. |
+
+### Energy
+| | |
+|---|---|
+| **Energy Mode** | ⌃⌥⌘A keeps your Mac awake, for a set time or while certain apps run. |
+
+### Extras
+| | |
+|---|---|
+| **Desk Minder** | ⌃⌥⌘E shows a bar above the Dock. Stretch it for more time, or type a time like 18:30, 6pm or 20m, add a title and press Return. When it's due, it fills the screen with Close and Snooze. It can also add the reminder to Apple Reminders, so your iPhone alerts too. |
+| **Sticky Notes** | Glass notes on your desktop. Add one with ⌃⌥⌘N or by right-clicking the desktop. |
 | **Shortcut cheat sheet** | ⌃⌥⌘/ shows the current app's menu shortcuts. |
 | **Text selection actions** | Select text to search the web, open links or translate. |
 | **System Stats** | CPU, memory, network and battery in the menu bar. |
@@ -70,12 +104,16 @@ macOS asks you to allow these yourself. Tolio only asks for what the features yo
 | **Accessibility** | Moving windows, typing snippets, reading selected text and menus, and global shortcuts |
 | **Screen Recording** | Screenshots, screen recording, Capture Text and window previews |
 | **Microphone** | Only when you record the screen with the microphone turned on |
+| **Reminders** | Only if Desk Minder's "Also add to Apple Reminders" is on |
+| **Calendars** | Only for Notch Island's calendar page |
+| **Automation (Music, Spotify)** | Only for Notch Island's music controls, progress and artwork |
+| **Bluetooth** | Only for Notch Island's AirPods and device notices |
 | **Finder extension** | "New Sticky Note" in the desktop's right-click menu. Turn on **Tolio** under System Settings → General → Login Items & Extensions → Finder |
 
 ## Privacy
 
-- **Nothing you do leaves your Mac.** No accounts, no analytics, no tracking.
-- The only thing Tolio downloads is **currency rates**: a small public file from the European Central Bank and the National Bank of Georgia, at most every 6 hours, when you open the Launcher. Nothing about you is sent, and you can switch it off in Settings → Launcher.
+- **Tolio never connects to the internet.** No accounts, no analytics, no tracking, no downloads.
+- If you turn on Desk Minder's Apple Reminders option, Tolio adds reminders to the Reminders app on your Mac, and Apple's iCloud syncs them to your other devices. Tolio itself sends nothing.
 - Clipboard contents, notes and text you select or capture are never written to logs.
 - Files Tolio deletes, such as recordings you discard and old clipboard images, go to the **Trash** and are never erased outright.
 

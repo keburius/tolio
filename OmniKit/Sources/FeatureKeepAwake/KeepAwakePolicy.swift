@@ -40,7 +40,7 @@ public enum KeepAwakePolicy {
         return L10n.KeepAwake.keepingAwake(joined)
     }
 
-    /// Preset durations offered in the palette, Settings and the menu bar icon.
+    /// Preset durations offered in Settings and the menu bar icon.
     public static let presetMinutes = [15, 30, 60, 120, 300]
 
     /// Preset durations with their titles ("15 Minutes", "1 Hour").

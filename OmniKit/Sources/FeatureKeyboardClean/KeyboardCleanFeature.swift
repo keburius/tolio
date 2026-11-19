@@ -27,7 +27,9 @@ public final class KeyboardCleanFeature: Feature {
     public let id: FeatureID = "keyboardclean"
     public var displayName: String { L10n.LockKeyboard.displayName }
     public var summary: String { L10n.LockKeyboard.summary }
+    public var tagline: String { L10n.LockKeyboard.tagline }
     public let symbolName = "keyboard.badge.ellipsis"
+    public let group: FeatureGroup = .keyboard
     public let requiredPermissions: Set<Permission> = [.accessibility]
     public var declaredHotkeys: [HotkeyAction] { [Self.startHotkey] }
 
@@ -65,6 +67,10 @@ public final class KeyboardCleanFeature: Feature {
     public func makeSettingsView() -> AnyView {
         guard let settings else { return AnyView(EmptyView()) }
         return AnyView(KeyboardCleanSettingsView(feature: self, settings: settings))
+    }
+
+    public func makeSettingsHero() -> AnyView? {
+        AnyView(KeyboardCleanHero())
     }
 
     func startSoon() {

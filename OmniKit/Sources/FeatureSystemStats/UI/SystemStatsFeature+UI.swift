@@ -1,4 +1,5 @@
 import OmniCore
+import SwiftUI
 
 /// Settings anchors of the System Stats page.
 enum StatsAnchor {
@@ -9,6 +10,8 @@ enum StatsAnchor {
 
 /// What Settings search shows for System Stats.
 public extension SystemStatsFeature {
+    func makeSettingsHero() -> AnyView? { AnyView(SystemStatsHero()) }
+
     var settingsEntries: [SettingsEntry] {
         let synonyms: [StatItem: [String]] = [
             .cpu: ["processor", "load"],

@@ -33,6 +33,7 @@ public final class CaptureTextFeature: Feature {
     public var displayName: String { L10n.Screenshots.captureText }
     public var summary: String { L10n.Screenshots.captureTextSummary }
     public let symbolName = "text.viewfinder"
+    public let group: FeatureGroup = .capture
     public let requiredPermissions: Set<Permission> = [.screenRecording]
 
     @ObservationIgnored private var settings: SettingsStore?
@@ -77,7 +78,7 @@ public final class CaptureTextFeature: Feature {
         }
     }
 
-    /// From the Launcher or a menu: wait until it has closed so it isn't in the selection.
+    /// From a menu or the control panel: wait until it has closed so it isn't in the selection.
     private func captureAfterUICloses() {
         Task { @MainActor in
             try? await Task.sleep(for: .milliseconds(200))
@@ -121,6 +122,37 @@ public final class CaptureTextFeature: Feature {
         guard let settings else { return AnyView(EmptyView()) }
         return AnyView(CaptureTextSettings(settings: settings))
     }
+
+    public func makeSettingsHero() -> AnyView? { AnyView(CaptureTextHero()) }
+}
+
+/// The example under the header: a frame around some text, its first line
+/// picked up, and a copy badge.
+struct CaptureTextHero: View {
+    private let teal = Color(hex: 0x2EC5BE)
+    private let size = CGSize(width: 320, height: 140)
+
+    var body: some View {
+        ASStage(tint: teal) {
+            ZStack(alignment: .topLeading) {
+                SVGPath("M40 44V16h28M252 16h28v28M280 96v28h-28M68 124H40V96", viewBox: size) // l10n-ignore
+                    .stroke(teal, style: StrokeStyle(lineWidth: 5, lineCap: .round, lineJoin: .round))
+                RoundedRectangle(cornerRadius: 6).fill(teal.opacity(0x55 / 255)).heroPlace(62, 34, 186, 24)
+                Capsule().fill(.white).heroPlace(70, 42, 170, 8)
+                Capsule().fill(.white.opacity(0.32)).heroPlace(70, 70, 120, 8)
+                Capsule().fill(.white.opacity(0.32)).heroPlace(70, 90, 154, 8)
+                Capsule().fill(.white.opacity(0.32)).heroPlace(70, 110, 88, 8)
+                Circle().fill(AS.stage).heroPlace(262, 88, 48, 48)
+                Circle().fill(teal).heroPlace(266, 92, 40, 40)
+                SVGPath("M281 104h12v15h-12zM277 115v-15h11", viewBox: size) // l10n-ignore
+                    .stroke(Color(hex: 0x06302E), style: StrokeStyle(lineWidth: 2.6, lineCap: .round, lineJoin: .round))
+            }
+            .frame(width: size.width, height: size.height)
+        }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(L10n.Screenshots.captureTextHeroLabel)
+        .accessibilityAddTraits(.isImage)
+    }
 }
 
 /// Capture Text options.
@@ -130,38 +162,54 @@ struct CaptureTextSettings: View {
     @State private var supported: [String] = []
 
     var body: some View {
-        Section(S.sectionCaptureText) {
-            Picker(S.lineBreaks, selection: settings.binding(CaptureTextFeature.lineBreakKey)) {
-                Text(S.lineBreaksKeep).tag(LineBreakMode.keep)
-                Text(S.lineBreaksJoin).tag(LineBreakMode.join)
-            }
-            .settingsAnchor(CaptureTextFeature.Anchor.lineBreaks)
-            LabeledContent(S.recognitionLanguages) {
-                Menu(summary) {
-                    Button(S.languagesMatchMac) { settings.set([], for: CaptureTextFeature.languagesKey) }
-                    Divider()
-                    ForEach(supported, id: \.self) { code in
-                        Toggle(Self.name(code), isOn: Binding(
-                            get: { chosen.contains(code) },
-                            set: { on in
-                                var list = chosen
-                                if on { if !list.contains(code) { list.append(code) } } else { list.removeAll { $0 == code } }
-                                settings.set(list, for: CaptureTextFeature.languagesKey)
-                            }
-                        ))
-                    }
+        VStack(alignment: .leading, spacing: 14) {
+            ASSection(footer: S.captureTextNote) {
+                ASRow(S.lineBreaks) {
+                    ASPopUp(S.lineBreaks, selection: settings.binding(CaptureTextFeature.lineBreakKey), options: [
+                        (LineBreakMode.keep, S.lineBreaksKeep),
+                        (LineBreakMode.join, S.lineBreaksJoin),
+                    ])
                 }
-                .fixedSize()
+                .settingsAnchor(CaptureTextFeature.Anchor.lineBreaks)
+                ASRow(S.recognitionLanguages) { languagesMenu }
+                    .settingsAnchor(CaptureTextFeature.Anchor.languages)
+                ASToggleRow(S.autoLanguage, subtitle: S.autoLanguageNote, isOn: settings.binding(CaptureTextFeature.autoLanguageKey))
+                    .settingsAnchor(CaptureTextFeature.Anchor.autoLanguage)
+                ASToggleRow(S.speakAloud, isOn: settings.binding(CaptureTextFeature.speakKey))
+                    .settingsAnchor(CaptureTextFeature.Anchor.speak)
             }
-            .settingsAnchor(CaptureTextFeature.Anchor.languages)
-            Toggle(S.autoLanguage, isOn: settings.binding(CaptureTextFeature.autoLanguageKey))
-                .settingsAnchor(CaptureTextFeature.Anchor.autoLanguage)
-            Text(S.autoLanguageNote).font(.caption).foregroundStyle(.secondary)
-            Toggle(S.speakAloud, isOn: settings.binding(CaptureTextFeature.speakKey))
-                .settingsAnchor(CaptureTextFeature.Anchor.speak)
-            Text(S.captureTextNote).font(.caption).foregroundStyle(.secondary)
         }
         .onAppear { if supported.isEmpty { supported = TextRecognizer.supportedLanguages() } }
+    }
+
+    /// A pop-up that can pick several languages, or follow the Mac's.
+    private var languagesMenu: some View {
+        Menu {
+            Button {
+                settings.set([], for: CaptureTextFeature.languagesKey)
+            } label: {
+                if chosen.isEmpty { Label(S.languagesMatchMac, systemImage: "checkmark") } else { Text(S.languagesMatchMac) }
+            }
+            Divider()
+            ForEach(supported, id: \.self) { code in
+                Toggle(Self.name(code), isOn: Binding(
+                    get: { chosen.contains(code) },
+                    set: { on in
+                        var list = chosen
+                        if on { if !list.contains(code) { list.append(code) } } else { list.removeAll { $0 == code } }
+                        settings.set(list, for: CaptureTextFeature.languagesKey)
+                    }
+                ))
+            }
+        } label: {
+            ASPopUpLabel(summary)
+        }
+        .menuStyle(.button)
+        .buttonStyle(.plain)
+        .menuIndicator(.hidden)
+        .fixedSize()
+        .accessibilityLabel(S.recognitionLanguages)
+        .accessibilityValue(summary)
     }
 
     private var chosen: [String] { settings.value(CaptureTextFeature.languagesKey) }

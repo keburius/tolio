@@ -26,7 +26,7 @@ extension KeepAwakeFeature {
     public var quickAccessItems: [QuickAccessItem] {
         [
             QuickAccessItem(
-                id: .keepAwake, title: displayName, symbolName: symbolName, activeSymbolName: "cup.and.saucer.fill",
+                id: .keepAwake, title: displayName, symbolName: symbolName, activeSymbolName: "bolt.fill",
                 clickHint: L10n.KeepAwake.clickHint, shortcutID: Self.toggleHotkey.id,
                 state: { [weak self] in self?.quickAccessState() ?? .idle },
                 primary: { [weak self] in self?.toggle() },

@@ -17,100 +17,131 @@ extension AppServices {
     }
 }
 
-/// All shortcuts in one table with conflict warnings, plus gestures.
+/// Every shortcut as key caps you click to change: one per feature, then
+/// Window Layouts' own, with conflict warnings and Reset to Defaults.
 struct ShortcutsPane: View {
     let services: AppServices
     let navigation: SettingsNavigation
-    @State private var filter = ""
-    @State private var onlyOn = false
     @State private var confirmResetAll = false
+
+    /// One line on the page.
+    private struct Item: Identifiable {
+        enum Kind { case hotkey(ShortcutTable.Row), gesture(GestureShortcut) }
+        let id: String
+        let title: String
+        let featureID: FeatureID
+        let isOn: Bool
+        let kind: Kind
+    }
 
     var body: some View {
         let table = services.shortcutTable(includingHidden: navigation.showsHiddenFeatures)
-        let rows = table.rows.filter(matches)
-        VStack(alignment: .leading, spacing: OmniStyle.s3) {
-            HStack {
-                Text(L10n.SettingsUI.shortcuts).font(.title2.weight(.semibold))
-                Spacer()
-                Picker("", selection: $onlyOn) { // l10n-ignore
-                    Text(L10n.SettingsUI.showAll).tag(false)
-                    Text(L10n.SettingsUI.showOnOnly).tag(true)
-                }
-                .pickerStyle(.segmented).labelsHidden().fixedSize()
-                TextField(L10n.SettingsUI.filter, text: $filter).textFieldStyle(.roundedBorder).frame(width: 160)
+        let (featureItems, layoutItems) = items(table)
+        PageScaffold(L10n.SettingsUI.shortcuts) {
+            Text(L10n.ShortcutsUI.intro).font(AS.body).foregroundStyle(AS.textBody)
+            section(L10n.AllSet.features, featureItems, table)
+            if !layoutItems.isEmpty {
+                section(services.features.feature("windows")?.displayName ?? L10n.Windows.displayName, layoutItems, table)
             }
-            if rows.isEmpty {
-                EmptyState(symbol: "keyboard", message: L10n.SettingsUI.noShortcutsMatch(filter))
-            } else {
-                Table(rows) {
-                    TableColumn(L10n.SettingsUI.action) { row in
-                        VStack(alignment: .leading, spacing: 2) {
-                            HStack(spacing: OmniStyle.s1) {
-                                if Self.warning(for: row) != nil { Image(systemName: "exclamationmark.triangle.fill").foregroundStyle(.orange) }
-                                Text(row.title)
-                            }
-                            if let warning = Self.warning(for: row) { Text(warning).font(.caption).foregroundStyle(.orange) }
-                        }
-                        .foregroundStyle(row.featureIsOn ? .primary : .secondary)
-                    }
-                    TableColumn(L10n.SettingsUI.feature) { row in
-                        Text(row.featureIsOn ? row.featureName : "\(row.featureName) \(L10n.SettingsUI.featureOffSuffix)")
-                            .foregroundStyle(.secondary)
-                    }
-                    .width(min: 120, ideal: 160)
-                    TableColumn(L10n.SettingsUI.shortcut) { row in
-                        HStack {
-                            HotkeyRecorderView(combo: row.combo) { Self.rebind(row.id, to: $0, services: services, table: table) }
-                            Button { services.hotkeys.resetToDefaults([row.id]) } label: { Image(systemName: "arrow.uturn.backward") }
-                                .buttonStyle(.borderless).disabled(row.isDefault)
-                                .help(L10n.Common.resetToDefault).accessibilityLabel(L10n.Common.resetToDefault)
-                        }
-                    }
-                    .width(min: 170, ideal: 190)
-                }
-                .frame(minHeight: 260)
-            }
-            gestures
             HStack {
-                Text(L10n.SettingsUI.offNote).font(.caption).foregroundStyle(.secondary)
+                Text(L10n.SettingsUI.offNote).font(AS.footnote).foregroundStyle(AS.textTertiary)
                 Spacer()
-                Button(L10n.SettingsUI.resetAllShortcuts) { confirmResetAll = true }
+                Button(L10n.SettingsUI.resetToDefaults) { confirmResetAll = true }
+                    .buttonStyle(.asSecondary)
                     .confirmationDialog(L10n.SettingsUI.resetAllShortcutsQuestion, isPresented: $confirmResetAll) {
                         Button(L10n.Common.reset) { services.hotkeys.resetToDefaults(table.rows.map(\.id)) }
                         Button(L10n.Common.cancel, role: .cancel) {}
                     }
             }
         }
-        .padding(OmniStyle.s5)
     }
 
-    @ViewBuilder private var gestures: some View {
-        let items = services.visibleFeatures(includingHidden: navigation.showsHiddenFeatures).flatMap { feature in
-            feature.gestures.map { (feature, $0) }
+    /// Feature shortcuts (one per feature, or each action when a feature has
+    /// several), the control panel, then Window Layouts' actions separately.
+    private func items(_ table: ShortcutTable) -> ([Item], [Item]) {
+        var main: [Item] = []
+        var layouts: [Item] = []
+        for feature in services.sidebarFeatures(includingHidden: navigation.showsHiddenFeatures) {
+            let isOn = services.features.status(of: feature.id) == .running
+            let rows = feature.declaredHotkeys.compactMap { action in table.rows.first { $0.id == action.id } }
+            let single = rows.count + feature.gestures.count == 1
+            var lines = rows.map { Item(id: $0.id, title: single ? feature.displayName : $0.title, featureID: feature.id, isOn: isOn, kind: .hotkey($0)) }
+            lines += feature.gestures.map { Item(id: "gesture.\($0.id)", title: single ? feature.displayName : $0.title, featureID: feature.id, isOn: isOn, kind: .gesture($0)) }
+            if feature.id == "windows" { layouts += lines } else { main += lines }
         }
-        if !items.isEmpty {
-            VStack(alignment: .leading, spacing: OmniStyle.s1) {
-                SectionHeader(L10n.SettingsUI.gestures)
-                ForEach(items, id: \.1.id) { feature, gesture in
-                    HStack {
-                        Text(gesture.title)
-                        Text(feature.displayName).foregroundStyle(.secondary)
-                        Spacer()
-                        ShortcutChip(gesture.gesture)
-                        Button { navigation.open(.feature(feature.id), anchor: gesture.settingsAnchor) } label: { Image(systemName: "arrow.right.circle") }
-                            .buttonStyle(.borderless).help(L10n.Common.featureSettings(feature.displayName))
-                    }
-                }
+        if let row = table.rows.first(where: { $0.id == AppHotkeys.controlPanel.id }) {
+            main.append(Item(id: row.id, title: L10n.ShortcutsUI.controlPanel, featureID: AppHotkeys.owner, isOn: true, kind: .hotkey(row)))
+        }
+        return (main, layouts)
+    }
+
+    private func section(_ title: String, _ items: [Item], _ table: ShortcutTable) -> some View {
+        let half = (items.count + 1) / 2
+        return VStack(alignment: .leading, spacing: 6) {
+            ASSectionTitle(title)
+            HStack(alignment: .top, spacing: 12) {
+                column(Array(items.prefix(half)), table)
+                column(Array(items.dropFirst(half)), table)
             }
         }
     }
 
-    private func matches(_ row: ShortcutTable.Row) -> Bool {
-        if onlyOn && !row.featureIsOn { return false }
-        let needle = filter.trimmingCharacters(in: .whitespaces)
-        guard !needle.isEmpty else { return true }
-        return row.title.localizedCaseInsensitiveContains(needle) || row.featureName.localizedCaseInsensitiveContains(needle)
-            || (row.combo?.displayString.localizedCaseInsensitiveContains(needle) ?? false)
+    private func column(_ items: [Item], _ table: ShortcutTable) -> some View {
+        ASCard {
+            ASDividedStack {
+                ForEach(items) { item in line(item, table) }
+            }
+        }
+    }
+
+    private func line(_ item: Item, _ table: ShortcutTable) -> some View {
+        HStack(spacing: 10) {
+            if item.featureID == AppHotkeys.owner {
+                LineIconTile(ASIcon.menuBar, size: 22, iconSize: 13)
+            } else {
+                FeatureIcon(item.featureID, size: 22)
+            }
+            VStack(alignment: .leading, spacing: 1) {
+                Text(item.title).font(AS.body).foregroundStyle(item.isOn ? AS.text : AS.textTertiary).lineLimit(1)
+                if case let .hotkey(row) = item.kind, let warning = Self.warning(for: row) {
+                    Text(warning).font(.system(size: 10.5)).foregroundStyle(AS.orange).lineLimit(2)
+                }
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            switch item.kind {
+            case let .hotkey(row):
+                if !row.isDefault {
+                    Button { services.hotkeys.resetToDefaults([row.id]) } label: {
+                        Image(systemName: "arrow.uturn.backward").font(.system(size: 10, weight: .semibold))
+                    }
+                    .buttonStyle(.plain)
+                    .foregroundStyle(AS.textSecondary)
+                    .help(L10n.Common.resetToDefault)
+                    .accessibilityLabel(L10n.Common.resetToDefault)
+                }
+                HotkeyRecorderView(combo: row.combo) { Self.rebind(row.id, to: $0, services: services, table: table) }
+                    .padding(.horizontal, 2)
+                    .background(RoundedRectangle(cornerRadius: 7, style: .continuous).fill(Color.black.opacity(0.22)))
+                    .overlay(RoundedRectangle(cornerRadius: 7, style: .continuous).strokeBorder(Color.white.opacity(0.10), lineWidth: 1))
+                    .help(L10n.ShortcutsUI.change(item.title))
+            case let .gesture(gesture):
+                Button {
+                    navigation.open(.feature(item.featureID), anchor: gesture.settingsAnchor)
+                } label: {
+                    KeyCaps(gesture.gesture, spacing: 3)
+                        .padding(.horizontal, 5)
+                        .frame(height: 26)
+                        .background(RoundedRectangle(cornerRadius: 7, style: .continuous).fill(Color.black.opacity(0.22)))
+                        .overlay(RoundedRectangle(cornerRadius: 7, style: .continuous).strokeBorder(Color.white.opacity(0.10), lineWidth: 1))
+                }
+                .buttonStyle(.plain)
+                .help(L10n.Common.featureSettings(item.title))
+            }
+        }
+        .padding(.leading, 12)
+        .padding(.trailing, 8)
+        .frame(minHeight: 36)
+        .settingsAnchor("shortcut.\(item.id)")
     }
 
     static func warning(for row: ShortcutTable.Row) -> String? {

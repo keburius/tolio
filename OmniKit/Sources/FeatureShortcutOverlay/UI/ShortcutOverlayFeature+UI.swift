@@ -1,4 +1,5 @@
 import OmniCore
+import SwiftUI
 
 /// Settings anchors of the Shortcut Cheat Sheet page.
 enum ShortcutOverlayAnchor {
@@ -9,6 +10,8 @@ enum ShortcutOverlayAnchor {
 /// What Settings and the Shortcuts page show for the Shortcut Cheat Sheet.
 public extension ShortcutOverlayFeature {
     var declaredHotkeys: [HotkeyAction] { [Self.showHotkey] }
+
+    func makeSettingsHero() -> AnyView? { AnyView(ShortcutOverlayHero()) }
 
     /// The double-press-and-hold, as currently set ("⌘ ⌘ hold" while off).
     var gestures: [GestureShortcut] {

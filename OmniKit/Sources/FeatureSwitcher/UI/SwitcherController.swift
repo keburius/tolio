@@ -71,13 +71,6 @@ final class SwitcherController {
         for effect in machine.handle(input) { apply(effect) }
     }
 
-    /// Windows for the palette ("win …"), ordered like the switcher.
-    func currentWindows() -> [WindowRecord] {
-        tracker.touchFocusedWindow()
-        catalog.reload(options: options(), recency: tracker.recency.order)
-        return catalog.records
-    }
-
     func focus(_ record: WindowRecord) {
         let app = NSRunningApplication(processIdentifier: record.pid)
         if record.state == .hidden { app?.unhide() }

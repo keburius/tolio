@@ -5,8 +5,8 @@ import OmniCore
 import OmniPlatform
 import SwiftUI
 
-/// Glass sticky notes on the desktop. Add one by right-clicking the desktop
-/// (Omni's Finder extension), with ⌃⌥⌘N, the menu bar icon, or the Launcher.
+/// Desktop Notes: glass notes on the desktop. Add one by right-clicking the desktop
+/// (Omni's Finder extension), with ⌃⌥⌘N, or the menu bar icon.
 @MainActor
 @Observable
 public final class StickyNotesFeature: Feature {
@@ -223,6 +223,10 @@ public final class StickyNotesFeature: Feature {
         guard let settings else { return AnyView(EmptyView()) }
         return AnyView(StickyNotesSettingsView(feature: self, settings: settings))
     }
+
+    public func makeSettingsHero() -> AnyView? {
+        AnyView(StickyNotesHero())
+    }
 }
 
 struct StickyNotesSettingsView: View {
@@ -232,34 +236,70 @@ struct StickyNotesSettingsView: View {
     private typealias S = L10n.StickyNotes
 
     var body: some View {
-        Section {
-            HStack {
-                VStack(alignment: .leading, spacing: 2) {
-                    Text(S.rightClickTitle)
-                    Text(finderEnabled ? S.rightClickOn : S.rightClickOff).font(.caption).foregroundStyle(.secondary)
+        VStack(alignment: .leading, spacing: 14) {
+            ASSection(footer: S.settingsNote) {
+                ASRow(S.rightClickTitle, subtitle: finderEnabled ? S.rightClickOn : S.rightClickOff) {
+                    if finderEnabled {
+                        ASStatusLabel(.good, L10n.Permissions.allowed)
+                    } else {
+                        Button(L10n.Common.openSystemSettings) { feature.openFinderExtensionSettings() }
+                            .buttonStyle(.asSecondary)
+                    }
                 }
-                Spacer()
-                if !finderEnabled {
-                    Button(L10n.Common.openSystemSettings) { feature.openFinderExtensionSettings() }
-                } else {
-                    Image(systemName: "checkmark.circle.fill").foregroundStyle(.green).accessibilityLabel(L10n.Permissions.allowed)
+                .settingsAnchor(StickyNotesFeature.Anchor.finder)
+                ASRow(S.defaultColor) {
+                    ASPopUp(S.defaultColor, selection: settings.binding(StickyNotesFeature.tintKey),
+                            options: NoteTint.allCases.map { ($0, $0.name) })
                 }
+                .settingsAnchor(StickyNotesFeature.Anchor.tint)
+                ASToggleRow(S.allSpaces, isOn: Binding(
+                    get: { settings.value(StickyNotesFeature.allSpacesKey) },
+                    set: { settings.set($0, for: StickyNotesFeature.allSpacesKey); feature.applyAllSpaces() }
+                ))
+                .settingsAnchor(StickyNotesFeature.Anchor.allSpaces)
             }
-            .settingsAnchor(StickyNotesFeature.Anchor.finder)
-            Picker(S.defaultColor, selection: settings.binding(StickyNotesFeature.tintKey)) {
-                ForEach(NoteTint.allCases, id: \.self) { Text($0.name).tag($0) }
-            }
-            .settingsAnchor(StickyNotesFeature.Anchor.tint)
-            Toggle(S.allSpaces, isOn: Binding(
-                get: { settings.value(StickyNotesFeature.allSpacesKey) },
-                set: { settings.set($0, for: StickyNotesFeature.allSpacesKey); feature.applyAllSpaces() }
-            ))
-            .settingsAnchor(StickyNotesFeature.Anchor.allSpaces)
-            Text(S.settingsNote).font(.caption).foregroundStyle(.secondary)
         }
         .onAppear { finderEnabled = feature.finderExtensionEnabled }
         .onReceive(NotificationCenter.default.publisher(for: NSApplication.didBecomeActiveNotification)) { _ in
             finderEnabled = feature.finderExtensionEnabled
         }
+    }
+}
+
+/// The example at the top of the page: two notes on the desktop, a light
+/// one and a yellow one, slightly turned.
+struct StickyNotesHero: View {
+    var body: some View {
+        ASStage(tint: Color(hex: 0xFFD60A).opacity(0.733)) {
+            Canvas { context, _ in
+                func rect(_ x: CGFloat, _ y: CGFloat, _ w: CGFloat, _ h: CGFloat, _ r: CGFloat) -> Path {
+                    Path(roundedRect: CGRect(x: x, y: y, width: w, height: h), cornerRadius: r, style: .continuous)
+                }
+                func note(angle: Double, center: CGPoint, draw: (inout GraphicsContext) -> Void) {
+                    var layer = context
+                    layer.translateBy(x: center.x, y: center.y)
+                    layer.rotate(by: .degrees(angle))
+                    layer.translateBy(x: -center.x, y: -center.y)
+                    draw(&layer)
+                }
+                note(angle: -7, center: CGPoint(x: 105, y: 75)) { c in
+                    c.fill(rect(50, 20, 110, 110, 13), with: .color(Color(hex: 0xECEDF2)))
+                    c.fill(rect(66, 40, 68, 8, 4), with: .color(Color(hex: 0x8E94A6)))
+                    c.fill(rect(66, 59, 78, 8, 4), with: .color(Color(hex: 0xB9BDCA)))
+                    c.fill(rect(66, 78, 52, 8, 4), with: .color(Color(hex: 0xB9BDCA)))
+                }
+                note(angle: 6, center: CGPoint(x: 195, y: 78)) { c in
+                    let faint = Color(red: 60 / 255, green: 48 / 255, blue: 0).opacity(0.45)
+                    c.fill(rect(140, 24, 110, 110, 13), with: .color(Color(hex: 0xFFD60A)))
+                    c.fill(rect(156, 44, 70, 8, 4), with: .color(Color(hex: 0x5C4A00)))
+                    c.fill(rect(156, 63, 78, 8, 4), with: .color(faint))
+                    c.fill(rect(156, 82, 48, 8, 4), with: .color(faint))
+                }
+            }
+            .frame(width: 300, height: 150)
+        }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(L10n.StickyNotes.heroDescription)
+        .accessibilityAddTraits(.isImage)
     }
 }

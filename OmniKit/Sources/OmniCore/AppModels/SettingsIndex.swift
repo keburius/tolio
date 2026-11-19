@@ -2,7 +2,7 @@ import Foundation
 
 /// A place in Settings a search result opens.
 public enum SettingsPage: Hashable, Sendable {
-    case overview, menuBar, shortcuts, permissions, general
+    case overview, menuBar, shortcuts, permissions, general, profile
     case feature(FeatureID)
 }
 

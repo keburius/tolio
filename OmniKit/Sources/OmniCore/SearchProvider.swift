@@ -1,6 +1,6 @@
 import Foundation
 
-/// A result a feature contributes to palette search (clipboard items, snippets…).
+/// A result a feature lists elsewhere in the app (recent copies in the control panel).
 public struct SearchResult: Identifiable, Sendable {
     public enum Icon: Sendable, Hashable {
         case symbol(String)
@@ -14,7 +14,7 @@ public struct SearchResult: Identifiable, Sendable {
     public let title: String
     public let subtitle: String?
     public let icon: Icon
-    /// Runs on ↩, after the palette has closed.
+    /// Runs when chosen, after the panel showing it has closed.
     public let primaryAction: @MainActor @Sendable () -> Void
     /// Runs on ⌘↩, if present.
     public let alternateAction: (@MainActor @Sendable () -> Void)?
@@ -33,12 +33,10 @@ public struct SearchResult: Identifiable, Sendable {
     }
 }
 
-/// Supplies dynamic results to the palette. Typing "<keyword> " in the
-/// palette shows only this provider's results; otherwise its best few
-/// matches are mixed into normal search.
+/// Supplies a feature's live results (the control panel's recent copies).
 @MainActor
 public protocol SearchProvider: AnyObject {
-    /// Prefix that scopes the palette to this provider, e.g. "clip".
+    /// Identifies the provider, e.g. "clip".
     var keyword: String { get }
     /// Section label, e.g. "Clipboard".
     var title: String { get }

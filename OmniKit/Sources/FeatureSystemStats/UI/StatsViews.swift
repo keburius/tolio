@@ -55,34 +55,80 @@ struct SystemStatsSettingsView: View {
     let settings: SettingsStore
 
     var body: some View {
-        Section(L10n.Stats.showInMenuBar) {
-            ForEach(StatItem.allCases, id: \.self) { item in
-                Toggle(item.title, isOn: Binding(
-                    get: { settings.value(SystemStatsFeature.itemsKey).contains(item) },
-                    set: { on in
-                        var items = settings.value(SystemStatsFeature.itemsKey)
-                        if on { items.insert(item) } else { items.remove(item) }
-                        settings.set(items, for: SystemStatsFeature.itemsKey)
-                        feature.refreshTitle()
+        VStack(alignment: .leading, spacing: 14) {
+            ASSection(L10n.Stats.showInMenuBar, footer: L10n.Stats.nothingSelectedHelp) {
+                ForEach(StatItem.allCases, id: \.self) { item in
+                    HStack(spacing: 12) {
+                        Text(item.title).font(AS.body).foregroundStyle(AS.text)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                        ASSwitch(item.title, isOn: binding(item))
                     }
-                ))
-                .settingsAnchor(StatsAnchor.item(item))
+                    .padding(.horizontal, 12)
+                    .frame(minHeight: 40)
+                    .settingsAnchor(StatsAnchor.item(item))
+                }
             }
-            Text(L10n.Stats.nothingSelectedHelp)
-                .font(.caption).foregroundStyle(.secondary)
-        }
-        Picker(L10n.Stats.refreshEvery, selection: Binding(
-            get: { settings.value(SystemStatsFeature.intervalKey) },
-            set: { settings.set($0, for: SystemStatsFeature.intervalKey); feature.restartTimer() }
-        )) {
-            ForEach([1, 2, 5], id: \.self) { seconds in
-                Text(L10n.Stats.seconds(seconds)).tag(Double(seconds))
+            ASSection(footer: L10n.Stats.refreshHelp) {
+                ASRow(L10n.Stats.refreshEvery) {
+                    ASPopUp(L10n.Stats.refreshEvery, selection: Binding(
+                        get: { settings.value(SystemStatsFeature.intervalKey) },
+                        set: { settings.set($0, for: SystemStatsFeature.intervalKey); feature.restartTimer() }
+                    ), options: [1, 2, 5].map { (Double($0), L10n.Stats.seconds($0)) })
+                }
+                .settingsAnchor(StatsAnchor.interval)
             }
         }
-        .settingsAnchor(StatsAnchor.interval)
-        Text(L10n.Stats.refreshHelp)
-            .font(.caption).foregroundStyle(.secondary)
-        Text(L10n.Stats.temperaturesHelp)
-            .font(.caption).foregroundStyle(.secondary)
+    }
+
+    private func binding(_ item: StatItem) -> Binding<Bool> {
+        Binding(
+            get: { settings.value(SystemStatsFeature.itemsKey).contains(item) },
+            set: { on in
+                var items = settings.value(SystemStatsFeature.itemsKey)
+                if on { items.insert(item) } else { items.remove(item) }
+                settings.set(items, for: SystemStatsFeature.itemsKey)
+                feature.refreshTitle()
+            }
+        )
+    }
+}
+
+/// The example under the header: numbers as they appear in the menu bar,
+/// over a small bar chart.
+struct SystemStatsHero: View {
+    private let green = Color(hex: 0x59D177)
+
+    var body: some View {
+        ASStage(tint: green) {
+            VStack(spacing: 14) {
+                HStack(spacing: 18) {
+                    reading(L10n.Stats.heroCPU, StatsFormat.percent(0.12))
+                    reading(L10n.Stats.heroMemory, StatsFormat.percent(0.61))
+                    reading(L10n.Stats.heroNetwork, "↓ " + StatsFormat.rate(1_200_000))
+                }
+                .padding(.horizontal, 16)
+                .frame(height: 30)
+                .background(RoundedRectangle(cornerRadius: 9, style: .continuous).fill(Color(hex: 0x15161B)))
+                .overlay(RoundedRectangle(cornerRadius: 9, style: .continuous).strokeBorder(.white.opacity(0.12), lineWidth: 1))
+                HStack(alignment: .bottom, spacing: 8) {
+                    ForEach(Array([26.0, 48, 36, 70, 44, 58].enumerated()), id: \.offset) { index, height in
+                        RoundedRectangle(cornerRadius: 5, style: .continuous)
+                            .fill(index == 3 ? green : .white.opacity(0.24))
+                            .frame(width: 16, height: height)
+                    }
+                }
+                .frame(height: 70, alignment: .bottom)
+            }
+        }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(L10n.Stats.heroLabel)
+        .accessibilityAddTraits(.isImage)
+    }
+
+    private func reading(_ label: String, _ value: String) -> some View {
+        HStack(alignment: .firstTextBaseline, spacing: 5) {
+            Text(label).font(.system(size: 11, weight: .semibold)).foregroundStyle(AS.textSecondary)
+            Text(value).font(.system(size: 13, weight: .semibold)).monospacedDigit().foregroundStyle(.white)
+        }
     }
 }

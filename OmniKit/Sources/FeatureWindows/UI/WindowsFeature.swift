@@ -24,7 +24,10 @@ public final class WindowsFeature: Feature {
     public let id: FeatureID = "windows"
     public var displayName: String { L10n.Windows.displayName }
     public var summary: String { L10n.Windows.summary }
+    public var tagline: String { L10n.Windows.tagline }
+    public var settingsViewEditsShortcuts: Bool { true }
     public let symbolName = "rectangle.split.2x1"
+    public let group: FeatureGroup = .windows
     public let requiredPermissions: Set<Permission> = [.accessibility]
     public var declaredHotkeys: [HotkeyAction] { Self.hotkeys }
 
@@ -72,6 +75,10 @@ public final class WindowsFeature: Feature {
     public func makeSettingsView() -> AnyView {
         guard let settings else { return AnyView(EmptyView()) }
         return AnyView(WindowsSettingsView(feature: self, settings: settings))
+    }
+
+    public func makeSettingsHero() -> AnyView? {
+        AnyView(WindowsHero())
     }
 
     /// Starts or stops the drag listener to match the setting.

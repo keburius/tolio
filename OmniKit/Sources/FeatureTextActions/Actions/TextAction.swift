@@ -13,7 +13,6 @@ public protocol TextActionContext {
     /// ⌘V of the current clipboard into the app.
     func pasteClipboard()
     func open(_ url: URL)
-    func openPalette(query: String)
     func showMessage(_ text: String, symbol: String)
     func translate(_ text: String, replaceable: Bool)
     var searchEngine: SearchEngine { get }
@@ -38,7 +37,7 @@ public extension TextAction {
 public enum TextActionCatalog {
     public static let builtIn: [any TextAction] = [
         CopyAction(), PasteAction(), OpenURLAction(), SearchWebAction(), TranslateAction(),
-        UppercaseAction(), LowercaseAction(), WordCountAction(), SendToPaletteAction(),
+        UppercaseAction(), LowercaseAction(), WordCountAction(),
     ]
 
     public static func available(for selection: TextSelection, enabled: Set<String>? = nil) -> [any TextAction] {
@@ -129,15 +128,3 @@ struct WordCountAction: TextAction {
     }
 }
 
-struct SendToPaletteAction: TextAction {
-    let id = "palette", symbolName = "command"
-    var title: String { L10n.TextActions.sendToLauncher }
-    /// The Launcher is a one-line field.
-    func isAvailable(for selection: TextSelection) -> Bool {
-        !selection.trimmed.isEmpty && selection.trimmed.count <= 500
-    }
-    func perform(_ selection: TextSelection, context: any TextActionContext) {
-        let oneLine = selection.trimmed.components(separatedBy: .newlines).joined(separator: " ")
-        context.openPalette(query: oneLine)
-    }
-}

@@ -966,3 +966,235 @@ Each phase has a **Done when** line, and nothing moves on until it's met. "You" 
 - **Download tracking (same day):**
   - All Download buttons go to `/download` (`website/download.html` + `download.js`). Vercel Web Analytics records that page view, so download clicks appear as **/download** with country, device and referrer. The page then starts the GitHub download after 0.7 s; without JS it redirects immediately via `<noscript>` meta refresh. It also shows the 3 install steps.
   - Actual downloads, including direct GitHub links: `make downloads` (`Scripts/downloads.py`, GitHub release download counts).
+
+## Feature groups and Launcher removal (2026-11-18, version 1.1.0)
+
+- **Why:** you asked to group the features under clear names and to drop the Launcher, which isn't useful anymore.
+- **Groups** (`OmniCore/FeatureGroup.swift`; each feature sets `group`, default `.extras`):
+  - Clipboard: Clipboard History, Snippets.
+  - Windows: Window Layouts, Window Switcher.
+  - Keyboard: Lock Keyboard.
+  - Capture: Screenshots & Recording, Capture Text (already one module, `FeatureScreenshots`).
+  - Energy: Energy Mode.
+  - Extras: Sticky Notes, cheat sheet, text actions, System Stats, Diagnostics (hidden).
+- **Where the groups show:**
+  - the Settings sidebar (one section per group)
+  - the Overview (a heading per group)
+  - the setup guide (welcome icons are the five main groups; the feature list is grouped)
+  - the README and the website (group nav chips, a header per group, Lock Keyboard, Energy Mode and Snippets now have their own showcase rows)
+- **Launcher removed:**
+  - the `FeaturePalette` module and its tests (moved to the Trash)
+  - `tolio://palette`
+  - "Send to Launcher" text action
+  - "Insert Snippet" and "Switch to Window…" commands and their search providers
+  - `openPalette` / `paletteHandler` in OmniCore
+  - The live demo drops the Launcher scene; the six scenes follow the group order.
+  - The control panel still uses the command registry (layouts) and the clipboard search provider (recent copies).
+- **Network:** Tolio now makes **no network requests at all**. The currency fetch was the only one. The security rule "nothing leaves the machine except the currency rate fetch" now simply means nothing leaves the machine.
+- **Cleanup on launch** (`AppDelegate.removeLauncherLeftovers`):
+  - removes `palette` from the wanted features and the `feature.palette.*` settings
+  - moves `currency-rates.json` and `currency-rates-nbg.json` to the Trash, logged
+- The Cheatsheet, Stats and Diagnostics strings that lived in `L10n+Launcher.swift` moved to `L10n+Extras.swift`.
+- Version 1.1.0 (build 2). Not released yet.
+
+## Illustrated Settings (2026-11-18)
+
+- **Group colors** (`App/Settings/FeatureArt.swift`): Clipboard blue, Windows violet, Keyboard orange, Capture pink, Energy amber, Extras teal.
+- **Icon tiles:** System Settings style, used in the sidebar for the pages and every feature. A feature that's off has a gray tile.
+- **Overview:**
+  - a welcome row: app icon, "N of M features on" with a bar, "Everything stays on this Mac"
+  - a colored header per group with "x of y on"
+  - cards with:
+    - a drawn illustration of the feature (gray when off)
+    - the switch
+    - its shortcut as separate keycaps
+    - status
+    - a hover highlight
+- **Feature pages:** start with the same illustration, the group name, keycaps and the switch.
+- Settings opens at 1000 × 720 with a wider sidebar.
+- `tolio://settings/<feature id>` opens a feature's page.
+- Energy Mode's icon is now a bolt (menu bar, control panel, notice).
+- Screenshots' description no longer mentions copying text from images; that's Capture Text.
+
+## Drop Ring (2026-11-18)
+
+- **Why:** you asked for something that works like Outpost (offloader.io/outpost): a radial drag-and-drop launcher. It has Tolio's own look and name.
+- **Module and group:** `FeatureDropRing`, in the new **Files** group (cyan).
+- **Opening it:**
+  - ⌃⌥⌘D
+  - shaking the pointer: listen-only `NSEvent` monitors, no permission; by default only while dragging, with adjustable sensitivity
+  - `tolio://dropring`
+- **The ring:**
+  - a full-screen, see-through non-activating panel
+  - the circles spring out around the pointer and stay on screen
+  - the middle label says what a drop will do
+  - Esc or a click on empty space closes it
+- **Circles:**
+  - **Folder:** copy or move. `FileTransfer` never overwrites ("Report 2.pdf"), skips moving into the same folder and refuses a folder into itself.
+  - **App:** open with.
+  - **Person:** `NSSharingService` compose for Messages or Mail. You press Send yourself.
+  - **Shortcut:** `/usr/bin/shortcuts run --input-path`.
+  - **Cargo:** a floating shelf. It keeps references only, and you drag everything out with one multi-item drag.
+  - **Trash:** `trashItem`, logged.
+  - Clicking a circle opens it.
+- **New users start with** Desktop, Downloads, Documents (copy), Cargo and Trash.
+- **Settings:**
+  - add, reorder and remove circles
+  - copy or move per folder
+  - shake on/off, "only while dragging" and sensitivity
+  - circle size, glass or solid look
+- **Not built:**
+  - **Market Watch:** live stock prices need the internet, and your rule is that nothing leaves the Mac.
+  - **Contacts photos:** people are typed in by name and phone or email, so no Contacts permission is needed.
+- **Tests:** 13 new (layout, file transfer, shake detection, items).
+- **Not yet checked on screen:** the Mac was locked when it was built.
+- **Share windows (same day, your request):** dropping on an app now picks the right way to hand over the files.
+  - **Apps with a macOS Share extension** (Messages, Mail, AirDrop, Notes, Telegram once its extension is on) open that app's share window with the files attached. The window has the "To:" field and Cancel / Send; nothing is sent until you press Send.
+  - **Chat apps without one** (Slack and WhatsApp on this Mac; detected by the Social Networking category or a short list of known work chat apps) get the files copied, the app brought forward, and a notice "Copied. Press ⌘V in a … chat to send."
+  - **Other apps** open the files.
+  - The ring's label says which of these will happen: "Share with", "Send with" or "Open with".
+  - `ShareServices` calls `sharingServicesForItems:` by selector. The Swift API is deprecated in favour of a picker menu, and a menu would add a step.
+  - 2 new tests for matching app names to share services.
+
+## Desk Minder (2026-11-18)
+
+- **What:** `FeatureDeskMinder`, in Extras. ⌃⌥⌘E (`tolio://reminder`) shows a glass bar above the Dock: [×] [⏱ 1 min · 3:11 PM | Reminder… ↑ |||].
+- **Setting the time:**
+  - Stretch the grip to the right. `StretchScale`: 1–30 min by 1, then by 5 to 2 h, then by 15 to 8 h; a time bubble floats above while you drag.
+  - Or type a time. `MinderTimeParser` takes 18:30, 18:, 6pm, 6:30 pm, 20m, 1h30 or 90; a past time means tomorrow.
+  - Return adds the reminder. A bad time turns the bar red.
+- **When it's due:**
+  - a full-screen blurred panel (screen-saver level) shows REMINDER, the title, **Close** (Return or Esc) and **Snooze Reminder** (click for the default, or pick 5/10/15/30/60 min)
+  - it plays the Glass sound
+  - reminders already due at launch or after waking show right away
+- **Saved in settings,** so reminders survive restarts. The Settings page lists upcoming ones with remove buttons.
+- **Apple Reminders** (on by default, asks permission):
+  - EventKit adds an `EKReminder` with due date and alarm to the default list
+  - Close ticks it off, Snooze moves it, Remove deletes it
+  - iCloud carries it to iPhone, iPad and Watch
+  - Tolio itself still makes no network requests
+  - Info.plist has `NSRemindersFullAccessUsageDescription`
+  - entitlement `com.apple.security.personal-information.calendars` (hardened runtime)
+  - With syncing on, the Mac's Reminders app may also show its own notification at the same time.
+- **Option:** "Keep the bar above the Dock". Clear parts of its window let clicks through.
+- **Tests:** 8 (stretch scale, time parsing, storage).
+- **Checked on screen:** captured the bar window and a test alert. The test reminder was removed afterwards.
+- **Not yet checked:** a real stretch drag and the Reminders permission prompt, which need your mouse.
+- **Bar polish (same day, your request):**
+  - **Liquid Glass:** `glassEffect(.regular.interactive())` on macOS 26 and later, with the wallpaper showing through and a reaction when clicked. Older macOS gets frosted material with a light rim.
+  - **Compact bar:** [× ] [⏱ 1 min · 3:30 PM |||]. Clicking it opens the editor [⏱ time | Reminder… ↑], with a press-shrink animation and a haptic. Esc goes back to compact.
+  - **Smoother stretching:**
+    - the bar follows the pointer with an interactive spring and resists like rubber past either end
+    - its long edges pinch in toward the middle with pull speed and length (`StretchPill`), then bounce back on release
+    - the minutes and time roll (numeric text transition)
+  - **Each minute step:** an alignment haptic on Force Touch trackpads, plus a quiet "Tink" no closer than 35 ms apart. Settings switch: "Tick sound while stretching".
+- **Stretch fixes (same day, your request):**
+  - **Grab anywhere:** the whole bar is one gesture. A click without moving opens the editor; a pull stretches. The hosting view accepts the first click, so it works even when Tolio isn't the active app.
+  - **Grows from the center:** the bar's window is as wide as the screen and the pill sits centered, so both ends move equally (the pill grows by twice the pull). Grabbing the left half and pulling left grows it too. The × sits just left of the pill, and the time bubble is centered above it.
+  - **Pinched middle:** while you hold, the middle narrows (at least 35%, more with length and speed, 22% of the height at most), then bounces back on release.
+- **Stretch rebuilt from the reference video** (`~/Desktop/screenshot/Screen Recording 2026-11-18 at 15.34.34.mp4`, the original app's demo):
+  - **Jitter fix:** the drag was measured inside the bar, which moves as it grows from the middle, so it fought the pointer. It's now measured on screen (`coordinateSpace: .global`), and the side you grabbed is found from the bar's on-screen center.
+  - **Trails the pointer:** the bar follows on a soft spring (response 0.3, damping 0.78), as in the demo, and settles with a bounce when you let go.
+  - **Bend:** subtle, at most 10% of the height, deeper when long.
+  - **Glass:** the stretching bar uses plain Liquid Glass; "interactive" glass wobbled against the pull. Buttons keep interactive glass.
+  - **Look:** slimmer (46 pt), smaller text, and a dial icon whose hand turns with the minutes. The due time shows from 10 minutes up.
+  - **After adding:** the bar folds into [+] [①]. "+" starts a new reminder; the count opens the list in Settings. Without "Keep the bar", it hides 1.6 s later.
+- **Bigger click targets (same day, your request):** the name field was tiny (only its line of text took clicks), and clicks fell through to the desktop.
+  - The whole area from the divider to ↑, full height, now focuses the name, with an I-beam cursor. The whole time box focuses the time.
+  - Any click on the bar makes its window key first.
+  - Every glass shape has a nearly invisible fill underneath. Liquid Glass is drawn outside the window's own pixels, so without it the window server could treat those areas as see-through.
+- **Sync permission fix (same day):** syncing used to do nothing until you pressed "Allow Access to Reminders…" in Settings. Now the first reminder you add (with sync on) asks for access. Once you allow it, that same reminder is added to Apple Reminders right away (`attachSyncedCopy`).
+
+## Notch Island (2026-11-18)
+
+- **Why:** you asked for an Alcove-style Dynamic Island (tryalcove.com, plus your demo video `Screen Recording 2026-11-18 at 15.52.28.mp4`). It's named **Notch Island**, with its own **Island** group.
+- **Module:** `FeatureIsland`. It's a borderless panel above the menu bar on the notched screen; clear parts let clicks through, and only the black shape reacts. A setting adds a virtual notch on screens without one.
+- **States:**
+  - **closed:** the notch. Wings appear beside it for music (artwork, bouncing sound bars) or for a live activity.
+  - **notice:** a line under the wings for 3.5 s, used for charging, on battery, and Bluetooth connect/disconnect.
+  - **volume:** speaker icon, level and a bar, when the volume changes (CoreAudio listener).
+  - **open:**
+    - opens on hover (220 ms), a click, ⌃⌥⌘I or `tolio://island`
+    - spring animation, haptic
+    - page icons on the left, settings gear on the right, page dots
+    - swipe sideways with two fingers to change pages
+- **Pages:**
+  - **Now Playing** (Music and Spotify):
+    - track changes come from the apps' own broadcasts, no permission needed
+    - position, artwork (Music only), shuffle and controls use Apple Events, run on a background queue so a pending "allow control" prompt or a slow app can't freeze Tolio, and never launch a player
+    - progress bar with drag to seek; shuffle, back, play/pause, forward; macOS's audio output picker (AirPlay)
+  - **Calendar:** EventKit, today and tomorrow, asks once.
+- **Live activities** (new `OmniCore/LiveActivity.swift`, `LiveActivityCenter.shared`, highest priority then newest; expiring notices):
+  - screen recording: red pulsing dot plus elapsed time
+  - next Desk Minder reminder within 3 h: countdown
+  - low battery
+  - charging and Bluetooth notices
+- **Info.plist:** usage text for Calendars, Apple Events and Bluetooth. **Entitlement:** `com.apple.security.automation.apple-events`.
+- **Not built:**
+  - **Lock screen widgets:** needs private window-server APIs, which Alcove itself relies on.
+  - **Focus/Do Not Disturb state:** no public API.
+  - **Spotify artwork:** would need downloading.
+  - **Replacing the system volume HUD:** would need intercepting the volume keys; the notch shows alongside it.
+- **Crash fixed while testing:** IOBluetooth calls back on a background queue. The callbacks are now `nonisolated` and hop to main.
+- **Checked on screen:**
+  - the open island showed a playing Spotify track (title, artist, live progress, sound bars)
+  - after the fix, the island opens and closes
+- **Not yet checked by hand:** swiping pages, the calendar permission prompt, charging and AirPods notices, the volume HUD.
+- **Tests:** 9 (notch geometry, live-activity priority and expiry, broadcast parsing, Bluetooth icons).
+- **Compact and animated pass (same day, your request):**
+  - **Smaller:** the open island went from 480×232 to 400×170. The invisible wing row above the open content was removed, which saved a whole notch-height. Wings are 50 pt instead of 74; the artwork, text and buttons are smaller.
+  - **Animations:**
+    - a bouncier spring (damping 0.66)
+    - open content comes in with scale, fade and a soft blur
+    - wings slide out from behind the notch
+    - the artwork breathes while playing and shrinks when paused
+    - a new song slides in from below
+    - play/pause swaps its symbol with a down-up effect
+    - buttons press with a bounce
+    - notice icons bounce
+    - a floating gradient music note shows when nothing is playing
+  - **Music icon:**
+    - wings stay while a song is paused (pause icon instead of the sound bars)
+    - the Spotify or Music app icon sits as a badge on the artwork (wing and open page)
+    - hovering an empty notch shows a ♪ and ⌄ hint
+- **Spacing pass (same day, your request):**
+  - **Music:** even vertical rhythm (12 / 8). Back, play and forward are grouped in the middle; shuffle and audio output sit at the ends, lined up with the progress bar edges. Both time labels are the same width. The page dots were removed (the icons at the top show the page), and the buttons get 14 pt of breathing room at the bottom.
+  - **Calendar:** a date block (weekday, big day, month) with a thin divider before the Today and Tomorrow columns. Event rows are centered on their color bar and show the start time; "+N more" appears when there are more than two.
+  - **Fix:** a song that's paused when Tolio starts now shows too (the wings with a pause icon), not only one that's playing.
+
+## Notch Island, NotchNook-level rebuild (2026-11-19)
+
+- **Why:** you asked to rebuild Notch Island to match NotchNook (getnotchnook.com/#tour), feature by feature. The features follow NotchNook's, but the design and names are Tolio's own.
+- **Pages** (the tabs sit beside the notch; swipe sideways between them):
+  - **Nook:** the music card (96 pt artwork that breathes, glows in its own color, Spotify/Music badge, scrolling title, sound bars in the artwork's color, seek bar that grows on hover, shuffle and AirPlay). Beside it, a calendar card: a 7-day strip (dots on busy days, today in red), the chosen day's events with "in 12 min" or "now", a **Join** button for Zoom, Meet, Teams, Webex and FaceTime links, and a double-click to open Calendar. The camera button in the band swaps the music card for a **Mirror** (AVCapture, flipped, runs only while it's showing).
+  - **Tray:** files are kept as bookmarks (no copies) in `Application Support/…/Island/tray.json`. There's an AirDrop zone (drop files or click it) and a file area with QuickLook thumbnails. You can drag one file or all of them out, click to select, double-click to open, or right-click for Open, Show in Finder, Copy Path, AirDrop, Share and Remove. Dropped text and images become files in `Island/Dropped`, which are deleted when removed.
+  - **Widgets:** a 4-column grid with more pages and dots. The widgets are:
+    - Timer: a scroll wheel with a haptic tick per step, several timers at once, and Pomodoro (focus, then a break, with a long break every fourth round)
+    - To-dos
+    - Note
+    - Quick Actions: Wi-Fi via CoreWLAN, Dark Mode via System Events, and Tolio's own Keep Awake, screenshot and sticky note commands, plus display sleep
+    - Shortcuts: pin favourites, run with `/usr/bin/shortcuts`
+    - Stats: CPU with a sparkline, and memory
+    Edit the layout from `+` in the band, the right-click menu, or Settings (checkboxes and up/down).
+- **Opening:** opens on hover (the delay is a setting), a click, a two-finger swipe down, ⌃⌥⌘I, or the commands *Open Notch Tray / Widgets / Mirror*. It closes on a swipe up or when the pointer leaves. While you type in a to-do or note it stays open until you click elsewhere.
+- **Dragging files** anywhere near the notch opens the Tray. A global and local `leftMouseDragged` monitor checks the drag pasteboard for file URLs.
+- **Closed notch:** a two-finger swipe left or right skips songs, with a small nudge and a haptic.
+- **Live activities** in the wings:
+  - timers (soonest countdown)
+  - the next meeting within 10 minutes
+  - downloads (watches `~/Downloads` for `.crdownload`/`.download`/`.part`; off by default because macOS asks for Downloads access), with a "Downloaded …" notice
+  - the existing charging, AirPods, recording, reminders and volume
+- **Look and displays:** Black or Glass (`glassEffect` on macOS 26+, material before). Screens without a notch use a notch shape or a small handle. An option puts an island on every display, each with its own state.
+- **Info.plist/entitlements:** camera usage text and `com.apple.security.device.camera`; Downloads usage text; the Apple Events text now mentions System Events.
+- **Tests:** 22 in FeatureIslandTests, covering widget layout and paging, timers and Pomodoro, swipe reading, partial downloads, meeting pick, call links, to-do order, and Tray add, dedupe, reload, prune and remove.
+- **Not built:**
+  - lyrics (needs an online lyrics service)
+  - weather (network and location; Tolio keeps everything on the Mac)
+  - a clipboard shelf in the notch (Clipboard History already does this)
+  - teleprompter
+  - AI agent approvals
+  - replacing the system volume/brightness HUD (would need intercepting media keys)
+  - AirPods battery level (private API)
+  - "any app" Now Playing (MediaRemote is closed to third-party apps since macOS 15.4)
+- **Not yet checked by hand:** everything on screen. Screenshots from this session came back black, so the layout, hover, drag-to-Tray, AirDrop, mirror and widgets still need a look.
+- **Spotify cover art (same day, your request):** shows the real album cover instead of the Spotify icon. Spotify reports the cover's `artwork url` over Apple Events, and Tolio downloads it, but only from https Spotify image servers (`*.scdn.co`, `*.spotifycdn.com`). Recent covers are cached, and a slow download can't put an old cover on a newer song. If anything fails, the Spotify icon shows as before.

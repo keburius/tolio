@@ -13,7 +13,7 @@ public extension ClipboardHistoryFeature {
             SettingsEntry(anchor: Anchor.keepUpTo, label: L10n.Clipboard.keepUpTo, keywords: ["limit", "maximum", "size", "items"]),
             SettingsEntry(anchor: Anchor.maxAge, label: L10n.Clipboard.deleteOlderThan, keywords: ["retention", "age", "expire", "days"]),
             SettingsEntry(anchor: Anchor.excludedApps, label: L10n.Clipboard.neverRecordFrom, keywords: ["exclude", "ignore", "privacy", "password"]),
-            SettingsEntry(anchor: Anchor.history, label: L10n.Clipboard.history, keywords: ["search", "browse", "pin", "items"]),
+            SettingsEntry(anchor: Anchor.history, label: L10n.Clipboard.copiedItems, keywords: ["search", "browse", "pin", "items"]),
             SettingsEntry(anchor: Anchor.clear, label: L10n.Clipboard.clearHistory, keywords: ["delete", "wipe", "remove", "erase"]),
         ]
     }
@@ -68,7 +68,7 @@ extension ClipboardHistoryFeature {
     /// Characters of an item's title shown in the menu.
     static let menuTitleLength = 40
 
-    /// Pastes into the frontmost app: what the Launcher, the control panel
+    /// Pastes into the frontmost app: what the control panel
     /// and the menu bar menu run for an item.
     func pasteAction(for record: ClipRecord) -> @MainActor @Sendable () -> Void {
         { [weak self] in self?.paste(record) }

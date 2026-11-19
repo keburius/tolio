@@ -28,7 +28,7 @@ enum ClipboardPaster {
     }
 
     /// Copies, then sends ⌘V to the frontmost app if Accessibility allows.
-    /// The palette has just closed, so wait a moment for focus to settle.
+    /// The menu or panel has just closed, so wait a moment for focus to settle.
     static func paste(_ record: ClipRecord, store: ClipboardStore, canPostKeys: Bool) {
         guard copy(record, store: store) else {
             HUD.show(L10n.Clipboard.itemGone, symbol: "exclamationmark.triangle")

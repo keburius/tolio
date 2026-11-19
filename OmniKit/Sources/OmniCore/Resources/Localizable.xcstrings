@@ -12,13 +12,1433 @@
         }
       }
     },
+    "allset.appName": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "All Set"
+          }
+        }
+      }
+    },
+    "allset.feature.changeShortcut": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@: change shortcut"
+          }
+        }
+      }
+    },
+    "allset.feature.shortcuts": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shortcuts"
+          }
+        }
+      }
+    },
+    "allset.feature.turnOnToChange": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Turn it on to change its settings."
+          }
+        }
+      }
+    },
+    "allset.general.about": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "About"
+          }
+        }
+      }
+    },
+    "allset.general.feel": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Feel"
+          }
+        }
+      }
+    },
+    "allset.general.haptics": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Haptic taps"
+          }
+        }
+      }
+    },
+    "allset.general.hapticsDetail": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A light tap on the trackpad when you stretch, open or change pages."
+          }
+        }
+      }
+    },
+    "allset.general.openAtLogin": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open All Set at login"
+          }
+        }
+      }
+    },
+    "allset.general.setupGuide": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Setup guide"
+          }
+        }
+      }
+    },
+    "allset.general.setupGuideDetail": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose features and grant permissions again."
+          }
+        }
+      }
+    },
+    "allset.general.startup": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Startup"
+          }
+        }
+      }
+    },
+    "allset.general.ticks": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tick sounds"
+          }
+        }
+      }
+    },
+    "allset.general.ticksDetail": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Soft ticks to go with the taps."
+          }
+        }
+      }
+    },
+    "allset.menuBar.dragToReorder": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Drag to reorder"
+          }
+        }
+      }
+    },
+    "allset.menuBar.separate": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Separate icons"
+          }
+        }
+      }
+    },
+    "allset.menuBar.separateDetail": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "One click for each quick action."
+          }
+        }
+      }
+    },
+    "allset.menuBar.single": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "One icon only"
+          }
+        }
+      }
+    },
+    "allset.menuBar.singleDetail": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Everything is in the control panel."
+          }
+        }
+      }
+    },
+    "allset.menuBar.statsNote": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "System Stats has its own menu bar item. With one icon only, its numbers move into the control panel."
+          }
+        }
+      }
+    },
+    "allset.onboarding.done.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "All Set lives in your menu bar. Try these first:"
+          }
+        }
+      }
+    },
+    "allset.onboarding.done.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You're all set."
+          }
+        }
+      }
+    },
+    "allset.onboarding.features.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Start with the recommended set. Anything off does nothing in the background, and you can change this any time."
+          }
+        }
+      }
+    },
+    "allset.onboarding.features.custom": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Let me choose"
+          }
+        }
+      }
+    },
+    "allset.onboarding.features.preset": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Preset"
+          }
+        }
+      }
+    },
+    "allset.onboarding.features.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Turn on what you need"
+          }
+        }
+      }
+    },
+    "allset.onboarding.permissions.accessibility": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lets All Set move windows, read menus and selected text, and listen for shortcuts."
+          }
+        }
+      }
+    },
+    "allset.onboarding.permissions.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "macOS asks before All Set can do these. Each one opens System Settings; flip the switch there and come back."
+          }
+        }
+      }
+    },
+    "allset.onboarding.permissions.footnote": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "All Set never connects to the internet. You can change these later in Permissions."
+          }
+        }
+      }
+    },
+    "allset.onboarding.permissions.microphone": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Only for screen recordings with your voice."
+          }
+        }
+      }
+    },
+    "allset.onboarding.permissions.none": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The features you chose don't need any permissions."
+          }
+        }
+      }
+    },
+    "allset.onboarding.permissions.reopen": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reopen All Set"
+          }
+        }
+      }
+    },
+    "allset.onboarding.permissions.reopenNote": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Switched it on but it still needs permission? Some permissions start working after All Set reopens."
+          }
+        }
+      }
+    },
+    "allset.onboarding.permissions.requiredFor": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Required for %@"
+          }
+        }
+      }
+    },
+    "allset.onboarding.permissions.screenRecording": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lets All Set take screenshots, record your screen, and show window previews."
+          }
+        }
+      }
+    },
+    "allset.onboarding.step": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Step %lld of %lld"
+          }
+        }
+      }
+    },
+    "allset.onboarding.welcome.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Everyday tools for your clipboard, windows, screenshots and shortcuts, in one menu bar app."
+          }
+        }
+      }
+    },
+    "allset.onboarding.welcome.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Welcome to All Set"
+          }
+        }
+      }
+    },
+    "allset.onboarding.windowTitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Welcome to All Set"
+          }
+        }
+      }
+    },
+    "allset.overview.about": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "About All Set"
+          }
+        }
+      }
+    },
+    "allset.overview.aboutBody": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The shortcuts your Mac is missing, in one small menu bar app. Turn on what you need. Everything stays on this Mac."
+          }
+        }
+      }
+    },
+    "allset.overview.moreFeatures": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "More features"
+          }
+        }
+      }
+    },
+    "allset.overview.mostLoved": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Most loved"
+          }
+        }
+      }
+    },
+    "allset.overview.nextSlide": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Next slide"
+          }
+        }
+      }
+    },
+    "allset.overview.onCount": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld of %lld on"
+          }
+        }
+      }
+    },
+    "allset.overview.previousSlide": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Previous slide"
+          }
+        }
+      }
+    },
+    "allset.overview.slide.clipboard": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copy once, paste any time"
+          }
+        }
+      }
+    },
+    "allset.overview.slide.clipboardBody": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Press %@ to bring back anything you copied: text, links and pictures."
+          }
+        }
+      }
+    },
+    "allset.overview.slide.dropRing": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Send a file in one move"
+          }
+        }
+      }
+    },
+    "allset.overview.slide.dropRingBody": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shake the pointer while you drag, then drop the file on a folder, an app or a person."
+          }
+        }
+      }
+    },
+    "allset.overview.slide.minder": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Remember the next thing"
+          }
+        }
+      }
+    },
+    "allset.overview.slide.minderBody": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stretch the bar above the Dock to set a reminder. It reaches your iPhone too."
+          }
+        }
+      }
+    },
+    "allset.overview.slide.screenshot": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show it instead of explaining it"
+          }
+        }
+      }
+    },
+    "allset.overview.slide.screenshotBody": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Press %@, pick an area and mark it up. It copies itself after 3 seconds."
+          }
+        }
+      }
+    },
+    "allset.overview.slideNumber": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Slide %lld of %lld"
+          }
+        }
+      }
+    },
+    "allset.page.profile": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Profile"
+          }
+        }
+      }
+    },
+    "allset.panel.captureText": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Capture Text"
+          }
+        }
+      }
+    },
+    "allset.panel.cheatSheet": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shortcut Cheat Sheet"
+          }
+        }
+      }
+    },
+    "allset.panel.clipboard": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Clipboard"
+          }
+        }
+      }
+    },
+    "allset.panel.dropRing": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Drop Ring"
+          }
+        }
+      }
+    },
+    "allset.panel.energyMode": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Energy Mode"
+          }
+        }
+      }
+    },
+    "allset.panel.featureOff": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ is off."
+          }
+        }
+      }
+    },
+    "allset.panel.island": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Island"
+          }
+        }
+      }
+    },
+    "allset.panel.layouts": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Layouts"
+          }
+        }
+      }
+    },
+    "allset.panel.lockKeys": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lock keys"
+          }
+        }
+      }
+    },
+    "allset.panel.more": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "More"
+          }
+        }
+      }
+    },
+    "allset.panel.newNote": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "New Desktop Note"
+          }
+        }
+      }
+    },
+    "allset.panel.nextReminder": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Next reminder at %@"
+          }
+        }
+      }
+    },
+    "allset.panel.off": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Off"
+          }
+        }
+      }
+    },
+    "allset.panel.on": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "On"
+          }
+        }
+      }
+    },
+    "allset.panel.quit": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quit All Set"
+          }
+        }
+      }
+    },
+    "allset.panel.record": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Record"
+          }
+        }
+      }
+    },
+    "allset.panel.reminder": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reminder"
+          }
+        }
+      }
+    },
+    "allset.panel.runningNow": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Running now"
+          }
+        }
+      }
+    },
+    "allset.panel.screenshot": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Screenshot"
+          }
+        }
+      }
+    },
+    "allset.panel.settings": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Settings…"
+          }
+        }
+      }
+    },
+    "allset.panel.snooze": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Snooze"
+          }
+        }
+      }
+    },
+    "allset.panel.stayingAwake": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Staying awake"
+          }
+        }
+      }
+    },
+    "allset.panel.stop": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stop %@"
+          }
+        }
+      }
+    },
+    "allset.panel.turnOn": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Turn On"
+          }
+        }
+      }
+    },
+    "allset.permissions.accessibilityUse": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Moves windows, locks the keyboard and listens for shortcuts."
+          }
+        }
+      }
+    },
+    "allset.permissions.allow": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Allow…"
+          }
+        }
+      }
+    },
+    "allset.permissions.allowed": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Allowed"
+          }
+        }
+      }
+    },
+    "allset.permissions.bluetooth": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bluetooth"
+          }
+        }
+      }
+    },
+    "allset.permissions.bluetoothUse": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shows AirPods and other devices when they connect."
+          }
+        }
+      }
+    },
+    "allset.permissions.calendars": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Calendars"
+          }
+        }
+      }
+    },
+    "allset.permissions.calendarsUse": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shows today's and tomorrow's events in the Notch Island."
+          }
+        }
+      }
+    },
+    "allset.permissions.firstUse": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Asked when you first use it"
+          }
+        }
+      }
+    },
+    "allset.permissions.footnote": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "To change one later, open System Settings, then Privacy & Security."
+          }
+        }
+      }
+    },
+    "allset.permissions.intro": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "All Set asks only for what a feature needs. Turn a feature off and it stops using its permission."
+          }
+        }
+      }
+    },
+    "allset.permissions.microphoneUse": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Only while you record the screen with your voice."
+          }
+        }
+      }
+    },
+    "allset.permissions.music": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Music and Spotify"
+          }
+        }
+      }
+    },
+    "allset.permissions.musicUse": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shows what's playing, with its artwork and controls."
+          }
+        }
+      }
+    },
+    "allset.permissions.needs": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Needs permission"
+          }
+        }
+      }
+    },
+    "allset.permissions.neverConnects": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "All Set never connects to the internet. Everything stays on this Mac."
+          }
+        }
+      }
+    },
+    "allset.permissions.notAsked": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not asked yet"
+          }
+        }
+      }
+    },
+    "allset.permissions.openSystemSettings": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open System Settings…"
+          }
+        }
+      }
+    },
+    "allset.permissions.optional": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Optional"
+          }
+        }
+      }
+    },
+    "allset.permissions.reminders": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reminders"
+          }
+        }
+      }
+    },
+    "allset.permissions.remindersUse": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sends Desk Minder reminders to your iPhone."
+          }
+        }
+      }
+    },
+    "allset.permissions.required": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Required"
+          }
+        }
+      }
+    },
+    "allset.permissions.screenRecordingUse": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "For screenshots, recordings, Capture Text and window previews."
+          }
+        }
+      }
+    },
+    "allset.profile.activate": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Activate"
+          }
+        }
+      }
+    },
+    "allset.profile.free": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Free"
+          }
+        }
+      }
+    },
+    "allset.profile.github": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "View on GitHub"
+          }
+        }
+      }
+    },
+    "allset.profile.haveLicense": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Already have a license?"
+          }
+        }
+      }
+    },
+    "allset.profile.haveLicenseDetail": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bring Pro back on this Mac."
+          }
+        }
+      }
+    },
+    "allset.profile.invalid": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "That doesn't look like a license key. Keys look like XXXX-XXXX-XXXX-XXXX."
+          }
+        }
+      }
+    },
+    "allset.profile.license": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "License"
+          }
+        }
+      }
+    },
+    "allset.profile.licenseKey": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "License key"
+          }
+        }
+      }
+    },
+    "allset.profile.noAccount": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No account needed. Your plan and license live on this Mac."
+          }
+        }
+      }
+    },
+    "allset.profile.noTracking": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No account. No tracking. Your license is checked on your Mac, offline."
+          }
+        }
+      }
+    },
+    "allset.profile.notAvailable": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "License activation isn't available in this version yet."
+          }
+        }
+      }
+    },
+    "allset.profile.openSource": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open source"
+          }
+        }
+      }
+    },
+    "allset.profile.openSourceDetail": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The free app is MIT-licensed on GitHub."
+          }
+        }
+      }
+    },
+    "allset.profile.pro": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "All Set Pro"
+          }
+        }
+      }
+    },
+    "allset.profile.proPrice": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "$14.99 a year, about $1.25 a month. 3 Macs per license."
+          }
+        }
+      }
+    },
+    "allset.profile.restore": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Restore…"
+          }
+        }
+      }
+    },
+    "allset.profile.startTrial": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Start 14-day trial"
+          }
+        }
+      }
+    },
+    "allset.profile.trial": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pro trial"
+          }
+        }
+      }
+    },
+    "allset.profile.trialDaysLeft": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld day left in your trial"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld days left in your trial"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "allset.profile.trialDetail": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No card needed. Stop anytime and keep the Pro version you have."
+          }
+        }
+      }
+    },
+    "allset.profile.trialTitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "14-day free trial"
+          }
+        }
+      }
+    },
+    "allset.shortcuts.change": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Change shortcut for %@"
+          }
+        }
+      }
+    },
+    "allset.shortcuts.controlPanel": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Control Panel"
+          }
+        }
+      }
+    },
+    "allset.shortcuts.intro": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Click a shortcut, then press the new keys."
+          }
+        }
+      }
+    },
+    "allset.sidebar.features": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Features"
+          }
+        }
+      }
+    },
+    "allset.sidebar.search": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Search"
+          }
+        }
+      }
+    },
     "app.about": {
       "extractionState": "manual",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "About Tolio"
+            "value": "About All Set"
           }
         }
       }
@@ -139,7 +1559,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Tolio"
+            "value": "All Set"
           }
         }
       }
@@ -172,7 +1592,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Quit Tolio"
+            "value": "Quit All Set"
           }
         }
       }
@@ -205,7 +1625,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Tolio Settings"
+            "value": "All Set Settings"
           }
         }
       }
@@ -227,7 +1647,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Tolio Setup Guide"
+            "value": "All Set Setup Guide"
           }
         }
       }
@@ -239,6 +1659,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Stop recording"
+          }
+        }
+      }
+    },
+    "capturetext.hero": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Example: a frame around some text on screen, with the first line picked up and copied"
           }
         }
       }
@@ -305,6 +1736,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "%@ %@ hold"
+          }
+        }
+      }
+    },
+    "cheatsheet.hero": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Example: a sheet listing an app's menu shortcuts"
           }
         }
       }
@@ -392,7 +1834,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Tolio can't detect key presses right now. Check that Tolio is allowed under Accessibility in System Settings."
+            "value": "All Set can't detect key presses right now. Check that All Set is allowed under Accessibility in System Settings."
           }
         }
       }
@@ -403,7 +1845,18 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Show items that are unavailable right now (dimmed)"
+            "value": "Show items that are unavailable right now"
+          }
+        }
+      }
+    },
+    "cheatsheet.settings.includeDisabledNote": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "They appear dimmed."
           }
         }
       }
@@ -425,7 +1878,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Press the key twice and keep holding it; the cheat sheet stays open while you hold. Click an item to run it. Opened with its shortcut (⌃⌥⌘/ by default) or from the Launcher, it stays open with a filter field until you press Esc."
+            "value": "Press the key twice and keep holding it; the cheat sheet stays open while you hold. Click an item to run it. Opened with its shortcut, it stays open with a filter field until you press Esc."
           }
         }
       }
@@ -502,7 +1955,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Off (use the shortcut or the Launcher)"
+            "value": "Off (use the shortcut)"
           }
         }
       }
@@ -636,6 +2089,204 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "clipboard.hero.app.mail": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mail"
+          }
+        }
+      }
+    },
+    "clipboard.hero.app.messages": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Messages"
+          }
+        }
+      }
+    },
+    "clipboard.hero.app.notes": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Notes"
+          }
+        }
+      }
+    },
+    "clipboard.hero.app.preview": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Preview"
+          }
+        }
+      }
+    },
+    "clipboard.hero.app.safari": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Safari"
+          }
+        }
+      }
+    },
+    "clipboard.hero.app.screenshot": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Screenshot"
+          }
+        }
+      }
+    },
+    "clipboard.hero.app.terminal": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Terminal"
+          }
+        }
+      }
+    },
+    "clipboard.hero.description": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Example: the clipboard history panel with seven copied items, two of them pictures"
+          }
+        }
+      }
+    },
+    "clipboard.hero.kind.link": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Link"
+          }
+        }
+      }
+    },
+    "clipboard.hero.kind.picture": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Picture"
+          }
+        }
+      }
+    },
+    "clipboard.hero.kind.text": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Text"
+          }
+        }
+      }
+    },
+    "clipboard.hero.link": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "apple.com/macos"
+          }
+        }
+      }
+    },
+    "clipboard.hero.picture": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Picture, %lld × %lld"
+          }
+        }
+      }
+    },
+    "clipboard.hero.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ · %2$@"
+          }
+        }
+      }
+    },
+    "clipboard.hero.text1": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Thanks, see you on Friday at 10."
+          }
+        }
+      }
+    },
+    "clipboard.hero.text2": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Invoice 2026-114 is attached."
+          }
+        }
+      }
+    },
+    "clipboard.hero.text3": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Flat 12, third floor, ring twice."
+          }
+        }
+      }
+    },
+    "clipboard.hero.text4": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "git commit -m \"Fix window snapping\""
           }
         }
       }
@@ -982,6 +2633,17 @@
         }
       }
     },
+    "clipboard.settings.copiedItems": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copied items"
+          }
+        }
+      }
+    },
     "clipboard.settings.copy": {
       "extractionState": "manual",
       "localizations": {
@@ -1071,6 +2733,17 @@
         }
       }
     },
+    "clipboard.settings.noOtherAppsExcluded": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No other apps excluded."
+          }
+        }
+      }
+    },
     "clipboard.settings.passwordManagerNote": {
       "extractionState": "manual",
       "localizations": {
@@ -1132,7 +2805,18 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Remembers what you copy so you can paste it again later."
+            "value": "Remembers what you copy, so you can paste it again later."
+          }
+        }
+      }
+    },
+    "clipboard.tagline": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "What you copied, ready to paste again."
           }
         }
       }
@@ -1390,6 +3074,381 @@
         }
       }
     },
+    "deskminder.add": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add Reminder"
+          }
+        }
+      }
+    },
+    "deskminder.added": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reminder at %@"
+          }
+        }
+      }
+    },
+    "deskminder.alert.done": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Close"
+          }
+        }
+      }
+    },
+    "deskminder.alert.kicker": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reminder"
+          }
+        }
+      }
+    },
+    "deskminder.alert.snooze": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Snooze Reminder"
+          }
+        }
+      }
+    },
+    "deskminder.alert.snoozeFor": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Snooze %@"
+          }
+        }
+      }
+    },
+    "deskminder.alert.snoozed": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Snoozed until %@"
+          }
+        }
+      }
+    },
+    "deskminder.badTime": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Try a time like 18:30, 6pm or 20m"
+          }
+        }
+      }
+    },
+    "deskminder.close": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Close the bar"
+          }
+        }
+      }
+    },
+    "deskminder.defaultTitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reminder"
+          }
+        }
+      }
+    },
+    "deskminder.displayName": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Desk Minder"
+          }
+        }
+      }
+    },
+    "deskminder.erase": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld upcoming reminder"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld upcoming reminders"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "deskminder.hero.description": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Example: the reminder bar above the Dock, stretched to 3:15"
+          }
+        }
+      }
+    },
+    "deskminder.hotkey": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "New Reminder"
+          }
+        }
+      }
+    },
+    "deskminder.hours": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld h"
+          }
+        }
+      }
+    },
+    "deskminder.hoursMinutes": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld h %lld min"
+          }
+        }
+      }
+    },
+    "deskminder.minutes": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld min"
+          }
+        }
+      }
+    },
+    "deskminder.settings.allow": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Allow Access to Reminders…"
+          }
+        }
+      }
+    },
+    "deskminder.settings.denied": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "All Set isn't allowed to use Reminders. Turn it on in System Settings → Privacy & Security → Reminders."
+          }
+        }
+      }
+    },
+    "deskminder.settings.keepBar": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Keep the bar above the Dock"
+          }
+        }
+      }
+    },
+    "deskminder.settings.keepBarHelp": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Otherwise it appears with its shortcut and hides after you add a reminder."
+          }
+        }
+      }
+    },
+    "deskminder.settings.noUpcoming": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No reminders yet. Press the shortcut to add one."
+          }
+        }
+      }
+    },
+    "deskminder.settings.showBar": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show the Bar"
+          }
+        }
+      }
+    },
+    "deskminder.settings.snoozeLength": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Snooze for"
+          }
+        }
+      }
+    },
+    "deskminder.settings.sounds": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tick sound while stretching"
+          }
+        }
+      }
+    },
+    "deskminder.settings.sync": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Also add to Apple Reminders"
+          }
+        }
+      }
+    },
+    "deskminder.settings.syncHelp": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reminders also alert on your iPhone, iPad and Apple Watch. iCloud syncs them from this Mac."
+          }
+        }
+      }
+    },
+    "deskminder.settings.upcoming": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Upcoming"
+          }
+        }
+      }
+    },
+    "deskminder.stretchHelp": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Drag to the right for more time"
+          }
+        }
+      }
+    },
+    "deskminder.summary": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stretch a bar or type a time to set a reminder. It fills the screen when it's due."
+          }
+        }
+      }
+    },
+    "deskminder.tagline": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stretch a bar to set a reminder."
+          }
+        }
+      }
+    },
+    "deskminder.timeHelp": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Type a time like 18:30, 6pm or 20m, or stretch the bar."
+          }
+        }
+      }
+    },
+    "deskminder.titlePlaceholder": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reminder…"
+          }
+        }
+      }
+    },
     "diagnostics.fired": {
       "extractionState": "manual",
       "localizations": {
@@ -1451,7 +3510,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "A test shortcut that checks Tolio's shortcuts work in every app."
+            "value": "A test shortcut that checks All Set's shortcuts work in every app."
           }
         }
       }
@@ -1462,7 +3521,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Test Tolio"
+            "value": "Test All Set"
           }
         }
       }
@@ -1496,6 +3555,2951 @@
           "stringUnit": {
             "state": "translated",
             "value": "Times pressed"
+          }
+        }
+      }
+    },
+    "dropring.action.addToCargo": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add to Cargo"
+          }
+        }
+      }
+    },
+    "dropring.action.copyTo": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copy to %@"
+          }
+        }
+      }
+    },
+    "dropring.action.moveTo": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Move to %@"
+          }
+        }
+      }
+    },
+    "dropring.action.moveToTrash": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Move to Trash"
+          }
+        }
+      }
+    },
+    "dropring.action.openWith": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open with %@"
+          }
+        }
+      }
+    },
+    "dropring.action.run": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Run “%@”"
+          }
+        }
+      }
+    },
+    "dropring.action.sendTo": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Send to %@ with %@"
+          }
+        }
+      }
+    },
+    "dropring.action.sendWith": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Send with %@"
+          }
+        }
+      }
+    },
+    "dropring.action.shareWith": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Share with %@"
+          }
+        }
+      }
+    },
+    "dropring.cargo.clear": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Clear"
+          }
+        }
+      }
+    },
+    "dropring.cargo.clearHelp": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Empties the shelf. Your files stay where they are."
+          }
+        }
+      }
+    },
+    "dropring.cargo.dragAll": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Drag all out"
+          }
+        }
+      }
+    },
+    "dropring.cargo.empty": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Drop files on the Cargo circle to collect them here."
+          }
+        }
+      }
+    },
+    "dropring.channel.mail": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mail"
+          }
+        }
+      }
+    },
+    "dropring.channel.messages": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Messages"
+          }
+        }
+      }
+    },
+    "dropring.displayName": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Drop Ring"
+          }
+        }
+      }
+    },
+    "dropring.done.alreadyThere": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Already in that folder"
+          }
+        }
+      }
+    },
+    "dropring.done.cargo": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Added %@ to Cargo"
+          }
+        }
+      }
+    },
+    "dropring.done.copied": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copied %@ to %@"
+          }
+        }
+      }
+    },
+    "dropring.done.failed": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ couldn't be moved"
+          }
+        }
+      }
+    },
+    "dropring.done.moved": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Moved %@ to %@"
+          }
+        }
+      }
+    },
+    "dropring.done.pasteInto": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copied. Press ⌘V in a %@ chat to send."
+          }
+        }
+      }
+    },
+    "dropring.done.trashed": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Moved %@ to the Trash"
+          }
+        }
+      }
+    },
+    "dropring.empty": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No circles yet. Add some in Settings → Drop Ring."
+          }
+        }
+      }
+    },
+    "dropring.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Drop files on a circle, or click one. Esc closes."
+          }
+        }
+      }
+    },
+    "dropring.hotkey": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show Drop Ring"
+          }
+        }
+      }
+    },
+    "dropring.item.cargo": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cargo"
+          }
+        }
+      }
+    },
+    "dropring.item.trash": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Trash"
+          }
+        }
+      }
+    },
+    "dropring.items": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld item"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld items"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "dropring.missing": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "“%@” can't be found"
+          }
+        }
+      }
+    },
+    "dropring.person.handle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Phone number or email"
+          }
+        }
+      }
+    },
+    "dropring.person.help": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dropped files open in a new message or email to this person. Nothing is sent until you press Send."
+          }
+        }
+      }
+    },
+    "dropring.person.name": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Name"
+          }
+        }
+      }
+    },
+    "dropring.person.sendWith": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Send with"
+          }
+        }
+      }
+    },
+    "dropring.person.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add a person"
+          }
+        }
+      }
+    },
+    "dropring.settings.add": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add Circle"
+          }
+        }
+      }
+    },
+    "dropring.settings.addApp": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "App…"
+          }
+        }
+      }
+    },
+    "dropring.settings.addFolder": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Folder…"
+          }
+        }
+      }
+    },
+    "dropring.settings.addPerson": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Person…"
+          }
+        }
+      }
+    },
+    "dropring.settings.addShortcut": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shortcut"
+          }
+        }
+      }
+    },
+    "dropring.settings.bigShake": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Big shake"
+          }
+        }
+      }
+    },
+    "dropring.settings.circles": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Circles"
+          }
+        }
+      }
+    },
+    "dropring.settings.circlesHelp": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Drag rows to change the order. The first circle sits at the top of the ring."
+          }
+        }
+      }
+    },
+    "dropring.settings.copy": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copy"
+          }
+        }
+      }
+    },
+    "dropring.settings.copyOrMove": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@: copy or move"
+          }
+        }
+      }
+    },
+    "dropring.settings.glass": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Glass"
+          }
+        }
+      }
+    },
+    "dropring.settings.hero.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Example: seven circles open around the pointer while a file is dragged, with Desktop highlighted"
+          }
+        }
+      }
+    },
+    "dropring.settings.missing": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not found"
+          }
+        }
+      }
+    },
+    "dropring.settings.move": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Move"
+          }
+        }
+      }
+    },
+    "dropring.settings.moveDown": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Move Down"
+          }
+        }
+      }
+    },
+    "dropring.settings.moveUp": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Move Up"
+          }
+        }
+      }
+    },
+    "dropring.settings.remove": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Remove %@"
+          }
+        }
+      }
+    },
+    "dropring.settings.resetCircles": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reset Circles"
+          }
+        }
+      }
+    },
+    "dropring.settings.sensitivity": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shake sensitivity"
+          }
+        }
+      }
+    },
+    "dropring.settings.shake": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shake the pointer to open the ring"
+          }
+        }
+      }
+    },
+    "dropring.settings.shakeDragging": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Only while dragging files"
+          }
+        }
+      }
+    },
+    "dropring.settings.size": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Circle size"
+          }
+        }
+      }
+    },
+    "dropring.settings.smallWiggle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Small wiggle"
+          }
+        }
+      }
+    },
+    "dropring.settings.solid": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Solid"
+          }
+        }
+      }
+    },
+    "dropring.settings.style": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Look"
+          }
+        }
+      }
+    },
+    "dropring.settings.tab.opening": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Opening and look"
+          }
+        }
+      }
+    },
+    "dropring.shortcuts.help": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dropped files are passed to the shortcut as input."
+          }
+        }
+      }
+    },
+    "dropring.shortcuts.loading": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Loading your shortcuts…"
+          }
+        }
+      }
+    },
+    "dropring.shortcuts.none": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No shortcuts found. Make one in the Shortcuts app."
+          }
+        }
+      }
+    },
+    "dropring.summary.short": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Drop files on a ring of folders, apps and people that opens around your pointer."
+          }
+        }
+      }
+    },
+    "dropring.tagline": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Drop files on folders, apps and people."
+          }
+        }
+      }
+    },
+    "group.capture": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Capture"
+          }
+        }
+      }
+    },
+    "group.capture.summary": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Screenshots, recordings and text from anything on screen."
+          }
+        }
+      }
+    },
+    "group.clipboard": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Clipboard"
+          }
+        }
+      }
+    },
+    "group.clipboard.summary": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Everything you copy, and text you type often."
+          }
+        }
+      }
+    },
+    "group.energy": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Energy"
+          }
+        }
+      }
+    },
+    "group.energy.summary": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your Mac stays awake when you need it."
+          }
+        }
+      }
+    },
+    "group.extras": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Extras"
+          }
+        }
+      }
+    },
+    "group.extras.summary": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Small helpers for every day."
+          }
+        }
+      }
+    },
+    "group.files": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Files"
+          }
+        }
+      }
+    },
+    "group.files.summary": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Send files where they need to go in one move."
+          }
+        }
+      }
+    },
+    "group.island": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Island"
+          }
+        }
+      }
+    },
+    "group.island.summary": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The notch, alive: music, calendar and live updates."
+          }
+        }
+      }
+    },
+    "group.keyboard": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Keyboard"
+          }
+        }
+      }
+    },
+    "group.keyboard.summary": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Keep your keyboard out of the way."
+          }
+        }
+      }
+    },
+    "group.windows": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Windows"
+          }
+        }
+      }
+    },
+    "group.windows.summary": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Arrange windows and jump between them."
+          }
+        }
+      }
+    },
+    "island.activity.downloaded": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Downloaded %@"
+          }
+        }
+      }
+    },
+    "island.activity.downloading": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Downloading %@"
+          }
+        }
+      }
+    },
+    "island.activity.recording": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recording"
+          }
+        }
+      }
+    },
+    "island.calendar.allDay": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "All day"
+          }
+        }
+      }
+    },
+    "island.calendar.allow": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show My Events…"
+          }
+        }
+      }
+    },
+    "island.calendar.denied": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Turn on Calendars for All Set in System Settings → Privacy & Security."
+          }
+        }
+      }
+    },
+    "island.calendar.inMinutes": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "in %lld min"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "in %lld min"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "island.calendar.join": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Join"
+          }
+        }
+      }
+    },
+    "island.calendar.more": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "+%lld more"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "+%lld more"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "island.calendar.noMore": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No more events today"
+          }
+        }
+      }
+    },
+    "island.calendar.nothingThatDay": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nothing that day"
+          }
+        }
+      }
+    },
+    "island.calendar.now": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "now"
+          }
+        }
+      }
+    },
+    "island.calendar.week": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "W%lld"
+          }
+        }
+      }
+    },
+    "island.command.focus": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open Notch Focus"
+          }
+        }
+      }
+    },
+    "island.command.mirror": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open Notch Mirror"
+          }
+        }
+      }
+    },
+    "island.command.tray": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open Notch Tray"
+          }
+        }
+      }
+    },
+    "island.command.widgets": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open Notch Widgets"
+          }
+        }
+      }
+    },
+    "island.displayName": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Notch Island"
+          }
+        }
+      }
+    },
+    "island.focus.pause": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pause"
+          }
+        }
+      }
+    },
+    "island.focus.resume": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Resume"
+          }
+        }
+      }
+    },
+    "island.focus.start": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Start Timer"
+          }
+        }
+      }
+    },
+    "island.focus.stopwatch": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stopwatch"
+          }
+        }
+      }
+    },
+    "island.hotkey": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open Notch Island"
+          }
+        }
+      }
+    },
+    "island.mirror": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mirror"
+          }
+        }
+      }
+    },
+    "island.mirror.allow": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Turn On Camera…"
+          }
+        }
+      }
+    },
+    "island.mirror.denied": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Turn on Camera for All Set in System Settings → Privacy & Security."
+          }
+        }
+      }
+    },
+    "island.mirror.none": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No camera found"
+          }
+        }
+      }
+    },
+    "island.music.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Play something in Music or Spotify."
+          }
+        }
+      }
+    },
+    "island.music.next": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Next"
+          }
+        }
+      }
+    },
+    "island.music.nothing": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nothing playing"
+          }
+        }
+      }
+    },
+    "island.music.open": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open %@"
+          }
+        }
+      }
+    },
+    "island.music.output": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Audio Output"
+          }
+        }
+      }
+    },
+    "island.music.playPause": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Play or Pause"
+          }
+        }
+      }
+    },
+    "island.music.previous": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Previous"
+          }
+        }
+      }
+    },
+    "island.music.shuffle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shuffle"
+          }
+        }
+      }
+    },
+    "island.note.characters": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld char"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld chars"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "island.note.placeholder": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jot something down…"
+          }
+        }
+      }
+    },
+    "island.notice.charging": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Charging"
+          }
+        }
+      }
+    },
+    "island.notice.connected": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ connected"
+          }
+        }
+      }
+    },
+    "island.notice.disconnected": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ disconnected"
+          }
+        }
+      }
+    },
+    "island.notice.full": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fully charged"
+          }
+        }
+      }
+    },
+    "island.notice.lowBattery": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Low battery"
+          }
+        }
+      }
+    },
+    "island.notice.onBattery": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "On battery"
+          }
+        }
+      }
+    },
+    "island.page.calendar": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Calendar"
+          }
+        }
+      }
+    },
+    "island.page.focus": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Focus"
+          }
+        }
+      }
+    },
+    "island.page.home": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Home"
+          }
+        }
+      }
+    },
+    "island.page.music": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Music"
+          }
+        }
+      }
+    },
+    "island.page.tray": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tray"
+          }
+        }
+      }
+    },
+    "island.page.widgets": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Widgets"
+          }
+        }
+      }
+    },
+    "island.quick.dark": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dark Mode"
+          }
+        }
+      }
+    },
+    "island.quick.keepAwake": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Keep Awake"
+          }
+        }
+      }
+    },
+    "island.quick.note": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "New Sticky Note"
+          }
+        }
+      }
+    },
+    "island.quick.screenshot": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Screenshot"
+          }
+        }
+      }
+    },
+    "island.quick.sleep": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sleep Display"
+          }
+        }
+      }
+    },
+    "island.quick.wifi": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wi-Fi"
+          }
+        }
+      }
+    },
+    "island.settings.allDisplays": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show on every display"
+          }
+        }
+      }
+    },
+    "island.settings.allDisplaysHelp": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Each display gets its own island."
+          }
+        }
+      }
+    },
+    "island.settings.battery": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Charging and low battery"
+          }
+        }
+      }
+    },
+    "island.settings.black": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Black"
+          }
+        }
+      }
+    },
+    "island.settings.bluetooth": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AirPods and other Bluetooth devices"
+          }
+        }
+      }
+    },
+    "island.settings.bluetoothHelp2": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "macOS asks once to let All Set see Bluetooth devices."
+          }
+        }
+      }
+    },
+    "island.settings.breakLength": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Break length"
+          }
+        }
+      }
+    },
+    "island.settings.calendar": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Calendar"
+          }
+        }
+      }
+    },
+    "island.settings.calendarHelp": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your week from the Calendar app. Google and Exchange accounts added in macOS show too."
+          }
+        }
+      }
+    },
+    "island.settings.delayLong": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A longer pause"
+          }
+        }
+      }
+    },
+    "island.settings.delayNormal": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A short pause"
+          }
+        }
+      }
+    },
+    "island.settings.delayShort": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A moment"
+          }
+        }
+      }
+    },
+    "island.settings.downloads": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Downloads"
+          }
+        }
+      }
+    },
+    "island.settings.downloadsHelp2": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shows files a browser is saving to Downloads. macOS asks once to let All Set see that folder."
+          }
+        }
+      }
+    },
+    "island.settings.dragOpens": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open the Tray when files are dragged to the notch"
+          }
+        }
+      }
+    },
+    "island.settings.focusLength": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Focus length"
+          }
+        }
+      }
+    },
+    "island.settings.focusPage": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Focus timer"
+          }
+        }
+      }
+    },
+    "island.settings.focusPageHelp": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Focus and break timers on a ruler, plus a stopwatch."
+          }
+        }
+      }
+    },
+    "island.settings.glass": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Glass"
+          }
+        }
+      }
+    },
+    "island.settings.hero.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Example: the notch opened as an island showing the song that is playing"
+          }
+        }
+      }
+    },
+    "island.settings.hero.artist": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Artist"
+          }
+        }
+      }
+    },
+    "island.settings.hero.song": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Song title"
+          }
+        }
+      }
+    },
+    "island.settings.hideSpaces": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Don't show Spaces when dragging to the top edge"
+          }
+        }
+      }
+    },
+    "island.settings.hideSpacesHelpShort": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "macOS shows your desktops when you drag to the top, which covers the notch. This changes a Desktop & Dock setting, and the Dock restarts once."
+          }
+        }
+      }
+    },
+    "island.settings.home": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Home page"
+          }
+        }
+      }
+    },
+    "island.settings.homeHelp": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Music, your next events and the focus timer together on one page."
+          }
+        }
+      }
+    },
+    "island.settings.hover": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open when the pointer rests on the notch"
+          }
+        }
+      }
+    },
+    "island.settings.hoverDelay": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Opens after"
+          }
+        }
+      }
+    },
+    "island.settings.hoverHelpShort": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Otherwise click the notch, or swipe down on it with two fingers."
+          }
+        }
+      }
+    },
+    "island.settings.lessBreak": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Less break time"
+          }
+        }
+      }
+    },
+    "island.settings.lessFocus": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Less focus time"
+          }
+        }
+      }
+    },
+    "island.settings.live": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Live activities"
+          }
+        }
+      }
+    },
+    "island.settings.look": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Look"
+          }
+        }
+      }
+    },
+    "island.settings.meetings": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Count down to the next meeting"
+          }
+        }
+      }
+    },
+    "island.settings.meetingsHelp": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shows in the notch 10 minutes before an event starts."
+          }
+        }
+      }
+    },
+    "island.settings.minutesValue": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld min"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld min"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "island.settings.mirror": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Camera mirror"
+          }
+        }
+      }
+    },
+    "island.settings.mirrorHelp": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Check how you look before a call. The camera runs only while the mirror is showing."
+          }
+        }
+      }
+    },
+    "island.settings.moreBreak": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "More break time"
+          }
+        }
+      }
+    },
+    "island.settings.moreFocus": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "More focus time"
+          }
+        }
+      }
+    },
+    "island.settings.noNotch": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This screen has no notch, so the island is a small black shape at the top middle."
+          }
+        }
+      }
+    },
+    "island.settings.noNotchHandle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Small handle"
+          }
+        }
+      }
+    },
+    "island.settings.noNotchShape": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Notch shape"
+          }
+        }
+      }
+    },
+    "island.settings.noNotchStyle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Screens without a notch"
+          }
+        }
+      }
+    },
+    "island.settings.nowPlaying": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Now Playing"
+          }
+        }
+      }
+    },
+    "island.settings.nowPlayingHelp": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Music and Spotify. The first time, macOS asks to let All Set control them."
+          }
+        }
+      }
+    },
+    "island.settings.removeAfterDrag": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Remove files from the Tray after dragging them out"
+          }
+        }
+      }
+    },
+    "island.settings.style": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Style"
+          }
+        }
+      }
+    },
+    "island.settings.swipes": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Swipe on the closed notch to skip songs"
+          }
+        }
+      }
+    },
+    "island.settings.swipesHelp": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Two fingers left for the next song, right for the previous one."
+          }
+        }
+      }
+    },
+    "island.settings.tab.look": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Look and behavior"
+          }
+        }
+      }
+    },
+    "island.settings.tab.nook": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nook"
+          }
+        }
+      }
+    },
+    "island.settings.timerSound": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Play a sound when a timer ends"
+          }
+        }
+      }
+    },
+    "island.settings.tray": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tray for files and AirDrop"
+          }
+        }
+      }
+    },
+    "island.settings.trayHelp": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The Tray keeps a link to each file, not a copy."
+          }
+        }
+      }
+    },
+    "island.settings.traySection": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tray"
+          }
+        }
+      }
+    },
+    "island.settings.virtual": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show on the main display when no screen has a notch"
+          }
+        }
+      }
+    },
+    "island.settings.volumeChanges": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Volume changes"
+          }
+        }
+      }
+    },
+    "island.settings.volumeHelp": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "macOS still shows its own volume overlay too."
+          }
+        }
+      }
+    },
+    "island.settings.widgets": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Widgets page"
+          }
+        }
+      }
+    },
+    "island.settings.widgetsDragHelp": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Drag to reorder. Or right-click the open island to add, move or remove widgets."
+          }
+        }
+      }
+    },
+    "island.settings.widgetsSection": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Widgets"
+          }
+        }
+      }
+    },
+    "island.shortcuts.choose": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose Shortcuts"
+          }
+        }
+      }
+    },
+    "island.shortcuts.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Press + to pin shortcuts here."
+          }
+        }
+      }
+    },
+    "island.shortcuts.loading": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Loading…"
+          }
+        }
+      }
+    },
+    "island.shortcuts.none": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No shortcuts in the Shortcuts app"
+          }
+        }
+      }
+    },
+    "island.shortcuts.remove": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Unpin"
+          }
+        }
+      }
+    },
+    "island.stats.cpu": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CPU"
+          }
+        }
+      }
+    },
+    "island.stats.memory": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Memory"
+          }
+        }
+      }
+    },
+    "island.summary.short": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Turns the notch into a live island for music, your calendar, files and live activities."
+          }
+        }
+      }
+    },
+    "island.tagline": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Music, calendar and notices in the notch."
+          }
+        }
+      }
+    },
+    "island.timer.add": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add another timer"
+          }
+        }
+      }
+    },
+    "island.timer.breakOver": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Break over. Back to focus"
+          }
+        }
+      }
+    },
+    "island.timer.done": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Time's up"
+          }
+        }
+      }
+    },
+    "island.timer.focus": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Focus"
+          }
+        }
+      }
+    },
+    "island.timer.focusDone": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Focus done. Take a break"
+          }
+        }
+      }
+    },
+    "island.timer.min": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "min"
+          }
+        }
+      }
+    },
+    "island.timer.minutes": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld minute"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld minutes"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "island.timer.pomodoro": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Focus"
+          }
+        }
+      }
+    },
+    "island.timer.pomodoroHelp": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pomodoro: %lld minutes of focus, then a %lld-minute break; a longer one every fourth round."
+          }
+        }
+      }
+    },
+    "island.timer.rest": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Break"
+          }
+        }
+      }
+    },
+    "island.timer.scroll": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Scroll to set the minutes."
+          }
+        }
+      }
+    },
+    "island.timer.start": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Start"
+          }
+        }
+      }
+    },
+    "island.timer.stop": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stop Timer"
+          }
+        }
+      }
+    },
+    "island.todo.add": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add a to-do"
+          }
+        }
+      }
+    },
+    "island.todo.clearDone": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Clear Completed"
+          }
+        }
+      }
+    },
+    "island.todo.delete": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete"
+          }
+        }
+      }
+    },
+    "island.todo.doneOf": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld of %lld"
+          }
+        }
+      }
+    },
+    "island.tray.airdrop": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AirDrop"
+          }
+        }
+      }
+    },
+    "island.tray.airdropHelp": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Drop files to send them with AirDrop, or click to send the Tray's files."
+          }
+        }
+      }
+    },
+    "island.tray.airdropHint": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Drop files here"
+          }
+        }
+      }
+    },
+    "island.tray.clear": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Clear Tray"
+          }
+        }
+      }
+    },
+    "island.tray.copyPath": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copy Path"
+          }
+        }
+      }
+    },
+    "island.tray.dragAll": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Drag"
+          }
+        }
+      }
+    },
+    "island.tray.dragAllHelp": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Drag the selected files (or all of them) out together."
+          }
+        }
+      }
+    },
+    "island.tray.droppedImage": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Image"
+          }
+        }
+      }
+    },
+    "island.tray.empty": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Drop files here"
+          }
+        }
+      }
+    },
+    "island.tray.emptyHint": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Drag files to the notch to keep them handy, then drag them anywhere."
+          }
+        }
+      }
+    },
+    "island.tray.finder": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show in Finder"
+          }
+        }
+      }
+    },
+    "island.tray.items": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld file"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld files"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "island.tray.open": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open"
+          }
+        }
+      }
+    },
+    "island.tray.remove": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Remove from Tray"
+          }
+        }
+      }
+    },
+    "island.tray.removeSelected": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Remove Selected"
+          }
+        }
+      }
+    },
+    "island.tray.selected": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld selected"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld selected"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "island.tray.share": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Share…"
+          }
+        }
+      }
+    },
+    "island.volume.muted": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Muted"
+          }
+        }
+      }
+    },
+    "island.widget.add": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add Widget"
+          }
+        }
+      }
+    },
+    "island.widget.edit": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Edit Widgets"
+          }
+        }
+      }
+    },
+    "island.widget.moveLeft": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Move Left"
+          }
+        }
+      }
+    },
+    "island.widget.moveRight": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Move Right"
+          }
+        }
+      }
+    },
+    "island.widget.none": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No widgets"
+          }
+        }
+      }
+    },
+    "island.widget.notes": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Note"
+          }
+        }
+      }
+    },
+    "island.widget.page": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Widgets page %lld"
+          }
+        }
+      }
+    },
+    "island.widget.quick": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quick Actions"
+          }
+        }
+      }
+    },
+    "island.widget.remove": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Remove Widget"
+          }
+        }
+      }
+    },
+    "island.widget.reset": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reset Widgets"
+          }
+        }
+      }
+    },
+    "island.widget.shortcuts": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shortcuts"
+          }
+        }
+      }
+    },
+    "island.widget.stats": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stats"
+          }
+        }
+      }
+    },
+    "island.widget.timer": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Timer"
+          }
+        }
+      }
+    },
+    "island.widget.todos": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "To-dos"
+          }
+        }
+      }
+    },
+    "island.widgets.next": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Next Widgets"
+          }
+        }
+      }
+    },
+    "island.widgets.previous": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Previous Widgets"
           }
         }
       }
@@ -1624,6 +6628,39 @@
         }
       }
     },
+    "keepawake.hero.detail": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "45 minutes left"
+          }
+        }
+      }
+    },
+    "keepawake.hero.label": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Example: Energy Mode keeping the Mac awake, with 45 minutes left"
+          }
+        }
+      }
+    },
+    "keepawake.hero.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Staying awake"
+          }
+        }
+      }
+    },
     "keepawake.hotkey.toggle": {
       "extractionState": "manual",
       "localizations": {
@@ -1745,6 +6782,17 @@
         }
       }
     },
+    "keepawake.settings.addAppLabel": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add an app"
+          }
+        }
+      }
+    },
     "keepawake.settings.appsSection": {
       "extractionState": "manual",
       "localizations": {
@@ -1796,6 +6844,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Status"
+          }
+        }
+      }
+    },
+    "keepawake.settings.stayAwakeFor": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stay awake for"
           }
         }
       }
@@ -1899,377 +6958,13 @@
         }
       }
     },
-    "launcher.answer.currencySubtitle": {
+    "keepawake.tagline": {
       "extractionState": "manual",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "%@ %@ = · %@ rate of %@"
-          }
-        }
-      }
-    },
-    "launcher.answer.gelFailed": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "National Bank of Georgia rates couldn't be downloaded."
-          }
-        }
-      }
-    },
-    "launcher.answer.noPublisher": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Neither the European Central Bank nor the National Bank of Georgia publishes a rate for %@."
-          }
-        }
-      }
-    },
-    "launcher.answer.noRates": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "No exchange rates"
-          }
-        }
-      }
-    },
-    "launcher.answer.rateMissing": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%@ rate not available"
-          }
-        }
-      }
-    },
-    "launcher.answer.ratesNotDownloaded": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Rates haven't been downloaded yet."
-          }
-        }
-      }
-    },
-    "launcher.answer.turnOnRates": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Turn on “Download currency rates” in Settings → Launcher."
-          }
-        }
-      }
-    },
-    "launcher.copied": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Copied %@"
-          }
-        }
-      }
-    },
-    "launcher.erase.usageHistory": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "your Launcher usage history"
-          }
-        }
-      }
-    },
-    "launcher.kind.app": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Application"
-          }
-        }
-      }
-    },
-    "launcher.kind.command": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Command"
-          }
-        }
-      }
-    },
-    "launcher.kind.result": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Result"
-          }
-        }
-      }
-    },
-    "launcher.kind.setting": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "System Settings"
-          }
-        }
-      }
-    },
-    "launcher.name": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Launcher"
-          }
-        }
-      }
-    },
-    "launcher.noResults": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "No results for “%@”."
-          }
-        }
-      }
-    },
-    "launcher.open": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Open Launcher"
-          }
-        }
-      }
-    },
-    "launcher.privacyPane": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Privacy: %@"
-          }
-        }
-      }
-    },
-    "launcher.search.placeholder": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Search apps, settings and commands, or try 2+2, 5 km in mi, 20 usd"
-          }
-        }
-      }
-    },
-    "launcher.settings.appsFound": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Apps found"
-          }
-        }
-      }
-    },
-    "launcher.settings.clearUsage": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Clear Usage History"
-          }
-        }
-      }
-    },
-    "launcher.settings.clearUsageHelp": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "The Launcher puts things you open often at the top. Clearing forgets that."
-          }
-        }
-      }
-    },
-    "launcher.settings.currencyCount": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "variations": {
-            "plural": {
-              "one": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "%lld currency"
-                }
-              },
-              "other": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "%lld currencies"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "launcher.settings.defaultCurrency": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Convert currencies to"
-          }
-        }
-      }
-    },
-    "launcher.settings.downloadRates": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Download currency rates"
-          }
-        }
-      }
-    },
-    "launcher.settings.downloadRatesHelp": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "This is the only thing Tolio downloads: one small public file from each bank below, at most every 6 hours, when you open the Launcher. Nothing about you is sent."
-          }
-        }
-      }
-    },
-    "launcher.settings.findAgain": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Look Again"
-          }
-        }
-      }
-    },
-    "launcher.settings.lastOpenTime": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Opening speed"
-          }
-        }
-      }
-    },
-    "launcher.settings.milliseconds": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%.1f ms"
-          }
-        }
-      }
-    },
-    "launcher.settings.notDownloaded": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Not downloaded"
-          }
-        }
-      }
-    },
-    "launcher.settings.ratesStatus": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%@ · %@"
-          }
-        }
-      }
-    },
-    "launcher.settings.updateNow": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Update Now"
-          }
-        }
-      }
-    },
-    "launcher.settings.updating": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Updating…"
-          }
-        }
-      }
-    },
-    "launcher.summary": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Open apps, settings and commands, and do quick math, from one search box."
+            "value": "Keep your Mac awake when you need it."
           }
         }
       }
@@ -2342,6 +7037,17 @@
         }
       }
     },
+    "lockkeyboard.hero.label": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Example: a keyboard with a lock over it"
+          }
+        }
+      }
+    },
     "lockkeyboard.hotkey.start": {
       "extractionState": "manual",
       "localizations": {
@@ -2364,6 +7070,17 @@
         }
       }
     },
+    "lockkeyboard.lockNowSubtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Starts after a moment, so you can let go of the keys."
+          }
+        }
+      }
+    },
     "lockkeyboard.menu.unlockAfter": {
       "extractionState": "manual",
       "localizations": {
@@ -2381,7 +7098,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Couldn't lock the keyboard. Check that Tolio has the Accessibility permission."
+            "value": "Couldn't lock the keyboard. Check that All Set has the Accessibility permission."
           }
         }
       }
@@ -2502,7 +7219,18 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Locks the keyboard so you can wipe it. Unlock with the mouse."
+            "value": "Locks the keyboard so you can wipe it clean. Unlock with the mouse."
+          }
+        }
+      }
+    },
+    "lockkeyboard.tagline": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lock the keys while you wipe them clean."
           }
         }
       }
@@ -2525,17 +7253,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Everything"
-          }
-        }
-      }
-    },
-    "onboarding.choose.more": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "More"
           }
         }
       }
@@ -2617,68 +7334,13 @@
         }
       }
     },
-    "onboarding.icon.clipboard": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Clipboard"
-          }
-        }
-      }
-    },
-    "onboarding.icon.keepAwake": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Energy Mode"
-          }
-        }
-      }
-    },
-    "onboarding.icon.launcher": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Launcher"
-          }
-        }
-      }
-    },
-    "onboarding.icon.screenshots": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Screenshots"
-          }
-        }
-      }
-    },
-    "onboarding.icon.windows": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Windows"
-          }
-        }
-      }
-    },
     "onboarding.intro": {
       "extractionState": "manual",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Tolio adds the shortcuts your Mac is missing: one menu bar app for screenshots, clipboard history, window layouts, staying awake and quick launching."
+            "value": "All Set adds the shortcuts your Mac is missing: one menu bar app for your clipboard, windows, keyboard, screenshots and energy."
           }
         }
       }
@@ -2700,7 +7362,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Open the control panel (or click Tolio's menu bar icon)"
+            "value": "Open the control panel (or click All Set's menu bar icon)"
           }
         }
       }
@@ -2733,7 +7395,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Reopen Tolio"
+            "value": "Reopen All Set"
           }
         }
       }
@@ -2744,7 +7406,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Switched it on but it still says “Not allowed”? Some permissions start working after Tolio reopens."
+            "value": "Switched it on but it still says “Not allowed”? Some permissions start working after All Set reopens."
           }
         }
       }
@@ -2810,7 +7472,18 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Welcome to Tolio"
+            "value": "Welcome to All Set"
+          }
+        }
+      }
+    },
+    "onboardingUI.openSettings": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open Settings"
           }
         }
       }
@@ -2997,7 +7670,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Lets Tolio move windows, type snippets for you, read menus and selected text, and listen for shortcuts."
+            "value": "Lets All Set move windows, type snippets for you, read menus and selected text, and listen for shortcuts."
           }
         }
       }
@@ -3030,7 +7703,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "macOS asks you to allow these yourself. Nothing Tolio sees leaves this Mac."
+            "value": "macOS asks you to allow these yourself. Nothing All Set sees leaves this Mac."
           }
         }
       }
@@ -3085,7 +7758,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Already switched on in System Settings but still not allowed? This removes Tolio's old entry and asks again."
+            "value": "Already switched on in System Settings but still not allowed? This removes All Set's old entry and asks again."
           }
         }
       }
@@ -3107,7 +7780,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Lets Tolio take screenshots, record your screen, and show window previews."
+            "value": "Lets All Set take screenshots, record your screen, and show window previews."
           }
         }
       }
@@ -4088,7 +8761,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Tolio needs Screen Recording permission to capture the screen."
+            "value": "All Set needs Screen Recording permission to capture the screen."
           }
         }
       }
@@ -4155,6 +8828,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Screenshot"
+          }
+        }
+      }
+    },
+    "screenshots.hero": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Example: an area of the screen selected for a screenshot, 640 by 360"
           }
         }
       }
@@ -4837,7 +9521,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "macOS also uses ⇧⌘4 for its own screenshots and gets the key press first. To use Tolio’s, open Keyboard Shortcuts → Screenshots and turn off “Save picture of selected area as a file”."
+            "value": "macOS also uses ⇧⌘4 for its own screenshots and gets the key press first. To use All Set’s, open Keyboard Shortcuts → Screenshots and turn off “Save picture of selected area as a file”."
           }
         }
       }
@@ -4848,7 +9532,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "macOS’s own ⇧⌘4 is off, so it opens Tolio’s screenshot."
+            "value": "macOS’s own %@ is off, so it opens All Set’s screenshot."
           }
         }
       }
@@ -4870,7 +9554,18 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Record the microphone (macOS 15 or later)"
+            "value": "Record the microphone"
+          }
+        }
+      }
+    },
+    "screenshots.settings.microphoneNote": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Needs macOS 15 or later."
           }
         }
       }
@@ -4892,7 +9587,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Recordings are saved as MP4 videos in the same folder. System audio and the microphone are saved as two audio tracks. To stop, press the recording shortcut again or click the recording timer in the menu bar."
+            "value": "Recordings are saved as MP4 videos in the same folder. To stop, press the recording shortcut again or click the recording timer in the menu bar."
           }
         }
       }
@@ -4936,7 +9631,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Scrolling capture"
+            "value": "Scrolling capture (experimental)"
           }
         }
       }
@@ -4947,7 +9642,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Select the part of a window that scrolls; Tolio scrolls it and joins the pages into one tall image. Needs the Accessibility permission. Works best on plain documents and web pages; content that moves or changes while scrolling can't be joined."
+            "value": "Select the part of a window that scrolls and All Set joins it into one tall image. Needs the Accessibility permission."
           }
         }
       }
@@ -5007,6 +9702,28 @@
         }
       }
     },
+    "screenshots.settings.tab.recording": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recording"
+          }
+        }
+      }
+    },
+    "screenshots.settings.tabs": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Screenshots and Recording settings"
+          }
+        }
+      }
+    },
     "screenshots.settings.useMacOSSetting": {
       "extractionState": "manual",
       "localizations": {
@@ -5035,7 +9752,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Tolio will switch off “Save picture of selected area as a file” in your keyboard shortcuts, so ⇧⌘4 opens Tolio’s screenshot. You can turn it back on here at any time."
+            "value": "All Set will switch off “Save picture of selected area as a file” in your keyboard shortcuts, so ⇧⌘4 opens All Set’s screenshot. You can turn it back on here at any time."
           }
         }
       }
@@ -5057,7 +9774,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Use ⇧⌘4 for Tolio"
+            "value": "Use ⇧⌘4 for All Set"
           }
         }
       }
@@ -5073,13 +9790,35 @@
         }
       }
     },
+    "screenshots.sidebarName": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Screenshots"
+          }
+        }
+      }
+    },
     "screenshots.summary": {
       "extractionState": "manual",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Capture, mark up and pin screenshots, copy text from images and record the screen."
+            "value": "Capture, mark up and pin screenshots, and record the screen."
+          }
+        }
+      }
+    },
+    "screenshots.tagline": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Capture, mark up and record the screen."
           }
         }
       }
@@ -5238,24 +9977,13 @@
         }
       }
     },
-    "settings.features": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Features"
-          }
-        }
-      }
-    },
     "settings.general.approveLoginItem": {
       "extractionState": "manual",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Approve Tolio in Login Items to finish."
+            "value": "Approve All Set in Login Items to finish."
           }
         }
       }
@@ -5299,7 +10027,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Open Tolio at login"
+            "value": "Open All Set at login"
           }
         }
       }
@@ -5513,6 +10241,50 @@
         }
       }
     },
+    "settings.overview.featuresOn": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld of %lld features on"
+          }
+        }
+      }
+    },
+    "settings.overview.groupOn": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld of %lld on"
+          }
+        }
+      }
+    },
+    "settings.overview.openHint": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Click to see how it works and change it"
+          }
+        }
+      }
+    },
+    "settings.overview.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Turn on what you need. Click a card to see how it works and change it."
+          }
+        }
+      }
+    },
     "settings.page.general": {
       "extractionState": "manual",
       "localizations": {
@@ -5574,7 +10346,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Tolio needs %@ permission. %@ Until then, this feature is paused."
+            "value": "All Set needs %@ permission. %@ Until then, this feature is paused."
           }
         }
       }
@@ -5894,7 +10666,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Tolio Settings"
+            "value": "All Set Settings"
           }
         }
       }
@@ -5949,7 +10721,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "macOS didn't let Tolio watch the keyboard and mouse. Check that Tolio is allowed under Accessibility."
+            "value": "macOS didn't let All Set watch the keyboard and mouse. Check that All Set is allowed under Accessibility."
           }
         }
       }
@@ -5972,17 +10744,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Press a shortcut…"
-          }
-        }
-      }
-    },
-    "snippets.command.insert": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Insert Snippet"
           }
         }
       }
@@ -6109,6 +10870,39 @@
         }
       }
     },
+    "snippets.hero.description": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Example: typing ;sig in a message turns into an email sign-off"
+          }
+        }
+      }
+    },
+    "snippets.hero.expanded": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Best regards,"
+          }
+        }
+      }
+    },
+    "snippets.hero.name": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alex"
+          }
+        }
+      }
+    },
     "snippets.problem.alreadyUsed": {
       "extractionState": "manual",
       "localizations": {
@@ -6138,17 +10932,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Use at least 2 characters."
-          }
-        }
-      }
-    },
-    "snippets.search.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Snippet"
           }
         }
       }
@@ -6351,6 +11134,50 @@
         }
       }
     },
+    "stats.hero": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Example: CPU, memory and network numbers in the menu bar, with a small chart"
+          }
+        }
+      }
+    },
+    "stats.hero.cpu": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CPU"
+          }
+        }
+      }
+    },
+    "stats.hero.memory": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "MEM"
+          }
+        }
+      }
+    },
+    "stats.hero.network": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "NET"
+          }
+        }
+      }
+    },
     "stats.item.battery": {
       "extractionState": "manual",
       "localizations": {
@@ -6522,7 +11349,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Updating the menu bar uses a little energy, so a longer interval saves battery. About 1.7% CPU at 2 seconds, 0.7% at 5 seconds, 0.2% with only the icon."
+            "value": "A longer interval saves battery: about 1.7% CPU at 2 seconds, 0.7% at 5 seconds, 0.2% with only the icon. Temperatures and fan speeds are left out on purpose; on Apple silicon Macs they can't be read reliably."
           }
         }
       }
@@ -6557,17 +11384,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Show in the menu bar"
-          }
-        }
-      }
-    },
-    "stats.settings.temperaturesHelp": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Temperatures and fan speeds are left out on purpose: on Apple silicon Macs they can't be read reliably."
           }
         }
       }
@@ -6710,7 +11526,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Sticky Notes"
+            "value": "Desktop Notes"
           }
         }
       }
@@ -6721,7 +11537,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Add “New Sticky Note” to the Desktop's Right-Click Menu…"
+            "value": "Add “New Desktop Note” to the Desktop's Right-Click Menu…"
           }
         }
       }
@@ -6735,13 +11551,13 @@
               "one": {
                 "stringUnit": {
                   "state": "translated",
-                  "value": "%lld sticky note and the recently deleted ones"
+                  "value": "%lld desktop note and the recently deleted ones"
                 }
               },
               "other": {
                 "stringUnit": {
                   "state": "translated",
-                  "value": "all %lld sticky notes and the recently deleted ones"
+                  "value": "all %lld desktop notes and the recently deleted ones"
                 }
               }
             }
@@ -6755,7 +11571,18 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "New Sticky Note"
+            "value": "New Desktop Note"
+          }
+        }
+      }
+    },
+    "stickynotes.hero.description": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Example: two notes on the desktop"
           }
         }
       }
@@ -6766,7 +11593,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "New sticky note"
+            "value": "New desktop note"
           }
         }
       }
@@ -6788,7 +11615,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "New Sticky Note"
+            "value": "New Desktop Note"
           }
         }
       }
@@ -6821,7 +11648,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "“New Sticky Note” in the desktop's right-click menu"
+            "value": "“New Desktop Note” in the desktop's right-click menu"
           }
         }
       }
@@ -6832,7 +11659,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Off. Turn on “Tolio” under Finder in System Settings → General → Login Items & Extensions."
+            "value": "Off. Turn on “All Set” under Finder in System Settings, General, Login Items & Extensions."
           }
         }
       }
@@ -6865,7 +11692,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Glass notes on your desktop. Right-click the desktop or press ⌃⌥⌘N to add one."
+            "value": "Glass notes on your desktop. Right-click the desktop or press the shortcut to add one."
           }
         }
       }
@@ -6980,17 +11807,6 @@
         }
       }
     },
-    "switcher.command.search": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Switch to Window…"
-          }
-        }
-      }
-    },
     "switcher.displayName": {
       "extractionState": "manual",
       "localizations": {
@@ -7009,6 +11825,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Switch windows"
+          }
+        }
+      }
+    },
+    "switcher.hero.label": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Example: the switcher open with three windows, the middle one chosen"
           }
         }
       }
@@ -7042,17 +11869,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Window Switcher paused: macOS stopped it from reading the keyboard"
-          }
-        }
-      }
-    },
-    "switcher.search.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Window"
           }
         }
       }
@@ -7129,7 +11945,18 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Show live previews (needs Screen Recording)"
+            "value": "Show live previews"
+          }
+        }
+      }
+    },
+    "switcher.settings.thumbnailsSubtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Needs Screen Recording."
           }
         }
       }
@@ -7262,17 +12089,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Search the Web"
-          }
-        }
-      }
-    },
-    "textactions.action.sendToLauncher": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Send to Launcher"
           }
         }
       }
@@ -7435,6 +12251,17 @@
         }
       }
     },
+    "textactions.hero.description": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Example: a small bar of actions above some selected text"
+          }
+        }
+      }
+    },
     "textactions.message.copied": {
       "extractionState": "manual",
       "localizations": {
@@ -7463,7 +12290,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Search the Web, Open Link and Translate act only when you click them. Search the Web and Open Link hand the text to your browser; Translate uses Apple's translation panel (the same as Translate in context menus)."
+            "value": "Search the Web, Open Link and Translate act only when you click them. Search and Open Link hand the text to your browser; Translate uses Apple's translation panel."
           }
         }
       }
@@ -7474,7 +12301,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "When an app doesn't share its selection, copy it briefly (⌘C) and put your clipboard back"
+            "value": "When an app doesn't share its selection, copy it briefly and put your clipboard back"
           }
         }
       }
@@ -7485,7 +12312,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Needed for many apps, such as Slack, Discord and Chrome. Tolio puts your previous clipboard back right away, and Clipboard History doesn't keep it. Never used in password fields, while you're typing a password, in password managers, or in Finder."
+            "value": "Needed for apps such as Slack, Discord and Chrome. Clipboard History doesn't keep it. Never used in password fields or password managers."
           }
         }
       }
@@ -7507,7 +12334,18 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Selecting with the mouse (drag, double-click, ⇧-click)"
+            "value": "Selecting with the mouse"
+          }
+        }
+      }
+    },
+    "textactions.settings.mouseTriggerHelp": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Drag, double-click or ⇧-click."
           }
         }
       }
@@ -7519,6 +12357,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Never show in"
+          }
+        }
+      }
+    },
+    "textactions.settings.noOtherAppsExcluded": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Password managers are always excluded. No other apps excluded."
           }
         }
       }
@@ -7552,6 +12401,39 @@
           "stringUnit": {
             "state": "translated",
             "value": "Show the bar after"
+          }
+        }
+      }
+    },
+    "textactions.settings.tab.actions": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Actions"
+          }
+        }
+      }
+    },
+    "textactions.settings.tab.whenItShows": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "When it shows"
+          }
+        }
+      }
+    },
+    "textactions.settings.tabs": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Text Actions settings"
           }
         }
       }
@@ -7787,6 +12669,17 @@
         }
       }
     },
+    "windows.hero.label": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Example: a window snapped to the left half of the screen"
+          }
+        }
+      }
+    },
     "windows.menu.dragToEdge": {
       "extractionState": "manual",
       "localizations": {
@@ -7892,7 +12785,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Snapping by dragging couldn't start. Check that Tolio has the Accessibility permission, then turn this setting off and on."
+            "value": "Snapping by dragging couldn't start. Check that All Set has the Accessibility permission, then turn this setting off and on."
           }
         }
       }
@@ -7930,13 +12823,57 @@
         }
       }
     },
-    "windows.settings.shortcutsHelp": {
+    "windows.settings.gridHelp": {
       "extractionState": "manual",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Change the shortcuts above or on the Shortcuts page. Every layout is also in the Launcher."
+            "value": "Click a shortcut, then press the new keys. Press Delete to clear it."
+          }
+        }
+      }
+    },
+    "windows.settings.noShortcut": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "None"
+          }
+        }
+      }
+    },
+    "windows.settings.tabSettings": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Settings"
+          }
+        }
+      }
+    },
+    "windows.settings.tabShortcuts": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shortcuts"
+          }
+        }
+      }
+    },
+    "windows.settings.tabsLabel": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Window Layouts settings"
           }
         }
       }
@@ -7948,6 +12885,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Snap windows to halves, thirds and corners with a shortcut."
+          }
+        }
+      }
+    },
+    "windows.tagline": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Snap windows to halves, thirds and corners."
           }
         }
       }

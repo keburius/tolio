@@ -72,18 +72,23 @@ final class ControlPanelController {
     }
 
     private func refreshLive() {
-        model.tiles = makeTiles()
-        model.statsLine = statsProvider?.statsLine
+        model.grid = makeActions(ControlPanelModel.gridSpecs)
+        model.more = makeActions(ControlPanelModel.moreSpecs)
+        let running = makeRunning()
+        if running != model.running {
+            model.running = running
+            model.rebuildFocus()
+        }
     }
 
     private func reload() {
         ShortcutLookupText.controlPanel = shortcuts.text(for: AppHotkeys.controlPanel.id)
-        model.tiles = makeTiles()
-        model.clips = makeClips()
+        model.grid = makeActions(ControlPanelModel.gridSpecs)
+        model.more = makeActions(ControlPanelModel.moreSpecs)
+        model.running = makeRunning()
         model.layouts = ControlPanelModel.layoutSpecs.map { spec in
             ControlPanelModel.Layout(id: spec.command, title: spec.title(), shortcut: shortcuts.text(for: spec.command), span: spec.span)
         }
-        model.statsLine = statsProvider?.statsLine
         model.rebuildFocus()
     }
 
@@ -93,35 +98,66 @@ final class ControlPanelController {
         menuBar()?.entries()[id]
     }
 
-    private func makeTiles() -> [ControlPanelModel.Tile] {
-        let all = menuBar()?.entries() ?? [:]
-        return ControlPanelModel.tileOrder.compactMap { id in
-            guard let entry = all[id] else { return nil }
-            let feature = entry.feature
-            var state: ControlPanelModel.TileState
-            switch services.features.status(of: feature.id) {
-            case .running:
-                let current = entry.item.state()
-                if let start = current.timerStart {
-                    state = .recording(elapsed: MenuBarController.elapsed(since: start))
-                } else {
-                    state = .ready(active: current.isActive, detail: current.isActive ? current.detail : nil)
+    /// A feature's quick-access item, known even while the feature is off.
+    private func quickAccess(_ id: QuickAccessID, of feature: any Feature) -> QuickAccessItem? {
+        entry(id)?.item ?? feature.quickAccessItems.first { $0.id == id }
+    }
+
+    /// Buttons for the features that exist (hidden or missing ones are left out).
+    private func makeActions(_ specs: [ControlPanelModel.Spec]) -> [ControlPanelModel.Action] {
+        specs.compactMap { spec in
+            guard let feature = services.features.feature(spec.featureID) else { return nil }
+            var state: ControlPanelModel.ActionState
+            var shortcut: String?
+            switch spec.kind {
+            case let .quickAccess(id):
+                let item = quickAccess(id, of: feature)
+                shortcut = shortcuts.text(for: item?.shortcutID) ?? services.mainShortcutText(of: feature).flatMap { KeyCaps.isProse($0) ? nil : $0 }
+                state = .ready(active: false)
+                if services.features.status(of: feature.id) == .running, let current = item?.state() {
+                    state = current.timerStart.map { .recording(elapsed: MenuBarController.elapsed(since: $0)) } ?? .ready(active: current.isActive)
                 }
+            case .command:
+                shortcut = services.mainShortcutText(of: feature).flatMap { KeyCaps.isProse($0) ? nil : $0 }
+                state = .ready(active: false)
+            }
+            switch services.features.status(of: feature.id) {
+            case .running: break
             case let .waitingForPermissions(missing):
                 state = .needsPermission(feature: feature.displayName, permission: missing.sorted { $0.rawValue < $1.rawValue }.first ?? .accessibility)
             case .off, .failed:
                 state = .off(feature: feature.displayName)
             }
-            return .init(id: id, title: entry.item.title, symbol: entry.item.symbolName, shortcut: shortcuts.text(for: entry.item.shortcutID), state: state)
+            return .init(id: spec.id, featureID: feature.id, title: spec.title(), kind: spec.kind, shortcut: shortcut, state: state)
         }
     }
 
-    private func makeClips() -> ControlPanelModel.ClipsState {
-        guard let clipboard = services.features.feature("clipboard") else { return .empty }
-        guard services.features.status(of: clipboard.id) == .running else { return .featureOff(clipboard.displayName) }
-        guard let provider = services.commands.allProviders.first(where: { $0.keyword == "clip" }) else { return .empty }
-        let results = provider.results(for: "", limit: ControlPanelModel.recentCount)
-        return results.isEmpty ? .empty : .items(results)
+    /// Energy Mode, the next reminder and System Stats, while they're on.
+    private func makeRunning() -> [ControlPanelModel.Running] {
+        var rows: [ControlPanelModel.Running] = []
+        if let feature = services.features.feature("keepawake"), services.features.status(of: feature.id) == .running,
+           let item = quickAccess(.keepAwake, of: feature) {
+            let state = item.state()
+            rows.append(.init(
+                id: "energy", featureID: feature.id,
+                title: state.isActive ? L10n.PanelUI.stayingAwake : feature.displayName,
+                detail: state.isActive ? (state.detail ?? L10n.PanelUI.on) : L10n.PanelUI.off,
+                control: .toggle(isOn: state.isActive)
+            ))
+        }
+        if let feature = services.features.feature("deskminder"), services.features.status(of: feature.id) == .running,
+           let provider = feature as? NextReminderProviding, let next = provider.nextReminder {
+            let time = next.due.formatted(date: Calendar.current.isDateInToday(next.due) ? .omitted : .abbreviated, time: .shortened)
+            rows.append(.init(
+                id: "reminder", featureID: feature.id, title: L10n.PanelUI.nextReminderAt(time), detail: next.title,
+                control: .button(L10n.PanelUI.snooze)
+            ))
+        }
+        if let stats = statsProvider, let line = stats.statsLine,
+           let feature = services.features.features.first(where: { $0 === stats as AnyObject }) {
+            rows.append(.init(id: "stats", featureID: feature.id, title: feature.displayName, detail: line, control: .none))
+        }
+        return rows
     }
 
     private func makeWindow() -> ControlPanelModel.WindowState {
@@ -142,9 +178,9 @@ final class ControlPanelController {
 
     private func activate(_ target: ControlPanelFocus.Target) {
         switch target {
-        case let .tile(id):
-            guard let tile = model.tiles.first(where: { $0.id == id }), let entry = entry(id) else { return }
-            switch tile.state {
+        case let .action(id):
+            guard let action = model.action(id) else { return }
+            switch action.state {
             case .off:
                 model.turnOnPrompt = id
                 panel?.refit()
@@ -152,25 +188,50 @@ final class ControlPanelController {
                 panel?.close()
                 Task { _ = await services.permissions.request(permission) }
             case .ready, .recording:
-                closeThen { entry.item.primary() }
+                run(action)
             }
-        case let .recent(index):
-            guard case let .items(results) = model.clips, results.indices.contains(index) else { return }
-            let action = results[index].primaryAction
-            closeThen(action)
-        case .showAllClips:
-            guard let entry = entry(.clipboard) else { return }
+        case let .running(id):
+            switch id {
+            case "energy":
+                if let feature = services.features.feature("keepawake") { quickAccess(.keepAwake, of: feature)?.primary() }
+                refreshLive()
+            case "reminder":
+                (services.features.feature("deskminder") as? NextReminderProviding)?.snoozeNextReminder()
+                refreshLive()
+                panel?.refit()
+            default: break
+            }
+        case let .tile(id):
+            guard let entry = entry(id) else { return }
             closeThen { entry.item.primary() }
         case let .layout(commandID):
             guard let command = services.commands.allCommands.first(where: { $0.id == commandID }) else { return }
             panel?.close()
             layoutPanel?.close()
             command.action()
+        case .recent, .showAllClips:
+            break
         case .settings:
             panel?.close()
             openSettings(.overview)
         case .quit:
             NSApp.terminate(nil)
+        }
+    }
+
+    private func run(_ action: ControlPanelModel.Action) {
+        switch action.kind {
+        case .quickAccess(.windowLayouts):
+            // Layouts opens the small grid under the main icon.
+            guard let button = menuBar()?.mainButton else { return }
+            panel?.close()
+            showLayoutGrid(below: button)
+        case let .quickAccess(id):
+            guard let feature = services.features.feature(action.featureID), let item = quickAccess(id, of: feature) else { return }
+            closeThen { item.primary() }
+        case let .command(commandID):
+            guard let command = services.commands.allCommands.first(where: { $0.id == commandID }) else { return }
+            closeThen { command.action() }
         }
     }
 
@@ -184,8 +245,8 @@ final class ControlPanelController {
         }
     }
 
-    private func turnOn(_ id: QuickAccessID) {
-        guard let feature = entry(id)?.feature ?? (id == .clipboard ? services.features.feature("clipboard") : id == .windowLayouts ? services.features.feature("windows") : nil) else { return }
+    private func turnOn(_ id: String) {
+        guard let action = model.action(id), let feature = services.features.feature(action.featureID) else { return }
         services.features.setWanted(true, for: feature.id)
         if case let .waitingForPermissions(missing) = services.features.status(of: feature.id), let permission = missing.first {
             panel?.close()
@@ -216,18 +277,13 @@ final class ControlPanelController {
         case 126: model.focus.move(.up)
         case 36, 76, 49: // Return, Enter, Space
             guard let current = model.focus.current else { return true }
-            if flags.contains(.shift), case let .tile(id) = current {
-                showOptionsMenu(id)
+            if flags.contains(.shift), case let .action(id) = current,
+               let action = model.action(id), case let .quickAccess(qa) = action.kind {
+                showOptionsMenu(qa)
             } else {
                 activate(current)
             }
         default:
-            // 1–9 open the first nine copies, 0 the tenth.
-            if let digit = event.charactersIgnoringModifiers.flatMap(Int.init), (0...9).contains(digit) {
-                let index = digit == 0 ? 9 : digit - 1
-                if case let .items(results) = model.clips, results.indices.contains(index) { activate(.recent(index)) }
-                return true
-            }
             return false
         }
         return true
@@ -261,18 +317,21 @@ private struct LayoutGridPanel: View {
     let action: (String) -> Void
 
     var body: some View {
-        VStack(alignment: .leading, spacing: OmniStyle.s2) {
+        VStack(alignment: .leading, spacing: 8) {
             switch model.window {
             case let .window(app, title):
-                SectionHeader(L10n.Panel.windowSection)
-                Text(title.map { L10n.Panel.windowTitle(app, $0) } ?? app).font(.callout).foregroundStyle(.secondary).lineLimit(1).truncationMode(.middle).frame(maxWidth: 360, alignment: .leading)
+                Text(L10n.Panel.windowSection).font(AS.font(11.5, .semibold)).foregroundStyle(AS.textSecondary)
+                Text(title.map { L10n.Panel.windowTitle(app, $0) } ?? app).font(AS.font(12.5)).foregroundStyle(AS.text)
+                    .lineLimit(1).truncationMode(.middle).frame(maxWidth: 360, alignment: .leading)
                 LayoutGrid(layouts: model.layouts, focused: nil, action: action)
             default:
-                Text(L10n.Panel.noWindow).font(.callout).foregroundStyle(.secondary).frame(width: 300, alignment: .leading)
+                Text(L10n.Panel.noWindow).font(AS.font(12.5)).foregroundStyle(AS.textSecondary).frame(width: 300, alignment: .leading)
             }
         }
         .frame(width: 360, alignment: .leading)
-        .padding(OmniStyle.s3)
-        .omniPanelBackground()
+        .padding(14)
+        .background(RoundedRectangle(cornerRadius: 18, style: .continuous).fill(AS.panel))
+        .overlay(RoundedRectangle(cornerRadius: 18, style: .continuous).strokeBorder(Color.white.opacity(0.14), lineWidth: 1))
+        .allSetWindowStyle()
     }
 }

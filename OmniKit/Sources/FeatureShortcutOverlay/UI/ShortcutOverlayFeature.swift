@@ -45,7 +45,7 @@ public final class ShortcutOverlayFeature: Feature {
             id: "shortcuts.show", title: L10n.Cheatsheet.showTitle, subtitle: L10n.Cheatsheet.showSubtitle,
             keywords: ["cheatsheet", "keys", "menu", "hotkeys"], symbolName: symbolName
         ) {
-            // Let the palette close first so it doesn't take the key focus back.
+            // Let the menu close first so it doesn't take the key focus back.
             Task { @MainActor in
                 try? await Task.sleep(for: .milliseconds(80))
                 controller.togglePinned()
@@ -93,21 +93,67 @@ struct ShortcutOverlaySettingsView: View {
     let settings: SettingsStore
 
     var body: some View {
-        Picker(L10n.Cheatsheet.openWith, selection: Binding(
-            get: { settings.value(ShortcutOverlayFeature.triggerKey) },
-            set: { settings.set($0, for: ShortcutOverlayFeature.triggerKey); try? feature.applyTrigger() }
-        )) {
-            ForEach(OverlayTrigger.allCases, id: \.self) { Text($0.label).tag($0) }
+        VStack(alignment: .leading, spacing: 14) {
+            ASSection(footer: L10n.Cheatsheet.sourceHelp) {
+                ASRow(L10n.Cheatsheet.openWith, subtitle: L10n.Cheatsheet.openWithHelp) {
+                    ASPopUp(L10n.Cheatsheet.openWith, selection: Binding(
+                        get: { settings.value(ShortcutOverlayFeature.triggerKey) },
+                        set: { settings.set($0, for: ShortcutOverlayFeature.triggerKey); try? feature.applyTrigger() }
+                    ), options: OverlayTrigger.allCases.map { ($0, $0.label) })
+                }
+                .settingsAnchor(ShortcutOverlayAnchor.trigger)
+                ASToggleRow(L10n.Cheatsheet.includeDisabled, subtitle: L10n.Cheatsheet.includeDisabledNote,
+                            isOn: settings.binding(ShortcutOverlayFeature.includeDisabledKey))
+                    .settingsAnchor(ShortcutOverlayAnchor.includeDisabled)
+            }
+            if let error = feature.tapError {
+                ASCard(padding: 12) {
+                    HStack(alignment: .top, spacing: 10) {
+                        LineIcon(ASIcon.warning, size: 14, lineWidth: 2, color: AS.orange).padding(.top, 1)
+                        Text(error).font(AS.body).foregroundStyle(AS.text).fixedSize(horizontal: false, vertical: true)
+                    }
+                }
+            }
         }
-        .settingsAnchor(ShortcutOverlayAnchor.trigger)
-        Text(L10n.Cheatsheet.openWithHelp)
-            .font(.caption).foregroundStyle(.secondary)
-        Toggle(L10n.Cheatsheet.includeDisabled, isOn: settings.binding(ShortcutOverlayFeature.includeDisabledKey))
-            .settingsAnchor(ShortcutOverlayAnchor.includeDisabled)
-        Text(L10n.Cheatsheet.sourceHelp)
-            .font(.caption).foregroundStyle(.secondary)
-        if let error = feature.tapError {
-            Text(error).font(.caption).foregroundStyle(.orange)
+    }
+}
+
+/// The example under the header: a sheet of an app's menu shortcuts.
+struct ShortcutOverlayHero: View {
+    private let pink = Color(hex: 0xFF5374)
+    private let rows: [(width: CGFloat, keys: [String])] = [
+        (110, ["⌘", "C"]), (84, ["⌘", "V"]), (128, ["⇧", "⌘", "Z"]), (96, ["⌘", "F"]), // l10n-ignore
+    ]
+
+    var body: some View {
+        ASStage(tint: pink) {
+            VStack(spacing: 9) {
+                ForEach(Array(rows.enumerated()), id: \.offset) { index, row in
+                    let first = index == 0
+                    HStack(spacing: 24) {
+                        Capsule().fill(first ? .white : .white.opacity(0.32)).frame(width: row.width, height: 8)
+                        Spacer(minLength: 0)
+                        HStack(spacing: 3) {
+                            ForEach(Array(row.keys.enumerated()), id: \.offset) { _, key in
+                                Text(key)
+                                    .font(.system(size: 12.5, weight: .semibold))
+                                    .foregroundStyle(first ? Color(hex: 0x3A0612) : .white)
+                                    .padding(.horizontal, 5)
+                                    .frame(minWidth: 22, minHeight: 22)
+                                    .background(RoundedRectangle(cornerRadius: 6, style: .continuous).fill(first ? pink : .white.opacity(0.12)))
+                            }
+                        }
+                    }
+                }
+            }
+            .padding(.horizontal, 16)
+            .padding(.vertical, 14)
+            .frame(width: 300)
+            .background(RoundedRectangle(cornerRadius: 16, style: .continuous).fill(Color(hex: 0x15161B)))
+            .overlay(RoundedRectangle(cornerRadius: 16, style: .continuous).strokeBorder(.white.opacity(0.12), lineWidth: 1))
         }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(L10n.Cheatsheet.heroLabel)
+        .accessibilityAddTraits(.isImage)
     }
 }
