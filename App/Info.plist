@@ -39,8 +39,6 @@
 	<true/>
 	<key>NSAppleEventsUsageDescription</key>
 	<string>Notch Island reads what Music or Spotify is playing and controls playback, and its Dark Mode switch asks System Events to change the appearance.</string>
-	<key>NSBluetoothAlwaysUsageDescription</key>
-	<string>Notch Island shows a short notice when AirPods or other Bluetooth devices connect.</string>
 	<key>NSCalendarsFullAccessUsageDescription</key>
 	<string>Notch Island shows your week's events and counts down to your next meeting.</string>
 	<key>NSCameraUsageDescription</key>

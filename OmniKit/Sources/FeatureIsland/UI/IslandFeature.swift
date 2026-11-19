@@ -27,9 +27,6 @@ public final class IslandFeature: Feature {
     static let trayKey = SettingKey.feature("island", "tray", default: true)
     static let widgetsKey = SettingKey.feature("island", "widgetsPage", default: true)
     static let focusPageKey = SettingKey.feature("island", "focusPage", default: true)
-    static let batteryKey = SettingKey.feature("island", "battery", default: true)
-    static let bluetoothKey = SettingKey.feature("island", "bluetooth", default: true)
-    static let volumeKey = SettingKey.feature("island", "volume", default: true)
     static let meetingKey = SettingKey.feature("island", "meetings", default: true)
     static let downloadsKey = SettingKey.feature("island", "downloads", default: false)
     static let virtualKey = SettingKey.feature("island", "virtualNotch", default: false)
@@ -45,7 +42,7 @@ public final class IslandFeature: Feature {
 
     enum Anchor {
         static let music = "island.music"
-        static let volume = "island.volume"
+        static let live = "island.live"
         static let hover = "island.hover"
         static let widgets = "island.widgets"
         static let tray = "island.tray"
@@ -64,9 +61,6 @@ public final class IslandFeature: Feature {
     @ObservationIgnored private(set) var services: IslandServices?
     @ObservationIgnored private var islands: [CGDirectDisplayID: (panel: IslandPanel, model: IslandModel)] = [:]
     @ObservationIgnored private let nowPlaying = NowPlaying()
-    @ObservationIgnored private let power = PowerMonitor()
-    @ObservationIgnored private let bluetooth = BluetoothMonitor()
-    @ObservationIgnored private let volume = VolumeMonitor()
     @ObservationIgnored private let calendar = CalendarSource()
     @ObservationIgnored private let downloads = DownloadsMonitor()
     @ObservationIgnored private var observers: [NSObjectProtocol] = []
@@ -152,15 +146,12 @@ public final class IslandFeature: Feature {
         modeTask?.cancel()
         meetingTask?.cancel()
         nowPlaying.stop()
-        power.stop()
-        bluetooth.stop()
-        volume.stop()
         downloads.stop()
         services?.camera.stop()
         services?.load.setLive(false)
         for (panel, _) in islands.values { panel.orderOut(nil) }
         islands.removeAll()
-        for id in ["island.lowBattery", "island.timer", "island.meeting", "island.download", "island.stopwatch"] { LiveActivityCenter.shared.remove(id) }
+        for id in ["island.timer", "island.meeting", "island.download", "island.stopwatch"] { LiveActivityCenter.shared.remove(id) }
     }
 
     public func makeSettingsView() -> AnyView {
@@ -182,33 +173,6 @@ public final class IslandFeature: Feature {
             noNotchStyle: IslandServices.NoNotchStyle(rawValue: settings.value(Self.noNotchStyleKey)) ?? .notch
         )
         if settings.value(Self.musicKey) { nowPlaying.start() } else { nowPlaying.stop() }
-
-        if settings.value(Self.batteryKey) {
-            power.onChange = { [weak self] old, new in self?.powerChanged(from: old, to: new) }
-            power.start()
-        } else {
-            power.stop()
-            LiveActivityCenter.shared.remove("island.lowBattery")
-        }
-
-        if settings.value(Self.bluetoothKey) {
-            bluetooth.onConnect = { [weak self] name, audio in
-                self?.notice(id: "island.bluetooth", symbol: Self.bluetoothSymbol(name, audio: audio), title: L10n.Island.connected(name), tint: "blue")
-            }
-            bluetooth.onDisconnect = { [weak self] name in
-                self?.notice(id: "island.bluetooth", symbol: "xmark.circle", title: L10n.Island.disconnected(name), tint: "white")
-            }
-            bluetooth.start()
-        } else {
-            bluetooth.stop()
-        }
-
-        if settings.value(Self.volumeKey) {
-            volume.onChange = { [weak self] level, muted in self?.volumeChanged(level, muted: muted) }
-            volume.start()
-        } else {
-            volume.stop()
-        }
 
         if settings.value(Self.downloadsKey) {
             downloads.onChange = { [weak self] active, finished in self?.downloadsChanged(active, finished: finished) }
@@ -275,7 +239,7 @@ public final class IslandFeature: Feature {
         model.onOpenChanged = { [weak self] _ in self?.openChanged() }
         let panel = IslandPanel()
         let host = IslandHostingView(rootView: IslandRoot(model: model, feature: self))
-        host.onGesture = { [weak self, weak model] gesture in
+        panel.onGesture = { [weak self, weak model] gesture in
             guard let self, let model else { return }
             self.gesture(gesture, on: model)
         }
@@ -559,7 +523,7 @@ public final class IslandFeature: Feature {
         show(.notice, for: seconds) { LiveActivityCenter.shared.remove(id) }
     }
 
-    /// Shows a temporary mode (notice or volume) on every island that isn't open.
+    /// Shows a temporary mode (a notice) on every island that isn't open.
     private func show(_ mode: IslandModel.Mode, for seconds: Double, then done: @escaping @MainActor () -> Void = {}) {
         for model in models where model.mode != .open { model.mode = mode }
         modeTask?.cancel()
@@ -569,31 +533,6 @@ public final class IslandFeature: Feature {
             done()
             for model in self?.models ?? [] where model.mode == mode { model.mode = .closed }
         }
-    }
-
-    private func powerChanged(from old: PowerMonitor.State?, to new: PowerMonitor.State) {
-        let percent = LiveActivity.Content.text("\(new.percent)%")
-        if let old, new.onPower, !old.onPower {
-            notice(id: "island.power", symbol: "bolt.fill", title: new.percent >= 100 ? L10n.Island.fullyCharged : L10n.Island.charging,
-                   tint: "green", trailing: percent)
-        } else if let old, !new.onPower, old.onPower {
-            notice(id: "island.power", symbol: "battery.75percent", title: L10n.Island.onBattery, tint: "white", trailing: percent)
-        }
-        if !new.onPower, new.percent <= 10 {
-            LiveActivityCenter.shared.post(LiveActivity(
-                id: "island.lowBattery", leading: .symbol("battery.25percent"), trailing: percent,
-                title: L10n.Island.lowBattery, tint: "red", priority: .high
-            ))
-        } else {
-            LiveActivityCenter.shared.remove("island.lowBattery")
-        }
-    }
-
-    private func volumeChanged(_ level: Double, muted: Bool) {
-        guard let services else { return }
-        services.volume = level
-        services.muted = muted
-        show(.volume, for: 1.4)
     }
 
     private func downloadsChanged(_ active: [String], finished: [URL]) {
@@ -620,17 +559,6 @@ public final class IslandFeature: Feature {
         case .rest: L10n.Island.breakOver
         }
         notice(id: "island.timerDone", symbol: "timer", title: title, tint: "orange", seconds: 5)
-    }
-
-    static func bluetoothSymbol(_ name: String, audio: Bool) -> String {
-        let lower = name.lowercased()
-        if lower.contains("airpods max") { return "airpodsmax" }
-        if lower.contains("airpods pro") { return "airpodspro" }
-        if lower.contains("airpods") { return "airpods" }
-        if lower.contains("keyboard") { return "keyboard" }
-        if lower.contains("mouse") { return "magicmouse" }
-        if lower.contains("trackpad") { return "rectangle.and.hand.point.up.left" }
-        return audio ? "headphones" : "dot.radiowaves.left.and.right"
     }
 
     // Tray settings the views read.

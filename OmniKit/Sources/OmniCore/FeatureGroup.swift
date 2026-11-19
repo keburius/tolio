@@ -1,7 +1,7 @@
 /// The sections features are listed under in Settings, the setup guide and
 /// the website, in display order.
 public enum FeatureGroup: String, CaseIterable, Sendable {
-    /// Clipboard History and Snippets.
+    /// Clipboard History.
     case clipboard
     /// Window Layouts and the Window Switcher.
     case windows

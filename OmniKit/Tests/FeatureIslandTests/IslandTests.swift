@@ -63,15 +63,6 @@ struct LiveActivityTests {
     }
 }
 
-struct IslandSymbolTests {
-    @MainActor @Test func bluetoothSymbols() {
-        #expect(IslandFeature.bluetoothSymbol("George's AirPods Pro", audio: true) == "airpodspro")
-        #expect(IslandFeature.bluetoothSymbol("AirPods Max", audio: true) == "airpodsmax")
-        #expect(IslandFeature.bluetoothSymbol("Magic Keyboard", audio: false) == "keyboard")
-        #expect(IslandFeature.bluetoothSymbol("Bose QC", audio: true) == "headphones")
-    }
-}
-
 struct PlayerInfoTests {
     @Test func readsMusicBroadcast() {
         let info = PlayerInfo(["Player State": "Playing", "Name": "Neighbors", "Artist": "J. Cole", "Album": "4 Your Eyez Only", "Total Time": 216_000], player: .music)

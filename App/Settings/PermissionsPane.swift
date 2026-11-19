@@ -1,6 +1,5 @@
 import AppKit
 import Carbon
-import CoreBluetooth
 import EventKit
 import OmniCore
 import OmniPlatform
@@ -87,13 +86,12 @@ struct PermissionsPane: View {
 /// Permissions features ask for themselves (macOS prompts on first use);
 /// shown here so everything is in one place.
 enum ExtraPermission: CaseIterable {
-    case calendars, reminders, bluetooth, music
+    case calendars, reminders, music
 
     var title: String {
         switch self {
         case .calendars: L10n.AllSet.calendars
         case .reminders: L10n.AllSet.reminders
-        case .bluetooth: L10n.AllSet.bluetooth
         case .music: L10n.AllSet.music
         }
     }
@@ -102,7 +100,6 @@ enum ExtraPermission: CaseIterable {
         switch self {
         case .calendars: L10n.AllSet.calendarsUse
         case .reminders: L10n.AllSet.remindersUse
-        case .bluetooth: L10n.AllSet.bluetoothUse
         case .music: L10n.AllSet.musicUse
         }
     }
@@ -111,7 +108,6 @@ enum ExtraPermission: CaseIterable {
         switch self {
         case .calendars: "M3 4h10v9H3zM3 6.8h10M5.5 2.5v2.5M10.5 2.5v2.5"
         case .reminders: "M4 4.5h.01M4 8h.01M4 11.5h.01M6.5 4.5h6M6.5 8h6M6.5 11.5h6"
-        case .bluetooth: "M5 5l6 6-3 2.5v-11L11 5l-6 6"
         case .music: "M6 12.5V4l6.5-1.5V11M6 12.5a1.6 1.6 0 1 1-1.6-1.6M12.5 11a1.6 1.6 0 1 1-1.6-1.6"
         }
     }
@@ -120,13 +116,6 @@ enum ExtraPermission: CaseIterable {
         switch self {
         case .calendars: Self.eventState(.event)
         case .reminders: Self.eventState(.reminder)
-        case .bluetooth:
-            switch CBManager.authorization {
-            case .allowedAlways: .granted
-            case .notDetermined: .notDetermined
-            case .denied, .restricted: .denied
-            @unknown default: .unknown
-            }
         case .music: Self.automationState()
         }
     }
@@ -164,7 +153,6 @@ enum ExtraPermission: CaseIterable {
         switch self {
         case .calendars: Self.openPrivacySettings("Privacy_Calendars")
         case .reminders: Self.openPrivacySettings("Privacy_Reminders")
-        case .bluetooth: Self.openPrivacySettings("Privacy_Bluetooth")
         case .music: Self.openPrivacySettings("Privacy_Automation")
         }
     }

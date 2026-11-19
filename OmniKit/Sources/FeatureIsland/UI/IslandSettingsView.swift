@@ -8,7 +8,7 @@ extension IslandFeature {
             SettingsEntry(anchor: Anchor.music, label: L10n.Island.nowPlaying, keywords: ["spotify", "music", "now playing", "controls", "calendar", "mirror", "camera", "nook"]),
             SettingsEntry(anchor: Anchor.tray, label: L10n.Island.traySection, keywords: ["tray", "shelf", "files", "airdrop", "drop"]),
             SettingsEntry(anchor: Anchor.widgets, label: L10n.Island.widgetsSection, keywords: ["widgets", "timer", "pomodoro", "focus", "break", "stopwatch", "todo", "notes", "shortcuts", "stats"]),
-            SettingsEntry(anchor: Anchor.volume, label: L10n.Island.liveActivities, keywords: ["hud", "sound", "battery", "airpods", "bluetooth", "downloads", "meeting"]),
+            SettingsEntry(anchor: Anchor.live, label: L10n.Island.liveActivities, keywords: ["downloads", "meeting", "countdown"]),
             SettingsEntry(anchor: Anchor.look, label: L10n.Island.look, keywords: ["glass", "black", "handle", "pill", "displays"]),
             SettingsEntry(anchor: Anchor.hover, label: L10n.Island.openOnHover, keywords: ["hover", "click", "swipe", "notch", "dynamic island"]),
         ]
@@ -121,7 +121,7 @@ struct IslandSettingsView: View {
         case IslandFeature.Anchor.music: .nook
         case IslandFeature.Anchor.tray: .tray
         case IslandFeature.Anchor.widgets: .widgets
-        case IslandFeature.Anchor.volume: .live
+        case IslandFeature.Anchor.live: .live
         case IslandFeature.Anchor.look, IslandFeature.Anchor.hover: .look
         default: nil
         }
@@ -174,12 +174,9 @@ struct IslandSettingsView: View {
     private var live: some View {
         ASSection {
             ASToggleRow(L10n.Island.meetingCountdown, subtitle: L10n.Island.meetingHelp, isOn: binding(IslandFeature.meetingKey))
-            ASToggleRow(L10n.Island.batteryNotices, isOn: binding(IslandFeature.batteryKey))
-            ASToggleRow(L10n.Island.bluetoothNotices, subtitle: L10n.Island.bluetoothHelpAllSet, isOn: binding(IslandFeature.bluetoothKey))
-            ASToggleRow(L10n.Island.volumeChanges, subtitle: L10n.Island.volumeHelp, isOn: binding(IslandFeature.volumeKey))
             ASToggleRow(L10n.Island.downloadsSetting, subtitle: L10n.Island.downloadsHelpAllSet, isOn: binding(IslandFeature.downloadsKey))
         }
-        .settingsAnchor(IslandFeature.Anchor.volume)
+        .settingsAnchor(IslandFeature.Anchor.live)
     }
 
     private var look: some View {

@@ -82,7 +82,6 @@ targets:
         NSAppleEventsUsageDescription: "Notch Island reads what Music or Spotify is playing and controls playback, and its Dark Mode switch asks System Events to change the appearance."
         NSCameraUsageDescription: "Notch Island's mirror shows your camera so you can check how you look before a call. Nothing is recorded."
         NSDownloadsFolderUsageDescription: "Notch Island shows files that are still downloading, if you turn that on."
-        NSBluetoothAlwaysUsageDescription: "Notch Island shows a short notice when AirPods or other Bluetooth devices connect."
         NSRemindersUsageDescription: "Desk Minder adds your reminders to Apple Reminders so they also alert on your iPhone and other devices."
     entitlements:
       path: App/AllSet.entitlements

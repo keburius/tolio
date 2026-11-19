@@ -157,9 +157,14 @@ struct Marquee: View {
 
 // MARK: - Mirror
 
-/// The camera, mirrored, to check how you look before a call.
+/// The camera, mirrored, to check how you look before a call, with a
+/// shutter to take a photo (saved to Pictures › All Set and copied).
 struct MirrorPage: View {
     let camera: CameraMirror
+    @State private var flash = false
+    @State private var busy = false
+    @State private var lastPhoto: URL?
+    @State private var thumbnail: NSImage?
 
     var body: some View {
         ZStack {
@@ -182,13 +187,75 @@ struct MirrorPage: View {
             case .noCamera:
                 Text(L10n.Island.noCamera).font(.system(size: 11.5)).foregroundStyle(.white.opacity(0.6))
             }
+            RoundedRectangle(cornerRadius: 20, style: .continuous)
+                .fill(.white)
+                .opacity(flash ? 0.85 : 0)
+                .allowsHitTesting(false)
         }
         .overlay(alignment: .topLeading) {
             if camera.running {
                 Circle().fill(.green).frame(width: 6, height: 6).padding(10)
             }
         }
+        .overlay(alignment: .bottom) {
+            if camera.running { shutter.padding(.bottom, 10) }
+        }
+        .overlay(alignment: .bottomTrailing) {
+            if let thumbnail, let lastPhoto {
+                Button { NSWorkspace.shared.activateFileViewerSelecting([lastPhoto]) } label: {
+                    Image(nsImage: thumbnail).resizable().aspectRatio(contentMode: .fill)
+                        .frame(width: 44, height: 32)
+                        .clipShape(RoundedRectangle(cornerRadius: 6, style: .continuous))
+                        .overlay(RoundedRectangle(cornerRadius: 6, style: .continuous).strokeBorder(.white.opacity(0.8), lineWidth: 1.5))
+                        .shadow(color: .black.opacity(0.4), radius: 4, y: 2)
+                }
+                .buttonStyle(.plain)
+                .help(L10n.Island.showInFinder)
+                .accessibilityLabel(L10n.Island.showInFinder)
+                .padding(10)
+                .transition(.scale(scale: 0.6).combined(with: .opacity))
+            }
+        }
         .frame(width: 300)
         .frame(maxWidth: .infinity)
+    }
+
+    /// A round white shutter, like the Camera app's.
+    private var shutter: some View {
+        Button(action: take) {
+            ZStack {
+                Circle().strokeBorder(.white, lineWidth: 2.5).frame(width: 38, height: 38)
+                Circle().fill(.white).frame(width: 30, height: 30).scaleEffect(busy ? 0.82 : 1)
+            }
+            .shadow(color: .black.opacity(0.35), radius: 4, y: 1)
+            .contentShape(Circle())
+        }
+        .buttonStyle(.plain)
+        .disabled(busy)
+        .help(L10n.Island.takePhoto)
+        .accessibilityLabel(L10n.Island.takePhoto)
+    }
+
+    private func take() {
+        busy = true
+        Task { @MainActor in
+            let url = await camera.takePhoto()
+            withAnimation(.easeOut(duration: 0.08)) { flash = true }
+            try? await Task.sleep(for: .milliseconds(90))
+            withAnimation(.easeOut(duration: 0.35)) { flash = false; busy = false }
+            guard let url else {
+                HUD.show(L10n.Island.photoFailed, symbol: "exclamationmark.triangle")
+                return
+            }
+            AppFeel.tap(.generic)
+            HUD.show(L10n.Island.photoSaved, symbol: "camera.fill")
+            withAnimation(.spring(duration: 0.35)) {
+                lastPhoto = url
+                thumbnail = NSImage(contentsOf: url)
+            }
+            // The thumbnail goes away after a few seconds.
+            try? await Task.sleep(for: .seconds(4))
+            if lastPhoto == url { withAnimation(.easeOut(duration: 0.3)) { thumbnail = nil } }
+        }
     }
 }

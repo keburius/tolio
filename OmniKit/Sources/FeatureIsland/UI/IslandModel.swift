@@ -27,8 +27,6 @@ final class IslandServices {
     var options = Options()
     var calendarEvents: [CalendarSource.Item] = []
     var calendarAccess: CalendarSource.Access = .notAsked
-    var volume: Double = 0
-    var muted = false
     /// Final names of files downloading into Downloads now.
     var downloads: [String] = []
     /// Files being dragged somewhere on screen (opens the Tray near the notch).
@@ -82,10 +80,8 @@ final class IslandModel {
     enum Mode: Equatable {
         /// Just the notch (or, with music or an activity, the notch with wings).
         case closed
-        /// A short notice under the wings ("AirPods Pro connected").
+        /// A short notice under the wings ("Time's up").
         case notice
-        /// Volume level under the wings.
-        case volume
         /// Fully open on a page.
         case open
     }
@@ -123,7 +119,7 @@ final class IslandModel {
         options.showMusic && nowPlaying.hasTrack && (activity.map { $0.priority < .high && $0.expires == nil } ?? true)
     }
 
-    var hasWings: Bool { activity != nil || showsMusicWings || mode == .volume }
+    var hasWings: Bool { activity != nil || showsMusicWings }
 
     // MARK: Sizes
 
@@ -169,8 +165,6 @@ final class IslandModel {
             return CGSize(width: max(Self.openWidth, notch.width + 2 * Self.wing), height: Self.openHeight(page))
         case .notice:
             return CGSize(width: notch.width + 2 * Self.wing + 70, height: notch.height + 30)
-        case .volume:
-            return CGSize(width: notch.width + 2 * Self.wing + 20, height: notch.height + 22)
         case .closed:
             if isHandle {
                 if hasWings { return CGSize(width: 190 + 2 * Self.wing, height: bandHeight) }

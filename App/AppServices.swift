@@ -8,6 +8,9 @@ final class AppServices {
     /// Set once the All Set (2.0) welcome guide has been shown, so people
     /// upgrading from Tolio see the new guide one time.
     static let allSetGuideSeenKey = SettingKey("app.allSetGuideSeen", default: false)
+    /// Set once All Set has turned "Open at login" on by default, so turning
+    /// it off later is respected.
+    static let loginItemDefaultAppliedKey = SettingKey("app.loginItemDefaultApplied", default: false)
 
     let settings: SettingsStore
     let permissions: PermissionsManager

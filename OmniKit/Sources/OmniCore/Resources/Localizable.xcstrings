@@ -925,28 +925,6 @@
         }
       }
     },
-    "allset.permissions.bluetooth": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Bluetooth"
-          }
-        }
-      }
-    },
-    "allset.permissions.bluetoothUse": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Shows AirPods and other devices when they connect."
-          }
-        }
-      }
-    },
     "allset.permissions.calendars": {
       "extractionState": "manual",
       "localizations": {
@@ -4783,6 +4761,28 @@
         }
       }
     },
+    "island.mirror.failed": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Couldn't take the photo"
+          }
+        }
+      }
+    },
+    "island.mirror.fileName": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Photo %@"
+          }
+        }
+      }
+    },
     "island.mirror.none": {
       "extractionState": "manual",
       "localizations": {
@@ -4790,6 +4790,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "No camera found"
+          }
+        }
+      }
+    },
+    "island.mirror.saved": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Photo saved to Pictures and copied"
+          }
+        }
+      }
+    },
+    "island.mirror.takePhoto": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Take Photo"
           }
         }
       }
@@ -4912,72 +4934,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Jot something down…"
-          }
-        }
-      }
-    },
-    "island.notice.charging": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Charging"
-          }
-        }
-      }
-    },
-    "island.notice.connected": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%@ connected"
-          }
-        }
-      }
-    },
-    "island.notice.disconnected": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%@ disconnected"
-          }
-        }
-      }
-    },
-    "island.notice.full": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Fully charged"
-          }
-        }
-      }
-    },
-    "island.notice.lowBattery": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Low battery"
-          }
-        }
-      }
-    },
-    "island.notice.onBattery": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "On battery"
           }
         }
       }
@@ -5136,17 +5092,6 @@
         }
       }
     },
-    "island.settings.battery": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Charging and low battery"
-          }
-        }
-      }
-    },
     "island.settings.black": {
       "extractionState": "manual",
       "localizations": {
@@ -5154,28 +5099,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Black"
-          }
-        }
-      }
-    },
-    "island.settings.bluetooth": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "AirPods and other Bluetooth devices"
-          }
-        }
-      }
-    },
-    "island.settings.bluetoothHelp2": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "macOS asks once to let All Set see Bluetooth devices."
           }
         }
       }
@@ -5753,28 +5676,6 @@
         }
       }
     },
-    "island.settings.volumeChanges": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Volume changes"
-          }
-        }
-      }
-    },
-    "island.settings.volumeHelp": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "macOS still shows its own volume overlay too."
-          }
-        }
-      }
-    },
     "island.settings.widgets": {
       "extractionState": "manual",
       "localizations": {
@@ -6313,17 +6214,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Share…"
-          }
-        }
-      }
-    },
-    "island.volume.muted": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Muted"
           }
         }
       }
@@ -7670,7 +7560,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Lets All Set move windows, type snippets for you, read menus and selected text, and listen for shortcuts."
+            "value": "Lets All Set move windows, paste for you, read menus and selected text, and listen for shortcuts."
           }
         }
       }
@@ -10744,293 +10634,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Press a shortcut…"
-          }
-        }
-      }
-    },
-    "snippets.default.date": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Today's date"
-          }
-        }
-      }
-    },
-    "snippets.default.signOff": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Email sign-off"
-          }
-        }
-      }
-    },
-    "snippets.displayName": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Text Snippets"
-          }
-        }
-      }
-    },
-    "snippets.editor.code": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Code"
-          }
-        }
-      }
-    },
-    "snippets.editor.codePrompt": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": ";sig"
-          }
-        }
-      }
-    },
-    "snippets.editor.save": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Save"
-          }
-        }
-      }
-    },
-    "snippets.editor.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Title"
-          }
-        }
-      }
-    },
-    "snippets.erase.description": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "variations": {
-            "plural": {
-              "one": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "%lld snippet"
-                }
-              },
-              "other": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "all %lld snippets"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "snippets.gesture.how": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Type its code, like ;sig"
-          }
-        }
-      }
-    },
-    "snippets.gesture.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Insert a snippet"
-          }
-        }
-      }
-    },
-    "snippets.hero.description": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Example: typing ;sig in a message turns into an email sign-off"
-          }
-        }
-      }
-    },
-    "snippets.hero.expanded": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Best regards,"
-          }
-        }
-      }
-    },
-    "snippets.hero.name": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Alex"
-          }
-        }
-      }
-    },
-    "snippets.problem.alreadyUsed": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Another snippet already uses “%@”."
-          }
-        }
-      }
-    },
-    "snippets.problem.noSpaces": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Codes can't contain spaces."
-          }
-        }
-      }
-    },
-    "snippets.problem.tooShort": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Use at least 2 characters."
-          }
-        }
-      }
-    },
-    "snippets.settings.add": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Add Snippet"
-          }
-        }
-      }
-    },
-    "snippets.settings.delete": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Delete"
-          }
-        }
-      }
-    },
-    "snippets.settings.edit": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Edit"
-          }
-        }
-      }
-    },
-    "snippets.settings.empty": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "No snippets yet. Add one, then type its code (like ;sig) in any app."
-          }
-        }
-      }
-    },
-    "snippets.settings.enabledToggle": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Use “%@”"
-          }
-        }
-      }
-    },
-    "snippets.settings.list": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Snippets"
-          }
-        }
-      }
-    },
-    "snippets.settings.placeholders": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Placeholders"
-          }
-        }
-      }
-    },
-    "snippets.settings.placeholdersHelp": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Placeholders: {date}, {date:yyyy-MM-dd}, {time}, {time:HH:mm}, {clipboard}, {cursor}. Use {{ and }} for literal braces. Snippets never expand in password fields."
-          }
-        }
-      }
-    },
-    "snippets.summary": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Type a short code like ;sig in any app to insert text you use often."
           }
         }
       }

@@ -19,7 +19,6 @@ Tolio's features come in eight groups.
 | | |
 |---|---|
 | **Clipboard History** | ⌃⌥V shows what you copied, with picture previews. Pin the ones you need often. |
-| **Snippets** | Type a short code such as `;sig` anywhere and it becomes the full text. |
 
 ### Windows
 | | |
@@ -101,7 +100,7 @@ macOS asks you to allow these yourself. Tolio only asks for what the features yo
 
 | Permission | Used for |
 |---|---|
-| **Accessibility** | Moving windows, typing snippets, reading selected text and menus, and global shortcuts |
+| **Accessibility** | Moving windows, pasting, reading selected text and menus, and global shortcuts |
 | **Screen Recording** | Screenshots, screen recording, Capture Text and window previews |
 | **Microphone** | Only when you record the screen with the microphone turned on |
 | **Reminders** | Only if Desk Minder's "Also add to Apple Reminders" is on |

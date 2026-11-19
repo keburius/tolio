@@ -48,7 +48,7 @@ public extension L10n {
         public static var screenRecording: String { tr("permission.screenRecording", "Screen Recording") }
         public static var microphone: String { tr("permission.microphone", "Microphone") }
         public static var accessibilityWhy: String {
-            tr("permission.accessibility.why", "Lets All Set move windows, type snippets for you, read menus and selected text, and listen for shortcuts.")
+            tr("permission.accessibility.why", "Lets All Set move windows, paste for you, read menus and selected text, and listen for shortcuts.")
         }
         public static var screenRecordingWhy: String {
             tr("permission.screenRecording.why", "Lets All Set take screenshots, record your screen, and show window previews.")

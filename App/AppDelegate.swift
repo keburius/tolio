@@ -46,6 +46,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         services.hotkeys.register(AppHotkeys.controlPanel, owner: AppHotkeys.owner) { [weak self] in
             self?.controlPanel?.toggle(below: self?.menuBar?.mainButton, byKeyboard: true)
         }
+        enableOpenAtLoginOnce()
         if !services.settings.value(AppServices.onboardingCompletedKey) {
             showOnboarding()
         } else if !services.settings.value(AppServices.allSetGuideSeenKey) {
@@ -132,7 +133,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private func registerFeatures() {
         // Clipboard
         services.features.register(ClipboardHistoryFeature())
-        services.features.register(SnippetsFeature())
         // Windows
         services.features.register(WindowsFeature())
         services.features.register(SwitcherFeature())
@@ -213,6 +213,20 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
               let feature = services.features.feature("stickynotes") as? StickyNotesFeature else { return }
         if !services.features.isWanted(feature.id) { services.features.setWanted(true, for: feature.id) }
         feature.newNote(at: point)
+    }
+
+    /// All Set opens at login by default: turned on once, on the first
+    /// launch of a release build (new installs and upgrades from Tolio).
+    /// Someone who turns it off in General keeps it off. Debug builds are
+    /// left out so development copies don't become login items.
+    private func enableOpenAtLoginOnce() {
+        #if !DEBUG
+        guard !services.settings.value(AppServices.loginItemDefaultAppliedKey) else { return }
+        services.settings.set(true, for: AppServices.loginItemDefaultAppliedKey)
+        let login = services.launchAtLogin
+        login.refresh()
+        if !login.isEnabled, !login.needsApproval { login.setEnabled(true) }
+        #endif
     }
 
     /// Opens Settings at `page` (or where it was). Holding ⌥ also lists Diagnostics.

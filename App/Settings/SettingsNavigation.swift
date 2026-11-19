@@ -48,10 +48,9 @@ extension AppServices {
 
     /// Visible features in the design's order (unknown ones last).
     func sidebarFeatures(includingHidden: Bool) -> [any Feature] {
-        let order = FeatureLook.designOrder.map(\.rawValue) + ["snippets"]
+        let order = FeatureLook.designOrder.map(\.rawValue)
         func rank(_ feature: any Feature) -> Int {
-            if feature.id == "snippets" { return (order.firstIndex(of: "clipboard") ?? 0) * 2 + 1 }
-            return (order.firstIndex(of: feature.id.rawValue).map { $0 * 2 }) ?? 1000
+            order.firstIndex(of: feature.id.rawValue) ?? 1000
         }
         return visibleFeatures(includingHidden: includingHidden).enumerated()
             .sorted { (rank($0.element), $0.offset) < (rank($1.element), $1.offset) }

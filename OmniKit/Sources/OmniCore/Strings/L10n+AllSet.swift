@@ -78,8 +78,6 @@ public extension L10n {
         public static var calendarsUse: String { tr("allset.permissions.calendarsUse", "Shows today's and tomorrow's events in the Notch Island.") }
         public static var reminders: String { tr("allset.permissions.reminders", "Reminders") }
         public static var remindersUse: String { tr("allset.permissions.remindersUse", "Sends Desk Minder reminders to your iPhone.") }
-        public static var bluetooth: String { tr("allset.permissions.bluetooth", "Bluetooth") }
-        public static var bluetoothUse: String { tr("allset.permissions.bluetoothUse", "Shows AirPods and other devices when they connect.") }
         public static var music: String { tr("allset.permissions.music", "Music and Spotify") }
         public static var musicUse: String { tr("allset.permissions.musicUse", "Shows what's playing, with its artwork and controls.") }
         public static var allowed: String { tr("allset.permissions.allowed", "Allowed") }

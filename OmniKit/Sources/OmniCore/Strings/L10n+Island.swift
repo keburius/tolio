@@ -50,6 +50,10 @@ public extension L10n {
             tr("island.mirror.denied", "Turn on Camera for All Set in System Settings → Privacy & Security.")
         }
         public static var noCamera: String { tr("island.mirror.none", "No camera found") }
+        public static var takePhoto: String { tr("island.mirror.takePhoto", "Take Photo") }
+        public static var photoSaved: String { tr("island.mirror.saved", "Photo saved to Pictures and copied") }
+        public static var photoFailed: String { tr("island.mirror.failed", "Couldn't take the photo") }
+        public static func photoFileName(_ stamp: String) -> String { format("island.mirror.fileName", "Photo %@", stamp) }
 
         // Calendar.
         public static var noMoreToday: String { tr("island.calendar.noMore", "No more events today") }
@@ -140,13 +144,6 @@ public extension L10n {
         public static var memory: String { tr("island.stats.memory", "Memory") }
 
         // Notices and activities.
-        public static var charging: String { tr("island.notice.charging", "Charging") }
-        public static var fullyCharged: String { tr("island.notice.full", "Fully charged") }
-        public static var onBattery: String { tr("island.notice.onBattery", "On battery") }
-        public static var lowBattery: String { tr("island.notice.lowBattery", "Low battery") }
-        public static func connected(_ name: String) -> String { format("island.notice.connected", "%@ connected", name) }
-        public static func disconnected(_ name: String) -> String { format("island.notice.disconnected", "%@ disconnected", name) }
-        public static var muted: String { tr("island.volume.muted", "Muted") }
         public static var recording: String { tr("island.activity.recording", "Recording") }
         public static func downloading(_ name: String) -> String { format("island.activity.downloading", "Downloading %@", name) }
         public static func downloaded(_ name: String) -> String { format("island.activity.downloaded", "Downloaded %@", name) }
@@ -174,9 +171,6 @@ public extension L10n {
         public static var liveActivities: String { tr("island.settings.live", "Live activities") }
         public static var meetingCountdown: String { tr("island.settings.meetings", "Count down to the next meeting") }
         public static var meetingHelp: String { tr("island.settings.meetingsHelp", "Shows in the notch 10 minutes before an event starts.") }
-        public static var batteryNotices: String { tr("island.settings.battery", "Charging and low battery") }
-        public static var bluetoothNotices: String { tr("island.settings.bluetooth", "AirPods and other Bluetooth devices") }
-        public static var volumeHelp: String { tr("island.settings.volumeHelp", "macOS still shows its own volume overlay too.") }
         public static var downloadsSetting: String { tr("island.settings.downloads", "Downloads") }
 
         public static var look: String { tr("island.settings.look", "Look") }
@@ -220,8 +214,6 @@ public extension L10n {
         public static var lessFocus: String { tr("island.settings.lessFocus", "Less focus time") }
         public static var moreBreak: String { tr("island.settings.moreBreak", "More break time") }
         public static var lessBreak: String { tr("island.settings.lessBreak", "Less break time") }
-        public static var volumeChanges: String { tr("island.settings.volumeChanges", "Volume changes") }
-        public static var bluetoothHelpAllSet: String { tr("island.settings.bluetoothHelp2", "macOS asks once to let All Set see Bluetooth devices.") }
         public static var downloadsHelpAllSet: String {
             tr("island.settings.downloadsHelp2", "Shows files a browser is saving to Downloads. macOS asks once to let All Set see that folder.")
         }

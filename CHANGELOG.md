@@ -3,6 +3,11 @@
 ## 2.0.1
 
 - **The new welcome guide opens once for everyone upgrading from Tolio**, so you can see what's new and check your features and permissions. It starts from the features you already have on; nothing changes unless you change it.
+- **All Set opens at login by default.** It's turned on once when you first open this version; switch it off any time in Settings → General.
+- **Notch Island:** the camera mirror has a shutter. Photos are saved, mirrored, to Pictures › All Set and copied so you can paste them.
+- **Notch Island:** swiping sideways works on every page again; it used to get stuck on Calendar. Lists inside still scroll.
+- **Notch Island no longer shows volume, AirPods/Bluetooth or charging notices.** All Set no longer asks for Bluetooth access.
+- **Text Snippets is removed.**
 
 ## 2.0.0
 

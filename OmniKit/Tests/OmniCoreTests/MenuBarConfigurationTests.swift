@@ -106,7 +106,7 @@ struct SettingsResetTests {
     @Test func resetsOnlyThatFeatureAndKeepsUserContent() {
         let stored = [
             "feature.clipboard.retentionDays", "feature.clipboard.excludedApps", "feature.clipboard.maxItems",
-            "feature.clipboarder.x", "feature.snippets.items", "features.wanted", "hotkeys.bindings",
+            "feature.clipboarder.x", "feature.stickynotes.notes", "features.wanted", "hotkeys.bindings",
         ]
         let keys = SettingsReset.keysToRemove(feature: "clipboard", storedKeys: stored, keep: ["feature.clipboard.excludedApps"])
         #expect(keys == ["feature.clipboard.maxItems", "feature.clipboard.retentionDays"])
@@ -161,7 +161,7 @@ struct OnboardingModelTests {
         .init(id: "windows", required: [.accessibility], optional: []),
         .init(id: "keepawake", required: [], optional: []),
         .init(id: "screenshots", required: [.screenRecording], optional: [.microphone, .accessibility]),
-        .init(id: "snippets", required: [.accessibility], optional: []),
+        .init(id: "switcher", required: [.accessibility], optional: []),
     ]
 
     @Test func recommendedByDefault() {
@@ -178,7 +178,7 @@ struct OnboardingModelTests {
         model.chooseEverything()
         #expect(model.chosen.count == 5)
         model.chooseRecommended()
-        #expect(!model.chosen.contains("snippets"))
+        #expect(!model.chosen.contains("switcher"))
     }
 
     @Test func permissionsFollowChoice() {
@@ -193,8 +193,8 @@ struct OnboardingModelTests {
 
     @Test func changesOnlyWhatDiffers() {
         let model = OnboardingModel(options: options, chosen: ["clipboard", "windows"])
-        let changes = model.changes(from: ["clipboard", "snippets"])
-        #expect(changes.map(\.0) == ["windows", "snippets"])
+        let changes = model.changes(from: ["clipboard", "switcher"])
+        #expect(changes.map(\.0) == ["windows", "switcher"])
         #expect(changes.map(\.1) == [true, false])
     }
 }

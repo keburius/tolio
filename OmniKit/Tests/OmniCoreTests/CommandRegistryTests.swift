@@ -43,10 +43,10 @@ struct SearchProviderRegistryTests {
     @Test func providersAreOwnedAndRemovedWithOwner() {
         let registry = CommandRegistry()
         registry.registerProvider(FakeProvider("clip"), owner: "clipboard")
-        registry.registerProvider(FakeProvider("snip"), owner: "snippets")
-        #expect(registry.allProviders.map(\.keyword) == ["clip", "snip"])
+        registry.registerProvider(FakeProvider("win"), owner: "windows")
+        #expect(registry.allProviders.map(\.keyword) == ["clip", "win"])
         registry.unregisterAll(owner: "clipboard")
-        #expect(registry.allProviders.map(\.keyword) == ["snip"])
+        #expect(registry.allProviders.map(\.keyword) == ["win"])
     }
 
     @Test func sameKeywordReplaces() {

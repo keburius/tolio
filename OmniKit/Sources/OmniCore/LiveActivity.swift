@@ -1,8 +1,8 @@
 import Foundation
 import Observation
 
-/// Something worth a glance in the notch while it lasts: charging, a
-/// connected headset, a recording, a reminder coming up. Any feature can
+/// Something worth a glance in the notch while it lasts: a timer, the
+/// next meeting, a download, a recording, a reminder coming up. Any feature can
 /// post one; Notch Island (if on) shows the most important in its wings.
 public struct LiveActivity: Identifiable, Equatable, Sendable {
     public enum Priority: Int, Comparable, Sendable {

@@ -85,7 +85,6 @@ public struct FeatureLook: Sendable {
 
     private static let table: [String: FeatureLook] = [
         "clipboard": .init(.clipboardHistory, 0x007AFF, 0x2E92FF, 0x0073F0),
-        "snippets": .init(.clipboardHistory, 0x007AFF, 0x2E92FF, 0x0073F0),
         "island": .init(.notchIsland, 0xE5E5EA, 0xE5E5EA, 0x1A1A1C, lightGlow: 0x1C1C1E),
         "dropring": .init(.dropRing, 0x32ADE6, 0x57BCEA, 0x2FA3D8),
         "deskminder": .init(.deskMinder, 0xFF9500, 0xFFA82E, 0xF08C00),
@@ -506,7 +505,7 @@ public struct KeyCaps: View {
         self.size = size
     }
 
-    /// A gesture described in words ("Type its code, like ;sig") isn't keys.
+    /// A gesture described in words ("Select text in any app") isn't keys.
     public static func isProse(_ text: String) -> Bool {
         // "⌥ Tab" and "⌘ ⌘ hold" are keys; two or more words with letters are a sentence.
         text.split(separator: " ").filter { $0.contains(where: \.isLetter) }.count >= 2

@@ -132,56 +132,6 @@ public extension L10n {
         public static var heroAppTerminal: String { tr("clipboard.hero.app.terminal", "Terminal") }
     }
 
-    /// Text Snippets: feature text, settings, editor and errors.
-    enum Snippets {
-        public static var displayName: String { tr("snippets.displayName", "Text Snippets") }
-        public static var summary: String {
-            tr("snippets.summary", "Type a short code like ;sig in any app to insert text you use often.")
-        }
-        public static var gestureTitle: String { tr("snippets.gesture.title", "Insert a snippet") }
-        public static var gestureHow: String { tr("snippets.gesture.how", "Type its code, like ;sig") }
-        public static var defaultDateTitle: String { tr("snippets.default.date", "Today's date") }
-        public static var defaultSignOffTitle: String { tr("snippets.default.signOff", "Email sign-off") }
-        public static func eraseDescription(_ count: Int) -> String {
-            plural("snippets.erase.description", one: "%lld snippet", other: "all %lld snippets", count)
-        }
-
-        // MARK: Settings
-
-        public static var list: String { tr("snippets.settings.list", "Snippets") }
-        public static var empty: String {
-            tr("snippets.settings.empty", "No snippets yet. Add one, then type its code (like ;sig) in any app.")
-        }
-        public static var addSnippet: String { tr("snippets.settings.add", "Add Snippet") }
-        public static var edit: String { tr("snippets.settings.edit", "Edit") }
-        public static var delete: String { tr("snippets.settings.delete", "Delete") }
-        public static func enabledToggle(_ title: String) -> String {
-            format("snippets.settings.enabledToggle", "Use “%@”", title)
-        }
-        public static var placeholders: String { tr("snippets.settings.placeholders", "Placeholders") }
-        public static var placeholdersHelp: String {
-            tr("snippets.settings.placeholdersHelp", "Placeholders: {date}, {date:yyyy-MM-dd}, {time}, {time:HH:mm}, {clipboard}, {cursor}. Use {{ and }} for literal braces. Snippets never expand in password fields.")
-        }
-
-        public static var heroDescription: String {
-            tr("snippets.hero.description", "Example: typing ;sig in a message turns into an email sign-off")
-        }
-        public static var heroExpanded: String { tr("snippets.hero.expanded", "Best regards,") }
-        public static var heroName: String { tr("snippets.hero.name", "Alex") }
-
-        // MARK: Editor
-
-        public static var code: String { tr("snippets.editor.code", "Code") }
-        public static var codePrompt: String { tr("snippets.editor.codePrompt", ";sig") }
-        public static var title: String { tr("snippets.editor.title", "Title") }
-        public static var save: String { tr("snippets.editor.save", "Save") }
-        public static var tooShort: String { tr("snippets.problem.tooShort", "Use at least 2 characters.") }
-        public static var noSpaces: String { tr("snippets.problem.noSpaces", "Codes can't contain spaces.") }
-        public static func alreadyUsed(_ code: String) -> String {
-            format("snippets.problem.alreadyUsed", "Another snippet already uses “%@”.", code)
-        }
-    }
-
     /// Text Actions: feature text, action titles, settings and messages.
     enum TextActions {
         public static var displayName: String { tr("textactions.displayName", "Text Actions") }

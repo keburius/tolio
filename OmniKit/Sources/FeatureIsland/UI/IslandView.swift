@@ -4,8 +4,8 @@ import OmniCore
 import OmniPlatform
 import SwiftUI
 
-/// The island that grows out of the notch: closed with wings, a notice or
-/// the volume, or open on a page (Music, Calendar, Focus, Tray…) with
+/// The island that grows out of the notch: closed with wings, a notice,
+/// or open on a page (Music, Calendar, Focus, Tray…) with
 /// tabs floating under it.
 struct IslandView: View {
     let model: IslandModel
@@ -94,9 +94,6 @@ struct IslandView: View {
                         .padding(.horizontal, 16).frame(maxHeight: .infinity)
                         .transition(AnyTransition.opacity.combined(with: .offset(y: -6)).combined(with: .softBlur))
                 }
-            case .volume:
-                VolumeBar(volume: model.services.volume, muted: model.services.muted).padding(.horizontal, 22).frame(maxHeight: .infinity)
-                    .transition(.opacity)
             case .open:
                 OpenIsland(model: model)
                     .transition(AnyTransition.opacity.combined(with: .scale(scale: 0.88, anchor: .top)).combined(with: .softBlur))
@@ -110,15 +107,7 @@ struct IslandView: View {
 
     @ViewBuilder private func wing(leading: Bool) -> some View {
         Group {
-            if model.mode == .volume {
-                if leading {
-                    Image(systemName: Self.speakerSymbol(model.services.volume, muted: model.services.muted)).font(.system(size: 13, weight: .semibold))
-                } else {
-                    Text(model.services.muted ? L10n.Island.muted : "\(Int((model.services.volume * 100).rounded()))")
-                        .font(.system(size: 12, weight: .semibold).monospacedDigit())
-                        .contentTransition(.numericText())
-                }
-            } else if let activity = model.activity, !(model.showsMusicWings && activity.priority < .normal) {
+            if let activity = model.activity, !(model.showsMusicWings && activity.priority < .normal) {
                 ActivityContent(content: leading ? activity.leading : activity.trailing, tint: Self.color(activity.tint))
             } else if model.showsMusicWings {
                 if leading {
@@ -159,11 +148,6 @@ struct IslandView: View {
         case "yellow": .yellow
         default: .white
         }
-    }
-
-    static func speakerSymbol(_ volume: Double, muted: Bool) -> String {
-        if muted || volume < 0.01 { return "speaker.slash.fill" }
-        return volume < 0.34 ? "speaker.wave.1.fill" : (volume < 0.67 ? "speaker.wave.2.fill" : "speaker.wave.3.fill")
     }
 }
 
@@ -527,23 +511,6 @@ struct Artwork: View {
         .frame(width: size, height: size)
         .clipShape(RoundedRectangle(cornerRadius: radius, style: .continuous))
         .accessibilityHidden(true)
-    }
-}
-
-/// The volume level under the wings.
-private struct VolumeBar: View {
-    let volume: Double
-    let muted: Bool
-
-    var body: some View {
-        GeometryReader { geo in
-            ZStack(alignment: .leading) {
-                Capsule().fill(.white.opacity(0.2))
-                Capsule().fill(.white).frame(width: geo.size.width * (muted ? 0 : max(0, min(volume, 1))))
-            }
-        }
-        .frame(height: 5)
-        .animation(OmniStyle.motion(.spring(response: 0.25, dampingFraction: 0.8)), value: volume)
     }
 }
 

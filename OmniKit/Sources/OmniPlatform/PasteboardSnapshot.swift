@@ -2,7 +2,7 @@ import AppKit
 import OmniCore
 
 /// A copy of everything on a pasteboard, so Omni can borrow the pasteboard
-/// (to paste a snippet, or to read a selection) and put it back exactly.
+/// (to paste text, or to read a selection) and put it back exactly.
 ///
 /// Limitation: types an app only promised (lazy data) are materialized at
 /// capture time; types whose data can't be read are skipped.

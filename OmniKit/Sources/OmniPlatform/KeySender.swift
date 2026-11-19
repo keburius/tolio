@@ -27,9 +27,6 @@ public enum KeySender {
         }
     }
 
-    public static func backspace(times: Int) { press(CGKeyCode(kVK_Delete), times: times) }
-    public static func left(times: Int) { press(CGKeyCode(kVK_LeftArrow), times: times) }
-
     /// ⌘V using the key that types "v" in the current ASCII-capable layout
     /// (differs on Dvorak and similar; non-Latin layouts use their ASCII fallback).
     public static func paste() {
