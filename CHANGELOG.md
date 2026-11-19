@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.1
+
+- **The new welcome guide opens once for everyone upgrading from Tolio**, so you can see what's new and check your features and permissions. It starts from the features you already have on; nothing changes unless you change it.
+
 ## 2.0.0
 
 - **Tolio is now All Set.** New name, new app icon (an A whose crossbar is a checkmark) and a new menu bar icon. Your settings, data and permissions carry over.

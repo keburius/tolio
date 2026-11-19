@@ -48,6 +48,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         }
         if !services.settings.value(AppServices.onboardingCompletedKey) {
             showOnboarding()
+        } else if !services.settings.value(AppServices.allSetGuideSeenKey) {
+            // Upgrading from Tolio: show the new guide once. It starts from the
+            // features that are already on, so nothing changes unless they choose.
+            services.settings.set(true, for: AppServices.allSetGuideSeenKey)
+            showOnboarding()
         }
     }
 
@@ -246,6 +251,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     private func finishOnboarding(openSettings: Bool) {
         services.settings.set(true, for: AppServices.onboardingCompletedKey)
+        services.settings.set(true, for: AppServices.allSetGuideSeenKey)
         onboardingWindow?.close()
         if openSettings { showSettings(.overview) }
     }

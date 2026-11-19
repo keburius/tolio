@@ -5,6 +5,9 @@ import OmniPlatform
 @MainActor
 final class AppServices {
     static let onboardingCompletedKey = SettingKey("app.onboardingCompleted", default: false)
+    /// Set once the All Set (2.0) welcome guide has been shown, so people
+    /// upgrading from Tolio see the new guide one time.
+    static let allSetGuideSeenKey = SettingKey("app.allSetGuideSeen", default: false)
 
     let settings: SettingsStore
     let permissions: PermissionsManager
